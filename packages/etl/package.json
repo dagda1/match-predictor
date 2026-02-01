@@ -1,0 +1,28 @@
+{
+  "name": "@match-predictor/etl",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "fetch-data": "tsx scripts/fetch-data.ts",
+    "parse": "tsx scripts/parse-all.ts"
+  },
+  "devDependencies": {
+    "zod": "^3.25.76",
+    "date-fns": "^4.1.0"
+  },
+  "peerDependencies": {
+    "zod": "^3.25.76",
+    "date-fns": "^4.1.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "exports": {
+    "types": "./dist/esm/index.d.ts",
+    "import": "./dist/esm/index.js"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "extends": "@cutting/tsconfig",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "jsx": "react-jsx",
+    "sourceMap": true,
+    "baseUrl": "${configDir}",
+    "outDir": "${configDir}/dist/esm",
+    "preserveSymlinks": false,
+    "paths": {
+      "~/*": ["${configDir}/src/*"],
+      "@match-predictor/etl": ["./packages/etl/src/*"]
+    },
+    "types": ["node", "@cutting/useful-types", "@cutting/useful-types/jsx"]
+  }
+}

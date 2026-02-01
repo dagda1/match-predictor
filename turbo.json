@@ -1,0 +1,41 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "globalEnv": ["NODE_ENV"],
+  "globalDependencies": ["tsconfig-base.json"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "watch": {
+      "dependsOn": ["^watch"],
+      "outputs": ["dist/**"]
+    },
+    "test": {
+      "dependsOn": [],
+      "inputs": [
+        "src/**/*.tsx",
+        "src/**/*.ts",
+        "src/test/**/*.ts",
+        "src/test/**/*.tsx"
+      ]
+    },
+    "test:ci": {
+      "dependsOn": [],
+      "inputs": [
+        "src/**/*.tsx",
+        "src/**/*.ts",
+        "src/test/**/*.ts",
+        "src/test/**/*.tsx"
+      ]
+    },
+    "lint": {
+      "dependsOn": [],
+      "outputs": []
+    },
+    "clean": {
+      "outputs": [],
+      "cache": false
+    }
+  }
+}
