@@ -11,11 +11,11 @@
     "parse": "tsx scripts/parse-all.ts"
   },
   "devDependencies": {
-    "zod": "^3.25.76",
+    "zod": "^4.3.6",
     "date-fns": "^4.1.0"
   },
   "peerDependencies": {
-    "zod": "^3.25.76",
+    "zod": "^4.3.6",
     "date-fns": "^4.1.0"
   },
   "volta": {
