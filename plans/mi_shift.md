@@ -168,14 +168,24 @@ expect(scrapedMatch).toEqual(expectedMatch);
 ### Architecture
 
 - React + TypeScript
+- MUI (Material UI) component library
 - FastAPI backend (Python) serving REST endpoints
 - Communication via fetch/axios
 
-### Pages
+### Match Predictor page (build first)
+
+**Inputs:**
+- Home team: MUI Autocomplete picker
+- Away team: MUI Autocomplete picker
+
+**Outputs:**
+- Win / Draw / Lose probabilities
+- Top 10 most likely scorelines with their probabilities from the Monte Carlo simulation
+
+### Future pages
 
 | Page | Purpose |
 |------|---------|
-| Match Predictor | Select teams, get win/draw/lose probabilities |
 | Team Analysis | View team stats, form, xG trends |
 | Model Performance | Display evaluation metrics, accuracy over time |
 
