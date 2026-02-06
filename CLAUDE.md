@@ -9,7 +9,7 @@ Build the smallest correct solution that matches the spec.
 - No code comments (no `//`, `/* */`, `#`).
 - Prefer small functions and descriptive names over comments.
 - Don't change unrelated files.
-- Avoid fixed pixels; use `vars.space` from `@cutting/component-library` for spacing.
+- Avoid fixed pixels; use `theme.space` from `@mui/material` for spacing.
 - Prefer existing npm packages over reimplementing functionality.
 
 ## Output expectations
