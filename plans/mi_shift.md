@@ -12,6 +12,12 @@ Build something real, not demoware.
 **Data source:** Understat (xG focused)
 **Scope:** Full Premier League, starting fresh
 
+**Data timeframe:**
+- Training: 2025-26 season matches played so far (Aug 2025 - Feb 2026)
+- Testing/Prediction: Upcoming 2025-26 matches (Feb 2026 onwards)
+
+**Rationale:** Transfer windows (summer 2025, January 2026) change team strength. Must use current season data only, not outdated rosters from 2024-25.
+
 ## Architecture
 
 ### Packages
@@ -37,7 +43,26 @@ Build something real, not demoware.
 | away_goals | Goals scored by away team |
 | home_xg | Expected goals for home team |
 | away_xg | Expected goals for away team |
+| home_shots | Total shots by home team |
+| away_shots | Total shots by away team |
+| home_shots_on_target | Shots on target by home team |
+| away_shots_on_target | Shots on target by away team |
+| home_deep | Deep completions by home team |
+| away_deep | Deep completions by away team |
+| home_ppda | Pressing intensity (PPDA) by home team |
+| away_ppda | Pressing intensity (PPDA) by away team |
+| home_xpts | Expected points for home team |
+| away_xpts | Expected points for away team |
 | matchweek | Fixture round in the season |
+
+### Derived (calculated from core)
+
+| Field | Description |
+|-------|-------------|
+| home_shot_conversion | home_goals / home_shots |
+| away_shot_conversion | away_goals / away_shots |
+| home_shots_on_target_pct | home_shots_on_target / home_shots |
+| away_shots_on_target_pct | away_shots_on_target / away_shots |
 
 ### Phase 2 (adds predictive value)
 
@@ -85,19 +110,28 @@ expect(scrapedMatch).toEqual(expectedMatch);
 - 5/5 manual spot checks match Understat exactly
 - Zero schema validation errors
 
-## Model features
+## Model approach: Monte Carlo simulation
 
-### Phase 1
+### How it works
 
-- Team strength ratings (attack/defense learned from historical data)
-- Recent form (last 5 matches: points, goals, xG trend)
-- Home advantage
-- xG over/underperformance
+1. Estimate expected goals for each team from xG history, form, home/away strength
+2. Model each team's goals as a Poisson distribution
+3. Simulate the match N times (e.g. 10,000)
+4. Count home wins, draws, away wins across simulations to get probabilities
 
-### Phase 2
+### Phase 1 inputs
 
+- Team xG averages (attack/defense)
+- Recent form (last 5 matches: xG, shots, shots on target)
+- Home advantage adjustment
+- xG over/underperformance (actual goals vs xG)
+- Shots on target percentage
+- PPDA (pressing intensity)
+
+### Phase 2 inputs
+
+- Shot-level simulation (simulate individual shots using per-shot xG)
 - Player-level xG aggregation
-- Shot quality trends
 - Head-to-head history
 
 ## Evaluation

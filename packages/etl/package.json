@@ -24,5 +24,10 @@
   "exports": {
     "types": "./dist/esm/index.d.ts",
     "import": "./dist/esm/index.js"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

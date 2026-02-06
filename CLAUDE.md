@@ -19,13 +19,13 @@ Build the smallest correct solution that matches the spec.
 
 ## Commands
 
-- Install: `npm install`
-- Run: `npm run scan`
-- Test: `npm test` (if no tests exist, add a single smoke test and wire this command)
+- Install: `pnpm install`
+- Run: `pnpm run scan`
+- Test: `pnpm test` (if no tests exist, add a single smoke test and wire this command)
 
 ## error handling
 
-- Never swallow errors: don't use empty catch blocks; if you catch, return a structured error and always log to stderr with enough context (site, step, message) and rethrow
+- Never swallow errors: don’t use empty catch blocks; if you catch, return a structured error and always log to stderr with enough context (site, step, message) and rethrow
 
 ## When unsure
 
@@ -37,4 +37,3 @@ Stop and ask for clarification before coding.
 - When the user complains about something, ask if they want it changed
 - Do not add features that weren't requested
 - Do not add code comments
-- Do not rewrite code unless explicitly asked
