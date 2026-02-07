@@ -221,13 +221,91 @@ Use Zod to validate correct types and required fields. Fail fast if schema inval
 
 ### Match Predictor page (build first)
 
-**Inputs:**
-- Home team: MUI Autocomplete picker
-- Away team: MUI Autocomplete picker
+#### States
 
-**Outputs:**
-- Win / Draw / Lose probabilities
-- Top 10 most likely scorelines with their probabilities from the Monte Carlo simulation
+1. **Empty** — no teams selected, predict button disabled
+2. **Ready** — both teams selected, predict button enabled
+3. **Simulating** — live simulation visualisation (see below)
+4. **Result** — final prediction displayed
+
+#### Simulation visualisation (Simulating state)
+
+The API streams simulation progress via SSE (Server-Sent Events) or the API returns quickly and we animate client-side using the final data. Either way, the user sees the simulation "running":
+
+- **Progress bar**: MUI `LinearProgress` with label — "Simulating... 12%" ticking up to 100%
+- **Counter**: "1,247 / 10,000 matches" beneath the progress bar
+- **Live probability bars**: Home Win / Draw / Away Win bars that shift and settle as simulations accumulate (start unstable, converge to final values)
+- **Live scoreline tally**: The top scorelines table fills in and reorders as counts come in — scores jump up/down the ranking before settling
+
+This gives the feel of watching 10,000 matches play out. The animation runs for ~2-3 seconds regardless of actual API speed (buffer the result, animate the reveal).
+
+**Implementation approach**: API returns the full result in one response. The frontend animates by interpolating from uniform (33/33/33) to the final probabilities over ~2s using `requestAnimationFrame`. The counter ticks from 0 to 10,000 in sync. No SSE needed for v1.
+
+#### Team picker
+
+- MUI `Autocomplete` component (`@mui/material/Autocomplete`)
+- Data source: `GET /teams` returns `{ id: string, name: string }[]`
+- Two instances: "Home team" and "Away team"
+- `disableClearable: false` (user can reset)
+- Away picker filters out the selected home team (can't play yourself)
+- Options sorted alphabetically
+- Shows team name as label
+
+#### Layout
+
+```
+┌─────────────────────────────────────────────┐
+│  Match Predictor                            │
+│                                             │
+│  ┌─────────────────┐  ┌─────────────────┐  │
+│  │ Home team [v]   │  │ Away team [v]   │  │
+│  └─────────────────┘  └─────────────────┘  │
+│                                             │
+│           [ Predict ]                       │
+│                                             │
+│  ┌─────────────────────────────────────┐    │
+│  │  Win / Draw / Lose probability bars │    │
+│  │  (horizontal stacked bar or 3 arcs) │    │
+│  └─────────────────────────────────────┘    │
+│                                             │
+│  ┌─────────────────────────────────────┐    │
+│  │  Top 10 scorelines table            │    │
+│  │  Rank | Score | Probability         │    │
+│  │  1    | 1-0   | 14.2%              │    │
+│  │  2    | 2-1   | 11.8%              │    │
+│  │  ...                                │    │
+│  └─────────────────────────────────────┘    │
+└─────────────────────────────────────────────┘
+```
+
+#### Prediction output
+
+**Outcome probabilities:**
+- Three values: Home win %, Draw %, Away win % (must sum to 100)
+- Display as horizontal stacked bar (Recharts `BarChart` or plain MUI)
+- Colour-coded: home win / draw / away win
+- Show percentage labels on each segment
+
+**Top scorelines:**
+- MUI `Table` with columns: Rank, Score (e.g. "2-1"), Probability (e.g. "14.2%")
+- 10 rows, sorted by probability descending
+- Score column shows "Home - Away" format
+
+#### API contract
+
+```
+POST /predict
+Request:  { home_team_id: string, away_team_id: string }
+Response: {
+  home_win: number,    // 0-1
+  draw: number,        // 0-1
+  away_win: number,    // 0-1
+  scorelines: { home_goals: number, away_goals: number, probability: number }[]
+}
+
+GET /teams
+Response: { id: string, name: string }[]
+```
 
 ### Future pages
 
