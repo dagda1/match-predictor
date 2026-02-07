@@ -247,9 +247,14 @@ This gives the feel of watching 10,000 matches play out. The animation runs for 
 - Data source: `GET /teams` returns `{ id: string, name: string }[]`
 - Two instances: "Home team" and "Away team"
 - `disableClearable: false` (user can reset)
+- `freeSolo: false` — select only, no free text input
 - Away picker filters out the selected home team (can't play yourself)
 - Options sorted alphabetically
 - Shows team name as label
+
+#### Prototype
+
+See `plans/match-predictor-prototype.html` — a standalone HTML prototype with light/dark mode, all 4 states (empty, ready, simulating, result), animated simulation with converging probability bars, scoreline reveal, and mock data. Open in browser to preview.
 
 #### Layout
 
