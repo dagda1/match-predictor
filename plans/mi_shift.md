@@ -360,15 +360,35 @@ Response: { id: string, name: string }[]
 - `GET /teams/{team}/xg-trend` - xG data over time
 - `GET /model/metrics` - Model evaluation metrics
 
+## Dev scripts
+
+- `pnpm dev` — starts API (port 4400) + frontend (port 3300) concurrently
+- `pnpm start:api` — API only
+- `pnpm start:frontend` — frontend only
+- `pnpm --filter @match-predictor/etl fetch-data` — incremental data scrape
+- API Swagger docs at http://localhost:4400/docs
+
 ## Progress
 
 - [x] ETL scraper (`scrapeMatch`, `scrapeLeague`, Zod schema, 20 passing tests)
 - [x] Data fetched: 380 matches (2024-25) + 241 matches (2025-26) = 621 total
+- [x] Incremental fetch-data script (only scrapes matches after max date in existing JSON)
 - [x] Frontend scaffold (App, routing, Page layout, TopNav, theme switching)
-- [ ] Python ML package (Monte Carlo simulation)
-- [ ] FastAPI serving predictions
+- [x] Python ML package (`packages/ml`) — GradientBoostingClassifier, 15 features, TimeSeriesSplit CV
+- [x] FastAPI (`packages/api`) — `/teams`, `/predict`, `/metrics` endpoints
+- [ ] Improve model (currently 40.9% accuracy vs 41.5% baseline — underperforming)
 - [ ] Frontend Match Predictor page (prototype exists at `plans/match-predictor-prototype.html`)
+
+### Current model metrics
+
+| Metric | Value | Target |
+|--------|-------|--------|
+| Accuracy | 0.409 | >0.46 |
+| Brier score | 0.304 | <0.25 |
+| Log loss | 2.190 | <1.0 |
+| ROC-AUC | 0.560 | >0.55 |
+| Baseline (always home) | 0.415 | — |
 
 ## Next action
 
-Build the Python ML package: Monte Carlo simulation using Poisson model on the scraped match data.
+Improve the model to beat the baseline. Options: tune hyperparameters, add/remove features, try XGBoost/LightGBM, increase training data quality. Then build the frontend Match Predictor page.
