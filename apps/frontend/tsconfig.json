@@ -4,8 +4,7 @@
     "baseUrl": ".",
     "noEmit": true,
     "paths": {
-      "~/*": ["src/*"],
-      "@match-predictor/theme": ["../../packages/theme/src"]
+      "~/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "../../types/mui.d.ts"],

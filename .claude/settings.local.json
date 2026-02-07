@@ -10,7 +10,9 @@
       "Bash(pnpm --filter @match-predictor/frontend dev:*)",
       "Bash(curl:*)",
       "Bash(pnpm --filter @match-predictor/theme test:ci:*)",
-      "Bash(pnpm --filter @match-predictor/theme add:*)"
+      "Bash(pnpm --filter @match-predictor/theme add:*)",
+      "Bash(pnpm --filter @match-predictor/frontend build:*)",
+      "Bash(pnpm --filter @match-predictor/theme build:*)"
     ]
   }
 }

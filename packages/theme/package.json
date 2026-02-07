@@ -29,7 +29,8 @@
     "@mui/system": "^6.5.0",
     "@mui/utils": "^6.4.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-router": "^7.13.0"
   },
   "volta": {
     "extends": "../../package.json"

@@ -36,7 +36,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['@emotion/styled', '@emotion/react', /^@mui\/.*/, 'react', 'react-dom'],
+      external: ['@emotion/styled', '@emotion/react', /^@mui\/.*/, 'react', 'react-dom', 'react-router'],
       input: [...entries],
       output: {
         preserveModulesRoot: 'src',

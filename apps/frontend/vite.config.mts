@@ -1,13 +1,28 @@
 import react from '@vitejs/plugin-react-swc';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import checker from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 import { sharedTestConfig } from '../../vitest.shared';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const isDev = process.env.NODE_ENV === 'development';
+const isTest = process.env.NODE_ENV === 'test';
 const isProd = process.env.NODE_ENV === 'production';
+const isCI = process.env.CI === 'true';
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+
+const addAlias = (isDev || isTest) && !isCI;
+
+const alias = {
+  ...(addAlias && {
+    '@match-predictor/theme': path.resolve(__dirname, '../../packages/theme/src'),
+  }),
+};
 
 export default defineConfig({
   define: {
@@ -29,6 +44,7 @@ export default defineConfig({
   logLevel: 'warn',
   resolve: {
     dedupe: ['react', 'react-dom', '@emotion/react', '@mui/material'],
+    alias,
   },
   optimizeDeps: {
     include: ['react/jsx-runtime', 'react', 'react-dom'],
