@@ -18,7 +18,13 @@
       "Bash(node -e:*)",
       "Bash(node:*)",
       "Bash(python3:*)",
-      "Bash(pnpm --filter @match-predictor/etl fetch-data:*)"
+      "Bash(pnpm --filter @match-predictor/etl fetch-data:*)",
+      "Bash(uv:*)",
+      "Bash(pip3:*)",
+      "Bash(sh:*)",
+      "Bash(brew install:*)",
+      "Bash(pkill:*)",
+      "Bash(pnpm add:*)"
     ]
   }
 }

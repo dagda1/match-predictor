@@ -1,0 +1,89 @@
+import uvicorn
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
+from match_predictor import load_matches, train, predict_match
+
+app = FastAPI(title="Match Predictor API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3300"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+df = load_matches()
+model = train(df)
+
+
+class PredictRequest(BaseModel):
+    homeTeamId: str
+    awayTeamId: str
+
+
+class Scoreline(BaseModel):
+    homeGoals: int
+    awayGoals: int
+    probability: float
+
+
+class PredictResponse(BaseModel):
+    homeWin: float
+    draw: float
+    awayWin: float
+    scorelines: list[Scoreline]
+
+
+class Team(BaseModel):
+    id: str
+    name: str
+
+
+class MetricsResponse(BaseModel):
+    accuracy: float
+    brierScore: float
+    logLoss: float
+    rocAuc: float
+    baselineAccuracy: float
+
+
+@app.get("/teams", response_model=list[Team])
+def get_teams():
+    home_teams = df["homeTeam"].unique()
+    away_teams = df["awayTeam"].unique()
+    all_teams = sorted(set(home_teams) | set(away_teams))
+    return [Team(id=name, name=name) for name in all_teams]
+
+
+@app.post("/predict", response_model=PredictResponse)
+def predict(req: PredictRequest):
+    result = predict_match(model, req.homeTeamId, req.awayTeamId)
+    return PredictResponse(
+        homeWin=result.home_win,
+        draw=result.draw,
+        awayWin=result.away_win,
+        scorelines=[Scoreline(**s) for s in result.scorelines],
+    )
+
+
+@app.get("/metrics", response_model=MetricsResponse)
+def get_metrics():
+    m = model.metrics
+    return MetricsResponse(
+        accuracy=m.accuracy,
+        brierScore=m.brier_score,
+        logLoss=m.log_loss_val,
+        rocAuc=m.roc_auc,
+        baselineAccuracy=m.baseline_accuracy,
+    )
+
+
+def start():
+    uvicorn.run(
+        "match_predictor_api.main:app",
+        host="0.0.0.0",
+        port=4400,
+        reload=True,
+    )

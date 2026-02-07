@@ -90,3 +90,7 @@ regression-tests/.auth
 
 .data
 .env
+
+__pycache__/
+*.pyc
+.venv
