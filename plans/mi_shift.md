@@ -80,34 +80,81 @@ Build something real, not demoware.
 
 ### ETL Verification
 
-Verify scraped data matches Understat source:
+Verify scraped data matches Understat source.
 
-**Test fixtures (packages/etl/test/fixtures/):**
-- Manually record 10 known matches from Understat with all fields
-- Include edge cases: high-scoring, 0-0 draws, different seasons
-- Store as `expected-matches.json`
+#### Understat data structure
 
-**Automated verification:**
+League page (`https://understat.com/league/EPL/2025`) embeds `datesData` (380 entries, one per fixture) as a global JS variable. Each entry has: `id`, `isResult`, `h` (id/title/short_title), `a`, `goals` (h/a), `xG` (h/a), `datetime`, `forecast` (w/d/l).
+
+Match page (`https://understat.com/match/{id}`) embeds `match_info` as hex-encoded JSON in a script tag. Fields:
+
+| Understat field | Plan field | Type |
+|-----------------|------------|------|
+| `id` | match_id | string |
+| `date` | date | string (YYYY-MM-DD HH:MM:SS) |
+| `season` | season | string (start year, e.g. "2025") |
+| `team_h` | home_team | string |
+| `team_a` | away_team | string |
+| `h_goals` | home_goals | string (numeric) |
+| `a_goals` | away_goals | string (numeric) |
+| `h_xg` | home_xg | string (float) |
+| `a_xg` | away_xg | string (float) |
+| `h_shot` | home_shots | string (numeric) |
+| `a_shot` | away_shots | string (numeric) |
+| `h_shotOnTarget` | home_shots_on_target | string (numeric) |
+| `a_shotOnTarget` | away_shots_on_target | string (numeric) |
+| `h_deep` | home_deep | string (numeric) |
+| `a_deep` | away_deep | string (numeric) |
+| `h_ppda` | home_ppda | string (float) |
+| `a_ppda` | away_ppda | string (float) |
+| `h_w` | home_win_prob | string (float) |
+| `h_d` | draw_prob | string (float) |
+| `h_l` | away_win_prob | string (float) |
+
+**xPTS is not in `match_info`** — it's computed client-side: `xPTS = 3 * h_w + 1 * h_d` (home), `xPTS = 3 * h_l + 1 * h_d` (away).
+
+**matchweek** is not in `match_info` — must be derived from fixture order or `datesData`.
+
+Also available on match pages: `shotsData` (per-shot xG, player, coordinates) and `rostersData` (lineups).
+
+#### Test fixture matches (10)
+
+Verify each by clicking Stats tab on the Understat page.
+
+| # | Match | Score | xG | Link |
+|---|-------|-------|----|------|
+| 1 | Aston Villa vs Newcastle | 0-0 | 0.32 - 1.40 | https://understat.com/match/28779 |
+| 2 | Chelsea vs Crystal Palace | 0-0 | 1.37 - 1.03 | https://understat.com/match/28784 |
+| 3 | Liverpool vs Bournemouth | 4-2 | 2.33 - 1.57 | https://understat.com/match/28778 |
+| 4 | West Ham vs Chelsea | 1-5 | 0.98 - 3.95 | https://understat.com/match/28788 |
+| 5 | Arsenal vs Leeds | 5-0 | 2.74 - 0.16 | https://understat.com/match/28793 |
+| 6 | Brighton vs Fulham | 1-1 | 1.44 - 0.90 | https://understat.com/match/28780 |
+| 7 | Nott. Forest vs Crystal Palace | 1-1 | 0.99 - 1.65 | https://understat.com/match/29013 |
+| 8 | Tottenham vs Man City | 2-2 | 1.50 - 2.04 | https://understat.com/match/29016 |
+| 9 | Sunderland vs Burnley | 3-0 | 1.89 - 0.13 | https://understat.com/match/29011 |
+| 10 | Brentford vs Burnley | 3-1 | 3.72 - 0.87 | https://understat.com/match/28899 |
+
+Edge cases covered: two 0-0 draws, two 1-1 draws, high-scoring (5-0, 1-5, 4-2), early season, mid season, late season.
+
+#### Test fixtures (packages/etl/test/fixtures/)
+
+Store as `expected-matches.json` using the raw `match_info` shape from Understat.
+
+#### Automated verification
+
 ```typescript
-// Test: scraper produces correct data
 const scrapedMatch = await scrapeMatch(matchId);
 const expectedMatch = fixtures.find(m => m.id === matchId);
 expect(scrapedMatch).toEqual(expectedMatch);
 ```
 
-**Manual spot checks:**
-- After each scrape run, randomly select 5 matches
-- Open Understat page for each
-- Verify: date, teams, goals, xG values match exactly
-- Document in `verification-log.md`
+#### Schema validation
 
-**Schema validation:**
-- Use Zod to ensure correct types and required fields
-- Fail fast if schema invalid
+Use Zod to validate correct types and required fields. Fail fast if schema invalid.
 
-**Acceptance criteria:**
+#### Acceptance criteria
+
 - All 10 test fixtures pass
-- 5/5 manual spot checks match Understat exactly
 - Zero schema validation errors
 
 ## Model approach: Monte Carlo simulation
