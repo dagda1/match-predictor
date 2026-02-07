@@ -3,7 +3,12 @@
     "allow": [
       "WebFetch(domain:understat.com)",
       "WebSearch",
-      "WebFetch(domain:scraperfc.readthedocs.io)"
+      "WebFetch(domain:scraperfc.readthedocs.io)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm --filter @match-predictor/etl test:ci:*)",
+      "Bash(pnpm --filter @match-predictor/frontend test:ci:*)",
+      "Bash(pnpm --filter @match-predictor/frontend dev:*)",
+      "Bash(curl:*)"
     ]
   }
 }

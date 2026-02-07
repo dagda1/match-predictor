@@ -10,7 +10,9 @@
     "preserveSymlinks": false,
     "paths": {
       "~/*": ["${configDir}/src/*"],
-      "@match-predictor/etl": ["./packages/etl/src/*"]
+      "@match-predictor/etl": ["./packages/etl/src/*"],
+      "@match-predictor/frontend": ["./apps/frontend/src/*"],
+      "@match-predictor/theme": ["./packages/theme/src/*"]
     },
     "types": ["node", "@cutting/useful-types", "@cutting/useful-types/jsx"]
   }

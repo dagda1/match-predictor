@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig-base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true,
+    "paths": {
+      "~/*": ["src/*"],
+      "@match-predictor/theme": ["../../packages/theme/src"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "../../types/mui.d.ts"],
+  "exclude": ["dist", "node_modules"]
+}

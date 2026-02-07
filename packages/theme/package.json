@@ -1,0 +1,38 @@
+{
+  "name": "@match-predictor/theme",
+  "version": "0.1.0",
+  "type": "module",
+  "sideEffects": false,
+  "module": "dist/esm/index.js",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --host --port 7000",
+    "test": "cross-env NODE_ENV=test vitest",
+    "test:ci": "cross-env CI=true NODE_ENV=test vitest --run"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.5.0",
+    "@mui/system": "^6.5.0",
+    "@mui/utils": "^6.4.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.5.0",
+    "@mui/system": "^6.5.0",
+    "@mui/utils": "^6.4.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "exports": {
+    "types": "./dist/esm/index.d.ts",
+    "import": "./dist/esm/index.js"
+  }
+}

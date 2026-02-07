@@ -1,0 +1,31 @@
+{
+  "name": "@match-predictor/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite dev --host --port 3300",
+    "preview": "vite preview --host --port 3300",
+    "test": "cross-env NODE_ENV=test vitest",
+    "test:ci": "cross-env NODE_ENV=test vitest --run"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.5.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-router": "^7.13.0",
+    "recharts": "^2.15.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "cross-env": "^10.1.0",
+    "vite-plugin-checker": "^0.12.0",
+    "vite-tsconfig-paths": "^6.0.5"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}
