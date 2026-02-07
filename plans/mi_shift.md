@@ -13,10 +13,11 @@ Build something real, not demoware.
 **Scope:** Full Premier League, starting fresh
 
 **Data timeframe:**
-- Training: 2025-26 season matches played so far (Aug 2025 - Feb 2026)
+- 2024-25 season (380 matches, complete)
+- 2025-26 season matches played so far (Aug 2025 - Feb 2026, ~240 matches)
 - Testing/Prediction: Upcoming 2025-26 matches (Feb 2026 onwards)
 
-**Rationale:** Transfer windows (summer 2025, January 2026) change team strength. Must use current season data only, not outdated rosters from 2024-25.
+**Rationale:** Two seasons gives ~620 matches for training. 2024-25 adds sample size; 2025-26 captures current form and post-transfer-window team strength.
 
 ## Architecture
 
@@ -36,40 +37,42 @@ Build something real, not demoware.
 | Field | Description |
 |-------|-------------|
 | date | Match date |
-| season | e.g. 2023-24 |
-| home_team | Home team name |
-| away_team | Away team name |
-| home_goals | Goals scored by home team |
-| away_goals | Goals scored by away team |
-| home_xg | Expected goals for home team |
-| away_xg | Expected goals for away team |
-| home_shots | Total shots by home team |
-| away_shots | Total shots by away team |
-| home_shots_on_target | Shots on target by home team |
-| away_shots_on_target | Shots on target by away team |
-| home_deep | Deep completions by home team |
-| away_deep | Deep completions by away team |
-| home_ppda | Pressing intensity (PPDA) by home team |
-| away_ppda | Pressing intensity (PPDA) by away team |
-| home_xpts | Expected points for home team |
-| away_xpts | Expected points for away team |
-| matchweek | Fixture round in the season |
+| season | e.g. 2025 |
+| homeTeam | Home team name |
+| awayTeam | Away team name |
+| homeGoals | Goals scored by home team |
+| awayGoals | Goals scored by away team |
+| homeXg | Expected goals for home team |
+| awayXg | Expected goals for away team |
+| homeShots | Total shots by home team |
+| awayShots | Total shots by away team |
+| homeShotsOnTarget | Shots on target by home team |
+| awayShotsOnTarget | Shots on target by away team |
+| homeDeep | Deep completions by home team |
+| awayDeep | Deep completions by away team |
+| homePpda | Pressing intensity (PPDA) by home team |
+| awayPpda | Pressing intensity (PPDA) by away team |
+| homeWinProb | Home win probability |
+| drawProb | Draw probability |
+| awayWinProb | Away win probability |
 
 ### Derived (calculated from core)
 
 | Field | Description |
 |-------|-------------|
-| home_shot_conversion | home_goals / home_shots |
-| away_shot_conversion | away_goals / away_shots |
-| home_shots_on_target_pct | home_shots_on_target / home_shots |
-| away_shots_on_target_pct | away_shots_on_target / away_shots |
+| homeShotConversion | homeGoals / homeShots |
+| awayShotConversion | awayGoals / awayShots |
+| homeShotsOnTargetPct | homeShotsOnTarget / homeShots |
+| awayShotsOnTargetPct | awayShotsOnTarget / awayShots |
+| homeXpts | 3 * homeWinProb + 1 * drawProb |
+| awayXpts | 3 * awayWinProb + 1 * drawProb |
 
 ### Phase 2 (adds predictive value)
 
 | Field | Description |
 |-------|-------------|
 | shots | Shot-level data with xG per shot |
-| player_xg | Per-player xG contributions |
+| playerXg | Per-player xG contributions |
 
 ### Out of scope (for now)
 
@@ -84,36 +87,36 @@ Verify scraped data matches Understat source.
 
 #### Understat data structure
 
-League page (`https://understat.com/league/EPL/2025`) embeds `datesData` (380 entries, one per fixture) as a global JS variable. Each entry has: `id`, `isResult`, `h` (id/title/short_title), `a`, `goals` (h/a), `xG` (h/a), `datetime`, `forecast` (w/d/l).
+League data is fetched via AJAX: `GET https://understat.com/getLeagueData/EPL/{season}` (requires `X-Requested-With: XMLHttpRequest` header). Returns JSON with `dates` (380 entries), `teams`, and `players`. Each `dates` entry has: `id`, `isResult`, `h` (id/title/short_title), `a`, `goals` (h/a), `xG` (h/a), `datetime`, `forecast` (w/d/l).
 
-Match page (`https://understat.com/match/{id}`) embeds `match_info` as hex-encoded JSON in a script tag. Fields:
+Match page (`https://understat.com/match/{id}`) embeds `match_info` as hex-escaped JSON in a `JSON.parse()` call inside a script tag. Decode `\xHH` escapes then parse. Fields:
 
-| Understat field | Plan field | Type |
-|-----------------|------------|------|
-| `id` | match_id | string |
+| Understat field | Our field | Type |
+|-----------------|-----------|------|
+| `id` | id | string |
 | `date` | date | string (YYYY-MM-DD HH:MM:SS) |
 | `season` | season | string (start year, e.g. "2025") |
-| `team_h` | home_team | string |
-| `team_a` | away_team | string |
-| `h_goals` | home_goals | string (numeric) |
-| `a_goals` | away_goals | string (numeric) |
-| `h_xg` | home_xg | string (float) |
-| `a_xg` | away_xg | string (float) |
-| `h_shot` | home_shots | string (numeric) |
-| `a_shot` | away_shots | string (numeric) |
-| `h_shotOnTarget` | home_shots_on_target | string (numeric) |
-| `a_shotOnTarget` | away_shots_on_target | string (numeric) |
-| `h_deep` | home_deep | string (numeric) |
-| `a_deep` | away_deep | string (numeric) |
-| `h_ppda` | home_ppda | string (float) |
-| `a_ppda` | away_ppda | string (float) |
-| `h_w` | home_win_prob | string (float) |
-| `h_d` | draw_prob | string (float) |
-| `h_l` | away_win_prob | string (float) |
+| `team_h` | homeTeam | string |
+| `team_a` | awayTeam | string |
+| `h_goals` | homeGoals | string (numeric) |
+| `a_goals` | awayGoals | string (numeric) |
+| `h_xg` | homeXg | string (float) |
+| `a_xg` | awayXg | string (float) |
+| `h_shot` | homeShots | string (numeric) |
+| `a_shot` | awayShots | string (numeric) |
+| `h_shotOnTarget` | homeShotsOnTarget | string (numeric) |
+| `a_shotOnTarget` | awayShotsOnTarget | string (numeric) |
+| `h_deep` | homeDeep | string (numeric) |
+| `a_deep` | awayDeep | string (numeric) |
+| `h_ppda` | homePpda | string (float) |
+| `a_ppda` | awayPpda | string (float) |
+| `h_w` | homeWinProb | string (float) |
+| `h_d` | drawProb | string (float) |
+| `h_l` | awayWinProb | string (float) |
 
-**xPTS is not in `match_info`** — it's computed client-side: `xPTS = 3 * h_w + 1 * h_d` (home), `xPTS = 3 * h_l + 1 * h_d` (away).
+**xPTS** is derived: `xPTS = 3 * winProb + 1 * drawProb`.
 
-**matchweek** is not in `match_info` — must be derived from fixture order or `datesData`.
+**matchweek** is not in `match_info` — must be derived from fixture order or league `dates` data.
 
 Also available on match pages: `shotsData` (per-shot xG, player, coordinates) and `rostersData` (lineups).
 
@@ -138,7 +141,7 @@ Edge cases covered: two 0-0 draws, two 1-1 draws, high-scoring (5-0, 1-5, 4-2), 
 
 #### Test fixtures (packages/etl/src/)
 
-Colocated with test file as `expected-matches.json` using the raw `match_info` shape from Understat.
+Colocated with test file as `expected-matches.json` using our camelCase `MatchInfo` shape (all stats verified).
 
 #### Automated verification
 
@@ -156,6 +159,23 @@ Use Zod to validate correct types and required fields. Fail fast if schema inval
 
 - All 10 test fixtures pass
 - Zero schema validation errors
+
+### Data persistence
+
+JSON files in `packages/etl/data/`, one file per season:
+
+```
+packages/etl/data/
+  matches-2024.json   (2024-25 season, 380 matches)
+  matches-2025.json   (2025-26 season, ~240 matches and growing)
+```
+
+Each file is an array of `MatchInfo` objects (camelCase, same shape as scraper output). Files are committed to git to avoid re-scraping. Re-scrape via `pnpm --filter @match-predictor/etl fetch-data`.
+
+The `fetch-data` script:
+1. Hits the league API (`/getLeagueData/EPL/{season}`) to get all completed match IDs
+2. Scrapes each match page with `scrapeMatch`
+3. Writes the season file
 
 ## Model approach: Monte Carlo simulation
 
@@ -185,7 +205,7 @@ Use Zod to validate correct types and required fields. Fail fast if schema inval
 
 ### Validation strategy
 
-- Time-based split: train on seasons 2020-2023, test on 2024
+- Time-based split: train on 2024-25 season, test on 2025-26 matches played so far
 - No data leakage: form calculated only from past matches
 
 ### Metrics
@@ -300,12 +320,12 @@ See `plans/match-predictor-prototype.html` — a standalone HTML prototype with 
 
 ```
 POST /predict
-Request:  { home_team_id: string, away_team_id: string }
+Request:  { homeTeamId: string, awayTeamId: string }
 Response: {
-  home_win: number,    // 0-1
-  draw: number,        // 0-1
-  away_win: number,    // 0-1
-  scorelines: { home_goals: number, away_goals: number, probability: number }[]
+  homeWin: number,    // 0-1
+  draw: number,       // 0-1
+  awayWin: number,    // 0-1
+  scorelines: { homeGoals: number, awayGoals: number, probability: number }[]
 }
 
 GET /teams
@@ -336,6 +356,15 @@ Response: { id: string, name: string }[]
 - `GET /teams/{team}/xg-trend` - xG data over time
 - `GET /model/metrics` - Model evaluation metrics
 
+## Progress
+
+- [x] ETL scraper (`scrapeMatch`, `scrapeLeague`, Zod schema, 20 passing tests)
+- [x] Data fetched: 380 matches (2024-25) + 241 matches (2025-26) = 621 total
+- [x] Frontend scaffold (App, routing, Page layout, TopNav, theme switching)
+- [ ] Python ML package (Monte Carlo simulation)
+- [ ] FastAPI serving predictions
+- [ ] Frontend Match Predictor page (prototype exists at `plans/match-predictor-prototype.html`)
+
 ## Next action
 
-Fetch Understat Premier League data: explore their site structure, find or write a scraper, pull match data with xG into packages/etl.
+Build the Python ML package: Monte Carlo simulation using Poisson model on the scraped match data.
