@@ -14,7 +14,11 @@
       "Bash(pnpm --filter @match-predictor/frontend build:*)",
       "Bash(pnpm --filter @match-predictor/theme build:*)",
       "Bash(open:*)",
-      "Bash(pnpm --filter @match-predictor/etl exec tsc:*)"
+      "Bash(pnpm --filter @match-predictor/etl exec tsc:*)",
+      "Bash(node -e:*)",
+      "Bash(node:*)",
+      "Bash(python3:*)",
+      "Bash(pnpm --filter @match-predictor/etl fetch-data:*)"
     ]
   }
 }

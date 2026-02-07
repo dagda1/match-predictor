@@ -16,6 +16,17 @@ describe('scrapeMatch', () => {
     expect(scraped.awayGoals).toBe(expected.awayGoals);
     expect(scraped.homeXg).toBe(expected.homeXg);
     expect(scraped.awayXg).toBe(expected.awayXg);
+    expect(scraped.homeShots).toBe(expected.homeShots);
+    expect(scraped.awayShots).toBe(expected.awayShots);
+    expect(scraped.homeShotsOnTarget).toBe(expected.homeShotsOnTarget);
+    expect(scraped.awayShotsOnTarget).toBe(expected.awayShotsOnTarget);
+    expect(scraped.homeDeep).toBe(expected.homeDeep);
+    expect(scraped.awayDeep).toBe(expected.awayDeep);
+    expect(scraped.homePpda).toBe(expected.homePpda);
+    expect(scraped.awayPpda).toBe(expected.awayPpda);
+    expect(scraped.homeWinProb).toBe(expected.homeWinProb);
+    expect(scraped.drawProb).toBe(expected.drawProb);
+    expect(scraped.awayWinProb).toBe(expected.awayWinProb);
   });
 
   it.each(matchIds)('match %s passes schema validation', async (matchId) => {

@@ -82,15 +82,116 @@ import { sx } from './styles';
 - Run: `pnpm run scan`
 - Test: `pnpm test` (if no tests exist, add a single smoke test and wire this command)
 
-## Error handling
+## Error handling — never swallow, always context
 
-- Never use empty `catch` blocks — every caught error must be logged or rethrown
-- When catching, log to `console.error` with context: what was being attempted, where, and the original error
-- Prefer letting errors propagate over catching them — only catch when you can add value (retry, fallback, structured error)
-- If you catch and recover, still log the original error at warn level
-- In async code, never silently swallow rejected promises — always attach `.catch()` or use try/catch
-- Bad: `catch (e) {}`, `catch (_e) { return null }`, `.catch(() => {})`
-- Good: `catch (e) { console.error('failed to fetch match', matchId, e); throw e; }`
+Errors are signals. If something fails, the developer needs to know what was being attempted, where, and why. Silent failures hide bugs and waste debugging time.
+
+### Never use empty catch blocks
+
+```ts
+// BAD — error disappears, nobody knows what happened
+try {
+  await fetchMatchData(matchId);
+} catch (error) {}
+
+// BAD — swallows error and returns misleading default
+try {
+  const data = await fetchMatchData(matchId);
+  return data;
+} catch (_error) {
+  return null;
+}
+
+// GOOD — log context and rethrow
+try {
+  await fetchMatchData(matchId);
+} catch (error) {
+  console.error('fetchMatchData failed', { matchId }, error);
+  throw error;
+}
+```
+
+### Prefer letting errors propagate
+
+Only catch when you can add value — a structured error with context. If you're just going to rethrow unchanged, don't catch at all.
+
+```ts
+// BAD — catch adds nothing
+try {
+  return await getLeagueTable(leagueId);
+} catch (error) {
+  throw error;
+}
+
+// GOOD — just let it propagate
+return await getLeagueTable(leagueId);
+
+// GOOD — catch adds context that callers don't have
+try {
+  return await getLeagueTable(leagueId);
+} catch (error) {
+  throw new Error(`failed loading table for league ${leagueId}`, { cause: error });
+}
+```
+
+### Always include context in error messages
+
+A bare `console.error(error)` is nearly useless. Include what was being attempted and the relevant identifiers.
+
+```ts
+// BAD — no context
+console.error(error);
+console.error('something went wrong');
+
+// GOOD — what, where, and the original error
+console.error('failed to fetch fixtures', { leagueId, season }, error);
+console.error('parseMatchStats: invalid response shape', { matchId }, error);
+```
+
+### Async code — never leave promises unhandled
+
+Every promise must have error handling. Unhandled rejections crash the process or silently disappear.
+
+```ts
+// BAD — fire and forget
+fetchMatchData(matchId);
+void fetchMatchData(matchId);
+
+// BAD — .catch that swallows
+fetchMatchData(matchId).catch(() => {});
+
+// GOOD — handle or await
+await fetchMatchData(matchId);
+
+// GOOD — explicit catch with logging if fire-and-forget is intentional
+fetchMatchData(matchId).catch((error) => {
+  console.error('background fetch failed', { matchId }, error);
+});
+```
+
+### Don't catch to recover — let it crash
+
+If an operation fails, it failed. Don't catch and return a fallback that hides the failure. The caller needs to know something went wrong.
+
+```ts
+// BAD — silently substitutes a fallback, caller thinks everything worked
+try {
+  return await fetchMatchData(matchId);
+} catch {
+  return defaultMatchData;
+}
+
+// BAD — slightly better but still hides the failure from the caller
+try {
+  return await fetchMatchData(matchId);
+} catch (error) {
+  console.warn('using fallback', { matchId }, error);
+  return defaultMatchData;
+}
+
+// GOOD — let the error propagate, handle it at the top level
+return await fetchMatchData(matchId);
+```
 
 ## Trust the types — no defensive programming
 
