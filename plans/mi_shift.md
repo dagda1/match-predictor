@@ -136,9 +136,9 @@ Verify each by clicking Stats tab on the Understat page.
 
 Edge cases covered: two 0-0 draws, two 1-1 draws, high-scoring (5-0, 1-5, 4-2), early season, mid season, late season.
 
-#### Test fixtures (packages/etl/test/fixtures/)
+#### Test fixtures (packages/etl/src/)
 
-Store as `expected-matches.json` using the raw `match_info` shape from Understat.
+Colocated with test file as `expected-matches.json` using the raw `match_info` shape from Understat.
 
 #### Automated verification
 

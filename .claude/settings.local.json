@@ -13,7 +13,8 @@
       "Bash(pnpm --filter @match-predictor/theme add:*)",
       "Bash(pnpm --filter @match-predictor/frontend build:*)",
       "Bash(pnpm --filter @match-predictor/theme build:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(pnpm --filter @match-predictor/etl exec tsc:*)"
     ]
   }
 }
