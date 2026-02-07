@@ -1,5 +1,3 @@
-import '../../../../types/mui.d.ts';
-
 import { grey } from '@mui/material/colors';
 import type { PaletteOptions } from '@mui/material/styles';
 

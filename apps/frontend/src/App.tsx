@@ -1,11 +1,13 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { ThemeProvider, builtinThemes } from '@match-predictor/theme';
+import { ThemeProvider } from '@match-predictor/theme';
+
+import { appStyles } from './styles';
 
 export function App(): JSX.Element {
   return (
-    <ThemeProvider theme={builtinThemes.light}>
-      <Container maxWidth="md" sx={{ py: 4 }}>
+    <ThemeProvider>
+      <Container maxWidth="md" sx={appStyles.container}>
         <Typography variant="h4" component="h1">
           Match Predictor
         </Typography>

@@ -1,18 +1,19 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import type { Theme } from '@mui/material/styles';
 import { StyledEngineProvider } from '@mui/material/styles';
 import MuiThemeProvider from '@mui/material/styles/ThemeProvider';
 import type { ReactNode } from 'react';
 
 import { GlobalStyles } from '../GlobalStyles';
+import { builtinThemes } from '../themes/builtinThemes';
+import { useThemeMode } from '../useThemeMode';
 
 export interface ThemeProviderProps {
   children: ReactNode;
-  theme: Theme;
 }
 
-export function ThemeProvider(props: ThemeProviderProps): JSX.Element {
-  const { children, theme } = props;
+export function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
+  const { mode } = useThemeMode();
+  const theme = builtinThemes[mode];
 
   return (
     <StyledEngineProvider injectFirst>

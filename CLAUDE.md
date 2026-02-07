@@ -18,6 +18,47 @@ Build the smallest correct solution that matches the spec.
 - Never use `const MyComponent = () =>` or `React.FC` or `FunctionComponent`
 - Never use `ReactElement` as the return type — use `JSX.Element`
 
+## Styling
+
+- **Never use inline `sx` props** on MUI components
+- All styles go in a separate `styles.ts` file next to the component
+- Use theme-aware functions: `(theme: Theme) => theme.palette.primary.main`
+- No hardcoded colours — always use `theme.palette`
+- Reference styles in components via `sx={styles.container}` or `sx={styles.container(theme)}`
+
+```ts
+// BAD — inline sx
+<Container sx={{ py: 4, backgroundColor: '#fff' }}>
+<Box sx={{ display: 'flex', gap: 2 }}>
+
+// GOOD — separate styles.ts
+// styles.ts
+import type { Theme } from '@mui/material/styles';
+
+export const styles = {
+  container: {
+    py: 4,
+    backgroundColor: (theme: Theme) => theme.palette.background.default,
+  },
+  layout: {
+    display: 'flex',
+    gap: 2,
+  },
+};
+
+// Component.tsx
+import { styles } from './styles';
+<Container sx={styles.container}>
+<Box sx={styles.layout}>
+```
+
+## Routing
+
+- Top-level page components are lazy loaded with `const Page = lazy(() => import('~/pages/Page/Page'))`
+- Route definitions live in a dedicated routes file, not scattered in App.tsx
+- Use `react-router` `Route` / `Routes` components
+- Page layout wrapper (`Page`) is a route-level `element`, pages render inside via `Outlet` or as child routes
+
 ## Testing
 
 - Tests are colocated with source files: `foo.ts` → `foo.test.ts`, `Bar.tsx` → `Bar.test.tsx`

@@ -8,7 +8,9 @@
       "Bash(pnpm --filter @match-predictor/etl test:ci:*)",
       "Bash(pnpm --filter @match-predictor/frontend test:ci:*)",
       "Bash(pnpm --filter @match-predictor/frontend dev:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(pnpm --filter @match-predictor/theme test:ci:*)",
+      "Bash(pnpm --filter @match-predictor/theme add:*)"
     ]
   }
 }
