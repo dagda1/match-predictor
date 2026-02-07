@@ -172,10 +172,13 @@ packages/etl/data/
 
 Each file is an array of `MatchInfo` objects (camelCase, same shape as scraper output). Files are committed to git to avoid re-scraping. Re-scrape via `pnpm --filter @match-predictor/etl fetch-data`.
 
-The `fetch-data` script:
-1. Hits the league API (`/getLeagueData/EPL/{season}`) to get all completed match IDs
-2. Scrapes each match page with `scrapeMatch`
-3. Writes the season file
+The `fetch-data` script is incremental:
+1. Reads existing JSON to find the max `date` already scraped
+2. Hits the league API (`/getLeagueData/EPL/{season}`) and filters for matches after that date
+3. Only scrapes new matches with `scrapeMatch`
+4. Appends to the existing season file
+
+First run scrapes everything. Subsequent runs only fetch new fixtures.
 
 ## Model approach: Monte Carlo simulation
 
@@ -205,7 +208,8 @@ The `fetch-data` script:
 
 ### Validation strategy
 
-- Time-based split: train on 2024-25 season, test on 2025-26 matches played so far
+- Train on both seasons (621 matches), weight recent matches higher (e.g. exponential decay)
+- Validate with rolling time-based cross-validation: for each matchweek, predict using only past data
 - No data leakage: form calculated only from past matches
 
 ### Metrics
