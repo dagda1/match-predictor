@@ -1,14 +1,15 @@
-import ContrastRoundedIcon from '@mui/icons-material/ContrastRounded';
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import IconButton from '@mui/material/IconButton';
 
 import { useThemeMode } from '../useThemeMode';
 
 export function ThemeSwitcherIconButton(): JSX.Element {
-  const { toggle } = useThemeMode();
+  const { mode, toggle } = useThemeMode();
 
   return (
     <IconButton onClick={toggle} aria-label="Toggle theme">
-      <ContrastRoundedIcon />
+      {mode === 'dark' ? <LightModeRoundedIcon /> : <DarkModeRoundedIcon />}
     </IconButton>
   );
 }
