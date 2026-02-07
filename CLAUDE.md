@@ -22,23 +22,29 @@ Build the smallest correct solution that matches the spec.
 
 - **Never use inline `sx` props** on MUI components
 - All styles go in a separate `styles.ts` file next to the component
+- The export is **always** called `sx` — never `styles`, `fooStyles`, `barStyles`, or any other name
+- Type it as `Record<string, SxProps<Theme>>`
+- Each component that needs styles gets its own `styles.ts` in its own directory (e.g. `Page/Page.tsx` + `Page/styles.ts`)
 - Use theme-aware functions: `(theme: Theme) => theme.palette.primary.main`
 - No hardcoded colours — always use `theme.palette`
-- Reference styles in components via `sx={styles.container}` or `sx={styles.container(theme)}`
 
 ```ts
 // BAD — inline sx
 <Container sx={{ py: 4, backgroundColor: '#fff' }}>
 <Box sx={{ display: 'flex', gap: 2 }}>
 
-// GOOD — separate styles.ts
-// styles.ts
-import type { Theme } from '@mui/material/styles';
+// BAD — wrong export name
+export const containerStyles = { ... };
+export const styles = { ... };
+export const appStyles = { ... };
 
-export const styles = {
+// GOOD — styles.ts
+import type { SxProps, Theme } from '@mui/material/styles';
+
+export const sx: Record<string, SxProps<Theme>> = {
   container: {
     py: 4,
-    backgroundColor: (theme: Theme) => theme.palette.background.default,
+    backgroundColor: (theme) => theme.palette.background.default,
   },
   layout: {
     display: 'flex',
@@ -46,10 +52,10 @@ export const styles = {
   },
 };
 
-// Component.tsx
-import { styles } from './styles';
-<Container sx={styles.container}>
-<Box sx={styles.layout}>
+// GOOD — Component.tsx
+import { sx } from './styles';
+<Container sx={sx.container}>
+<Box sx={sx.layout}>
 ```
 
 ## Routing

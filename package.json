@@ -13,6 +13,7 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "prepare": "tsx ./scripts/prepare.ts",
+    "start:frontend": "cross-env NODE_ENV=development pnpm --filter @match-predictor/frontend dev",
     "test": "cross-env turbo run test:ci"
   },
   "keywords": [],
@@ -20,9 +21,16 @@
   "license": "ISC",
   "dependencies": {
     "@cutting/assert": "^0.5.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.0",
+    "@mui/icons-material": "6.5.0",
+    "@mui/material": "6.5.0",
+    "@mui/system": "6.5.0",
+    "@mui/utils": "6.4.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-router": "7.13.0",
+    "recharts": "^2.15.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -56,7 +64,7 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
-    "turbo": "^2.8.1",
+    "turbo": "^2.8.3",
     "typescript": "5.9.3",
     "vite": "7.3.1",
     "vite-plugin-checker": "^0.12.0",

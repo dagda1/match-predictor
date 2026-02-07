@@ -2,12 +2,12 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@match-predictor/theme';
 
-import { appStyles } from './styles';
+import { sx } from './styles';
 
 export function App(): JSX.Element {
   return (
     <ThemeProvider>
-      <Container maxWidth="md" sx={appStyles.container}>
+      <Container maxWidth="md" sx={sx.container}>
         <Typography variant="h4" component="h1">
           Match Predictor
         </Typography>

@@ -1,4 +1,6 @@
-export const pageStyles = {
+import type { SxProps, Theme } from '@mui/material/styles';
+
+export const sx: Record<string, SxProps<Theme>> = {
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -8,11 +10,5 @@ export const pageStyles = {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-  },
-};
-
-export const topNavStyles = {
-  title: {
-    flexGrow: 1,
   },
 };
