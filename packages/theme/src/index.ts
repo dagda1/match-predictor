@@ -1,3 +1,4 @@
+export { MaxWidthContainer } from './components/MaxWidthContainer/MaxWidthContainer';
 export { Page } from './components/Page/Page';
 export { ThemeSwitcherIconButton } from './components/ThemeSwitcherIconButton';
 export { TopNav } from './components/TopNav/TopNav';

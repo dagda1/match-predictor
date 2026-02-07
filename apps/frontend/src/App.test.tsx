@@ -4,8 +4,8 @@ import { render, screen } from '@testing-library/react';
 import { App } from './App';
 
 describe('App', () => {
-  it('renders heading', () => {
+  it('renders heading', async () => {
     render(<App />);
-    expect(screen.getByText('Match Predictor')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Match Predictor', level: 1 })).toBeInTheDocument();
   });
 });

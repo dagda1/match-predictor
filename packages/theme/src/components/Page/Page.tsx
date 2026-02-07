@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import { Outlet } from 'react-router';
 
+import { MaxWidthContainer } from '../MaxWidthContainer/MaxWidthContainer';
 import { TopNav } from '../TopNav/TopNav';
 import { sx } from './styles';
 
@@ -9,7 +10,9 @@ export function Page(): JSX.Element {
     <Box sx={sx.root}>
       <TopNav />
       <Box component="main" sx={sx.main}>
-        <Outlet />
+        <MaxWidthContainer>
+          <Outlet />
+        </MaxWidthContainer>
       </Box>
     </Box>
   );
