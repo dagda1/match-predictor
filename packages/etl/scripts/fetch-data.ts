@@ -19,7 +19,9 @@ async function loadExisting(season: string): Promise<MatchInfo[]> {
 }
 
 function maxDate(matches: MatchInfo[]): string | undefined {
-  if (matches.length === 0) return undefined;
+  if (matches.length === 0) {
+    return undefined;
+  }
   return matches.reduce((max, m) => (m.date > max ? m.date : max), matches[0].date);
 }
 
