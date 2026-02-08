@@ -24,7 +24,9 @@
       "Bash(sh:*)",
       "Bash(brew install:*)",
       "Bash(pkill:*)",
-      "Bash(pnpm add:*)"
+      "Bash(pnpm add:*)",
+      "Bash(pnpm --filter @match-predictor/frontend exec tsc:*)",
+      "Bash(pnpm exec tsc:*)"
     ]
   }
 }

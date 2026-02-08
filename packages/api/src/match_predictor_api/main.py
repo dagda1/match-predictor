@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from match_predictor import load_matches, train, predict_match
+from match_predictor import load_matches, train, predict_match, poisson_predict
 
 app = FastAPI(title="Match Predictor API")
 
@@ -29,11 +29,25 @@ class Scoreline(BaseModel):
     probability: float
 
 
-class PredictResponse(BaseModel):
+class MlPrediction(BaseModel):
     homeWin: float
     draw: float
     awayWin: float
     scorelines: list[Scoreline]
+
+
+class PoissonPrediction(BaseModel):
+    homeWin: float
+    draw: float
+    awayWin: float
+    homeLambda: float
+    awayLambda: float
+    scorelines: list[Scoreline]
+
+
+class PredictResponse(BaseModel):
+    ml: MlPrediction
+    poisson: PoissonPrediction
 
 
 class Team(BaseModel):
@@ -59,12 +73,23 @@ def get_teams():
 
 @app.post("/predict", response_model=PredictResponse)
 def predict(req: PredictRequest):
-    result = predict_match(model, req.homeTeamId, req.awayTeamId)
+    ml_result = predict_match(model, req.homeTeamId, req.awayTeamId)
+    poisson_result = poisson_predict(df, req.homeTeamId, req.awayTeamId)
     return PredictResponse(
-        homeWin=result.home_win,
-        draw=result.draw,
-        awayWin=result.away_win,
-        scorelines=[Scoreline(**s) for s in result.scorelines],
+        ml=MlPrediction(
+            homeWin=ml_result.home_win,
+            draw=ml_result.draw,
+            awayWin=ml_result.away_win,
+            scorelines=[Scoreline(**s) for s in ml_result.scorelines],
+        ),
+        poisson=PoissonPrediction(
+            homeWin=poisson_result.home_win,
+            draw=poisson_result.draw,
+            awayWin=poisson_result.away_win,
+            homeLambda=poisson_result.home_lambda,
+            awayLambda=poisson_result.away_lambda,
+            scorelines=[Scoreline(**s) for s in poisson_result.scorelines],
+        ),
     )
 
 

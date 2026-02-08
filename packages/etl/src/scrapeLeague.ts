@@ -10,7 +10,7 @@ export async function scrapeLeagueMatchIds(season: string, after?: string): Prom
   const response = await fetch(`https://understat.com/getLeagueData/EPL/${season}`, {
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
-      'Referer': `https://understat.com/league/EPL/${season}`,
+      Referer: `https://understat.com/league/EPL/${season}`,
     },
   });
   assert(response.ok, `failed to fetch league data for season ${season}: ${response.status}`);
