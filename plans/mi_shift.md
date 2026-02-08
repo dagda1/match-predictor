@@ -326,10 +326,20 @@ See `plans/match-predictor-prototype.html` — a standalone HTML prototype with 
 POST /predict
 Request:  { homeTeamId: string, awayTeamId: string }
 Response: {
-  homeWin: number,    // 0-1
-  draw: number,       // 0-1
-  awayWin: number,    // 0-1
-  scorelines: { homeGoals: number, awayGoals: number, probability: number }[]
+  ml: {
+    homeWin: number,    // 0-1
+    draw: number,       // 0-1
+    awayWin: number,    // 0-1
+    scorelines: { homeGoals: number, awayGoals: number, probability: number }[]
+  },
+  poisson: {
+    homeWin: number,
+    draw: number,
+    awayWin: number,
+    scorelines: { homeGoals: number, awayGoals: number, probability: number }[],
+    homeLambda: number,
+    awayLambda: number,
+  }
 }
 
 GET /teams
@@ -376,7 +386,11 @@ Response: { id: string, name: string }[]
 - [x] Frontend scaffold (App, routing, Page layout, TopNav, theme switching)
 - [x] Python ML package (`packages/ml`) — GradientBoostingClassifier, 15 features, TimeSeriesSplit CV
 - [x] FastAPI (`packages/api`) — `/teams`, `/predict`, `/metrics` endpoints
+- [x] Poisson baseline model (`poisson_baseline.py`) — raw xG averages, no hardcoded multipliers, for comparison
 - [ ] Improve model (currently 40.9% accuracy vs 41.5% baseline — underperforming)
+- [ ] Add recency weighting to ML model (current form not reflected, e.g. City's decline)
+- [ ] Fix home advantage bias (62% home win for Liverpool vs City is too high)
+- [ ] Compare ML model vs Poisson baseline predictions side by side
 - [ ] Frontend Match Predictor page (prototype exists at `plans/match-predictor-prototype.html`)
 
 ### Current model metrics
@@ -391,4 +405,9 @@ Response: { id: string, name: string }[]
 
 ## Next action
 
-Improve the model to beat the baseline. Options: tune hyperparameters, add/remove features, try XGBoost/LightGBM, increase training data quality. Then build the frontend Match Predictor page.
+Improve the model to beat the baseline:
+1. Add recency weighting so current form matters more than old results
+2. Fix the home advantage feature — it shouldn't apply a flat league-wide boost regardless of away team strength
+3. Compare ML model vs Poisson baseline to see which produces more realistic predictions
+4. Tune hyperparameters, try XGBoost/LightGBM
+5. Then build the frontend Match Predictor page

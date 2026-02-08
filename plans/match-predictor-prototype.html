@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Match Predictor — Prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,18 +13,27 @@
   <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
     body {
       font-family: 'Roboto', sans-serif;
       min-height: 100vh;
+      min-height: -webkit-fill-available;
       display: flex;
       justify-content: center;
-      padding: 48px 24px;
+      padding: 16px 12px;
       transition: background-color 0.3s ease;
+      touch-action: manipulation;
+      -webkit-font-smoothing: antialiased;
+    }
+    @media (min-width: 600px) {
+      body { padding: 48px 24px; }
     }
     body.light { background: #f5f5f7; }
     body.dark  { background: #0e0e12; }
-    #root { width: 100%; max-width: 720px; }
+    #root { width: 100%; max-width: 780px; }
     .MuiAutocomplete-popper { z-index: 1300 !important; }
+    /* prevent iOS input zoom */
+    input, select, textarea { font-size: 16px !important; }
   </style>
 </head>
 <body class="dark">
@@ -32,11 +41,11 @@
 
   <script type="text/babel">
     const {
-      ThemeProvider, createTheme,
+      ThemeProvider, createTheme, useMediaQuery,
       CssBaseline, Paper, Typography, Button, Box, Stack,
       Autocomplete, TextField, LinearProgress, Table, TableBody,
       TableCell, TableContainer, TableHead, TableRow, Chip,
-      Fade, Grow, IconButton, Tooltip
+      Fade, Grow, IconButton, Tooltip, Tabs, Tab, Divider
     } = MaterialUI;
 
     /* ── Themes ────────────────────────────────────────────── */
@@ -84,15 +93,30 @@
         },
         MuiOutlinedInput: {
           styleOverrides: {
-            root: mode === 'dark' ? {
-              '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(255,255,255,0.12)' },
-              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(255,255,255,0.24)' },
-            } : {},
+            root: {
+              ...(mode === 'dark' ? {
+                '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(255,255,255,0.12)' },
+                '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(255,255,255,0.24)' },
+              } : {}),
+            },
           },
         },
         MuiTableCell: {
           styleOverrides: {
-            root: mode === 'dark' ? { borderBottomColor: 'rgba(255,255,255,0.06)' } : {},
+            root: {
+              padding: '10px 12px',
+              ...(mode === 'dark' ? { borderBottomColor: 'rgba(255,255,255,0.06)' } : {}),
+            },
+          },
+        },
+        MuiTab: {
+          styleOverrides: {
+            root: { textTransform: 'none', fontWeight: 600, fontSize: '0.85rem', minHeight: 42, minWidth: 0, px: 2 },
+          },
+        },
+        MuiTabs: {
+          styleOverrides: {
+            root: { minHeight: 42 },
           },
         },
       },
@@ -107,22 +131,43 @@
       'Sunderland', 'Tottenham Hotspur', 'West Ham United',
     ];
 
-    const MOCK_RESULT = {
-      home_win: 0.482,
-      draw: 0.241,
-      away_win: 0.277,
-      scorelines: [
-        { home: 2, away: 1, prob: 0.142 },
-        { home: 1, away: 0, prob: 0.128 },
-        { home: 2, away: 0, prob: 0.112 },
-        { home: 1, away: 1, prob: 0.098 },
-        { home: 3, away: 1, prob: 0.074 },
-        { home: 0, away: 0, prob: 0.068 },
-        { home: 0, away: 1, prob: 0.062 },
-        { home: 2, away: 2, prob: 0.054 },
-        { home: 3, away: 2, prob: 0.041 },
-        { home: 1, away: 2, prob: 0.038 },
-      ],
+    const MOCK_RESPONSE = {
+      ml: {
+        homeWin: 0.482,
+        draw: 0.241,
+        awayWin: 0.277,
+        scorelines: [
+          { homeGoals: 2, awayGoals: 1, probability: 0.142 },
+          { homeGoals: 1, awayGoals: 0, probability: 0.128 },
+          { homeGoals: 2, awayGoals: 0, probability: 0.112 },
+          { homeGoals: 1, awayGoals: 1, probability: 0.098 },
+          { homeGoals: 3, awayGoals: 1, probability: 0.074 },
+          { homeGoals: 0, awayGoals: 0, probability: 0.068 },
+          { homeGoals: 0, awayGoals: 1, probability: 0.062 },
+          { homeGoals: 2, awayGoals: 2, probability: 0.054 },
+          { homeGoals: 3, awayGoals: 2, probability: 0.041 },
+          { homeGoals: 1, awayGoals: 2, probability: 0.038 },
+        ],
+      },
+      poisson: {
+        homeWin: 0.438,
+        draw: 0.263,
+        awayWin: 0.299,
+        homeLambda: 1.72,
+        awayLambda: 1.31,
+        scorelines: [
+          { homeGoals: 1, awayGoals: 1, probability: 0.134 },
+          { homeGoals: 2, awayGoals: 1, probability: 0.115 },
+          { homeGoals: 1, awayGoals: 0, probability: 0.102 },
+          { homeGoals: 2, awayGoals: 0, probability: 0.088 },
+          { homeGoals: 0, awayGoals: 1, probability: 0.078 },
+          { homeGoals: 0, awayGoals: 0, probability: 0.076 },
+          { homeGoals: 2, awayGoals: 2, probability: 0.075 },
+          { homeGoals: 3, awayGoals: 1, probability: 0.066 },
+          { homeGoals: 1, awayGoals: 2, probability: 0.059 },
+          { homeGoals: 3, awayGoals: 2, probability: 0.043 },
+        ],
+      },
     };
 
     /* ── Helpers ────────────────────────────────────────────── */
@@ -130,7 +175,7 @@
     const lerp = (a, b, t) => a + (b - a) * t;
     const fmt  = (n) => n.toLocaleString();
 
-    /* ── SVG Icons (no extra dep) ──────────────────────────── */
+    /* ── SVG Icons ─────────────────────────────────────────── */
     const SunIcon = () => (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
@@ -154,25 +199,40 @@
           value={value}
           onChange={(_, v) => onChange(v)}
           options={options}
-          renderInput={(params) => <TextField {...params} label={label} variant="outlined" />}
+          freeSolo={false}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={label}
+              variant="outlined"
+              InputLabelProps={{ ...params.InputLabelProps, style: { fontSize: 14 } }}
+            />
+          )}
           disableClearable={false}
           fullWidth
-          sx={{ minWidth: 240 }}
         />
       );
     }
 
-    function ProbBar({ label, value, color, animatedValue, isDark }) {
+    function ProbBar({ label, value, color, animatedValue, isDark, compact }) {
       const display = animatedValue != null ? animatedValue : value;
       const trackBg = isDark ? 'rgba(255,255,255,0.06)' : '#eee';
       const labelColor = isDark ? '#b0b0c0' : '#444';
       return (
-        <Box sx={{ mb: 1.5 }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 0.5 }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, color: labelColor }}>{label}</Typography>
-            <Typography variant="body2" sx={{ fontWeight: 700, fontFeatureSettings: "'tnum'", color }}>{pct(display)}</Typography>
+        <Box sx={{ mb: compact ? 1 : 1.5 }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 0.4 }}>
+            <Typography
+              variant="body2"
+              noWrap
+              sx={{ fontWeight: 500, color: labelColor, fontSize: compact ? '0.78rem' : '0.875rem', maxWidth: '60%' }}
+            >
+              {label}
+            </Typography>
+            <Typography variant="body2" sx={{ fontWeight: 700, fontFeatureSettings: "'tnum'", color, fontSize: compact ? '0.78rem' : '0.875rem' }}>
+              {pct(display)}
+            </Typography>
           </Stack>
-          <Box sx={{ width: '100%', height: 10, borderRadius: 5, bgcolor: trackBg, overflow: 'hidden' }}>
+          <Box sx={{ width: '100%', height: compact ? 8 : 10, borderRadius: 5, bgcolor: trackBg, overflow: 'hidden' }}>
             <Box sx={{
               width: `${display * 100}%`,
               height: '100%',
@@ -187,53 +247,46 @@
 
     function SimCounter({ count, total, isDark }) {
       return (
-        <Typography variant="body2" sx={{ textAlign: 'center', color: isDark ? '#6a6a80' : '#888', fontFeatureSettings: "'tnum'", mt: 0.5, mb: 2 }}>
-          {fmt(count)} / {fmt(total)} matches simulated
+        <Typography variant="body2" sx={{ textAlign: 'center', color: isDark ? '#6a6a80' : '#888', fontFeatureSettings: "'tnum'", mt: 0.5, mb: 1.5, fontSize: '0.8rem' }}>
+          {fmt(count)} / {fmt(total)} simulated
         </Typography>
       );
     }
 
-    function ScorelineTable({ scorelines, revealed, isDark }) {
+    function ScorelineTable({ scorelines, revealed, isDark, chipColor, chipBg, chipAccentBg }) {
       const rows = revealed != null ? scorelines.slice(0, revealed) : scorelines;
       const headColor = isDark ? '#5a5a70' : '#999';
       return (
-        <TableContainer>
+        <TableContainer sx={{ mx: { xs: -1, sm: 0 } }}>
           <Table size="small">
             <TableHead>
               <TableRow>
-                {['#', 'Score', ''].map((h, i) => (
-                  <TableCell key={h} align={i === 2 ? 'right' : 'left'}
-                    sx={{ fontWeight: 700, color: headColor, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                    {h || 'Probability'}
-                  </TableCell>
-                ))}
+                <TableCell sx={{ fontWeight: 700, color: headColor, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.06em', width: 28, pl: { xs: 1.5, sm: 2 } }}>#</TableCell>
+                <TableCell sx={{ fontWeight: 700, color: headColor, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Score</TableCell>
+                <TableCell align="right" sx={{ fontWeight: 700, color: headColor, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.06em', pr: { xs: 1.5, sm: 2 } }}>Prob</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((s, i) => (
                 <Grow in key={i} timeout={300 + i * 80}>
                   <TableRow sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                    <TableCell sx={{ fontWeight: 500, color: isDark ? '#5a5a70' : '#aaa', width: 32 }}>{i + 1}</TableCell>
+                    <TableCell sx={{ fontWeight: 500, color: isDark ? '#5a5a70' : '#aaa', width: 28, pl: { xs: 1.5, sm: 2 } }}>{i + 1}</TableCell>
                     <TableCell>
-                      <Typography variant="body2" sx={{ fontWeight: 600, fontFeatureSettings: "'tnum'" }}>
-                        {s.home} – {s.away}
+                      <Typography variant="body2" sx={{ fontWeight: 600, fontFeatureSettings: "'tnum'", fontSize: '0.85rem' }}>
+                        {s.homeGoals} – {s.awayGoals}
                       </Typography>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="right" sx={{ pr: { xs: 1.5, sm: 2 } }}>
                       <Chip
-                        label={pct(s.prob)}
+                        label={pct(s.probability)}
                         size="small"
                         sx={{
                           fontWeight: 600,
                           fontFeatureSettings: "'tnum'",
-                          fontSize: '0.78rem',
-                          ...(isDark ? {
-                            bgcolor: i === 0 ? '#7C4DFF' : i < 3 ? 'rgba(124,77,255,0.15)' : 'rgba(255,255,255,0.05)',
-                            color: i === 0 ? '#fff' : i < 3 ? '#b09aff' : '#8888a0',
-                          } : {
-                            bgcolor: i === 0 ? '#3D195B' : i < 3 ? '#ede7f6' : '#f5f5f5',
-                            color: i === 0 ? '#fff' : i < 3 ? '#3D195B' : '#666',
-                          }),
+                          fontSize: '0.74rem',
+                          height: 24,
+                          bgcolor: i === 0 ? chipColor : i < 3 ? chipAccentBg : (isDark ? 'rgba(255,255,255,0.05)' : '#f5f5f5'),
+                          color: i === 0 ? '#fff' : i < 3 ? chipBg : (isDark ? '#8888a0' : '#666'),
                         }}
                       />
                     </TableCell>
@@ -246,6 +299,45 @@
       );
     }
 
+    /* Model probability section — reusable for ML and Poisson */
+    function ModelProbBars({ title, subtitle, data, home, away, animProbs, isSimulating, isDark, colors, compact }) {
+      return (
+        <Box sx={{ flex: 1, minWidth: 0 }}>
+          <Typography variant="subtitle2" sx={{ mb: 0.3, fontSize: compact ? '0.72rem' : '0.82rem' }}>{title}</Typography>
+          {subtitle && (
+            <Typography variant="caption" sx={{ color: isDark ? '#555' : '#aaa', display: 'block', mb: 1, fontFeatureSettings: "'tnum'", fontSize: '0.7rem' }}>
+              {subtitle}
+            </Typography>
+          )}
+          {!subtitle && <Box sx={{ mb: compact ? 0.8 : 1.2 }} />}
+          <ProbBar
+            label={`${home || 'Home'} win`}
+            value={data.homeWin}
+            animatedValue={isSimulating && animProbs ? animProbs.h : null}
+            color={colors.homeWin}
+            isDark={isDark}
+            compact={compact}
+          />
+          <ProbBar
+            label="Draw"
+            value={data.draw}
+            animatedValue={isSimulating && animProbs ? animProbs.d : null}
+            color={colors.draw}
+            isDark={isDark}
+            compact={compact}
+          />
+          <ProbBar
+            label={`${away || 'Away'} win`}
+            value={data.awayWin}
+            animatedValue={isSimulating && animProbs ? animProbs.a : null}
+            color={colors.awayWin}
+            isDark={isDark}
+            compact={compact}
+          />
+        </Box>
+      );
+    }
+
     /* ── Main App ──────────────────────────────────────────── */
     function App() {
       const [mode, setMode]       = React.useState('dark');
@@ -253,12 +345,15 @@
       const [away, setAway]       = React.useState(null);
       const [phase, setPhase]     = React.useState('empty');
       const [simProgress, setSimProgress] = React.useState(0);
-      const [animProbs, setAnimProbs]     = React.useState({ h: 0.333, d: 0.333, a: 0.333 });
+      const [mlAnimProbs, setMlAnimProbs]         = React.useState({ h: 0.333, d: 0.333, a: 0.333 });
+      const [poissonAnimProbs, setPoissonAnimProbs] = React.useState({ h: 0.333, d: 0.333, a: 0.333 });
       const [revealedRows, setRevealedRows] = React.useState(0);
+      const [scoreTab, setScoreTab] = React.useState(0);
       const rafRef = React.useRef(null);
 
       const isDark = mode === 'dark';
       const theme  = React.useMemo(() => makeTheme(mode), [mode]);
+      const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
       const toggleMode = () => {
         const next = isDark ? 'light' : 'dark';
@@ -275,11 +370,14 @@
         setPhase('simulating');
         setSimProgress(0);
         setRevealedRows(0);
-        setAnimProbs({ h: 0.333, d: 0.333, a: 0.333 });
+        setScoreTab(0);
+        setMlAnimProbs({ h: 0.333, d: 0.333, a: 0.333 });
+        setPoissonAnimProbs({ h: 0.333, d: 0.333, a: 0.333 });
 
         const duration = 2600;
         const start = performance.now();
-        const target = MOCK_RESULT;
+        const ml = MOCK_RESPONSE.ml;
+        const po = MOCK_RESPONSE.poisson;
 
         const tick = (now) => {
           const elapsed = now - start;
@@ -288,17 +386,23 @@
           const jitter = (1 - ease) * (Math.random() - 0.5) * 0.08;
 
           setSimProgress(ease);
-          setAnimProbs({
-            h: lerp(0.333, target.home_win, ease) + jitter,
-            d: lerp(0.333, target.draw,     ease) - jitter * 0.5,
-            a: lerp(0.333, target.away_win, ease) - jitter * 0.5,
+          setMlAnimProbs({
+            h: lerp(0.333, ml.homeWin, ease) + jitter,
+            d: lerp(0.333, ml.draw,    ease) - jitter * 0.5,
+            a: lerp(0.333, ml.awayWin, ease) - jitter * 0.5,
+          });
+          setPoissonAnimProbs({
+            h: lerp(0.333, po.homeWin, ease) + jitter * 0.7,
+            d: lerp(0.333, po.draw,    ease) - jitter * 0.3,
+            a: lerp(0.333, po.awayWin, ease) - jitter * 0.4,
           });
           setRevealedRows(Math.min(10, Math.floor(ease * 13)));
 
           if (t < 1) {
             rafRef.current = requestAnimationFrame(tick);
           } else {
-            setAnimProbs({ h: target.home_win, d: target.draw, a: target.away_win });
+            setMlAnimProbs({ h: ml.homeWin, d: ml.draw, a: ml.awayWin });
+            setPoissonAnimProbs({ h: po.homeWin, d: po.draw, a: po.awayWin });
             setRevealedRows(10);
             setTimeout(() => setPhase('result'), 200);
           }
@@ -319,9 +423,16 @@
       const showResult   = phase === 'result' || isSimulating;
 
       /* colour tokens */
-      const homeWinColor = isDark ? '#7C4DFF' : '#3D195B';
-      const drawColor    = isDark ? '#546E7A' : '#78909C';
-      const awayWinColor = '#00E676';
+      const mlColors = {
+        homeWin: isDark ? '#7C4DFF' : '#3D195B',
+        draw:    isDark ? '#546E7A' : '#78909C',
+        awayWin: '#00E676',
+      };
+      const poissonColors = {
+        homeWin: isDark ? '#FF6D00' : '#E65100',
+        draw:    isDark ? '#546E7A' : '#78909C',
+        awayWin: isDark ? '#26C6DA' : '#00838F',
+      };
       const vsColor      = isDark ? '#555' : '#bbb';
       const subColor     = isDark ? '#6a6a80' : '#999';
       const gradBtn      = isDark
@@ -334,26 +445,45 @@
       const progressGrad  = isDark
         ? 'linear-gradient(90deg, #7C4DFF 0%, #00FF87 100%)'
         : 'linear-gradient(90deg, #3D195B 0%, #00FF87 100%)';
+      const dividerColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)';
+
+      const mlChip = {
+        color: isDark ? '#7C4DFF' : '#3D195B',
+        accentBg: isDark ? 'rgba(124,77,255,0.15)' : '#ede7f6',
+        accentText: isDark ? '#b09aff' : '#3D195B',
+      };
+      const poissonChip = {
+        color: isDark ? '#FF6D00' : '#E65100',
+        accentBg: isDark ? 'rgba(255,109,0,0.15)' : '#fff3e0',
+        accentText: isDark ? '#ffab40' : '#E65100',
+      };
+
+      const cardPx = { xs: 2.5, sm: 4 };
+      const cardPy = { xs: 2.5, sm: 4 };
 
       return (
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Stack spacing={3}>
+          <Stack spacing={{ xs: 2, sm: 3 }}>
             {/* ── Header card ───────────────────────── */}
-            <Paper sx={{ p: { xs: 3, sm: 4 } }}>
+            <Paper sx={{ px: cardPx, py: cardPy }}>
               <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                <Box>
-                  <Typography variant="h5" sx={{ mb: 0.5 }}>Match Predictor</Typography>
-                  <Typography variant="subtitle2" sx={{ mb: 3 }}>Monte Carlo · 10,000 simulations</Typography>
+                <Box sx={{ minWidth: 0 }}>
+                  <Typography variant="h5" noWrap sx={{ mb: 0.3, fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
+                    Match Predictor
+                  </Typography>
+                  <Typography variant="subtitle2" sx={{ mb: { xs: 2, sm: 3 }, fontSize: { xs: '0.72rem', sm: '0.82rem' } }}>
+                    ML model + Poisson baseline
+                  </Typography>
                 </Box>
                 <Tooltip title={isDark ? 'Light mode' : 'Dark mode'}>
-                  <IconButton onClick={toggleMode} sx={{ color: isDark ? '#aaa' : '#666', mt: -0.5 }}>
+                  <IconButton onClick={toggleMode} size={isMobile ? 'small' : 'medium'} sx={{ color: isDark ? '#aaa' : '#666', mt: -0.5, ml: 1, flexShrink: 0 }}>
                     {isDark ? <SunIcon /> : <MoonIcon />}
                   </IconButton>
                 </Tooltip>
               </Stack>
 
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: 3 }}>
+              <Stack direction="column" spacing={1.5} sx={{ mb: { xs: 2, sm: 3 } }}>
                 <TeamPicker label="Home team" value={home} onChange={setHome} exclude={away} />
                 <TeamPicker label="Away team" value={away} onChange={setAway} exclude={home} />
               </Stack>
@@ -366,8 +496,8 @@
                   onClick={runSimulation}
                   disableElevation
                   sx={{
-                    py: 1.4,
-                    fontSize: '1rem',
+                    py: { xs: 1.2, sm: 1.4 },
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
                     background: phase === 'empty' ? undefined : gradBtn,
                     '&:hover': { background: gradBtnHover },
                   }}
@@ -377,26 +507,26 @@
               )}
 
               {phase === 'result' && (
-                <Button variant="outlined" fullWidth onClick={reset} sx={{ py: 1.2 }}>
+                <Button variant="outlined" fullWidth onClick={reset} sx={{ py: { xs: 1, sm: 1.2 } }}>
                   New prediction
                 </Button>
               )}
             </Paper>
 
-            {/* ── Probabilities ──────────────────────── */}
+            {/* ── Probabilities: ML vs Poisson ──────── */}
             {showResult && (
               <Fade in>
-                <Paper sx={{ p: { xs: 3, sm: 4 } }}>
+                <Paper sx={{ px: cardPx, py: cardPy }}>
                   {isSimulating && (
                     <Box sx={{ mb: 2 }}>
                       <LinearProgress
                         variant="determinate"
                         value={simProgress * 100}
                         sx={{
-                          height: 8,
-                          borderRadius: 4,
+                          height: 6,
+                          borderRadius: 3,
                           bgcolor: progressTrack,
-                          '& .MuiLinearProgress-bar': { borderRadius: 4, background: progressGrad },
+                          '& .MuiLinearProgress-bar': { borderRadius: 3, background: progressGrad },
                         }}
                       />
                       <SimCounter count={Math.round(simProgress * 10000)} total={10000} isDark={isDark} />
@@ -404,33 +534,104 @@
                   )}
 
                   {phase === 'result' && (
-                    <Box sx={{ textAlign: 'center', mb: 3 }}>
-                      <Typography variant="body2" sx={{ color: subColor, fontWeight: 500, mb: 0.5 }}>Prediction</Typography>
-                      <Typography variant="h5" sx={{ fontSize: '1.35rem' }}>
-                        {home} <span style={{ color: vsColor, fontWeight: 400, margin: '0 6px' }}>vs</span> {away}
+                    <Box sx={{ textAlign: 'center', mb: { xs: 2, sm: 3 } }}>
+                      <Typography variant="body2" sx={{ color: subColor, fontWeight: 500, mb: 0.3, fontSize: '0.75rem' }}>Prediction</Typography>
+                      <Typography variant="h5" sx={{ fontSize: { xs: '1.05rem', sm: '1.35rem' }, lineHeight: 1.3 }}>
+                        {home} <span style={{ color: vsColor, fontWeight: 400, margin: '0 4px' }}>vs</span> {away}
                       </Typography>
                     </Box>
                   )}
 
-                  <Typography variant="subtitle2" sx={{ mb: 2 }}>
-                    {isSimulating ? 'Converging…' : 'Outcome probabilities'}
-                  </Typography>
-
-                  <Box sx={{ mb: 1 }}>
-                    <ProbBar label={`${home || 'Home'} win`} value={MOCK_RESULT.home_win} animatedValue={isSimulating ? animProbs.h : null} color={homeWinColor} isDark={isDark} />
-                    <ProbBar label="Draw" value={MOCK_RESULT.draw} animatedValue={isSimulating ? animProbs.d : null} color={drawColor} isDark={isDark} />
-                    <ProbBar label={`${away || 'Away'} win`} value={MOCK_RESULT.away_win} animatedValue={isSimulating ? animProbs.a : null} color={awayWinColor} isDark={isDark} />
-                  </Box>
+                  {/* On mobile: stack vertically with horizontal divider. Desktop: side by side with vertical divider */}
+                  <Stack
+                    direction={{ xs: 'column', sm: 'row' }}
+                    spacing={{ xs: 0, sm: 0 }}
+                    divider={
+                      isMobile
+                        ? <Divider sx={{ borderColor: dividerColor, my: 2 }} />
+                        : <Divider orientation="vertical" flexItem sx={{ borderColor: dividerColor, mx: 2.5 }} />
+                    }
+                  >
+                    <ModelProbBars
+                      title="ML Model"
+                      subtitle={null}
+                      data={MOCK_RESPONSE.ml}
+                      home={home} away={away}
+                      animProbs={isSimulating ? mlAnimProbs : null}
+                      isSimulating={isSimulating}
+                      isDark={isDark}
+                      colors={mlColors}
+                      compact={isMobile}
+                    />
+                    <ModelProbBars
+                      title="Poisson Baseline"
+                      subtitle={phase === 'result' ? `λ home ${MOCK_RESPONSE.poisson.homeLambda.toFixed(2)}  ·  λ away ${MOCK_RESPONSE.poisson.awayLambda.toFixed(2)}` : null}
+                      data={MOCK_RESPONSE.poisson}
+                      home={home} away={away}
+                      animProbs={isSimulating ? poissonAnimProbs : null}
+                      isSimulating={isSimulating}
+                      isDark={isDark}
+                      colors={poissonColors}
+                      compact={isMobile}
+                    />
+                  </Stack>
                 </Paper>
               </Fade>
             )}
 
-            {/* ── Scorelines ────────────────────────── */}
+            {/* ── Scorelines: tabbed ML / Poisson ────── */}
             {showResult && (
               <Fade in timeout={400}>
-                <Paper sx={{ p: { xs: 3, sm: 4 } }}>
-                  <Typography variant="subtitle2" sx={{ mb: 2 }}>Most likely scorelines</Typography>
-                  <ScorelineTable scorelines={MOCK_RESULT.scorelines} revealed={isSimulating ? revealedRows : null} isDark={isDark} />
+                <Paper sx={{ px: cardPx, py: cardPy }}>
+                  <Typography variant="subtitle2" sx={{ mb: 1, fontSize: { xs: '0.72rem', sm: '0.82rem' } }}>
+                    Most likely scorelines
+                  </Typography>
+
+                  <Tabs
+                    value={scoreTab}
+                    onChange={(_, v) => setScoreTab(v)}
+                    variant={isMobile ? 'fullWidth' : 'standard'}
+                    sx={{
+                      mb: 1.5,
+                      '& .MuiTabs-indicator': {
+                        backgroundColor: scoreTab === 0
+                          ? (isDark ? '#7C4DFF' : '#3D195B')
+                          : (isDark ? '#FF6D00' : '#E65100'),
+                      },
+                    }}
+                  >
+                    <Tab label="ML Model" sx={{
+                      color: isDark ? '#8888a0' : '#888',
+                      fontSize: { xs: '0.8rem', sm: '0.85rem' },
+                      '&.Mui-selected': { color: isDark ? '#b09aff' : '#3D195B' },
+                    }} />
+                    <Tab label="Poisson" sx={{
+                      color: isDark ? '#8888a0' : '#888',
+                      fontSize: { xs: '0.8rem', sm: '0.85rem' },
+                      '&.Mui-selected': { color: isDark ? '#ffab40' : '#E65100' },
+                    }} />
+                  </Tabs>
+
+                  {scoreTab === 0 && (
+                    <ScorelineTable
+                      scorelines={MOCK_RESPONSE.ml.scorelines}
+                      revealed={isSimulating ? revealedRows : null}
+                      isDark={isDark}
+                      chipColor={mlChip.color}
+                      chipBg={mlChip.accentText}
+                      chipAccentBg={mlChip.accentBg}
+                    />
+                  )}
+                  {scoreTab === 1 && (
+                    <ScorelineTable
+                      scorelines={MOCK_RESPONSE.poisson.scorelines}
+                      revealed={isSimulating ? revealedRows : null}
+                      isDark={isDark}
+                      chipColor={poissonChip.color}
+                      chipBg={poissonChip.accentText}
+                      chipAccentBg={poissonChip.accentBg}
+                    />
+                  )}
                 </Paper>
               </Fade>
             )}
