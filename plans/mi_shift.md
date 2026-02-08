@@ -446,6 +446,51 @@ Each row shows:
 - `GET /teams/{team}/xg-trend` - xG data over time
 - `GET /model/metrics` - Model evaluation metrics
 
+## Experiment tracking (MLflow)
+
+Every model change is an experiment measured against a baseline (H_0).
+
+### Setup
+
+- `pip install mlflow` (added to ml package dependencies)
+- Data stored locally in `mlruns/` (gitignored)
+- View results with `mlflow ui` (default port 5000)
+
+### What gets logged per run
+
+| Item | Example |
+|------|---------|
+| Description | "Added xG std dev features" |
+| Feature list | `["homeXgFor", "homeXgAgainst", ..., "homeXgStdDev"]` |
+| Hyperparameters | `n_estimators=200, max_depth=4, learning_rate=0.1` |
+| Overall metrics | accuracy, brier score, log loss, ROC-AUC |
+| Per-match predictions | For every match: predicted outcome + probabilities vs actual outcome |
+
+### Workflow
+
+1. Log the current 15-feature model as H_0 (baseline run)
+2. Make a change (add features, tune hyperparameters, try a different algorithm)
+3. Log the new run
+4. Compare against H_0 in MLflow UI — did metrics improve?
+5. Matchweek review shows which specific matches flipped right/wrong
+6. If the change doesn't beat H_0, reject it and move on
+
+### Planned model experiments
+
+| Experiment | Hypothesis |
+|-----------|-----------|
+| Add xG std dev (volatility) | Volatile teams produce more extreme results; SD features let the model distinguish them |
+| Recency weighting | Recent form matters more than old results; exponential decay on rolling window |
+| Per-team home advantage | Replace league-wide home advantage with team-specific home/away xG ratios |
+| XGBoost / LightGBM | Gradient boosting alternatives may handle the feature space better |
+
+### Deployment path
+
+MLflow stores data locally by default (SQLite + flat files). Scales without code changes:
+- SQLite → Postgres (swap connection string)
+- Local artifacts → S3/GCS (swap path)
+- Local UI → hosted MLflow server (one env var)
+
 ## Dev scripts
 
 - `pnpm dev` — starts API (port 4400) + frontend (port 3300) concurrently
