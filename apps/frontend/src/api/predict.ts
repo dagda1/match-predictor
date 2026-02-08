@@ -1,4 +1,4 @@
-import type { PredictResponse, Team } from './types';
+import type { MatchweekDetail, MatchweekSummary, PredictResponse, Team } from './types';
 
 export async function fetchTeams(): Promise<Team[]> {
   const response = await fetch('/api/teams');
@@ -16,6 +16,22 @@ export async function fetchPrediction(homeTeamId: string, awayTeamId: string): P
   });
   if (!response.ok) {
     throw new Error(`prediction failed: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchMatchweeks(): Promise<MatchweekSummary[]> {
+  const response = await fetch('/api/matchweeks');
+  if (!response.ok) {
+    throw new Error(`failed to fetch matchweeks: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchMatchweek(week: number): Promise<MatchweekDetail> {
+  const response = await fetch(`/api/matchweeks/${week}`);
+  if (!response.ok) {
+    throw new Error(`failed to fetch matchweek ${week}: ${response.status}`);
   }
   return response.json();
 }

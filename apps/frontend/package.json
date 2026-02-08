@@ -11,7 +11,8 @@
     "test:ci": "cross-env NODE_ENV=test vitest --run"
   },
   "dependencies": {
-    "@match-predictor/theme": "workspace:*"
+    "@match-predictor/theme": "workspace:*",
+    "@mui/icons-material": "6.5.0"
   },
   "devDependencies": {
     "@emotion/react": "11.14.0",

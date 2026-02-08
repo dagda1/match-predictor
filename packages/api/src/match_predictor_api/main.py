@@ -1,9 +1,14 @@
+import json
+from datetime import datetime, timedelta
+from pathlib import Path
+
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from match_predictor import load_matches, train, predict_match, poisson_predict
+from match_predictor.data import DATA_DIR
 
 app = FastAPI(title="Match Predictor API")
 
@@ -102,6 +107,148 @@ def get_metrics():
         logLoss=m.log_loss_val,
         rocAuc=m.roc_auc,
         baselineAccuracy=m.baseline_accuracy,
+    )
+
+
+FIRST_MATCHWEEK = datetime(2025, 12, 27)
+PREDICTIONS_PATH = DATA_DIR / "predictions-2025.json"
+
+
+class TopScore(BaseModel):
+    homeGoals: int
+    awayGoals: int
+    probability: float
+
+
+class MatchMlResult(BaseModel):
+    homeWin: float
+    draw: float
+    awayWin: float
+    predictedOutcome: str
+    correct: bool
+    topScore: TopScore
+
+
+class MatchPoissonResult(BaseModel):
+    homeWin: float
+    draw: float
+    awayWin: float
+    predictedOutcome: str
+    correct: bool
+    homeLambda: float
+    awayLambda: float
+    topScore: TopScore
+
+
+class MatchResult(BaseModel):
+    homeTeam: str
+    awayTeam: str
+    date: str
+    actualHomeGoals: int
+    actualAwayGoals: int
+    actualOutcome: str
+    ml: MatchMlResult
+    poisson: MatchPoissonResult
+
+
+class MatchweekSummaryResponse(BaseModel):
+    week: int
+    startDate: str
+    endDate: str
+    matchCount: int
+    mlCorrect: int
+    poissonCorrect: int
+
+
+class MatchweekDetailSummary(BaseModel):
+    mlCorrect: int
+    mlTotal: int
+    poissonCorrect: int
+    poissonTotal: int
+
+
+class MatchweekDetailResponse(BaseModel):
+    week: int
+    startDate: str
+    endDate: str
+    matches: list[MatchResult]
+    summary: MatchweekDetailSummary
+
+
+def _load_predictions() -> list[dict]:
+    if not PREDICTIONS_PATH.exists():
+        return []
+    with open(PREDICTIONS_PATH) as f:
+        return json.load(f)
+
+
+def _matchweek_for_date(dt: datetime) -> int:
+    days_since = (dt - FIRST_MATCHWEEK).days
+    if days_since < 0:
+        return 0
+    return days_since // 7 + 1
+
+
+def _matchweek_dates(week: int) -> tuple[datetime, datetime]:
+    start = FIRST_MATCHWEEK + timedelta(days=(week - 1) * 7)
+    end = start + timedelta(days=6, hours=23, minutes=59, seconds=59)
+    return start, end
+
+
+def _group_by_matchweek(predictions: list[dict]) -> dict[int, list[dict]]:
+    groups: dict[int, list[dict]] = {}
+    for p in predictions:
+        dt = datetime.fromisoformat(p["date"])
+        week = _matchweek_for_date(dt)
+        if week < 1:
+            continue
+        groups.setdefault(week, []).append(p)
+    return groups
+
+
+@app.get("/matchweeks", response_model=list[MatchweekSummaryResponse])
+def get_matchweeks():
+    predictions = _load_predictions()
+    groups = _group_by_matchweek(predictions)
+
+    summaries = []
+    for week in sorted(groups.keys()):
+        matches = groups[week]
+        start, end = _matchweek_dates(week)
+        summaries.append(MatchweekSummaryResponse(
+            week=week,
+            startDate=start.strftime("%-d %b %Y"),
+            endDate=end.strftime("%-d %b %Y"),
+            matchCount=len(matches),
+            mlCorrect=sum(1 for m in matches if m["ml"]["correct"]),
+            poissonCorrect=sum(1 for m in matches if m["poisson"]["correct"]),
+        ))
+
+    return summaries
+
+
+@app.get("/matchweeks/{week}", response_model=MatchweekDetailResponse)
+def get_matchweek(week: int):
+    predictions = _load_predictions()
+    groups = _group_by_matchweek(predictions)
+
+    if week not in groups:
+        raise HTTPException(status_code=404, detail=f"matchweek {week} not found")
+
+    matches = groups[week]
+    start, end = _matchweek_dates(week)
+
+    return MatchweekDetailResponse(
+        week=week,
+        startDate=start.strftime("%-d %b %Y"),
+        endDate=end.strftime("%-d %b %Y"),
+        matches=[MatchResult(**m) for m in matches],
+        summary=MatchweekDetailSummary(
+            mlCorrect=sum(1 for m in matches if m["ml"]["correct"]),
+            mlTotal=len(matches),
+            poissonCorrect=sum(1 for m in matches if m["poisson"]["correct"]),
+            poissonTotal=len(matches),
+        ),
     )
 
 

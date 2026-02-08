@@ -26,7 +26,14 @@
       "Bash(pkill:*)",
       "Bash(pnpm add:*)",
       "Bash(pnpm --filter @match-predictor/frontend exec tsc:*)",
-      "Bash(pnpm exec tsc:*)"
+      "Bash(pnpm exec tsc:*)",
+      "Bash(python -m match_predictor.generate_predictions:*)",
+      "Bash(.venv/bin/python:*)",
+      "Bash(pnpm --filter @match-predictor/theme exec tsc:*)",
+      "Bash(pnpm --filter @match-predictor/frontend add:*)",
+      "Bash(kill:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)"
     ]
   }
 }
