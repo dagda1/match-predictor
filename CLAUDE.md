@@ -269,6 +269,44 @@ const team = response.team_h;
 
 `?.` is for `T | undefined | null`. If the type is `T`, use `.` and let TypeScript catch the mistake at compile time, not mask it at runtime.
 
+## Testing — test behaviour, not code
+
+Tests must verify what a user sees and does, not internal implementation details. A test that calls `onChange` and asserts it was called proves nothing. A test that renders a full component tree, populates it with data, and asserts the user sees the correct output in the DOM is useful.
+
+### Always render through the real component tree
+
+- Never test components in isolation with mock props when they exist inside a larger tree.
+- Render the way the app renders — with real providers, real data flow.
+
+### Assert what the user sees
+
+```ts
+// BAD — testing internal wiring, proves nothing
+expect(props.onChange).toHaveBeenCalledWith('Arsenal');
+
+// GOOD — testing what the user actually sees
+expect(screen.getByRole('cell', { name: 'Arsenal' })).toBeInTheDocument();
+```
+
+### Interact like a user
+
+```ts
+// BAD — calling handlers directly
+fireEvent.change(input, { target: { value: 'foo' } });
+
+// GOOD — simulating real user actions
+const user = userEvent.setup();
+await user.click(screen.getByRole('button', { name: 'Select' }));
+const option = await screen.findByRole('option', { name: 'Arsenal' });
+await user.click(option);
+expect(screen.getByText('Arsenal')).toBeInTheDocument();
+```
+
+### Use real data structures
+
+- Use real data shapes from the API, not hand-crafted fragments.
+- If testing existing data display, pass it through the same path the app uses.
+
 ## When unsure
 
 Stop and ask for clarification before coding.

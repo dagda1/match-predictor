@@ -243,6 +243,26 @@ First run scrapes everything. Subsequent runs only fetch new fixtures.
 - FastAPI backend (Python) serving REST endpoints
 - Communication via fetch/axios
 
+### Navigation
+
+TopNav (`packages/theme`) currently has a static title and theme switcher. Needs nav links added.
+
+| Path | Nav label | Page component |
+|------|-----------|----------------|
+| `/` | Predictor | Match Predictor — select two teams, get predictions |
+| `/results` | Results | Matchweek Review — model predictions vs actual results |
+
+TopNav changes:
+- Add nav links ("Predictor", "Results") to the left of the theme switcher
+- Active link highlighted
+- Links use `react-router` `Link` or `NavLink`
+- TopNav is in the theme package so it needs to accept routes as props or children (keep it generic, don't hardcode routes in the shared package)
+
+Routes (`apps/frontend/src/routes/AppRoutes.tsx`):
+- `/` → lazy-loaded `Home` (Match Predictor)
+- `/results` → lazy-loaded `Results` (Matchweek Review)
+- Both wrapped by `Page` layout (which includes TopNav + MaxWidthContainer + Outlet)
+
 ### Match Predictor page (build first)
 
 #### States
@@ -354,29 +374,151 @@ Compare model predictions against actual results for a matchweek (a 7-day window
 
 Show how the model performed on real matches. This is the credibility test — did the model's probabilities reflect reality? Lets you browse week by week and see where the model got it right or wrong.
 
-#### Data
+#### Matchweek definition
 
-A "matchweek" is all completed matches within a 7-day period. The model predicts each match using only data available before kick-off (no leakage). After the matches are played, we compare predictions to actual outcomes.
+A matchweek runs Saturday 00:00 to Friday 23:59 (covers Saturday 3pm kickoffs through Monday night football). First matchweek starts Saturday 2nd February 2026. Week numbers are sequential from that date.
+
+The model predicts each match using only data available before kick-off (no leakage). After the matches are played, we compare predicted outcome against actual outcome.
+
+#### Routes
+
+| Route | Page | Purpose |
+|-------|------|---------|
+| `/results` | Matchweek list | All matchweeks with summary stats, click to drill in |
+| `/results/:week` | Matchweek detail | Per-match predictions vs actuals for one week |
+
+#### Matchweek list page (`/results`)
+
+Clickable table of all matchweeks, most recent first.
+
+```
+┌──────────────────────────────────────────────────────────┐
+│  Results                                                  │
+│                                                           │
+│  ┌──────────────────────────────────────────────────────┐ │
+│  │ Week    │ Dates              │ Matches │ ML    │ Poi  │ │
+│  │ Week 1  │ 2 Feb – 8 Feb     │ 10      │ 5/10  │ 4/10 │ │
+│  │ Week 2  │ 9 Feb – 15 Feb    │ 8       │ 6/8   │ 5/8  │ │
+│  │ Week 3  │ 16 Feb – 22 Feb   │ 10      │ 4/10  │ 6/10 │ │
+│  │ ...                                                   │ │
+│  └──────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────┘
+```
+
+#### Matchweek detail page (`/results/:week`)
+
+Back link to list. Each match is a card showing the actual result and a mini version of the predictor output (same ML + Poisson probability bars, compact).
+
+```
+┌──────────────────────────────────────────────────────────┐
+│  ← Back to results                                        │
+│                                                           │
+│  Week 1 · 2 Feb – 8 Feb 2026 · 10 matches                │
+│  ML 5/10 (50%) · Poisson 4/10 (40%)                      │
+│                                                           │
+│  ┌──────────────────────────────────────────────────────┐ │
+│  │  Liverpool 2 – 1 Man City              ML ✓  Poi ✗  │ │
+│  │  ML predicted: 2–1 14.2%   Poisson predicted: 1–1 13.4% │
+│  │                                                       │ │
+│  │  ML Model               │  Poisson Baseline           │ │
+│  │  Liverpool win ██████ 48.2% │  Liverpool win ███ 29.9%│ │
+│  │  Draw         ███ 24.1%     │  Draw         ███ 26.3%│ │
+│  │  Man City win ████ 27.7%    │  Man City win █████43.8%│ │
+│  └──────────────────────────────────────────────────────┘ │
+│                                                           │
+│  ┌──────────────────────────────────────────────────────┐ │
+│  │  Arsenal 1 – 0 Aston Villa             ML ✓  Poi ✓  │ │
+│  │  ML predicted: 1–0 15.8%   Poisson predicted: 2–1 11.8% │
+│  │                                                       │ │
+│  │  ML Model               │  Poisson Baseline           │ │
+│  │  Arsenal win  ███████ 55.1% │  Arsenal win  █████43.8%│ │
+│  │  Draw         ███ 22.4%     │  Draw         ████ 28.1%│ │
+│  │  Villa win    ███ 22.5%     │  Villa win    ████ 28.1%│ │
+│  └──────────────────────────────────────────────────────┘ │
+│                                                           │
+│  ┌──────────────────────────────────────────────────────┐ │
+│  │  Chelsea 1 – 1 Tottenham               ML ✗  Poi ✗  │ │
+│  │  ML predicted: 2–1 11.2%   Poisson predicted: 1–1 12.8% │
+│  │                                                       │ │
+│  │  ML Model               │  Poisson Baseline           │ │
+│  │  Chelsea win  █████ 42.3%   │  Chelsea win  ████ 35.2%│ │
+│  │  Draw         ███ 24.1%     │  Draw         ████ 29.5%│ │
+│  │  Spurs win    ████ 33.6%    │  Spurs win    █████35.3%│ │
+│  └──────────────────────────────────────────────────────┘ │
+│  ...                                                      │
+└──────────────────────────────────────────────────────────┘
+```
+
+Each match card shows:
+- Actual score and team names as the header
+- ML ✓/✗ and Poisson ✓/✗ top-right — instant glance at who got it right
+- Top predicted scoreline per model with probability (e.g. "ML predicted: 2–1 14.2%" / "Poisson predicted: 1–1 13.4%")
+- Mini probability bars for both models side by side (reuses `ModelProbBars` + `ProbBar` components from the predictor page in compact mode)
+- Card border/tint: green if both correct, red if both wrong, neutral if they disagree
+
+#### UI fields per match row
+
+| Field | Source | Purpose |
+|-------|--------|---------|
+| homeTeam | match data | Row label |
+| awayTeam | match data | Row label |
+| date | match data | Sort order within week |
+| actualHomeGoals | match data | Show actual score |
+| actualAwayGoals | match data | Show actual score |
+| actualOutcome | derived (home/draw/away) | Compare against predictions |
+| mlHomeWin | ML model | Probability percentage |
+| mlDraw | ML model | Probability percentage |
+| mlAwayWin | ML model | Probability percentage |
+| mlPredictedOutcome | derived (highest prob) | ✓/✗ indicator |
+| mlTopScore | ML model (rank 1 scoreline) | Top predicted scoreline + probability |
+| mlCorrect | derived | Green/red row tint |
+| poissonHomeWin | Poisson | Probability percentage |
+| poissonDraw | Poisson | Probability percentage |
+| poissonAwayWin | Poisson | Probability percentage |
+| poissonPredictedOutcome | derived (highest prob) | ✓/✗ indicator |
+| poissonTopScore | Poisson model (rank 1 scoreline) | Top predicted scoreline + probability |
+| poissonCorrect | derived | Green/red row tint |
+| poissonHomeLambda | Poisson | Show the xG inputs |
+| poissonAwayLambda | Poisson | Show the xG inputs |
+
+#### Matchweek summary fields
+
+| Field | Purpose |
+|-------|---------|
+| week | Identifier |
+| startDate | Week picker label |
+| endDate | Week picker label |
+| matchCount | "10 matches" |
+| mlCorrect | "ML 5/10 (50%)" |
+| poissonCorrect | "Poisson 4/10 (40%)" |
 
 #### API
 
 ```
 GET /matchweeks
-Response: { week: string, startDate: string, endDate: string, matchCount: number }[]
+Response: {
+  week: number,
+  startDate: string,
+  endDate: string,
+  matchCount: number,
+  mlCorrect: number,
+  poissonCorrect: number,
+}[]
 
 GET /matchweeks/{week}
 Response: {
-  week: string,
+  week: number,
   startDate: string,
   endDate: string,
   matches: {
     homeTeam: string,
     awayTeam: string,
+    date: string,
     actualHomeGoals: number,
     actualAwayGoals: number,
     actualOutcome: "home" | "draw" | "away",
-    ml: { homeWin: number, draw: number, awayWin: number, predictedOutcome: "home" | "draw" | "away", correct: boolean },
-    poisson: { homeWin: number, draw: number, awayWin: number, predictedOutcome: "home" | "draw" | "away", correct: boolean },
+    ml: { homeWin: number, draw: number, awayWin: number, predictedOutcome: "home" | "draw" | "away", correct: boolean, topScore: { homeGoals: number, awayGoals: number, probability: number } },
+    poisson: { homeWin: number, draw: number, awayWin: number, predictedOutcome: "home" | "draw" | "away", correct: boolean, homeLambda: number, awayLambda: number, topScore: { homeGoals: number, awayGoals: number, probability: number } },
   }[],
   summary: {
     mlCorrect: number,
@@ -387,40 +529,34 @@ Response: {
 }
 ```
 
-#### Layout
+#### Data pipeline
+
+Predictions are pre-computed at import time, not on the fly. The `fetch-data` script does three things:
+
+1. **Scrape** — incrementally fetch new completed matches from Understat (only matches after the max date in existing JSON)
+2. **Predict** — for each new match, run both models using only data available before kick-off (`date < match_date`), producing probabilities and predicted outcome
+3. **Save** — append match result + predictions to a pre-computed predictions file
 
 ```
-┌─────────────────────────────────────────────────┐
-│  Matchweek Review                               │
-│                                                  │
-│  ┌──────────────────────────────────┐            │
-│  │ Week picker  [◀ Week 24 ▶]      │            │
-│  │ 1 Feb – 7 Feb 2026 · 10 matches │            │
-│  └──────────────────────────────────┘            │
-│                                                  │
-│  Summary: ML 5/10 (50%) · Poisson 4/10 (40%)    │
-│                                                  │
-│  ┌──────────────────────────────────────────┐    │
-│  │ Match          │ Score │ ML      │ Poisson│   │
-│  │ Liverpool v City│ 2-1  │ ✓ 48.2% │ ✗ 29.9%│  │
-│  │ Arsenal v Villa │ 1-0  │ ✓ 55.1% │ ✓ 43.8%│  │
-│  │ Chelsea v Spurs │ 1-1  │ ✗ 24.1% │ ✓ 26.3%│  │
-│  │ ...                                       │   │
-│  └──────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────┘
+packages/etl/data/
+  matches-2024.json        # raw match data (2024-25 season)
+  matches-2025.json        # raw match data (2025-26 season)
+  predictions-2025.json    # pre-computed: actual result + ML + Poisson per match
 ```
 
-Each row shows:
-- The match and actual score
-- Whether ML predicted the correct outcome (✓/✗) and the probability it assigned
-- Whether Poisson predicted the correct outcome (✓/✗) and the probability it assigned
-- Colour-code rows: green tint for correct, red tint for wrong
+The predictions file is an array of objects matching the matchweek detail `matches[]` shape from the API contract above. The `/matchweeks` endpoint just reads this file and groups by Saturday-to-Friday windows — no model execution at request time.
 
-#### Week picker
+Command: `pnpm --filter @match-predictor/etl fetch-data` (scrapes + predicts + saves in one step).
 
-- Previous/next arrows to navigate weeks
-- Shows date range and match count
-- Defaults to the most recent completed matchweek
+#### Prediction integrity
+
+The key constraint: predictions must use only data from before the match. The existing code handles this — `_rolling_stats` filters `df["date"] < before_date` and Poisson's `_team_xg` can be filtered the same way.
+
+For the ML model, honest evaluation requires either:
+- **Option A:** Retrain per matchweek (train only on matches before that week, predict, compare) — correct but slow
+- **Option B:** Use TimeSeriesSplit CV predictions from `evaluate()` — already out-of-sample, just need to preserve the match-to-prediction mapping
+
+Option B is preferred for the initial implementation. Extend `evaluate()` to return per-match predictions alongside overall metrics.
 
 ### Future pages
 
