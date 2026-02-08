@@ -6,6 +6,7 @@ requires-python = ">=3.13"
 dependencies = [
     "numpy",
     "pandas",
+    "requests>=2.32.5",
     "scikit-learn",
 ]
 

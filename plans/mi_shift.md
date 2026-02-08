@@ -541,7 +541,7 @@ Predictions are pre-computed at import time, not on the fly. The `fetch-data` sc
 packages/etl/data/
   matches-2024.json        # raw match data (2024-25 season)
   matches-2025.json        # raw match data (2025-26 season)
-  predictions-2025.json    # pre-computed: actual result + ML + Poisson per match
+  predictions-2026.json    # pre-computed: actual result + ML + Poisson per match
 ```
 
 The predictions file is an array of objects matching the matchweek detail `matches[]` shape from the API contract above. The `/matchweeks` endpoint just reads this file and groups by Saturday-to-Friday windows — no model execution at request time.

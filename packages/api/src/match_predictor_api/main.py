@@ -111,7 +111,8 @@ def get_metrics():
 
 
 FIRST_MATCHWEEK = datetime(2025, 12, 27)
-PREDICTIONS_PATH = DATA_DIR / "predictions-2025.json"
+PREDICTIONS_PATH = DATA_DIR / "predictions-2026.json"
+UPCOMING_PATH = DATA_DIR / "upcoming.json"
 
 
 class TopScore(BaseModel):
@@ -249,6 +250,59 @@ def get_matchweek(week: int):
             poissonCorrect=sum(1 for m in matches if m["poisson"]["correct"]),
             poissonTotal=len(matches),
         ),
+    )
+
+
+class UpcomingMlResult(BaseModel):
+    homeWin: float
+    draw: float
+    awayWin: float
+    predictedOutcome: str
+    topScore: TopScore
+
+
+class UpcomingPoissonResult(BaseModel):
+    homeWin: float
+    draw: float
+    awayWin: float
+    predictedOutcome: str
+    homeLambda: float
+    awayLambda: float
+    topScore: TopScore
+
+
+class UpcomingMatch(BaseModel):
+    homeTeam: str
+    awayTeam: str
+    date: str
+    ml: UpcomingMlResult
+    poisson: UpcomingPoissonResult
+
+
+class UpcomingResponse(BaseModel):
+    startDate: str
+    endDate: str
+    matches: list[UpcomingMatch]
+
+
+def _load_upcoming() -> list[dict]:
+    if not UPCOMING_PATH.exists():
+        return []
+    with open(UPCOMING_PATH) as f:
+        return json.load(f)
+
+
+@app.get("/upcoming", response_model=UpcomingResponse)
+def get_upcoming():
+    matches = _load_upcoming()
+    if not matches:
+        return UpcomingResponse(startDate="", endDate="", matches=[])
+
+    dates = [datetime.fromisoformat(m["date"]) for m in matches]
+    return UpcomingResponse(
+        startDate=min(dates).strftime("%-d %b %Y"),
+        endDate=max(dates).strftime("%-d %b %Y"),
+        matches=[UpcomingMatch(**m) for m in matches],
     )
 
 

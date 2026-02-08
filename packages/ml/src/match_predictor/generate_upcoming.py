@@ -1,55 +1,70 @@
 import json
+from datetime import datetime, timedelta
 
 import numpy as np
 import pandas as pd
+import requests
 
 from match_predictor.data import load_matches, DATA_DIR
 from match_predictor.model import train
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
-CUTOFF = pd.Timestamp("2026-01-01")
-PREDICTIONS_PATH = DATA_DIR / "predictions-2026.json"
+UPCOMING_PATH = DATA_DIR / "upcoming.json"
+SEASON = "2025"
 
 
-def _outcome(home_goals: int, away_goals: int) -> str:
-    if home_goals > away_goals:
-        return "home"
-    if home_goals < away_goals:
-        return "away"
-    return "draw"
+def _fetch_upcoming_fixtures() -> list[dict]:
+    response = requests.get(
+        f"https://understat.com/getLeagueData/EPL/{SEASON}",
+        headers={
+            "X-Requested-With": "XMLHttpRequest",
+            "Referer": f"https://understat.com/league/EPL/{SEASON}",
+        },
+    )
+    response.raise_for_status()
 
+    data = response.json()
 
-def _predicted_outcome(home_win: float, draw: float, away_win: float) -> str:
-    best = max(home_win, draw, away_win)
-    if best == home_win:
-        return "home"
-    if best == draw:
-        return "draw"
-    return "away"
+    now = datetime.now()
+    cutoff = now + timedelta(days=8)
+
+    fixtures = []
+    for entry in data["dates"]:
+        if entry["isResult"]:
+            continue
+        dt = datetime.strptime(entry["datetime"], "%Y-%m-%d %H:%M:%S")
+        if dt < now or dt > cutoff:
+            continue
+        fixtures.append({
+            "homeTeam": entry["h"]["title"],
+            "awayTeam": entry["a"]["title"],
+            "date": dt.isoformat(),
+        })
+
+    return sorted(fixtures, key=lambda f: f["date"])
 
 
 def generate() -> None:
-    df = load_matches()
+    print("fetching upcoming fixtures from Understat...")
+    fixtures = _fetch_upcoming_fixtures()
 
-    train_df = df[df["date"] < CUTOFF]
-    predict_df = df[df["date"] >= CUTOFF]
-
-    if predict_df.empty:
-        print(f"no matches after {CUTOFF.date()}")
+    if not fixtures:
+        print("no upcoming fixtures in the next 7 days")
+        with open(UPCOMING_PATH, "w") as f:
+            json.dump([], f)
         return
 
-    print(f"training on {len(train_df)} matches before {CUTOFF.date()}")
-    print(f"predicting {len(predict_df)} matches from {CUTOFF.date()} onwards")
+    print(f"found {len(fixtures)} upcoming fixtures")
 
-    model = train(train_df)
+    df = load_matches()
+    model = train(df)
 
     predictions = []
-
-    for _, match in predict_df.iterrows():
-        home_team = match["homeTeam"]
-        away_team = match["awayTeam"]
-        match_date = match["date"]
+    for fixture in fixtures:
+        home_team = fixture["homeTeam"]
+        away_team = fixture["awayTeam"]
+        match_date = pd.Timestamp(fixture["date"])
 
         features = build_feature_row(df, match_date, home_team, away_team)
         if features is None:
@@ -77,29 +92,23 @@ def generate() -> None:
             scoreline_counts[key] = scoreline_counts.get(key, 0) + 1
         ml_top = sorted(scoreline_counts.items(), key=lambda x: x[1], reverse=True)[0]
 
-        prior_df = df[df["date"] < match_date]
-        poisson_result = poisson_predict(prior_df, home_team, away_team)
+        poisson_result = poisson_predict(df, home_team, away_team)
         poisson_top = poisson_result.scorelines[0]
 
-        actual_home = int(match["homeGoals"])
-        actual_away = int(match["awayGoals"])
-        actual_outcome = _outcome(actual_home, actual_away)
-        ml_pred = _predicted_outcome(ml_home_win, ml_draw, ml_away_win)
-        poisson_pred = _predicted_outcome(poisson_result.home_win, poisson_result.draw, poisson_result.away_win)
+        best_ml = max(ml_home_win, ml_draw, ml_away_win)
+        ml_pred = "home" if best_ml == ml_home_win else ("draw" if best_ml == ml_draw else "away")
+        best_poi = max(poisson_result.home_win, poisson_result.draw, poisson_result.away_win)
+        poi_pred = "home" if best_poi == poisson_result.home_win else ("draw" if best_poi == poisson_result.draw else "away")
 
         predictions.append({
             "homeTeam": home_team,
             "awayTeam": away_team,
-            "date": match_date.isoformat(),
-            "actualHomeGoals": actual_home,
-            "actualAwayGoals": actual_away,
-            "actualOutcome": actual_outcome,
+            "date": fixture["date"],
             "ml": {
                 "homeWin": ml_home_win,
                 "draw": ml_draw,
                 "awayWin": ml_away_win,
                 "predictedOutcome": ml_pred,
-                "correct": ml_pred == actual_outcome,
                 "topScore": {
                     "homeGoals": ml_top[0][0],
                     "awayGoals": ml_top[0][1],
@@ -110,8 +119,7 @@ def generate() -> None:
                 "homeWin": poisson_result.home_win,
                 "draw": poisson_result.draw,
                 "awayWin": poisson_result.away_win,
-                "predictedOutcome": poisson_pred,
-                "correct": poisson_pred == actual_outcome,
+                "predictedOutcome": poi_pred,
                 "homeLambda": poisson_result.home_lambda,
                 "awayLambda": poisson_result.away_lambda,
                 "topScore": {
@@ -122,16 +130,12 @@ def generate() -> None:
             },
         })
 
-        print(f"  {home_team} {actual_home}-{actual_away} {away_team}  ML:{ml_pred}({'✓' if ml_pred == actual_outcome else '✗'})  Poi:{poisson_pred}({'✓' if poisson_pred == actual_outcome else '✗'})")
+        print(f"  {home_team} vs {away_team}  ML:{ml_pred}  Poi:{poi_pred}  ML top:{ml_top[0][0]}-{ml_top[0][1]}  Poi top:{poisson_top['homeGoals']}-{poisson_top['awayGoals']}")
 
-    with open(PREDICTIONS_PATH, "w") as f:
+    with open(UPCOMING_PATH, "w") as f:
         json.dump(predictions, f, indent=2)
 
-    ml_correct = sum(1 for p in predictions if p["ml"]["correct"])
-    poi_correct = sum(1 for p in predictions if p["poisson"]["correct"])
-    print(f"\nsaved {len(predictions)} predictions to {PREDICTIONS_PATH}")
-    print(f"ML: {ml_correct}/{len(predictions)} ({ml_correct/len(predictions)*100:.0f}%)")
-    print(f"Poisson: {poi_correct}/{len(predictions)} ({poi_correct/len(predictions)*100:.0f}%)")
+    print(f"\nsaved {len(predictions)} upcoming predictions to {UPCOMING_PATH}")
 
 
 if __name__ == "__main__":

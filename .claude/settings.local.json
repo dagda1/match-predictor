@@ -33,7 +33,12 @@
       "Bash(pnpm --filter @match-predictor/frontend add:*)",
       "Bash(kill:*)",
       "Bash(lsof:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(source:*)",
+      "Bash(python -c:*)",
+      "Bash(pip install:*)",
+      "Bash(python -m pip install:*)",
+      "Bash(python -m match_predictor.generate_upcoming:*)"
     ]
   }
 }

@@ -8,15 +8,18 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import type { MatchweekDetail, MatchweekSummary } from '~/api/types';
-import { fetchMatchweek, fetchMatchweeks } from '~/api/predict';
+import type { MatchweekDetail, MatchweekSummary, UpcomingResponse } from '~/api/types';
+import { fetchMatchweek, fetchMatchweeks, fetchUpcoming } from '~/api/predict';
 import { MatchResultCard } from './components/MatchResultCard/MatchResultCard';
+import { UpcomingCard } from './components/UpcomingCard/UpcomingCard';
 import { sx } from './styles';
 
 export function Results(): JSX.Element {
   const [weeks, setWeeks] = useState<MatchweekSummary[]>([]);
   const [weekIdx, setWeekIdx] = useState(0);
   const [detail, setDetail] = useState<MatchweekDetail | null>(null);
+  const [upcoming, setUpcoming] = useState<UpcomingResponse | null>(null);
+  const [hasUpcoming, setHasUpcoming] = useState(false);
 
   useEffect(() => {
     fetchMatchweeks()
@@ -29,7 +32,21 @@ export function Results(): JSX.Element {
       .catch((error) => {
         console.error('failed to fetch matchweeks', error);
       });
+
+    fetchUpcoming()
+      .then((result) => {
+        if (result.matches.length > 0) {
+          setUpcoming(result);
+          setHasUpcoming(true);
+        }
+      })
+      .catch((error) => {
+        console.error('failed to fetch upcoming', error);
+      });
   }, []);
+
+  const totalPositions = weeks.length + (hasUpcoming ? 1 : 0);
+  const isUpcomingSelected = hasUpcoming && weekIdx === weeks.length;
 
   const loadWeek = useCallback((week: number) => {
     setDetail(null);
@@ -41,12 +58,12 @@ export function Results(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (weeks.length > 0) {
+    if (weeks.length > 0 && weekIdx < weeks.length) {
       loadWeek(weeks[weekIdx].week);
     }
   }, [weekIdx, weeks, loadWeek]);
 
-  if (weeks.length === 0) {
+  if (weeks.length === 0 && !hasUpcoming) {
     return (
       <Container maxWidth="md" sx={sx.container}>
         <Paper sx={sx.emptyState}>
@@ -57,8 +74,6 @@ export function Results(): JSX.Element {
       </Container>
     );
   }
-
-  const week = weeks[weekIdx];
 
   return (
     <Container maxWidth="md" sx={sx.container}>
@@ -74,16 +89,29 @@ export function Results(): JSX.Element {
               <ChevronLeftIcon />
             </IconButton>
             <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h5" sx={sx.weekTitle}>
-                Matchweek {week.week}
-              </Typography>
-              <Typography variant="body2" sx={sx.weekDates}>
-                {week.startDate} – {week.endDate} · {week.matchCount} matches
-              </Typography>
+              {isUpcomingSelected && upcoming ? (
+                <>
+                  <Typography variant="h5" sx={sx.weekTitle}>
+                    Upcoming
+                  </Typography>
+                  <Typography variant="body2" sx={sx.weekDates}>
+                    {upcoming.startDate} – {upcoming.endDate} · {upcoming.matches.length} matches
+                  </Typography>
+                </>
+              ) : weeks.length > 0 && weekIdx < weeks.length ? (
+                <>
+                  <Typography variant="h5" sx={sx.weekTitle}>
+                    Matchweek {weeks[weekIdx].week}
+                  </Typography>
+                  <Typography variant="body2" sx={sx.weekDates}>
+                    {weeks[weekIdx].startDate} – {weeks[weekIdx].endDate} · {weeks[weekIdx].matchCount} matches
+                  </Typography>
+                </>
+              ) : null}
             </Box>
             <IconButton
-              onClick={() => setWeekIdx(Math.min(weeks.length - 1, weekIdx + 1))}
-              disabled={weekIdx === weeks.length - 1}
+              onClick={() => setWeekIdx(Math.min(totalPositions - 1, weekIdx + 1))}
+              disabled={weekIdx === totalPositions - 1}
               size="small"
               sx={sx.navButton}
             >
@@ -92,7 +120,13 @@ export function Results(): JSX.Element {
           </Stack>
         </Paper>
 
-        {detail && (
+        {isUpcomingSelected && upcoming && (
+          upcoming.matches.map((match) => (
+            <UpcomingCard key={`${match.homeTeam}-${match.awayTeam}`} match={match} />
+          ))
+        )}
+
+        {!isUpcomingSelected && detail && (
           <>
             <Paper sx={sx.summaryCard}>
               <Stack direction="row" spacing={{ xs: 2, sm: 4 }} justifyContent="center">
