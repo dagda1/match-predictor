@@ -30,7 +30,7 @@
     }
     body.light { background: #f5f5f7; }
     body.dark  { background: #0e0e12; }
-    #root { width: 100%; max-width: 780px; }
+    #root { width: 100%; max-width: 900px; }
     .MuiAutocomplete-popper { z-index: 1300 !important; }
     /* prevent iOS input zoom */
     input, select, textarea { font-size: 16px !important; }
@@ -45,7 +45,7 @@
       CssBaseline, Paper, Typography, Button, Box, Stack,
       Autocomplete, TextField, LinearProgress, Table, TableBody,
       TableCell, TableContainer, TableHead, TableRow, Chip,
-      Fade, Grow, IconButton, Tooltip, Tabs, Tab, Divider
+      Fade, Grow, IconButton, Tooltip, Divider
     } = MaterialUI;
 
     /* ── Themes ────────────────────────────────────────────── */
@@ -348,7 +348,6 @@
       const [mlAnimProbs, setMlAnimProbs]         = React.useState({ h: 0.333, d: 0.333, a: 0.333 });
       const [poissonAnimProbs, setPoissonAnimProbs] = React.useState({ h: 0.333, d: 0.333, a: 0.333 });
       const [revealedRows, setRevealedRows] = React.useState(0);
-      const [scoreTab, setScoreTab] = React.useState(0);
       const rafRef = React.useRef(null);
 
       const isDark = mode === 'dark';
@@ -370,7 +369,6 @@
         setPhase('simulating');
         setSimProgress(0);
         setRevealedRows(0);
-        setScoreTab(0);
         setMlAnimProbs({ h: 0.333, d: 0.333, a: 0.333 });
         setPoissonAnimProbs({ h: 0.333, d: 0.333, a: 0.333 });
 
@@ -483,7 +481,7 @@
                 </Tooltip>
               </Stack>
 
-              <Stack direction="column" spacing={1.5} sx={{ mb: { xs: 2, sm: 3 } }}>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={{ mb: { xs: 2, sm: 3 } }}>
                 <TeamPicker label="Home team" value={home} onChange={setHome} exclude={away} />
                 <TeamPicker label="Away team" value={away} onChange={setAway} exclude={home} />
               </Stack>
@@ -579,60 +577,42 @@
               </Fade>
             )}
 
-            {/* ── Scorelines: tabbed ML / Poisson ────── */}
+            {/* ── Scorelines: ML and Poisson side by side ── */}
             {showResult && (
               <Fade in timeout={400}>
-                <Paper sx={{ px: cardPx, py: cardPy }}>
-                  <Typography variant="subtitle2" sx={{ mb: 1, fontSize: { xs: '0.72rem', sm: '0.82rem' } }}>
-                    Most likely scorelines
-                  </Typography>
-
-                  <Tabs
-                    value={scoreTab}
-                    onChange={(_, v) => setScoreTab(v)}
-                    variant={isMobile ? 'fullWidth' : 'standard'}
-                    sx={{
-                      mb: 1.5,
-                      '& .MuiTabs-indicator': {
-                        backgroundColor: scoreTab === 0
-                          ? (isDark ? '#7C4DFF' : '#3D195B')
-                          : (isDark ? '#FF6D00' : '#E65100'),
-                      },
-                    }}
+                <div>
+                  <Stack
+                    direction={{ xs: 'column', sm: 'row' }}
+                    spacing={{ xs: 2, sm: 2.5 }}
                   >
-                    <Tab label="ML Model" sx={{
-                      color: isDark ? '#8888a0' : '#888',
-                      fontSize: { xs: '0.8rem', sm: '0.85rem' },
-                      '&.Mui-selected': { color: isDark ? '#b09aff' : '#3D195B' },
-                    }} />
-                    <Tab label="Poisson" sx={{
-                      color: isDark ? '#8888a0' : '#888',
-                      fontSize: { xs: '0.8rem', sm: '0.85rem' },
-                      '&.Mui-selected': { color: isDark ? '#ffab40' : '#E65100' },
-                    }} />
-                  </Tabs>
-
-                  {scoreTab === 0 && (
-                    <ScorelineTable
-                      scorelines={MOCK_RESPONSE.ml.scorelines}
-                      revealed={isSimulating ? revealedRows : null}
-                      isDark={isDark}
-                      chipColor={mlChip.color}
-                      chipBg={mlChip.accentText}
-                      chipAccentBg={mlChip.accentBg}
-                    />
-                  )}
-                  {scoreTab === 1 && (
-                    <ScorelineTable
-                      scorelines={MOCK_RESPONSE.poisson.scorelines}
-                      revealed={isSimulating ? revealedRows : null}
-                      isDark={isDark}
-                      chipColor={poissonChip.color}
-                      chipBg={poissonChip.accentText}
-                      chipAccentBg={poissonChip.accentBg}
-                    />
-                  )}
-                </Paper>
+                    <Paper sx={{ px: cardPx, py: cardPy, flex: 1, minWidth: 0 }}>
+                      <Typography variant="subtitle2" sx={{ mb: 1.5, fontSize: { xs: '0.72rem', sm: '0.78rem' } }}>
+                        ML Model scorelines
+                      </Typography>
+                      <ScorelineTable
+                        scorelines={MOCK_RESPONSE.ml.scorelines}
+                        revealed={isSimulating ? revealedRows : null}
+                        isDark={isDark}
+                        chipColor={mlChip.color}
+                        chipBg={mlChip.accentText}
+                        chipAccentBg={mlChip.accentBg}
+                      />
+                    </Paper>
+                    <Paper sx={{ px: cardPx, py: cardPy, flex: 1, minWidth: 0 }}>
+                      <Typography variant="subtitle2" sx={{ mb: 1.5, fontSize: { xs: '0.72rem', sm: '0.78rem' } }}>
+                        Poisson scorelines
+                      </Typography>
+                      <ScorelineTable
+                        scorelines={MOCK_RESPONSE.poisson.scorelines}
+                        revealed={isSimulating ? revealedRows : null}
+                        isDark={isDark}
+                        chipColor={poissonChip.color}
+                        chipBg={poissonChip.accentText}
+                        chipAccentBg={poissonChip.accentBg}
+                      />
+                    </Paper>
+                  </Stack>
+                </div>
               </Fade>
             )}
           </Stack>

@@ -78,35 +78,17 @@ export const sx: Record<string, SxProps<Theme>> = {
     borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)',
     mx: 2.5,
   }),
-  scoreSubtitle: {
-    mb: 1,
+  scoreCard: {
+    px: { xs: 2.5, sm: 4 },
+    py: { xs: 2.5, sm: 4 },
+    flex: 1,
+    minWidth: 0,
   },
-  mlTab: (theme: Theme) => ({
-    color: theme.palette.text.secondary,
-    fontSize: { xs: '0.8rem', sm: '0.85rem' },
-    '&.Mui-selected': {
-      color: theme.palette.mode === 'dark' ? '#b09aff' : '#3D195B',
-    },
-  }),
-  poissonTab: (theme: Theme) => ({
-    color: theme.palette.text.secondary,
-    fontSize: { xs: '0.8rem', sm: '0.85rem' },
-    '&.Mui-selected': {
-      color: theme.palette.mode === 'dark' ? '#ffab40' : '#E65100',
-    },
-  }),
-};
-
-export function tabsIndicatorSx(selectedTab: number): SxProps<Theme> {
-  return (theme: Theme) => ({
+  scoreSubtitle: {
     mb: 1.5,
-    '& .MuiTabs-indicator': {
-      backgroundColor: selectedTab === 0
-        ? (theme.palette.mode === 'dark' ? '#7C4DFF' : '#3D195B')
-        : (theme.palette.mode === 'dark' ? '#FF6D00' : '#E65100'),
-    },
-  });
-}
+    fontSize: { xs: '0.72rem', sm: '0.78rem' },
+  },
+};
 
 interface ModelColorSet {
   homeWin: string;

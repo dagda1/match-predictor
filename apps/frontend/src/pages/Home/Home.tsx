@@ -7,8 +7,6 @@ import Fade from '@mui/material/Fade';
 import LinearProgress from '@mui/material/LinearProgress';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -18,7 +16,7 @@ import { ModelProbBars } from './components/ModelProbBars/ModelProbBars';
 import { ScorelineTable } from './components/ScorelineTable/ScorelineTable';
 import { SimCounter } from './components/SimCounter/SimCounter';
 import { TeamPicker } from './components/TeamPicker/TeamPicker';
-import { sx, getModelColors, tabsIndicatorSx } from './styles';
+import { sx, getModelColors } from './styles';
 
 type Phase = 'empty' | 'ready' | 'simulating' | 'result';
 
@@ -50,7 +48,6 @@ export function Home(): JSX.Element {
   const [mlAnimProbs, setMlAnimProbs] = useState<AnimProbs>(INITIAL_PROBS);
   const [poissonAnimProbs, setPoissonAnimProbs] = useState<AnimProbs>(INITIAL_PROBS);
   const [revealedRows, setRevealedRows] = useState(0);
-  const [scoreTab, setScoreTab] = useState(0);
   const rafRef = useRef(0);
 
   useEffect(() => {
@@ -109,7 +106,6 @@ export function Home(): JSX.Element {
 
     setSimProgress(0);
     setRevealedRows(0);
-    setScoreTab(0);
     setMlAnimProbs(INITIAL_PROBS);
     setPoissonAnimProbs(INITIAL_PROBS);
 
@@ -148,7 +144,7 @@ export function Home(): JSX.Element {
             ML model + Poisson baseline
           </Typography>
 
-          <Stack direction="column" spacing={1.5} sx={sx.teamStack}>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={sx.teamStack}>
             <TeamPicker label="Home team" value={home} onChange={setHome} options={teams} exclude={away} />
             <TeamPicker label="Away team" value={away} onChange={setAway} options={teams} exclude={home} />
           </Stack>
@@ -236,40 +232,37 @@ export function Home(): JSX.Element {
 
         {showResult && prediction && (
           <Fade in timeout={400}>
-            <Paper sx={sx.card}>
-              <Typography variant="subtitle2" sx={sx.scoreSubtitle}>
-                Most likely scorelines
-              </Typography>
-
-              <Tabs
-                value={scoreTab}
-                onChange={(_, v: number) => setScoreTab(v)}
-                variant={isMobile ? 'fullWidth' : 'standard'}
-                sx={tabsIndicatorSx(scoreTab)}
+            <div>
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 2, sm: 2.5 }}
               >
-                <Tab label="ML Model" sx={sx.mlTab} />
-                <Tab label="Poisson" sx={sx.poissonTab} />
-              </Tabs>
-
-              {scoreTab === 0 && (
-                <ScorelineTable
-                  scorelines={prediction.ml.scorelines}
-                  revealed={isSimulating ? revealedRows : null}
-                  chipColor={colors.ml.chip}
-                  chipAccentBg={colors.ml.chipAccentBg}
-                  chipAccentText={colors.ml.chipAccentText}
-                />
-              )}
-              {scoreTab === 1 && (
-                <ScorelineTable
-                  scorelines={prediction.poisson.scorelines}
-                  revealed={isSimulating ? revealedRows : null}
-                  chipColor={colors.poisson.chip}
-                  chipAccentBg={colors.poisson.chipAccentBg}
-                  chipAccentText={colors.poisson.chipAccentText}
-                />
-              )}
-            </Paper>
+                <Paper sx={sx.scoreCard}>
+                  <Typography variant="subtitle2" sx={sx.scoreSubtitle}>
+                    ML Model scorelines
+                  </Typography>
+                  <ScorelineTable
+                    scorelines={prediction.ml.scorelines}
+                    revealed={isSimulating ? revealedRows : null}
+                    chipColor={colors.ml.chip}
+                    chipAccentBg={colors.ml.chipAccentBg}
+                    chipAccentText={colors.ml.chipAccentText}
+                  />
+                </Paper>
+                <Paper sx={sx.scoreCard}>
+                  <Typography variant="subtitle2" sx={sx.scoreSubtitle}>
+                    Poisson scorelines
+                  </Typography>
+                  <ScorelineTable
+                    scorelines={prediction.poisson.scorelines}
+                    revealed={isSimulating ? revealedRows : null}
+                    chipColor={colors.poisson.chip}
+                    chipAccentBg={colors.poisson.chipAccentBg}
+                    chipAccentText={colors.poisson.chipAccentText}
+                  />
+                </Paper>
+              </Stack>
+            </div>
           </Fade>
         )}
       </Stack>

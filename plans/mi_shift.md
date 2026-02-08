@@ -346,6 +346,82 @@ GET /teams
 Response: { id: string, name: string }[]
 ```
 
+### Matchweek Review page
+
+Compare model predictions against actual results for a matchweek (a 7-day window of fixtures).
+
+#### Purpose
+
+Show how the model performed on real matches. This is the credibility test — did the model's probabilities reflect reality? Lets you browse week by week and see where the model got it right or wrong.
+
+#### Data
+
+A "matchweek" is all completed matches within a 7-day period. The model predicts each match using only data available before kick-off (no leakage). After the matches are played, we compare predictions to actual outcomes.
+
+#### API
+
+```
+GET /matchweeks
+Response: { week: string, startDate: string, endDate: string, matchCount: number }[]
+
+GET /matchweeks/{week}
+Response: {
+  week: string,
+  startDate: string,
+  endDate: string,
+  matches: {
+    homeTeam: string,
+    awayTeam: string,
+    actualHomeGoals: number,
+    actualAwayGoals: number,
+    actualOutcome: "home" | "draw" | "away",
+    ml: { homeWin: number, draw: number, awayWin: number, predictedOutcome: "home" | "draw" | "away", correct: boolean },
+    poisson: { homeWin: number, draw: number, awayWin: number, predictedOutcome: "home" | "draw" | "away", correct: boolean },
+  }[],
+  summary: {
+    mlCorrect: number,
+    mlTotal: number,
+    poissonCorrect: number,
+    poissonTotal: number,
+  }
+}
+```
+
+#### Layout
+
+```
+┌─────────────────────────────────────────────────┐
+│  Matchweek Review                               │
+│                                                  │
+│  ┌──────────────────────────────────┐            │
+│  │ Week picker  [◀ Week 24 ▶]      │            │
+│  │ 1 Feb – 7 Feb 2026 · 10 matches │            │
+│  └──────────────────────────────────┘            │
+│                                                  │
+│  Summary: ML 5/10 (50%) · Poisson 4/10 (40%)    │
+│                                                  │
+│  ┌──────────────────────────────────────────┐    │
+│  │ Match          │ Score │ ML      │ Poisson│   │
+│  │ Liverpool v City│ 2-1  │ ✓ 48.2% │ ✗ 29.9%│  │
+│  │ Arsenal v Villa │ 1-0  │ ✓ 55.1% │ ✓ 43.8%│  │
+│  │ Chelsea v Spurs │ 1-1  │ ✗ 24.1% │ ✓ 26.3%│  │
+│  │ ...                                       │   │
+│  └──────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────┘
+```
+
+Each row shows:
+- The match and actual score
+- Whether ML predicted the correct outcome (✓/✗) and the probability it assigned
+- Whether Poisson predicted the correct outcome (✓/✗) and the probability it assigned
+- Colour-code rows: green tint for correct, red tint for wrong
+
+#### Week picker
+
+- Previous/next arrows to navigate weeks
+- Shows date range and match count
+- Defaults to the most recent completed matchweek
+
 ### Future pages
 
 | Page | Purpose |
