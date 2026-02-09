@@ -101,10 +101,10 @@ export function Results(): JSX.Element {
               ) : weeks.length > 0 && weekIdx < weeks.length ? (
                 <>
                   <Typography variant="h5" sx={sx.weekTitle}>
-                    Matchweek {weeks[weekIdx].week}
+                    {weeks[weekIdx].startDate} – {weeks[weekIdx].endDate}
                   </Typography>
                   <Typography variant="body2" sx={sx.weekDates}>
-                    {weeks[weekIdx].startDate} – {weeks[weekIdx].endDate} · {weeks[weekIdx].matchCount} matches
+                    {weeks[weekIdx].matchCount} matches
                   </Typography>
                 </>
               ) : null}
