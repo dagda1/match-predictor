@@ -19,20 +19,13 @@ async function loadExisting(season: string): Promise<MatchInfo[]> {
   return JSON.parse(raw) as MatchInfo[];
 }
 
-function maxDate(matches: MatchInfo[]): string | undefined {
-  if (matches.length === 0) {
-    return undefined;
-  }
-  return matches.reduce((max, m) => (m.date > max ? m.date : max), matches[0].date);
-}
-
 async function fetchSeason(season: string): Promise<void> {
   const existing = await loadExisting(season);
-  const after = maxDate(existing);
+  const existingIds = new Set(existing.map((m) => m.id));
 
-  console.log(`\n${season} season: ${existing.length} existing matches${after ? `, last: ${after}` : ''}`);
+  console.log(`\n${season} season: ${existing.length} existing matches`);
 
-  const newIds = await scrapeLeagueMatchIds(season, after);
+  const newIds = await scrapeLeagueMatchIds(season, existingIds);
   if (newIds.length === 0) {
     console.log('No new matches');
     return;

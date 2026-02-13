@@ -6,7 +6,7 @@ interface LeagueEntry {
   datetime: string;
 }
 
-export async function scrapeLeagueMatchIds(season: string, after?: string): Promise<string[]> {
+export async function scrapeLeagueMatchIds(season: string, existingIds: Set<string>): Promise<string[]> {
   const response = await fetch(`https://understat.com/getLeagueData/EPL/${season}`, {
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
@@ -18,6 +18,6 @@ export async function scrapeLeagueMatchIds(season: string, after?: string): Prom
   const data = await response.json();
 
   return data.dates
-    .filter((entry: LeagueEntry) => entry.isResult && (!after || entry.datetime > after))
+    .filter((entry: LeagueEntry) => entry.isResult && !existingIds.has(entry.id))
     .map((entry: LeagueEntry) => entry.id);
 }

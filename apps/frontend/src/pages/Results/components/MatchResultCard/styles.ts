@@ -13,6 +13,18 @@ export const sx: Record<string, SxProps<Theme>> = {
     fontWeight: 700,
     fontFeatureSettings: "'tnum'",
   },
+  dash: {
+    color: (theme: Theme) => theme.palette.text.disabled,
+    fontWeight: 400,
+    mx: 0.8,
+    fontSize: '0.85em',
+  },
+  modelDivider: {
+    borderColor: (theme: Theme) =>
+      theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)',
+    mx: 2,
+    display: { xs: 'none', sm: 'block' },
+  },
   chips: {
     flexShrink: 0,
     ml: 1.5,

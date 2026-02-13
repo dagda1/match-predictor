@@ -21,23 +21,33 @@ interface MatchResultCardProps {
 export function MatchResultCard({ match }: MatchResultCardProps): JSX.Element {
   const theme = useTheme();
   const colors = getModelColors(theme.palette.mode);
-  const bothCorrect = match.ml.correct && match.poisson.correct;
-  const bothWrong = !match.ml.correct && !match.poisson.correct;
+  const hasResult = match.actualOutcome !== null;
+  const bothCorrect = hasResult && match.ml.correct === true && match.poisson.correct === true;
+  const bothWrong = hasResult && match.ml.correct === false && match.poisson.correct === false;
 
   return (
     <Paper sx={cardSx(bothCorrect, bothWrong)}>
       <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={sx.header}>
-        <Typography variant="h6" sx={sx.score}>
-          {match.homeTeam}{' '}
-          <Box component="span" sx={sx.goals}>{match.actualHomeGoals}</Box>
-          <Box component="span" sx={{ color: (t) => t.palette.text.disabled, fontWeight: 400, mx: 0.8, fontSize: '0.85em' }}>–</Box>
-          <Box component="span" sx={sx.goals}>{match.actualAwayGoals}</Box>
-          {' '}{match.awayTeam}
-        </Typography>
-        <Stack direction="row" spacing={1} sx={sx.chips}>
-          <Chip label={`ML ${match.ml.correct ? '✓' : '✗'}`} size="small" sx={chipSx(match.ml.correct)} />
-          <Chip label={`Poi ${match.poisson.correct ? '✓' : '✗'}`} size="small" sx={chipSx(match.poisson.correct)} />
-        </Stack>
+        {hasResult ? (
+          <Typography variant="h6" sx={sx.score}>
+            {match.homeTeam}{' '}
+            <Box component="span" sx={sx.goals}>{match.actualHomeGoals}</Box>
+            <Box component="span" sx={sx.dash}>–</Box>
+            <Box component="span" sx={sx.goals}>{match.actualAwayGoals}</Box>
+            {' '}{match.awayTeam}
+          </Typography>
+        ) : (
+          <Typography variant="h6" sx={sx.score}>
+            {match.homeTeam} vs {match.awayTeam}
+          </Typography>
+        )}
+
+        {hasResult && (
+          <Stack direction="row" spacing={1} sx={sx.chips}>
+            <Chip label={`ML ${match.ml.correct ? '✓' : '✗'}`} size="small" sx={chipSx(match.ml.correct === true)} />
+            <Chip label={`Poi ${match.poisson.correct ? '✓' : '✗'}`} size="small" sx={chipSx(match.poisson.correct === true)} />
+          </Stack>
+        )}
       </Stack>
 
       <Stack direction="row" spacing={{ xs: 2, sm: 3 }} sx={sx.predictedScores}>
@@ -60,13 +70,7 @@ export function MatchResultCard({ match }: MatchResultCardProps): JSX.Element {
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={0}
-        divider={
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{ borderColor: (t) => t.palette.mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)', mx: 2, display: { xs: 'none', sm: 'block' } }}
-          />
-        }
+        divider={<Divider orientation="vertical" flexItem sx={sx.modelDivider} />}
       >
         <ModelProbBars
           title="ML Model"

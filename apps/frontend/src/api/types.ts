@@ -43,7 +43,7 @@ export interface MatchMlResult {
   draw: number;
   awayWin: number;
   predictedOutcome: Outcome;
-  correct: boolean;
+  correct: boolean | null;
   topScore: TopScore;
 }
 
@@ -52,7 +52,7 @@ export interface MatchPoissonResult {
   draw: number;
   awayWin: number;
   predictedOutcome: Outcome;
-  correct: boolean;
+  correct: boolean | null;
   homeLambda: number;
   awayLambda: number;
   topScore: TopScore;
@@ -62,9 +62,9 @@ export interface MatchResult {
   homeTeam: string;
   awayTeam: string;
   date: string;
-  actualHomeGoals: number;
-  actualAwayGoals: number;
-  actualOutcome: Outcome;
+  actualHomeGoals: number | null;
+  actualAwayGoals: number | null;
+  actualOutcome: Outcome | null;
   ml: MatchMlResult;
   poisson: MatchPoissonResult;
 }

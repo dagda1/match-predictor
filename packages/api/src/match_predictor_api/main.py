@@ -111,6 +111,7 @@ def get_metrics():
 
 
 PREDICTIONS_PATH = DATA_DIR / "predictions-2026.json"
+UPCOMING_PATH = DATA_DIR / "upcoming.json"
 
 
 class TopScore(BaseModel):
@@ -124,7 +125,7 @@ class MatchMlResult(BaseModel):
     draw: float
     awayWin: float
     predictedOutcome: str
-    correct: bool
+    correct: bool | None = None
     topScore: TopScore
 
 
@@ -133,7 +134,7 @@ class MatchPoissonResult(BaseModel):
     draw: float
     awayWin: float
     predictedOutcome: str
-    correct: bool
+    correct: bool | None = None
     homeLambda: float
     awayLambda: float
     topScore: TopScore
@@ -143,9 +144,9 @@ class MatchResult(BaseModel):
     homeTeam: str
     awayTeam: str
     date: str
-    actualHomeGoals: int
-    actualAwayGoals: int
-    actualOutcome: str
+    actualHomeGoals: int | None = None
+    actualAwayGoals: int | None = None
+    actualOutcome: str | None = None
     ml: MatchMlResult
     poisson: MatchPoissonResult
 
@@ -164,16 +165,29 @@ class ResultsResponse(BaseModel):
     hasLater: bool
 
 
-def _load_predictions() -> list[dict]:
-    if not PREDICTIONS_PATH.exists():
+def _load_json(path: Path) -> list[dict]:
+    if not path.exists():
         return []
-    with open(PREDICTIONS_PATH) as f:
+    with open(path) as f:
         return json.load(f)
+
+
+def _all_matches() -> list[dict]:
+    predictions = _load_json(PREDICTIONS_PATH)
+    upcoming = _load_json(UPCOMING_PATH)
+
+    prediction_keys = {(p["homeTeam"], p["awayTeam"], p["date"][:10]) for p in predictions}
+    unique_upcoming = [
+        u for u in upcoming
+        if (u["homeTeam"], u["awayTeam"], u["date"][:10]) not in prediction_keys
+    ]
+
+    return predictions + unique_upcoming
 
 
 @app.get("/results", response_model=ResultsResponse)
 def get_results(startDate: str, endDate: str | None = None):
-    predictions = _load_predictions()
+    all_matches = _all_matches()
 
     start = date.fromisoformat(startDate)
     end = date.fromisoformat(endDate) if endDate else None
@@ -182,23 +196,25 @@ def get_results(startDate: str, endDate: str | None = None):
     has_earlier = False
     has_later = False
 
-    for prediction in predictions:
-        match_date = datetime.fromisoformat(prediction["date"]).date()
+    for match in all_matches:
+        match_date = datetime.fromisoformat(match["date"]).date()
 
         if match_date < start:
             has_earlier = True
         elif end and match_date > end:
             has_later = True
         else:
-            filtered.append(prediction)
+            filtered.append(match)
+
+    played = [m for m in filtered if m.get("ml", {}).get("correct") is not None]
 
     return ResultsResponse(
         matches=[MatchResult(**m) for m in filtered],
         summary=ResultsSummary(
-            mlCorrect=sum(1 for m in filtered if m["ml"]["correct"]),
-            mlTotal=len(filtered),
-            poissonCorrect=sum(1 for m in filtered if m["poisson"]["correct"]),
-            poissonTotal=len(filtered),
+            mlCorrect=sum(1 for m in played if m["ml"]["correct"]),
+            mlTotal=len(played),
+            poissonCorrect=sum(1 for m in played if m["poisson"]["correct"]),
+            poissonTotal=len(played),
         ),
         hasEarlier=has_earlier,
         hasLater=has_later,
