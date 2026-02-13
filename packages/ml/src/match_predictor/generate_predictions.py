@@ -35,9 +35,7 @@ def generate() -> None:
     train_df = df[df["date"] < CUTOFF]
     predict_df = df[df["date"] >= CUTOFF]
 
-    if predict_df.empty:
-        print(f"no matches after {CUTOFF.date()}")
-        return
+    assert not predict_df.empty, f"no matches after {CUTOFF.date()}"
 
     print(f"training on {len(train_df)} matches before {CUTOFF.date()}")
     print(f"predicting {len(predict_df)} matches from {CUTOFF.date()} onwards")

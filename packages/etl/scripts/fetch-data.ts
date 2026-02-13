@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'fs/promises';
+import { access, readFile, mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 
 import type { MatchInfo } from '../src/matchSchema';
@@ -11,11 +11,12 @@ const SEASONS = ['2024', '2025'];
 async function loadExisting(season: string): Promise<MatchInfo[]> {
   const filePath = join(DATA_DIR, `matches-${season}.json`);
   try {
-    const raw = await readFile(filePath, 'utf-8');
-    return JSON.parse(raw) as MatchInfo[];
+    await access(filePath);
   } catch {
     return [];
   }
+  const raw = await readFile(filePath, 'utf-8');
+  return JSON.parse(raw) as MatchInfo[];
 }
 
 function maxDate(matches: MatchInfo[]): string | undefined {

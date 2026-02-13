@@ -49,11 +49,7 @@ def generate() -> None:
     print("fetching upcoming fixtures from Understat...")
     fixtures = _fetch_upcoming_fixtures()
 
-    if not fixtures:
-        print("no upcoming fixtures in the next 7 days")
-        with open(UPCOMING_PATH, "w") as f:
-            json.dump([], f)
-        return
+    assert len(fixtures) > 0, "no upcoming fixtures in the next 8 days"
 
     print(f"found {len(fixtures)} upcoming fixtures")
 

@@ -16,7 +16,7 @@
     "start:frontend": "cross-env NODE_ENV=development pnpm --filter @match-predictor/frontend dev",
     "start:api": "uv run --directory packages/api uvicorn match_predictor_api.main:app --port 4400 --reload",
     "dev": "concurrently -n api,frontend -c blue,green \"pnpm start:api\" \"pnpm start:frontend\"",
-    "update": "pnpm --filter @match-predictor/etl fetch-data && uv run --directory packages/ml python -m match_predictor.generate_predictions && uv run --directory packages/ml python -m match_predictor.generate_upcoming",
+    "refresh": "pnpm --filter @match-predictor/etl fetch-data && uv run --directory packages/ml python -m match_predictor.generate_predictions && uv run --directory packages/ml python -m match_predictor.generate_upcoming",
     "test": "cross-env turbo run test:ci"
   },
   "keywords": [],
