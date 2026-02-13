@@ -1,4 +1,4 @@
-import type { MatchweekDetail, MatchweekSummary, PredictResponse, Team, UpcomingResponse } from './types';
+import type { PredictResponse, ResultsResponse, Team } from './types';
 
 export async function fetchTeams(): Promise<Team[]> {
   const response = await fetch('/api/teams');
@@ -20,26 +20,14 @@ export async function fetchPrediction(homeTeamId: string, awayTeamId: string): P
   return response.json();
 }
 
-export async function fetchUpcoming(): Promise<UpcomingResponse> {
-  const response = await fetch('/api/upcoming');
-  if (!response.ok) {
-    throw new Error(`failed to fetch upcoming: ${response.status}`);
+export async function fetchResults(startDate: string, endDate?: string): Promise<ResultsResponse> {
+  const params = new URLSearchParams({ startDate });
+  if (endDate) {
+    params.set('endDate', endDate);
   }
-  return response.json();
-}
-
-export async function fetchMatchweeks(): Promise<MatchweekSummary[]> {
-  const response = await fetch('/api/matchweeks');
+  const response = await fetch(`/api/results?${params}`);
   if (!response.ok) {
-    throw new Error(`failed to fetch matchweeks: ${response.status}`);
-  }
-  return response.json();
-}
-
-export async function fetchMatchweek(week: number): Promise<MatchweekDetail> {
-  const response = await fetch(`/api/matchweeks/${week}`);
-  if (!response.ok) {
-    throw new Error(`failed to fetch matchweek ${week}: ${response.status}`);
+    throw new Error(`failed to fetch results: ${response.status}`);
   }
   return response.json();
 }

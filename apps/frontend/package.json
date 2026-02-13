@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@match-predictor/theme": "workspace:*",
-    "@mui/icons-material": "6.5.0"
+    "@mui/icons-material": "6.5.0",
+    "@tanstack/react-query": "^5.90.21",
+    "dayjs": "^1.11.19"
   },
   "devDependencies": {
     "@emotion/react": "11.14.0",

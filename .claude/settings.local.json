@@ -38,7 +38,8 @@
       "Bash(python -c:*)",
       "Bash(pip install:*)",
       "Bash(python -m pip install:*)",
-      "Bash(python -m match_predictor.generate_upcoming:*)"
+      "Bash(python -m match_predictor.generate_upcoming:*)",
+      "mcp__ide__getDiagnostics"
     ]
   }
 }

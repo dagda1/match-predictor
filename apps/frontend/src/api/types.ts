@@ -69,56 +69,16 @@ export interface MatchResult {
   poisson: MatchPoissonResult;
 }
 
-export interface MatchweekSummary {
-  week: number;
-  startDate: string;
-  endDate: string;
-  matchCount: number;
+export interface ResultsSummary {
   mlCorrect: number;
+  mlTotal: number;
   poissonCorrect: number;
+  poissonTotal: number;
 }
 
-export interface UpcomingMlResult {
-  homeWin: number;
-  draw: number;
-  awayWin: number;
-  predictedOutcome: Outcome;
-  topScore: TopScore;
-}
-
-export interface UpcomingPoissonResult {
-  homeWin: number;
-  draw: number;
-  awayWin: number;
-  predictedOutcome: Outcome;
-  homeLambda: number;
-  awayLambda: number;
-  topScore: TopScore;
-}
-
-export interface UpcomingMatch {
-  homeTeam: string;
-  awayTeam: string;
-  date: string;
-  ml: UpcomingMlResult;
-  poisson: UpcomingPoissonResult;
-}
-
-export interface UpcomingResponse {
-  startDate: string;
-  endDate: string;
-  matches: UpcomingMatch[];
-}
-
-export interface MatchweekDetail {
-  week: number;
-  startDate: string;
-  endDate: string;
+export interface ResultsResponse {
   matches: MatchResult[];
-  summary: {
-    mlCorrect: number;
-    mlTotal: number;
-    poissonCorrect: number;
-    poissonTotal: number;
-  };
+  summary: ResultsSummary;
+  hasEarlier: boolean;
+  hasLater: boolean;
 }

@@ -4,6 +4,9 @@ export const sx: Record<string, SxProps<Theme>> = {
   container: {
     py: { xs: 1, sm: 2 },
   },
+  headerCenter: {
+    textAlign: 'center',
+  },
   weekPicker: {
     px: { xs: 2, sm: 4 },
     py: { xs: 2, sm: 3 },
