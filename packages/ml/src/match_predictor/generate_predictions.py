@@ -1,10 +1,9 @@
 import json
 
-import numpy as np
 import pandas as pd
 
 from match_predictor.data import load_matches, DATA_DIR
-from match_predictor.model import train
+from match_predictor.model import train, _scoreline_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
@@ -62,18 +61,8 @@ def generate() -> None:
         ml_draw = float(proba[classes.index("draw")])
         ml_away_win = float(proba[classes.index("away")])
 
-        home_xg = features["homeXgFor"]
-        away_xg = features["awayXgFor"]
-
-        rng = np.random.default_rng(42)
-        sim_home = rng.poisson(home_xg, 10_000)
-        sim_away = rng.poisson(away_xg, 10_000)
-
-        scoreline_counts: dict[tuple[int, int], int] = {}
-        for h, a in zip(sim_home, sim_away):
-            key = (int(h), int(a))
-            scoreline_counts[key] = scoreline_counts.get(key, 0) + 1
-        ml_top = sorted(scoreline_counts.items(), key=lambda x: x[1], reverse=True)[0]
+        ml_scorelines = _scoreline_probabilities(model, X)
+        ml_top = ml_scorelines[0]
 
         prior_df = df[df["date"] < match_date]
         poisson_result = poisson_predict(prior_df, home_team, away_team)
@@ -98,11 +87,7 @@ def generate() -> None:
                 "awayWin": ml_away_win,
                 "predictedOutcome": ml_pred,
                 "correct": ml_pred == actual_outcome,
-                "topScore": {
-                    "homeGoals": ml_top[0][0],
-                    "awayGoals": ml_top[0][1],
-                    "probability": ml_top[1] / 10_000,
-                },
+                "topScore": ml_top,
             },
             "poisson": {
                 "homeWin": poisson_result.home_win,
@@ -120,7 +105,7 @@ def generate() -> None:
             },
         })
 
-        print(f"  {home_team} {actual_home}-{actual_away} {away_team}  ML:{ml_pred}({'✓' if ml_pred == actual_outcome else '✗'})  Poi:{poisson_pred}({'✓' if poisson_pred == actual_outcome else '✗'})")
+        print(f"  {home_team} {actual_home}-{actual_away} {away_team}  ML:{ml_pred}({'✓' if ml_pred == actual_outcome else '✗'})  Poi:{poisson_pred}({'✓' if poisson_pred == actual_outcome else '✗'})  ML top:{ml_top['homeGoals']}-{ml_top['awayGoals']}")
 
     with open(PREDICTIONS_PATH, "w") as f:
         json.dump(predictions, f, indent=2)

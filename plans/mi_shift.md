@@ -180,6 +180,15 @@ The `fetch-data` script is incremental:
 
 First run scrapes everything. Subsequent runs only fetch new fixtures.
 
+## Model separation — non-negotiable
+
+The ML model and Poisson baseline are **completely separate prediction approaches**. They must never share prediction logic.
+
+- **ML model** (`model.py`): Uses the GradientBoosting classifier for all predictions — outcome probabilities AND scorelines. No Poisson simulation anywhere in the ML prediction path.
+- **Poisson baseline** (`poisson_baseline.py`): Uses raw xG averages as Poisson lambda parameters to simulate goals. This is the statistical baseline for comparison.
+
+The whole point of having two models is to compare fundamentally different approaches. If both use Poisson for scorelines, the comparison is meaningless.
+
 ## Model approach: Monte Carlo simulation
 
 ### How it works

@@ -37,13 +37,14 @@ class EvalMetrics:
 @dataclass
 class TrainedModel:
     classifier: GradientBoostingClassifier
+    scoreline_classifier: GradientBoostingClassifier
     df: pd.DataFrame
     metrics: EvalMetrics | None = None
     feature_names: list[str] = field(default_factory=list)
 
 
 def train(df: pd.DataFrame) -> TrainedModel:
-    X, y = build_training_data(df)
+    X, y_outcome, y_scoreline = build_training_data(df)
 
     clf = GradientBoostingClassifier(
         n_estimators=200,
@@ -51,12 +52,21 @@ def train(df: pd.DataFrame) -> TrainedModel:
         learning_rate=0.1,
         random_state=42,
     )
-    clf.fit(X, y)
+    clf.fit(X, y_outcome)
 
-    metrics = evaluate(clf, X, y)
+    scoreline_clf = GradientBoostingClassifier(
+        n_estimators=200,
+        max_depth=4,
+        learning_rate=0.1,
+        random_state=42,
+    )
+    scoreline_clf.fit(X, y_scoreline)
+
+    metrics = evaluate(clf, X, y_outcome)
 
     return TrainedModel(
         classifier=clf,
+        scoreline_classifier=scoreline_clf,
         df=df,
         metrics=metrics,
         feature_names=list(X.columns),
@@ -112,11 +122,30 @@ def evaluate(
     )
 
 
+def _scoreline_probabilities(
+    model: TrainedModel, X: pd.DataFrame,
+) -> list[dict]:
+    proba = model.scoreline_classifier.predict_proba(X)[0]
+    classes = list(model.scoreline_classifier.classes_)
+
+    scored = sorted(
+        zip(classes, proba), key=lambda x: x[1], reverse=True,
+    )[:10]
+
+    return [
+        {
+            "homeGoals": int(label.split("-")[0]),
+            "awayGoals": int(label.split("-")[1]),
+            "probability": float(prob),
+        }
+        for label, prob in scored
+    ]
+
+
 def predict_match(
     model: TrainedModel,
     home_team: str,
     away_team: str,
-    n_simulations: int = 10_000,
 ) -> Prediction:
     features = build_feature_row(model.df, pd.Timestamp.now(), home_team, away_team)
     if features is None:
@@ -126,36 +155,9 @@ def predict_match(
     proba = model.classifier.predict_proba(X)[0]
     classes = list(model.classifier.classes_)
 
-    home_win_prob = float(proba[classes.index("home")])
-    draw_prob = float(proba[classes.index("draw")])
-    away_win_prob = float(proba[classes.index("away")])
-
-    home_xg = features["homeXgFor"]
-    away_xg = features["awayXgFor"]
-
-    rng = np.random.default_rng()
-    home_goals = rng.poisson(home_xg, n_simulations)
-    away_goals = rng.poisson(away_xg, n_simulations)
-
-    scoreline_counts: dict[tuple[int, int], int] = {}
-    for h, a in zip(home_goals, away_goals):
-        key = (int(h), int(a))
-        scoreline_counts[key] = scoreline_counts.get(key, 0) + 1
-
-    top_scorelines = sorted(
-        scoreline_counts.items(), key=lambda x: x[1], reverse=True
-    )[:10]
-
     return Prediction(
-        home_win=home_win_prob,
-        draw=draw_prob,
-        away_win=away_win_prob,
-        scorelines=[
-            {
-                "homeGoals": score[0],
-                "awayGoals": score[1],
-                "probability": count / n_simulations,
-            }
-            for score, count in top_scorelines
-        ],
+        home_win=float(proba[classes.index("home")]),
+        draw=float(proba[classes.index("draw")]),
+        away_win=float(proba[classes.index("away")]),
+        scorelines=_scoreline_probabilities(model, X),
     )
