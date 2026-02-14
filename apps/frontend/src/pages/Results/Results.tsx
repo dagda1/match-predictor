@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router';
 
-import { DISPLAY_DATE_FORMAT, ISO_DATE_FORMAT } from '~/constants';
+import { DISPLAY_DATE_FORMAT, ISO_DATE_FORMAT, saturdayForDate } from '~/constants';
 import { useFetchResults } from '~/hooks/useFetchResults';
 
 import { MatchResultCard } from './components/MatchResultCard/MatchResultCard';
@@ -29,8 +29,10 @@ export function Results(): JSX.Element {
   const start = dayjs(startDate);
   const end = dayjs(endDate);
 
-  function navigateTo(weekStart: dayjs.Dayjs, weekEnd: dayjs.Dayjs) {
-    navigate(`/results/${weekStart.format(ISO_DATE_FORMAT)}/${weekEnd.format(ISO_DATE_FORMAT)}`);
+  function navigateToDate(matchDate: string) {
+    const saturday = saturdayForDate(dayjs(matchDate));
+    const friday = saturday.add(6, 'day');
+    navigate(`/results/${saturday.format(ISO_DATE_FORMAT)}/${friday.format(ISO_DATE_FORMAT)}`);
   }
 
   return (
@@ -39,8 +41,8 @@ export function Results(): JSX.Element {
         <Paper sx={sx.weekPicker}>
           <Stack direction="row" alignItems="center" justifyContent="space-between">
             <IconButton
-              disabled={!data.hasEarlier}
-              onClick={() => navigateTo(start.subtract(7, 'day'), end.subtract(7, 'day'))}
+              disabled={!data.earlierMatchDate}
+              onClick={() => navigateToDate(data.earlierMatchDate!)}
               size="small"
               sx={sx.navButton}
             >
@@ -57,8 +59,8 @@ export function Results(): JSX.Element {
             </Box>
 
             <IconButton
-              disabled={!data.hasLater}
-              onClick={() => navigateTo(start.add(7, 'day'), end.add(7, 'day'))}
+              disabled={!data.laterMatchDate}
+              onClick={() => navigateToDate(data.laterMatchDate!)}
               size="small"
               sx={sx.navButton}
             >

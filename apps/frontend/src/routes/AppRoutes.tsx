@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 
-import { ISO_DATE_FORMAT } from '~/constants';
+import { ISO_DATE_FORMAT, saturdayForDate } from '~/constants';
 import { ResultsSkeleton } from '~/pages/Results/components/ResultsSkeleton/ResultsSkeleton';
 
 const Home = lazy(() => import('~/pages/Home/Home'));
@@ -16,8 +16,7 @@ const navLinks: NavLinkItem[] = [
 ];
 
 function ResultsRedirect(): JSX.Element {
-  const today = dayjs();
-  const saturday = today.day() === 6 ? today : today.subtract(today.day() + 1, 'day');
+  const saturday = saturdayForDate(dayjs());
   const friday = saturday.add(6, 'day');
   return <Navigate to={`/results/${saturday.format(ISO_DATE_FORMAT)}/${friday.format(ISO_DATE_FORMAT)}`} replace />;
 }

@@ -161,8 +161,8 @@ class ResultsSummary(BaseModel):
 class ResultsResponse(BaseModel):
     matches: list[MatchResult]
     summary: ResultsSummary
-    hasEarlier: bool
-    hasLater: bool
+    earlierMatchDate: str | None = None
+    laterMatchDate: str | None = None
 
 
 def _load_json(path: Path) -> list[dict]:
@@ -193,16 +193,18 @@ def get_results(startDate: str, endDate: str | None = None):
     end = date.fromisoformat(endDate) if endDate else None
 
     filtered = []
-    has_earlier = False
-    has_later = False
+    earlier_date: date | None = None
+    later_date: date | None = None
 
     for match in all_matches:
         match_date = datetime.fromisoformat(match["date"]).date()
 
         if match_date < start:
-            has_earlier = True
+            if earlier_date is None or match_date > earlier_date:
+                earlier_date = match_date
         elif end and match_date > end:
-            has_later = True
+            if later_date is None or match_date < later_date:
+                later_date = match_date
         else:
             filtered.append(match)
 
@@ -216,8 +218,8 @@ def get_results(startDate: str, endDate: str | None = None):
             poissonCorrect=sum(1 for m in played if m["poisson"]["correct"]),
             poissonTotal=len(played),
         ),
-        hasEarlier=has_earlier,
-        hasLater=has_later,
+        earlierMatchDate=earlier_date.isoformat() if earlier_date else None,
+        laterMatchDate=later_date.isoformat() if later_date else None,
     )
 
 

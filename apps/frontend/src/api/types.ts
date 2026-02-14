@@ -79,6 +79,6 @@ export interface ResultsSummary {
 export interface ResultsResponse {
   matches: MatchResult[];
   summary: ResultsSummary;
-  hasEarlier: boolean;
-  hasLater: boolean;
+  earlierMatchDate: string | null;
+  laterMatchDate: string | null;
 }
