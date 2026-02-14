@@ -27,14 +27,14 @@ def _fetch_upcoming_fixtures() -> list[dict]:
     data = response.json()
 
     now = datetime.now()
-    cutoff = now + timedelta(days=8)
+    cutoff = now + timedelta(weeks=3)
 
     fixtures = []
     for entry in data["dates"]:
         if entry["isResult"]:
             continue
         dt = datetime.strptime(entry["datetime"], "%Y-%m-%d %H:%M:%S")
-        if dt < now or dt > cutoff:
+        if dt > cutoff:
             continue
         fixtures.append({
             "homeTeam": entry["h"]["title"],
@@ -49,7 +49,7 @@ def generate() -> None:
     print("fetching upcoming fixtures from Understat...")
     fixtures = _fetch_upcoming_fixtures()
 
-    assert len(fixtures) > 0, "no upcoming fixtures in the next 8 days"
+    assert len(fixtures) > 0, "no upcoming fixtures in the next 3 weeks"
 
     print(f"found {len(fixtures)} upcoming fixtures")
 

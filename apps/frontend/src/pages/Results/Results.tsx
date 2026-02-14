@@ -11,11 +11,26 @@ import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router';
 
-import { DISPLAY_DATE_FORMAT, ISO_DATE_FORMAT, saturdayForDate } from '~/constants';
+import type { MatchResult } from '~/api/types';
+import { DISPLAY_DATE_FORMAT, ISO_DATE_FORMAT, mondayForDate } from '~/constants';
 import { useFetchResults } from '~/hooks/useFetchResults';
 
-import { MatchResultCard } from './components/MatchResultCard/MatchResultCard';
+import { MatchDayGroup } from './components/MatchDayGroup/MatchDayGroup';
 import { sx } from './styles';
+
+function groupByDate(matches: MatchResult[]): Map<string, MatchResult[]> {
+  const groups = new Map<string, MatchResult[]>();
+  for (const match of matches) {
+    const date = match.date.slice(0, 10);
+    const group = groups.get(date);
+    if (group) {
+      group.push(match);
+    } else {
+      groups.set(date, [match]);
+    }
+  }
+  return groups;
+}
 
 export function Results(): JSX.Element {
   const { startDate, endDate } = useParams();
@@ -25,14 +40,15 @@ export function Results(): JSX.Element {
   assert(!!endDate, 'endDate route param is required');
 
   const { data } = useFetchResults({ startDate, endDate });
+  const matchDays = groupByDate(data.matches);
 
   const start = dayjs(startDate);
   const end = dayjs(endDate);
 
   function navigateToDate(matchDate: string) {
-    const saturday = saturdayForDate(dayjs(matchDate));
-    const friday = saturday.add(6, 'day');
-    navigate(`/results/${saturday.format(ISO_DATE_FORMAT)}/${friday.format(ISO_DATE_FORMAT)}`);
+    const monday = mondayForDate(dayjs(matchDate));
+    const sunday = monday.add(6, 'day');
+    navigate(`/results/${monday.format(ISO_DATE_FORMAT)}/${sunday.format(ISO_DATE_FORMAT)}`);
   }
 
   return (
@@ -100,7 +116,9 @@ export function Results(): JSX.Element {
             </Typography>
           </Paper>
         ) : (
-          data.matches.map((match) => <MatchResultCard key={`${match.homeTeam}-${match.awayTeam}`} match={match} />)
+          [...matchDays.entries()].map(([date, matches]) =>
+            <MatchDayGroup key={date} date={date} matches={matches} />
+          )
         )}
       </Stack>
     </Container>
