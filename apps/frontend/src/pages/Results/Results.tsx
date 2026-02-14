@@ -91,9 +91,15 @@ export function Results(): JSX.Element {
           </Paper>
         )}
 
-        {data.matches.map((match) => (
-          <MatchResultCard key={`${match.homeTeam}-${match.awayTeam}`} match={match} />
-        ))}
+        {data.matches.length === 0 ? (
+          <Paper sx={sx.emptyState}>
+            <Typography variant="body1" sx={sx.emptyText}>
+              No matches this week
+            </Typography>
+          </Paper>
+        ) : (
+          data.matches.map((match) => <MatchResultCard key={`${match.homeTeam}-${match.awayTeam}`} match={match} />)
+        )}
       </Stack>
     </Container>
   );
