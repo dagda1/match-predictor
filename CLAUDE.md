@@ -8,9 +8,20 @@ Build the smallest correct solution that matches the spec.
 
 - No code comments (no `//`, `/* */`, `#`).
 - Prefer small functions and descriptive names over comments.
+- Never use single character variables.
 - Don't change unrelated files.
-- Avoid fixed pixels; use `theme.space` from `@mui/material` for spacing.
+- Avoid fixed pixels; use `theme.spacing` from `@mui/material` for spacing.
 - Prefer existing npm packages over reimplementing functionality.
+- No file extensions on imports (use `import x from './foo'` not `import x from './foo.js'`).
+- Use `~/` path alias for imports outside the current directory — never use `../` relative imports.
+- Max 150 lines per file.
+- Always use braces after `if` conditions.
+- No hardcoded colors - always use theme palette.
+- Add blank lines between logical sections within functions for readability.
+- Use `Readonly<Props>` for component props to prevent mutation.
+- Always extract component props to a named `interface` — never inline prop types.
+- Never use the `!` non-null assertion operator.
+- No local barrel files (`index.ts` that re-exports) — import directly from the source file (e.g. `import { Foo } from './Foo/Foo'` not `import { Foo } from './Foo'`).
 
 ## React components
 
@@ -75,6 +86,7 @@ import { sx } from './styles';
 
 - Keep diffs minimal.
 - If you change behavior, update any docs/tests that describe it.
+- Never add "Generated with Claude Code" to PR descriptions or anywhere else.
 
 ## Commands
 
@@ -113,7 +125,7 @@ try {
 
 ### Prefer letting errors propagate
 
-Only catch when you can add value — a structured error with context. If you're just going to rethrow unchanged, don't catch at all.
+Only catch when you can add value — retry, structured error, or meaningful recovery. If you're just going to rethrow unchanged, don't catch at all.
 
 ```ts
 // BAD — catch adds nothing

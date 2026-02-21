@@ -43,7 +43,7 @@ That gives 7 x 2 teams = 14 features, plus one global feature:
 
 ### Scoreline prediction
 
-Scorelines are generated separately from the outcome classifier using **Monte Carlo simulation**: draw 10,000 random samples from `Poisson(homeXgFor)` and `Poisson(awayXgFor)`, then count how often each scoreline (e.g. 2-1, 1-0) occurs.
+A second Gradient Boosting classifier is trained on the same 15 features but with scoreline labels (e.g. "2-1", "0-0") instead of outcome labels. Scores are capped at 4 goals per side. At prediction time it outputs probabilities for each scoreline class and returns the top 10.
 
 ### Evaluation
 
