@@ -4,6 +4,19 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/machine-
 
 Exam: $150, 65 questions, 130 minutes, pass 720/1000
 
+## Context for agents
+
+- Paul is a frontend dev pivoting to MLOps
+- He knows: programming (not Python), Docker, Terraform, CI/CD, Linux
+- He does NOT know: Python syntax, AWS ML services, ML theory beyond basics
+- He learns by doing, not videos or books
+- Each service checkbox gets sub-tasks tied to this repo (match-predictor)
+- All infrastructure must be done with CDK or CloudFormation — no web console, no Terraform
+- Do NOT generate code for him — answer questions, check his work, explain errors
+- Do NOT make assumptions or state things as fact without a source
+- Do NOT write walls of text
+- Checked boxes = done. Work top to bottom. Resume from the first unchecked item.
+
 ## In-scope AWS services
 
 Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-in-scope-services.html
@@ -11,6 +24,10 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 ### Analytics
 
 - [ ] Amazon Athena
+  - [ ] Upload match JSON files to S3
+  - [ ] Create a Glue table definition for the match schema
+  - [ ] Query match data with SQL in Athena
+  - [ ] Understand when to use Athena vs pandas (cost, scale, serverless)
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue
