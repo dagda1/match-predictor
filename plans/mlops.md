@@ -24,7 +24,18 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 ### Analytics
 
 - [ ] Amazon Athena
-  - [ ] Upload match JSON files to S3
+  - [ ] Create a CDK project in `packages/deploy` (Python)
+  - [ ] Define an S3 bucket in CDK with production-grade settings:
+    - [ ] Block all public access
+    - [ ] Encryption at rest (SSE-S3 or KMS)
+    - [ ] Enforce SSL (reject non-HTTPS)
+    - [ ] Versioning enabled
+    - [ ] Lifecycle rules (move old data to cheaper tiers)
+    - [ ] Access logging
+    - [ ] Least privilege IAM policy
+  - [ ] Verify with `cdk synth` (like `terraform plan`)
+  - [ ] Deploy with `cdk deploy`
+  - [ ] Upload match JSON files to S3 (AWS CLI)
   - [ ] Create a Glue table definition for the match schema
   - [ ] Query match data with SQL in Athena
   - [ ] Understand when to use Athena vs pandas (cost, scale, serverless)
