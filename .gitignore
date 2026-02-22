@@ -94,3 +94,6 @@ regression-tests/.auth
 __pycache__/
 *.pyc
 .venv
+
+cdk.out
+*.egg-info
