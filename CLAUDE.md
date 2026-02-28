@@ -21,7 +21,31 @@ Build the smallest correct solution that matches the spec.
 - Use `Readonly<Props>` for component props to prevent mutation.
 - Always extract component props to a named `interface` — never inline prop types.
 - Never use the `!` non-null assertion operator.
+- Never use `as unknown as` type casts — fix the types instead.
 - No local barrel files (`index.ts` that re-exports) — import directly from the source file (e.g. `import { Foo } from './Foo/Foo'` not `import { Foo } from './Foo'`).
+- Every exported function must have an explicit return type — ESLint enforces this, no exceptions.
+
+```ts
+// BAD — missing return type, ESLint will reject
+export function useMatchData(matchId: string) {
+  return { match, loading };
+}
+
+// BAD — component missing return type
+export function MyComponent({ title }: Readonly<Props>) {
+  return <div>{title}</div>;
+}
+
+// GOOD — explicit return type on hook
+export function useMatchData(matchId: string): UseMatchDataResult {
+  return { match, loading };
+}
+
+// GOOD — explicit return type on component
+export function MyComponent({ title }: Readonly<Props>): JSX.Element {
+  return <div>{title}</div>;
+}
+```
 
 ## React components
 
@@ -281,6 +305,31 @@ const team = response.team_h;
 
 `?.` is for `T | undefined | null`. If the type is `T`, use `.` and let TypeScript catch the mistake at compile time, not mask it at runtime.
 
+### Never use `as unknown as` — fix the types
+
+`as unknown as T` means the types are wrong. Don't force mismatched types through a double cast — go back and fix the type definitions so the assignment works naturally.
+
+```ts
+// BAD — types don't match, force it through unknown
+const data = rawData as unknown as MyType;
+records.push({ id, group } as unknown as TableData);
+
+// GOOD — define a proper type that matches the actual shape
+interface GroupRow {
+  id: string;
+  group: string;
+}
+
+type TableRow = DataRow | GroupRow;
+records.push({ id, group });
+
+// GOOD — if transforming data, type the output correctly
+const rows: TableData[] = items.map((item) => ({
+  ...item,
+  displayDate: formatDate(item.createdOn),
+}));
+```
+
 ## Testing — test behaviour, not code
 
 Tests must verify what a user sees and does, not internal implementation details. A test that calls `onChange` and asserts it was called proves nothing. A test that renders a full component tree, populates it with data, and asserts the user sees the correct output in the DOM is useful.
@@ -318,6 +367,10 @@ expect(screen.getByText('Arsenal')).toBeInTheDocument();
 
 - Use real data shapes from the API, not hand-crafted fragments.
 - If testing existing data display, pass it through the same path the app uses.
+
+## Communication
+
+- Never ask "What do you want to work on next?" or "What would you like me to do?" If unsure, ask.
 
 ## When unsure
 
