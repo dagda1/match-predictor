@@ -1,7 +1,6 @@
 from aws_cdk import (
-    # Duration,
     Stack,
-    # aws_sqs as sqs,
+    aws_iam as iam
 )
 from constructs import Construct
 
@@ -10,10 +9,23 @@ class DeployStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # The code that defines your stack goes here
+        github_provider = iam.OpenIdConnectProvider(
+                self, "GitHubProvider",
+                url="https://token.actions.githubusercontent.com",
+                client_ids=["sts.amazonaws.com"],
+                thumbprints=["6938fd4d98bab03faadb97b34396831e3780aea1"]
+            )
 
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "DeployQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
+        provider_role = iam.Role(
+            self, "GitHubActionRole",
+            assumed_by=iam.OpenIdConnectPrincipal(
+                github_provider,
+                conditions={
+                    "StringLike": {
+                        "token.actions.githubusercontent.com:sub": "repo:dagda1/match-predictor:*"
+                    }
+                }
+            ),
+            description="Role assumed by GitHub Actions"
+        )
+

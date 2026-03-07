@@ -27,9 +27,9 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
   - [X] Create a CDK project in `packages/deploy` (Python)
      - created with `cdk init app --language python`
   - [ ] Set up GitHub Actions OIDC trust (one-time local deploy):
-    - [ ] Add GitHub OIDC identity provider to CDK stack
-    - [ ] Add IAM role that GitHub Actions can assume via OIDC
-    - [ ] `cdk deploy` once from laptop to bootstrap CI credentials
+    - [X] Add GitHub OIDC identity provider to CDK stack
+    - [X] Add IAM role that GitHub Actions can assume via OIDC
+    - [X] `cdk deploy` once from laptop to bootstrap CI credentials
     - [ ] Add GitHub Actions workflow that assumes the role and runs `cdk deploy`
     - [ ] Verify: push a commit and confirm CI deploys successfully
   - [ ] Create an IAM role for bucket access
