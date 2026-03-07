@@ -29,3 +29,10 @@ class DeployStack(Stack):
             description="Role assumed by GitHub Actions"
         )
 
+        provider_role.add_to_policy(
+            iam.PolicyStatement(
+                actions=["sts:AssumeRole"],
+                resources=[f"arn:aws:iam::{self.account}:role/cdk-hnb659fds-*"]
+            )
+        )
+
