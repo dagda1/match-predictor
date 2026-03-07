@@ -21,6 +21,9 @@ Exam: $150, 65 questions, 130 minutes, pass 720/1000
 
 Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-in-scope-services.html
 
+### commands
+  - `aws iam list-roles --query "Roles[?starts_with(CreateDate, '2026-03-07')].[RoleName, Arn]" --output table`
+
 ### Analytics
 
 - [ ] Amazon Athena
