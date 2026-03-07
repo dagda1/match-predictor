@@ -24,7 +24,15 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 ### Analytics
 
 - [ ] Amazon Athena
-  - [ ] Create a CDK project in `packages/deploy` (Python)
+  - [X] Create a CDK project in `packages/deploy` (Python)
+     - created with `cdk init app --language python`
+  - [ ] Set up GitHub Actions OIDC trust (one-time local deploy):
+    - [ ] Add GitHub OIDC identity provider to CDK stack
+    - [ ] Add IAM role that GitHub Actions can assume via OIDC
+    - [ ] `cdk deploy` once from laptop to bootstrap CI credentials
+    - [ ] Add GitHub Actions workflow that assumes the role and runs `cdk deploy`
+    - [ ] Verify: push a commit and confirm CI deploys successfully
+  - [ ] Create an IAM role for bucket access
   - [ ] Define an S3 bucket in CDK with production-grade settings:
     - [ ] Block all public access
     - [ ] Encryption at rest (SSE-S3 or KMS)
@@ -32,13 +40,17 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [ ] Versioning enabled
     - [ ] Lifecycle rules (move old data to cheaper tiers)
     - [ ] Access logging
-    - [ ] Least privilege IAM policy
+    - [ ] Least privilege IAM policy (attach to IAM role)
   - [ ] Verify with `cdk synth` (like `terraform plan`)
   - [ ] Deploy with `cdk deploy`
   - [ ] Upload match JSON files to S3 (AWS CLI)
   - [ ] Create a Glue table definition for the match schema
   - [ ] Query match data with SQL in Athena
   - [ ] Understand when to use Athena vs pandas (cost, scale, serverless)
+  - [ ] Daily ETL automation:
+    - [ ] EventBridge rule — cron schedule, once daily
+    - [ ] Lambda function — runs the scraper, writes updated JSON to S3
+    - [ ] Replaces manual `pnpm --filter @match-predictor/etl fetch-data`
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue
