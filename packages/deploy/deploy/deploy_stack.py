@@ -3,6 +3,7 @@ from aws_cdk import (
     aws_iam as iam
 )
 from constructs import Construct
+from deploy.storage import Storage
 
 class DeployStack(Stack):
 
@@ -36,3 +37,4 @@ class DeployStack(Stack):
             )
         )
 
+        Storage(self, "Storage")
