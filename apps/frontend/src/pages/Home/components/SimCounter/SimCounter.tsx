@@ -1,4 +1,5 @@
 import Typography from '@mui/material/Typography';
+
 import { sx } from './styles';
 
 interface SimCounterProps {

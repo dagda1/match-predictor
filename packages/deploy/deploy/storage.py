@@ -1,6 +1,40 @@
-from aws_cdk import Stack, aws_iam as iam
+from aws_cdk import Stack, aws_s3 as s3, Duration, RemovalPolicy
 from constructs import Construct
 
 class Storage(Construct):
     def __init__(self, scope: Construct, construct_id: str) -> None:
         super().__init__(scope, construct_id)
+
+        base_name = f"ce-matchpredictor-data-{Stack.of(self).region}-{Stack.of(self).account}-prod" 
+
+        log_bucket = s3.Bucket(self, "AccessLogBucket",
+            bucket_name=f"{base_name}-logs",                                                                         
+            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,                                                                                 
+            encryption=s3.BucketEncryption.S3_MANAGED,                                                                                          
+            enforce_ssl=True,
+            removal_policy=RemovalPolicy.RETAIN,                                                                                                
+        )   
+        
+        s3.Bucket(self, "Bucket",
+            bucket_name=base_name,
+            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+            encryption=s3.BucketEncryption.S3_MANAGED,
+            enforce_ssl=True,
+            versioned=True,
+            removal_policy=RemovalPolicy.RETAIN,
+            server_access_logs_bucket=log_bucket,
+            lifecycle_rules=[                                                                                                                       
+                s3.LifecycleRule(                                                                                                                   
+                    transitions=[                                                                                                                   
+                        s3.Transition(
+                            storage_class=s3.StorageClass.INFREQUENT_ACCESS,
+                            transition_after=Duration.days(30)                                                                                      
+                        ),
+                        s3.Transition(                                                                                                              
+                            storage_class=s3.StorageClass.GLACIER,
+                            transition_after=Duration.days(90)                                                                                      
+                        )
+                    ]                                                                                                                               
+                )                                                                                                                                   
+            ] 
+        )
