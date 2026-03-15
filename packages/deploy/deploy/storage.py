@@ -5,7 +5,7 @@ class Storage(Construct):
     def __init__(self, scope: Construct, construct_id: str) -> None:
         super().__init__(scope, construct_id)
 
-        base_name = f"ce-matchpredictor-data-{Stack.of(self).region}-{Stack.of(self).account}-prod" 
+        base_name = f"cuttingedge-matchpredictor-data-{Stack.of(self).region}-{Stack.of(self).account}" 
 
         log_bucket = s3.Bucket(self, "AccessLogBucket",
             bucket_name=f"{base_name}-logs",                                                                         
