@@ -35,17 +35,19 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] `cdk deploy` once from laptop to bootstrap CI credentials
     - [X] Add GitHub Actions workflow that assumes the role and runs `cdk deploy`
     - [X] Verify: push a commit and confirm CI deploys successfully
-  - [ ] Create an IAM role for bucket access
-  - [ ] Define an S3 bucket in CDK with production-grade settings:
-    - [ ] Block all public access
-    - [ ] Encryption at rest (SSE-S3 or KMS)
-    - [ ] Enforce SSL (reject non-HTTPS)
-    - [ ] Versioning enabled
-    - [ ] Lifecycle rules (move old data to cheaper tiers)
-    - [ ] Access logging
-    - [ ] Least privilege IAM policy (attach to IAM role)
-  - [ ] Verify with `cdk synth` (like `terraform plan`)
-  - [ ] Deploy with `cdk deploy`
+  - [X] Create an IAM role for bucket access
+    - skipped: CDK best practice is to use grant methods when a consumer exists, not pre-create roles
+  - [X] Define an S3 bucket in CDK with production-grade settings:
+    - [X] Block all public access
+    - [X] Encryption at rest (SSE-S3 or KMS)
+    - [X] Enforce SSL (reject non-HTTPS)
+    - [X] Versioning enabled
+    - [X] Lifecycle rules (move old data to cheaper tiers)
+    - [X] Access logging
+    - [X] Least privilege IAM policy (attach to IAM role)
+      - skipped: will use CDK grant methods when consumer (Lambda) is created
+  - [X] Verify with `cdk synth` (like `terraform plan`)
+  - [X] Deploy with `cdk deploy`
   - [ ] Upload match JSON files to S3 (AWS CLI)
   - [ ] Create a Glue table definition for the match schema
   - [ ] Query match data with SQL in Athena
