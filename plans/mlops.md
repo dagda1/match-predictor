@@ -48,9 +48,9 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
       - skipped: will use CDK grant methods when consumer (Lambda) is created
   - [X] Verify with `cdk synth` (like `terraform plan`)
   - [X] Deploy with `cdk deploy`
-  - [ ] Bootstrap initial data into S3:
-    - [ ] Run scraper locally: `pnpm --filter @match-predictor/etl fetch-data`
-    - [ ] Upload output to S3 with AWS CLI: `aws s3 sync`
+  - [X] Bootstrap initial data into S3:
+    - [X] Run scraper locally: `pnpm refresh`
+    - [X] Upload output to S3 with AWS CLI: `./scripts/upload-data.sh`
   - [ ] Create a Glue table definition for the match schema
   - [ ] Query match data with SQL in Athena
   - [ ] Understand when to use Athena vs pandas (cost, scale, serverless)

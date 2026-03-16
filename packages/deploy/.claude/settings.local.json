@@ -6,7 +6,8 @@
       "Bash(source .venv/bin/activate 2>/dev/null && cdk synth 2>&1 | head -80)",
       "Bash(aws cloudformation:*)",
       "WebFetch(domain:gist.github.com)",
-      "Bash(source .venv/bin/activate && cdk diff 2>&1)"
+      "Bash(source .venv/bin/activate && cdk diff 2>&1)",
+      "Bash(chmod:*)"
     ]
   }
 }
