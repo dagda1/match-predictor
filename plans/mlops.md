@@ -48,14 +48,15 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
       - skipped: will use CDK grant methods when consumer (Lambda) is created
   - [X] Verify with `cdk synth` (like `terraform plan`)
   - [X] Deploy with `cdk deploy`
-  - [ ] Upload match JSON files to S3 (AWS CLI)
+  - [ ] Bootstrap initial data into S3:
+    - [ ] Run scraper locally: `pnpm --filter @match-predictor/etl fetch-data`
+    - [ ] Upload output to S3 with AWS CLI: `aws s3 sync`
   - [ ] Create a Glue table definition for the match schema
   - [ ] Query match data with SQL in Athena
   - [ ] Understand when to use Athena vs pandas (cost, scale, serverless)
-  - [ ] Daily ETL automation:
-    - [ ] EventBridge rule — cron schedule, once daily
-    - [ ] Lambda function — runs the scraper, writes updated JSON to S3
-    - [ ] Replaces manual `pnpm --filter @match-predictor/etl fetch-data`
+  - [ ] Automate daily ETL (replaces manual scraper runs):
+    - [ ] Lambda function — runs the scraper, writes JSON to S3
+    - [ ] EventBridge rule — cron schedule triggers Lambda daily
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue
