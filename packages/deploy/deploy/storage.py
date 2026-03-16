@@ -15,7 +15,7 @@ class Storage(Construct):
             removal_policy=RemovalPolicy.RETAIN,                                                                                                
         )   
         
-        s3.Bucket(self, "Bucket",
+        self.bucket: s3.Bucket = s3.Bucket(self, "Bucket",
             bucket_name=base_name,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             encryption=s3.BucketEncryption.S3_MANAGED,
