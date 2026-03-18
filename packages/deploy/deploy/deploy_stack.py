@@ -4,6 +4,7 @@ from aws_cdk import (
 )
 from constructs import Construct
 from deploy.storage import Storage
+from deploy.data_storage import DataStorage
 
 class DeployStack(Stack):
 
@@ -37,4 +38,6 @@ class DeployStack(Stack):
             )
         )
 
-        Storage(self, "Storage")
+        storage = Storage(self, "Storage")
+        DataStorage(self, "DataStorage", bucket=storage.bucket)
+
