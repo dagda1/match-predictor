@@ -51,9 +51,9 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
   - [X] Bootstrap initial data into S3:
     - [X] Run scraper locally: `pnpm refresh`
     - [X] Upload output to S3 with AWS CLI: `./scripts/upload-data.sh`
-  - [ ] Create a Glue table definition for the match schema
-  - [ ] Query match data with SQL in Athena
-  - [ ] Understand when to use Athena vs pandas (cost, scale, serverless)
+  - [X] Create a Glue table definition for the match schema
+  - [X] Query match data with SQL in Athena
+  - [X] Understand when to use Athena vs pandas (cost, scale, serverless)
   - [ ] Automate daily ETL (replaces manual scraper runs):
     - [ ] Lambda function — runs the scraper, writes JSON to S3
     - [ ] EventBridge rule — cron schedule triggers Lambda daily
