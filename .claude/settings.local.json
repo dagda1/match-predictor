@@ -41,7 +41,8 @@
       "Bash(python -m match_predictor.generate_upcoming:*)",
       "mcp__ide__getDiagnostics",
       "Bash(pnpm --filter @match-predictor/etl run fetch-data:*)",
-      "Bash(pnpm refresh:*)"
+      "Bash(pnpm refresh:*)",
+      "Bash(aws cloudformation:*)"
     ]
   }
 }

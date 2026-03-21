@@ -8,11 +8,12 @@ class Storage(Construct):
         base_name = f"cuttingedge-matchpredictor-data-{Stack.of(self).region}-{Stack.of(self).account}" 
 
         log_bucket = s3.Bucket(self, "AccessLogBucket",
-            bucket_name=f"{base_name}-logs",                                                                         
-            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,                                                                                 
-            encryption=s3.BucketEncryption.S3_MANAGED,                                                                                          
+            bucket_name=f"{base_name}-logs",
+            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+            encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=True,
-            removal_policy=RemovalPolicy.RETAIN,                                                                                                
+            removal_policy=RemovalPolicy.RETAIN,
+            object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
         )   
         
         self.bucket: s3.Bucket = s3.Bucket(self, "Bucket",
