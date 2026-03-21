@@ -12,7 +12,7 @@ class Storage(Construct):
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=True,
-            removal_policy=RemovalPolicy.RETAIN,
+            removal_policy=RemovalPolicy.DESTROY,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
         )   
         
@@ -22,7 +22,7 @@ class Storage(Construct):
             encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=True,
             versioned=True,
-            removal_policy=RemovalPolicy.RETAIN,
+            removal_policy=RemovalPolicy.DESTROY,
             server_access_logs_bucket=log_bucket,
             lifecycle_rules=[                                                                                                                       
                 s3.LifecycleRule(                                                                                                                   

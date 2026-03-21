@@ -35,16 +35,62 @@ aws cloudformation continue-update-rollback \
   --resources-to-skip <LogicalResourceId>
 ```
 
+## List all S3 buckets
+
+```bash
+aws s3api list-buckets \
+  --query "Buckets[].Name" \
+  --output table
+```
+
 ## Delete an S3 bucket (empties it first)
 
 ```bash
 aws s3 rb s3://<bucket-name> --force
 ```
 
+## Delete a versioned S3 bucket
+
+`--force` only removes current objects. Versioned buckets also have old versions and delete markers.
+
+```bash
+aws s3api delete-objects \
+  --bucket <bucket-name> \
+  --delete "$(aws s3api list-object-versions \
+    --bucket <bucket-name> \
+    --query '{Objects: Versions[].{Key:Key,VersionId:VersionId}}' \
+    --output json)"
+```
+
+Then delete markers:
+
+```bash
+aws s3api delete-objects \
+  --bucket <bucket-name> \
+  --delete "$(aws s3api list-object-versions \
+    --bucket <bucket-name> \
+    --query '{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId}}' \
+    --output json)"
+```
+
+Then delete the bucket:
+
+```bash
+aws s3 rb s3://<bucket-name>
+```
+
+## Delete the entire stack
+
+```bash
+aws cloudformation delete-stack \
+  --stack-name DeployStack
+```
+
 ## Deploy from repo root
 
 ```bash
-cdk deploy --app "packages/deploy/.venv/bin/python3 packages/deploy/app.py"
+cdk deploy --require-approval never \
+  --app "packages/deploy/.venv/bin/python3 packages/deploy/app.py"
 ```
 
 ## Synth from repo root
