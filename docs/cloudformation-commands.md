@@ -93,6 +93,15 @@ cdk deploy --require-approval never \
   --app "packages/deploy/.venv/bin/python3 packages/deploy/app.py"
 ```
 
+## List Glue tables
+
+```bash
+aws glue get-tables \
+  --database-name match_predictor \
+  --query "TableList[].Name" \
+  --output table
+```
+
 ## Synth from repo root
 
 ```bash

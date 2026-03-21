@@ -42,7 +42,9 @@
       "mcp__ide__getDiagnostics",
       "Bash(pnpm --filter @match-predictor/etl run fetch-data:*)",
       "Bash(pnpm refresh:*)",
-      "Bash(aws cloudformation:*)"
+      "Bash(aws cloudformation:*)",
+      "WebFetch(domain:repost.aws)",
+      "Bash(aws athena:*)"
     ]
   }
 }
