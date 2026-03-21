@@ -1,6 +1,7 @@
 import { assert } from '@cutting/assert';
 
 import type { MatchInfo } from './matchSchema';
+import { matchInfoSchema } from './matchSchema';
 
 export type { MatchInfo };
 
@@ -20,7 +21,7 @@ export async function scrapeMatch(matchId: string): Promise<MatchInfo> {
 
   const raw = JSON.parse(decodeHex(scriptMatch[1]));
 
-  return {
+  return matchInfoSchema.parse({
     id: raw.id,
     date: raw.date,
     season: raw.season,
@@ -41,5 +42,5 @@ export async function scrapeMatch(matchId: string): Promise<MatchInfo> {
     homeWinProb: raw.h_w,
     drawProb: raw.h_d,
     awayWinProb: raw.h_l,
-  };
+  });
 }

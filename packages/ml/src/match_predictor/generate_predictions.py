@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from match_predictor.data import load_matches, DATA_DIR
+from match_predictor.data import load_matches, DATA_DIR, format_date
 from match_predictor.model import train, _scoreline_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
@@ -77,7 +77,7 @@ def generate() -> None:
         predictions.append({
             "homeTeam": home_team,
             "awayTeam": away_team,
-            "date": match_date.isoformat(),
+            "date": format_date(match_date),
             "actualHomeGoals": actual_home,
             "actualAwayGoals": actual_away,
             "actualOutcome": actual_outcome,

@@ -31,3 +31,7 @@ def load_matches() -> pd.DataFrame:
     df = df.sort_values("date").reset_index(drop=True)
 
     return df
+
+
+def format_date(dt: pd.Timestamp) -> str:
+    return dt.strftime("%Y-%m-%d %H:%M:%S")

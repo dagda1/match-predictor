@@ -8,7 +8,7 @@ class DataStorage(Construct):
 
         database = Database(self, "Database", database_name="match_predictor")
 
-        matches_table = S3Table(self, "MatchesTable",
+        S3Table(self, "MatchesTable",
                 database=database,
                 bucket=bucket,
                 table_name="matches",

@@ -10,5 +10,8 @@ if [ "$bucket" = "None" ] || [ -z "$bucket" ]; then
   exit 1
 fi
 
+echo "Clearing s3://${bucket}/matches/"
+aws s3 rm "s3://${bucket}/matches/" --recursive
+
 echo "Uploading to s3://${bucket}/matches/"
 aws s3 sync packages/etl/data/ "s3://${bucket}/matches/"

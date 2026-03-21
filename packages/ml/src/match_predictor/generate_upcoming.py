@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 import requests
 
-from match_predictor.data import load_matches, DATA_DIR
+from match_predictor.data import load_matches, DATA_DIR, format_date
 from match_predictor.model import train, _scoreline_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
@@ -38,7 +38,7 @@ def _fetch_upcoming_fixtures() -> list[dict]:
         fixtures.append({
             "homeTeam": entry["h"]["title"],
             "awayTeam": entry["a"]["title"],
-            "date": dt.isoformat(),
+            "date": format_date(pd.Timestamp(dt)),
         })
 
     return sorted(fixtures, key=lambda f: f["date"])

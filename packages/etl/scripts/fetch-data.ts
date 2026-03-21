@@ -19,8 +19,10 @@ async function loadExisting(season: string): Promise<MatchInfo[]> {
   return JSON.parse(raw) as MatchInfo[];
 }
 
+const force = process.argv.includes('--force');
+
 async function fetchSeason(season: string): Promise<void> {
-  const existing = await loadExisting(season);
+  const existing = force ? [] : await loadExisting(season);
   const existingIds = new Set(existing.map((m) => m.id));
 
   console.log(`\n${season} season: ${existing.length} existing matches`);
