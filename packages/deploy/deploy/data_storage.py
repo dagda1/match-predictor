@@ -9,6 +9,7 @@ class DataStorage(Construct):
         database = Database(self, "Database", database_name="match_predictor")
 
         S3Table(self, "MatchesTable",
+                s3_prefix="matches/",
                 database=database,
                 bucket=bucket,
                 table_name="matches",
@@ -56,7 +57,8 @@ class DataStorage(Construct):
             Column(name="awayLambda", type=Schema.DOUBLE),
         ])
         
-        predictions_table = S3Table(self, "PredictionsTable",
+        S3Table(self, "PredictionsTable",
+                s3_prefix="predictions/",
                 database=database,
                 bucket=bucket,
                 table_name="predictions",
@@ -73,7 +75,8 @@ class DataStorage(Construct):
                 data_format=DataFormat.JSON
         )
 
-        upcoming_table = S3Table(self, "UpcomingTable",
+        S3Table(self, "UpcomingTable",
+                s3_prefix="upcoming/",
                 database=database,
                 bucket=bucket,
                 table_name="upcoming",
