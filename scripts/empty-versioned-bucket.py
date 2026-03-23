@@ -1,5 +1,12 @@
+#!/usr/bin/env python3
+import subprocess
 import sys
-import boto3
+
+try:
+    import boto3
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--break-system-packages", "boto3"])
+    import boto3
 
 bucket = sys.argv[1]
 s3 = boto3.client("s3")

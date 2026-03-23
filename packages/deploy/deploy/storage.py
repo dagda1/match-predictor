@@ -11,9 +11,14 @@ class Storage(Construct):
             bucket_name=f"{base_name}-logs",
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             encryption=s3.BucketEncryption.S3_MANAGED,
-            enforce_ssl=True,
+            enforce_ssl=False,
             removal_policy=RemovalPolicy.DESTROY,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
+            lifecycle_rules=[
+                s3.LifecycleRule(
+                    expiration=Duration.days(30)
+                )
+            ]
         )   
         
         self.bucket: s3.Bucket = s3.Bucket(self, "Bucket",
@@ -21,10 +26,10 @@ class Storage(Construct):
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=True,
-            versioned=True,
+            versioned=False,
             removal_policy=RemovalPolicy.DESTROY,
             server_access_logs_bucket=log_bucket,
-            lifecycle_rules=[                                                                                                                       
+            lifecycle_rules=[                                                                                                                          
                 s3.LifecycleRule(                                                                                                                   
                     transitions=[                                                                                                                   
                         s3.Transition(

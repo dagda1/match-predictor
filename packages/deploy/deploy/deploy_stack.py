@@ -5,6 +5,7 @@ from aws_cdk import (
 from constructs import Construct
 from deploy.storage import Storage
 from deploy.data_storage import DataStorage
+from deploy.etl.functions import EtlFunctions
 
 class DeployStack(Stack):
 
