@@ -44,7 +44,9 @@
       "Bash(pnpm refresh:*)",
       "Bash(aws cloudformation:*)",
       "WebFetch(domain:repost.aws)",
-      "Bash(aws athena:*)"
+      "Bash(aws athena:*)",
+      "Bash(pnpm list:*)",
+      "Bash(ls:*)"
     ]
   }
 }

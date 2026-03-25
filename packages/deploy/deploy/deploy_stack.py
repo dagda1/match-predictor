@@ -41,4 +41,5 @@ class DeployStack(Stack):
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
+        EtlFunctions(self, "EtlFunctions", bucket=storage.bucket)
 
