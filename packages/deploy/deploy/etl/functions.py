@@ -7,7 +7,7 @@ class EtlFunctions(Construct):
     def __init__(self, scope: Construct, construct_id: str, bucket: s3.Bucket) -> None:
         super().__init__(scope, construct_id)
 
-        scraper = NodejsFunction(self, "ScraperFunction",
+        self.scraper = NodejsFunction(self, "ScraperFunction",
             entry="packages/etl/src/lambda-handler.ts",
             handler="handler",
             runtime=aws_lambda.Runtime.NODEJS_22_X,
@@ -19,4 +19,4 @@ class EtlFunctions(Construct):
             },
         )
 
-        bucket.grant_write(scraper)
+        bucket.grant_write(self.scraper)

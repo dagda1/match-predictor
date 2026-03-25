@@ -55,12 +55,15 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
   - [X] Query match data with SQL in Athena
   - [X] Understand when to use Athena vs pandas (cost, scale, serverless)
   - [ ] Automate daily ETL (replaces manual scraper runs):
-    - [ ] TypeScript Lambda — imports existing scraper, writes matches to S3
+    - [X] TypeScript Lambda — imports existing scraper, writes matches to S3
+    - [X] EventBridge rule — cron schedule triggers scraper Lambda daily at 06:00 UTC
+    - [X] CDK constructs for scraper Lambda and EventBridge in `packages/deploy/deploy/etl/`
+    - [ ] Verify scraper Lambda runs successfully (check 2026-03-26 morning):
+      - `aws lambda list-functions --query "Functions[?contains(FunctionName, 'Scraper')].FunctionName" --output text`
+      - `aws lambda invoke --function-name <name> /tmp/lambda-output.json && cat /tmp/lambda-output.json`
+    - [ ] SQS queue — scraper Lambda sends message on completion, triggers Python Lambda
     - [ ] Python Lambda — imports existing generate_predictions/generate_upcoming, reads matches from S3, writes predictions + upcoming to S3
     - [ ] Refactor Python generate() functions to accept read/write functions (pluggable storage)
-    - [ ] SQS queue — scraper Lambda sends message on completion, triggers Python Lambda
-    - [ ] EventBridge rule — cron schedule triggers scraper Lambda daily
-    - [ ] CDK constructs for all of the above in `packages/deploy/deploy/etl/`
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue

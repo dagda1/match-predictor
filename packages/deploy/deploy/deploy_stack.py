@@ -6,6 +6,8 @@ from constructs import Construct
 from deploy.storage import Storage
 from deploy.data_storage import DataStorage
 from deploy.etl.functions import EtlFunctions
+from deploy.events import Events
+from deploy.alerts import Alerts
 
 class DeployStack(Stack):
 
@@ -41,5 +43,6 @@ class DeployStack(Stack):
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
-        EtlFunctions(self, "EtlFunctions", bucket=storage.bucket)
-
+        functions=EtlFunctions(self, "EtlFunctions", bucket=storage.bucket)
+        Events(self, "EventBridge", scraper_function=functions.scraper)
+        Alerts(self, "Alerts", scraper_function=functions.scraper)
