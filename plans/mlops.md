@@ -60,6 +60,7 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] CDK constructs for scraper Lambda and EventBridge in `packages/deploy/deploy/etl/`
     - [ ] Verify scraper Lambda runs successfully (check 2026-03-26 morning):
       - `aws lambda list-functions --query "Functions[?contains(FunctionName, 'Scraper')].FunctionName" --output text`
+      - DeployStack-EtlFunctionsScraperFunctionF099BA00-t23rQIlM3RwA
       - `aws lambda invoke --function-name <name> /tmp/lambda-output.json && cat /tmp/lambda-output.json`
     - [ ] SQS queue — scraper Lambda sends message on completion, triggers Python Lambda
     - [ ] Python Lambda — imports existing generate_predictions/generate_upcoming, reads matches from S3, writes predictions + upcoming to S3
