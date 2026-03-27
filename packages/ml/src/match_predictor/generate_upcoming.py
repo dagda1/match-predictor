@@ -1,10 +1,11 @@
 import json
+from collections.abc import Callable
 from datetime import datetime, timedelta
 
 import pandas as pd
 import requests
 
-from match_predictor.data import load_matches, DATA_DIR, format_date
+from match_predictor.data import load_matches as load_matches_from_disk, DATA_DIR, format_date
 from match_predictor.model import train, _scoreline_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
@@ -44,7 +45,15 @@ def _fetch_upcoming_fixtures() -> list[dict]:
     return sorted(fixtures, key=lambda f: f["date"])
 
 
-def generate() -> None:
+def _write_to_disk(predictions: list[dict]) -> None:
+    with open(UPCOMING_PATH, "w") as f:
+        json.dump(predictions, f, indent=2)
+
+
+def generate(
+    load_matches: Callable[[], pd.DataFrame],
+    write_output: Callable[[list[dict]], None],
+) -> str:
     print("fetching upcoming fixtures from Understat...")
     fixtures = _fetch_upcoming_fixtures()
 
@@ -113,11 +122,13 @@ def generate() -> None:
 
         print(f"  {home_team} vs {away_team}  ML:{ml_pred}  Poi:{poi_pred}  ML top:{ml_top['homeGoals']}-{ml_top['awayGoals']}  Poi top:{poisson_top['homeGoals']}-{poisson_top['awayGoals']}")
 
-    with open(UPCOMING_PATH, "w") as f:
-        json.dump(predictions, f, indent=2)
+    write_output(predictions)
 
-    print(f"\nsaved {len(predictions)} upcoming predictions to {UPCOMING_PATH}")
+    summary = f"{len(predictions)} upcoming predictions"
+    print(summary)
+
+    return summary
 
 
 if __name__ == "__main__":
-    generate()
+    generate(load_matches_from_disk, _write_to_disk)

@@ -1,8 +1,9 @@
 import json
+from collections.abc import Callable
 
 import pandas as pd
 
-from match_predictor.data import load_matches, DATA_DIR, format_date
+from match_predictor.data import load_matches as load_matches_from_disk, DATA_DIR, format_date
 from match_predictor.model import train, _scoreline_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
@@ -28,7 +29,15 @@ def _predicted_outcome(home_win: float, draw: float, away_win: float) -> str:
     return "away"
 
 
-def generate() -> None:
+def _write_to_disk(predictions: list[dict]) -> None:
+    with open(PREDICTIONS_PATH, "w") as f:
+        json.dump(predictions, f, indent=2)
+
+
+def generate(
+    load_matches: Callable[[], pd.DataFrame],
+    write_output: Callable[[list[dict]], None],
+) -> str:
     df = load_matches()
 
     train_df = df[df["date"] < CUTOFF]
@@ -107,15 +116,15 @@ def generate() -> None:
 
         print(f"  {home_team} {actual_home}-{actual_away} {away_team}  ML:{ml_pred}({'✓' if ml_pred == actual_outcome else '✗'})  Poi:{poisson_pred}({'✓' if poisson_pred == actual_outcome else '✗'})  ML top:{ml_top['homeGoals']}-{ml_top['awayGoals']}")
 
-    with open(PREDICTIONS_PATH, "w") as f:
-        json.dump(predictions, f, indent=2)
+    write_output(predictions)
 
     ml_correct = sum(1 for p in predictions if p["ml"]["correct"])
     poi_correct = sum(1 for p in predictions if p["poisson"]["correct"])
-    print(f"\nsaved {len(predictions)} predictions to {PREDICTIONS_PATH}")
-    print(f"ML: {ml_correct}/{len(predictions)} ({ml_correct/len(predictions)*100:.0f}%)")
-    print(f"Poisson: {poi_correct}/{len(predictions)} ({poi_correct/len(predictions)*100:.0f}%)")
+    summary = f"{len(predictions)} predictions, ML: {ml_correct}/{len(predictions)} ({ml_correct/len(predictions)*100:.0f}%), Poisson: {poi_correct}/{len(predictions)} ({poi_correct/len(predictions)*100:.0f}%)"
+    print(summary)
+
+    return summary
 
 
 if __name__ == "__main__":
-    generate()
+    generate(load_matches_from_disk, _write_to_disk)
