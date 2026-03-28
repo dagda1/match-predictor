@@ -32,6 +32,39 @@ aws lambda get-function-configuration \
   --output json
 ```
 
+## Verify full pipeline ran
+
+Check scraper logs:
+
+```bash
+aws logs tail \
+  "/aws/lambda/DeployStack-EtlFunctionsScraperFunctionF099BA00-t23rQIlM3RwA" \
+  --since 24h
+```
+
+Find predictor function name:
+
+```bash
+aws lambda list-functions \
+  --query "Functions[?contains(FunctionName, 'Predictor')].FunctionName" \
+  --output text
+```
+
+Check predictor logs (use name from above):
+
+```bash
+aws logs tail \
+  "/aws/lambda/<predictor-function-name>" \
+  --since 24h
+```
+
+Check S3 files were updated:
+
+```bash
+aws s3 ls s3://cuttingedge-matchpredictor-data-us-west-2-313095418189/predictions/
+aws s3 ls s3://cuttingedge-matchpredictor-data-us-west-2-313095418189/upcoming/
+```
+
 ## Check Lambda errors
 
 ```bash

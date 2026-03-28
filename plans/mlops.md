@@ -58,13 +58,19 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] TypeScript Lambda — imports existing scraper, writes matches to S3
     - [X] EventBridge rule — cron schedule triggers scraper Lambda daily at 06:00 UTC
     - [X] CDK constructs for scraper Lambda and EventBridge in `packages/deploy/deploy/etl/`
-    - [ ] Verify scraper Lambda runs successfully (check 2026-03-26 morning):
-      - `aws lambda list-functions --query "Functions[?contains(FunctionName, 'Scraper')].FunctionName" --output text`
-      - DeployStack-EtlFunctionsScraperFunctionF099BA00-t23rQIlM3RwA
-      - `aws lambda invoke --function-name <name> /tmp/lambda-output.json && cat /tmp/lambda-output.json`
-    - [ ] SQS queue — scraper Lambda sends message on completion, triggers Python Lambda
-    - [ ] Python Lambda — imports existing generate_predictions/generate_upcoming, reads matches from S3, writes predictions + upcoming to S3
-    - [ ] Refactor Python generate() functions to accept read/write functions (pluggable storage)
+    - [X] Verify scraper Lambda runs successfully
+    - [X] Refactor Python generate() functions to accept read/write functions (pluggable storage)
+    - [X] Python Lambda — imports existing generate_predictions/generate_upcoming, reads matches from S3, writes predictions + upcoming to S3
+    - [X] SQS queue — scraper Lambda sends message on completion, triggers Python Lambda
+    - [X] SNS notifications on success and CloudWatch alarms on error
+    - [X] X-Ray tracing enabled on both Lambdas
+    - [ ] Verify full pipeline runs (check 2026-03-29 morning): EventBridge → scraper → SQS → predictor → S3
+  - [ ] Deploy web app to AWS:
+    - [ ] Frontend: build React app, deploy to S3 + CloudFront
+    - [ ] API: deploy FastAPI as Lambda behind API Gateway
+    - [ ] CDK constructs for CloudFront distribution, S3 static hosting, API Gateway, Lambda
+    - [ ] Wire frontend to hit API Gateway URL instead of localhost
+    - [ ] Custom domain (optional)
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue
