@@ -8,6 +8,7 @@ from deploy.data_storage import DataStorage
 from deploy.etl.functions import EtlFunctions
 from deploy.events import Events
 from deploy.alerts import Alerts
+from deploy.queuing import Queuing
 
 class DeployStack(Stack):
 
@@ -45,4 +46,5 @@ class DeployStack(Stack):
         DataStorage(self, "DataStorage", bucket=storage.bucket)
         functions=EtlFunctions(self, "EtlFunctions", bucket=storage.bucket)
         Events(self, "EventBridge", scraper_function=functions.scraper)
+        Queuing(self, "Queuing", predictor_function=functions.predictor)
         Alerts(self, "Alerts", scraper_function=functions.scraper)

@@ -18,7 +18,7 @@
     "dev": "concurrently -n api,frontend -c blue,green \"pnpm start:api\" \"pnpm start:frontend\"",
     "refresh": "pnpm --filter @match-predictor/etl fetch-data && uv run --directory packages/ml python -m match_predictor.generate_predictions && uv run --directory packages/ml python -m match_predictor.generate_upcoming",
     "test": "cross-env turbo run test:ci",
-    "setup:deploy": "cd packages/deploy && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/pip install aws-cdk.aws-glue-alpha"
+    "setup:deploy": "cd packages/deploy && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt"
   },
   "keywords": [],
   "author": "",

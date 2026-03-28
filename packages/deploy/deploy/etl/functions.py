@@ -3,6 +3,7 @@ import os
 from constructs import Construct
 from aws_cdk import aws_s3 as s3, aws_lambda, aws_sns, aws_sns_subscriptions, Duration
 from aws_cdk.aws_lambda_nodejs import NodejsFunction
+from aws_cdk.aws_lambda_python_alpha import PythonFunction
 from pathlib import Path
 
 DEPLOY_DIR = Path(__file__).resolve().parent.parent.parent
@@ -31,5 +32,20 @@ class EtlFunctions(Construct):
             },
         )
 
+        self.predictor = PythonFunction(self, "PredictorFunction",
+            entry=str(REPO_DIR / "packages" / "ml" / "src"),
+            index="match_predictor/lambda_handler.py",
+            handler="handler",
+            runtime=aws_lambda.Runtime.PYTHON_3_12,
+            timeout=Duration.minutes(5),
+            tracing=aws_lambda.Tracing.ACTIVE,
+            environment={
+                "BUCKET_NAME": bucket.bucket_name,
+                "TOPIC_ARN": self.topic.topic_arn,
+            },
+        )
+
         bucket.grant_write(self.scraper)
+        bucket.grant_write(self.predictor)
         self.topic.grant_publish(self.scraper)
+        self.topic.grant_publish(self.predictor)
