@@ -50,7 +50,7 @@ export function useMatchPrediction(): UseMatchPredictionResult {
     if (prediction && phase === 'simulating') {
       animation.startAnimation(prediction);
     }
-  }, [prediction, phase]);
+  }, [prediction, phase, animation]);
 
   useEffect(() => {
     if (!animation.isAnimating && phase === 'simulating' && prediction) {

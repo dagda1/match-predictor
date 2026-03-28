@@ -63,12 +63,7 @@ export function getValueSx(compact: boolean, variant: ModelVariant, outcome: Out
   });
 }
 
-export function getBarSx(
-  widthPct: number,
-  variant: ModelVariant,
-  outcome: Outcome,
-  animated: boolean,
-): SxProps<Theme> {
+export function getBarSx(widthPct: number, variant: ModelVariant, outcome: Outcome, animated: boolean): SxProps<Theme> {
   return (theme: Theme) => ({
     height: '100%',
     borderRadius: 5,
