@@ -1,5 +1,15 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
+import type { ModelVariant } from '../ModelProbBars/ModelProbBars';
+
+function getChipColor(theme: Theme, variant: ModelVariant): string {
+  return variant === 'ml' ? theme.palette.primary.main : theme.palette.warning.main;
+}
+
+function getChipAccentBg(theme: Theme, variant: ModelVariant): string {
+  return variant === 'ml' ? theme.palette.primary.dark : theme.palette.warning.dark;
+}
+
 export const sx: Record<string, SxProps<Theme>> = {
   headCell: {
     fontWeight: 700,
@@ -23,14 +33,9 @@ export const sx: Record<string, SxProps<Theme>> = {
   },
 };
 
-export function chipSx(
-  index: number,
-  chipColor: string,
-  chipAccentBg: string,
-  chipAccentText: string,
-): SxProps<Theme> {
+export function getChipSx(index: number, variant: ModelVariant): SxProps<Theme> {
   return (theme: Theme) => {
-    const defaultBg = theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : theme.palette.grey[100];
+    const defaultBg = theme.palette.action.hover;
     const defaultColor = theme.palette.text.secondary;
 
     return {
@@ -38,8 +43,13 @@ export function chipSx(
       fontFeatureSettings: "'tnum'",
       fontSize: '0.74rem',
       height: 24,
-      bgcolor: index === 0 ? chipColor : index < 3 ? chipAccentBg : defaultBg,
-      color: index === 0 ? '#fff' : index < 3 ? chipAccentText : defaultColor,
+      bgcolor: index === 0 ? getChipColor(theme, variant) : index < 3 ? getChipAccentBg(theme, variant) : defaultBg,
+      color:
+        index === 0
+          ? theme.palette.getContrastText(getChipColor(theme, variant))
+          : index < 3
+            ? theme.palette.getContrastText(getChipAccentBg(theme, variant))
+            : defaultColor,
     };
   };
 }

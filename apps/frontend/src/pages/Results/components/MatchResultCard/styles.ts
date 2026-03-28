@@ -43,6 +43,18 @@ export const sx: Record<string, SxProps<Theme>> = {
     fontFeatureSettings: "'tnum'",
     fontSize: '0.88rem',
   },
+  mlPredictedValue: {
+    fontWeight: 700,
+    fontFeatureSettings: "'tnum'",
+    fontSize: '0.88rem',
+    color: (theme: Theme) => theme.palette.primary.main,
+  },
+  poissonPredictedValue: {
+    fontWeight: 700,
+    fontFeatureSettings: "'tnum'",
+    fontSize: '0.88rem',
+    color: (theme: Theme) => theme.palette.warning.main,
+  },
   predictedProb: {
     fontWeight: 500,
     fontSize: '0.78rem',
@@ -50,19 +62,21 @@ export const sx: Record<string, SxProps<Theme>> = {
   },
 };
 
-export function cardSx(bothCorrect: boolean, bothWrong: boolean): (theme: Theme) => Record<string, unknown> {
+export function cardSx(bothCorrect: boolean, bothWrong: boolean): SxProps<Theme> {
   return (theme: Theme) => {
-    const isDark = theme.palette.mode === 'dark';
+    const successColor = theme.palette.success.main;
+    const errorColor = theme.palette.error.main;
     const borderColor = bothCorrect
-      ? (isDark ? 'rgba(0,230,118,0.3)' : 'rgba(0,200,83,0.4)')
+      ? `${successColor}66`
       : bothWrong
-        ? (isDark ? 'rgba(255,82,82,0.25)' : 'rgba(255,82,82,0.3)')
-        : (isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)');
+        ? `${errorColor}44`
+        : theme.palette.divider;
     const bgTint = bothCorrect
-      ? (isDark ? 'rgba(0,230,118,0.03)' : 'rgba(0,200,83,0.03)')
+      ? `${successColor}08`
       : bothWrong
-        ? (isDark ? 'rgba(255,82,82,0.03)' : 'rgba(255,82,82,0.02)')
+        ? `${errorColor}06`
         : 'transparent';
+
     return {
       px: { xs: 2, sm: 3 },
       py: { xs: 2, sm: 2.5 },
@@ -72,30 +86,17 @@ export function cardSx(bothCorrect: boolean, bothWrong: boolean): (theme: Theme)
   };
 }
 
-export function chipSx(correct: boolean): (theme: Theme) => Record<string, unknown> {
-  return (theme: Theme) => {
-    const isDark = theme.palette.mode === 'dark';
-    return {
-      fontWeight: 700,
-      fontSize: '0.72rem',
-      height: 24,
-      bgcolor: correct
-        ? (isDark ? 'rgba(0,230,118,0.12)' : 'rgba(0,200,83,0.12)')
-        : (isDark ? 'rgba(255,82,82,0.12)' : 'rgba(255,82,82,0.1)'),
-      color: correct ? '#00E676' : (isDark ? '#FF5252' : '#D32F2F'),
-      border: 'none',
-    };
-  };
-}
-
-export function mlColorSx(): (theme: Theme) => Record<string, unknown> {
+export function chipSx(correct: boolean): SxProps<Theme> {
   return (theme: Theme) => ({
-    color: theme.palette.mode === 'dark' ? '#b09aff' : '#3D195B',
-  });
-}
-
-export function poissonColorSx(): (theme: Theme) => Record<string, unknown> {
-  return (theme: Theme) => ({
-    color: theme.palette.mode === 'dark' ? '#ffab40' : '#E65100',
+    fontWeight: 700,
+    fontSize: '0.72rem',
+    height: 24,
+    bgcolor: correct
+      ? `${theme.palette.success.main}1F`
+      : `${theme.palette.error.main}1A`,
+    color: correct
+      ? theme.palette.success.main
+      : theme.palette.error.main,
+    border: 'none',
   });
 }

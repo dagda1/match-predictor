@@ -7,29 +7,24 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import type { Scoreline } from '~/api/types';
-import { sx, chipSx } from './styles';
 
-interface ScorelineTableProps {
+import type { Scoreline } from '~/api/types';
+
+import type { ModelVariant } from '../ModelProbBars/ModelProbBars';
+import { getChipSx, sx } from './styles';
+
+interface Props {
   scorelines: Scoreline[];
   revealed: number | null;
-  chipColor: string;
-  chipAccentBg: string;
-  chipAccentText: string;
+  variant: ModelVariant;
 }
 
-function pct(v: number): string {
-  return `${(v * 100).toFixed(1)}%`;
+function pct(value: number): string {
+  return `${(value * 100).toFixed(1)}%`;
 }
 
-export function ScorelineTable({
-  scorelines,
-  revealed,
-  chipColor,
-  chipAccentBg,
-  chipAccentText,
-}: ScorelineTableProps): JSX.Element {
-  const rows = revealed != null ? scorelines.slice(0, revealed) : scorelines;
+export function ScorelineTable({ scorelines, revealed, variant }: Readonly<Props>): JSX.Element {
+  const rows = revealed !== null ? scorelines.slice(0, revealed) : scorelines;
 
   return (
     <TableContainer>
@@ -38,25 +33,23 @@ export function ScorelineTable({
           <TableRow>
             <TableCell sx={sx.headCell}>#</TableCell>
             <TableCell sx={sx.headCell}>Score</TableCell>
-            <TableCell align="right" sx={sx.headCell}>Prob</TableCell>
+            <TableCell align="right" sx={sx.headCell}>
+              Prob
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((s, i) => (
-            <Grow in key={`${s.homeGoals}-${s.awayGoals}`} timeout={300 + i * 80}>
+          {rows.map((scoreline, index) => (
+            <Grow in key={`${scoreline.homeGoals}-${scoreline.awayGoals}`} timeout={300 + index * 80}>
               <TableRow sx={sx.bodyRow}>
-                <TableCell sx={sx.rankCell}>{i + 1}</TableCell>
+                <TableCell sx={sx.rankCell}>{index + 1}</TableCell>
                 <TableCell>
                   <Typography variant="body2" sx={sx.score}>
-                    {s.homeGoals} – {s.awayGoals}
+                    {scoreline.homeGoals} – {scoreline.awayGoals}
                   </Typography>
                 </TableCell>
                 <TableCell align="right">
-                  <Chip
-                    label={pct(s.probability)}
-                    size="small"
-                    sx={chipSx(i, chipColor, chipAccentBg, chipAccentText)}
-                  />
+                  <Chip label={pct(scoreline.probability)} size="small" sx={getChipSx(index, variant)} />
                 </TableCell>
               </TableRow>
             </Grow>
