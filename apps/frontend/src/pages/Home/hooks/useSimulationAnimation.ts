@@ -76,7 +76,7 @@ export function useSimulationAnimation(): UseSimulationAnimationResult {
     setRevealedRows(0);
     setMlAnimProbs(INITIAL_PROBS);
     setPoissonAnimProbs(INITIAL_PROBS);
-    setIsAnimating(false);
+    setIsAnimating(true);
   }, []);
 
   useEffect(() => () => cancelAnimationFrame(rafRef.current), []);

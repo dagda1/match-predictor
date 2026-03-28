@@ -4,12 +4,13 @@ from collections.abc import Callable
 import pandas as pd
 
 from match_predictor.data import load_matches as load_matches_from_disk, DATA_DIR, format_date
-from match_predictor.model import train, _scoreline_probabilities
+from match_predictor.model import train, save_model, _scoreline_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
 CUTOFF = pd.Timestamp("2026-01-01")
 PREDICTIONS_PATH = DATA_DIR / "predictions-2026.json"
+MODEL_PATH = DATA_DIR / "model.joblib"
 
 
 def _outcome(home_goals: int, away_goals: int) -> str:
@@ -49,6 +50,7 @@ def generate(
     print(f"predicting {len(predict_df)} matches from {CUTOFF.date()} onwards")
 
     model = train(train_df)
+    save_model(model, MODEL_PATH)
 
     predictions = []
 

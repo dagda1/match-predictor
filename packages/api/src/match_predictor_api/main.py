@@ -7,8 +7,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from match_predictor import load_matches, train, predict_match, poisson_predict
+from match_predictor import load_matches, predict_match, poisson_predict
 from match_predictor.data import DATA_DIR
+from match_predictor.model import load_model
+
+MODEL_PATH = DATA_DIR / "model.joblib"
 
 app = FastAPI(title="Match Predictor API")
 
@@ -20,7 +23,7 @@ app.add_middleware(
 )
 
 df = load_matches()
-model = train(df)
+model = load_model(MODEL_PATH)
 
 
 class PredictRequest(BaseModel):

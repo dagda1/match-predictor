@@ -53,10 +53,10 @@ export function useMatchPrediction(): UseMatchPredictionResult {
   }, [prediction, phase]);
 
   useEffect(() => {
-    if (!animation.isAnimating && phase === 'simulating') {
+    if (!animation.isAnimating && phase === 'simulating' && prediction) {
       setPhase('result');
     }
-  }, [animation.isAnimating, phase]);
+  }, [animation.isAnimating, phase, prediction]);
 
   function handlePredict(): void {
     if (!home || !away) {

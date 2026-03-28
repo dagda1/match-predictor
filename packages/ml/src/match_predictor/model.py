@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
+from pathlib import Path
 
+import joblib
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import GradientBoostingClassifier
@@ -120,6 +122,14 @@ def evaluate(
         confusion=confusion_matrix(y_true, y_pred, labels=list(classes)),
         baseline_accuracy=baseline_acc,
     )
+
+
+def save_model(model: TrainedModel, path: Path) -> None:
+    joblib.dump(model, path)
+
+
+def load_model(path: Path) -> TrainedModel:
+    return joblib.load(path)
 
 
 def _scoreline_probabilities(
