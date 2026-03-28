@@ -1,5 +1,5 @@
 import type { PaletteOptions } from '@mui/material/styles';
-import type { TypographyOptions } from '@mui/material/styles/createTypography';
+import type { TypographyVariantsOptions } from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 
 import { DEFAULT_FONT_FAMILY, DEFAULT_HTML_FONT_SIZE } from '../constants';
@@ -8,16 +8,16 @@ export interface BaseThemeOptions {
   palette: PaletteOptions;
   fontFamily?: string;
   htmlFontSize?: number;
-  typography?: TypographyOptions;
+  typography?: TypographyVariantsOptions;
 }
 
 export function createBaseThemeOptions(options: BaseThemeOptions): {
   palette: PaletteOptions;
-  typography: TypographyOptions;
+  typography: TypographyVariantsOptions;
 } {
   const { palette, htmlFontSize = DEFAULT_HTML_FONT_SIZE, fontFamily = DEFAULT_FONT_FAMILY, typography } = options;
 
-  const defaultTypography: TypographyOptions = {
+  const defaultTypography: TypographyVariantsOptions = {
     htmlFontSize,
     fontFamily,
     h1: { fontSize: 54, fontWeight: 400 },

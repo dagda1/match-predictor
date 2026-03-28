@@ -1,6 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import { StyledEngineProvider } from '@mui/material/styles';
-import MuiThemeProvider from '@mui/material/styles/ThemeProvider';
+import { ThemeProvider as MuiThemeProvider} from '@mui/material/styles';
 import type { ReactNode } from 'react';
 
 import { GlobalStyles } from '../GlobalStyles';

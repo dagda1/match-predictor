@@ -1,7 +1,6 @@
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
 import dts from 'vite-plugin-dts';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 import { sharedTestConfig } from '../../vitest.shared';
@@ -19,12 +18,12 @@ export default defineConfig({
   plugins: [
     checker({ typescript: { tsconfigPath: 'tsconfig.dist.json' } }),
     dts({ tsconfigPath: 'tsconfig.dist.json', insertTypesEntry: true, logLevel: 'error' }),
-    tsconfigPaths(),
     react(),
   ],
   logLevel: 'warn',
   resolve: {
     dedupe: ['react', 'react-dom', '@emotion/react'],
+    tsconfigPaths: true,
   },
   build: {
     manifest: true,
@@ -35,7 +34,7 @@ export default defineConfig({
       entry: [...entries],
       formats: ['es'],
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['@emotion/styled', '@emotion/react', /^@mui\/.*/, 'react', 'react-dom', 'react-router'],
       input: [...entries],
       output: {

@@ -1,6 +1,5 @@
 import checker from 'vite-plugin-checker';
 import dts from 'vite-plugin-dts';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 import { sharedTestConfig } from '../../vitest.shared';
@@ -18,9 +17,11 @@ export default defineConfig({
   plugins: [
     checker({ typescript: { tsconfigPath: 'tsconfig.dist.json' } }),
     dts({ tsconfigPath: 'tsconfig.dist.json', insertTypesEntry: true, logLevel: 'error' }),
-    tsconfigPaths(),
   ],
   logLevel: 'warn',
+  resolve: {
+    tsconfigPaths: true,
+  },
   build: {
     manifest: true,
     minify: true,
@@ -30,7 +31,7 @@ export default defineConfig({
       entry: [...entries],
       formats: ['es'],
     },
-    rollupOptions: {
+    rolldownOptions: {
       input: [...entries],
       output: {
         preserveModulesRoot: 'src',

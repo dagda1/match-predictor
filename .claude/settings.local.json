@@ -46,7 +46,10 @@
       "WebFetch(domain:repost.aws)",
       "Bash(aws athena:*)",
       "Bash(pnpm list:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:vite.dev)",
+      "WebFetch(domain:rolldown.rs)"
     ]
   }
 }

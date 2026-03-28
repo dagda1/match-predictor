@@ -8,6 +8,7 @@
     "baseUrl": "${configDir}",
     "outDir": "${configDir}/dist/esm",
     "preserveSymlinks": false,
+    "ignoreDeprecations": "6.0",
     "paths": {
       "~/*": ["${configDir}/src/*"],
       "@match-predictor/etl": ["./packages/etl/src/*"],

@@ -1,5 +1,5 @@
 import type { Theme } from '@mui/material/styles';
-import createMuiTheme from '@mui/material/styles/createTheme';
+import { createTheme as createMuiTheme} from '@mui/material/styles';
 
 import type { BaseThemeOptions } from './createBaseThemeOptions';
 import { createBaseThemeOptions } from './createBaseThemeOptions';
