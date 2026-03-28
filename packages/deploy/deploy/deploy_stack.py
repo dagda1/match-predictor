@@ -45,6 +45,5 @@ class DeployStack(Stack):
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
         functions=EtlFunctions(self, "EtlFunctions", bucket=storage.bucket)
+        Queuing(self, "Queuing", scraper=functions.scraper, predictor=functions.predictor)
         Events(self, "EventBridge", scraper_function=functions.scraper)
-        Queuing(self, "Queuing", predictor_function=functions.predictor)
-        Alerts(self, "Alerts", scraper_function=functions.scraper)
