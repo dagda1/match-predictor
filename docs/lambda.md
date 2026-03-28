@@ -23,6 +23,15 @@ aws logs tail "/aws/lambda/<function-name>" \
   --since 24h
 ```
 
+## Check Lambda environment variables
+
+```bash
+aws lambda get-function-configuration \
+  --function-name DeployStack-EtlFunctionsScraperFunctionF099BA00-t23rQIlM3RwA \
+  --query "Environment.Variables" \
+  --output json
+```
+
 ## Check Lambda errors
 
 ```bash
