@@ -69,7 +69,9 @@ export function useMatchPrediction(): UseMatchPredictionResult {
   }
 
   function handleReset(): void {
-    setPhase(home && away ? 'ready' : 'empty');
+    setHome(null);
+    setAway(null);
+    setPhase('empty');
     animation.resetAnimation();
   }
 
