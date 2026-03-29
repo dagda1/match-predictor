@@ -4,7 +4,7 @@ from collections.abc import Callable
 import pandas as pd
 
 from match_predictor.data import load_matches as load_matches_from_disk, DATA_DIR, format_date
-from match_predictor.model import train, save_model, _scoreline_probabilities
+from match_predictor.model import train, save_model, TrainedModel, _scoreline_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
@@ -35,9 +35,14 @@ def _write_to_disk(predictions: list[dict]) -> None:
         json.dump(predictions, f, indent=2)
 
 
+def _save_model_to_disk(model: TrainedModel) -> None:
+    save_model(model, MODEL_PATH)
+
+
 def generate(
     load_matches: Callable[[], pd.DataFrame],
     write_output: Callable[[list[dict]], None],
+    save_trained_model: Callable[[TrainedModel], None] = _save_model_to_disk,
 ) -> str:
     df = load_matches()
 
@@ -50,7 +55,7 @@ def generate(
     print(f"predicting {len(predict_df)} matches from {CUTOFF.date()} onwards")
 
     model = train(train_df)
-    save_model(model, MODEL_PATH)
+    save_trained_model(model)
 
     predictions = []
 
