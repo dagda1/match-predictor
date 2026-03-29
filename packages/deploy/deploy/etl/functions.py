@@ -1,7 +1,6 @@
 from constructs import Construct
 from aws_cdk import aws_s3 as s3, aws_lambda, Duration
 from aws_cdk.aws_lambda_nodejs import NodejsFunction
-from aws_cdk.aws_lambda_python_alpha import PythonFunction
 from pathlib import Path
 
 DEPLOY_DIR = Path(__file__).resolve().parent.parent.parent
@@ -24,12 +23,12 @@ class EtlFunctions(Construct):
             },
         )
 
-        self.predictor = PythonFunction(self, "PredictorFunction",
-            entry=str(REPO_DIR / "packages" / "ml" / "src"),
-            index="match_predictor/lambda_handler.py",
-            handler="handler",
-            runtime=aws_lambda.Runtime.PYTHON_3_12,
+        self.predictor = aws_lambda.DockerImageFunction(self, "PredictorFunction",
+            code=aws_lambda.DockerImageCode.from_image_asset(
+                str(REPO_DIR / "packages" / "ml" / "src"),
+            ),
             timeout=Duration.minutes(5),
+            memory_size=1024,
             tracing=aws_lambda.Tracing.ACTIVE,
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
