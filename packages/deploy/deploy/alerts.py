@@ -1,13 +1,11 @@
-from aws_cdk.aws_lambda_nodejs import NodejsFunction
-from aws_cdk import aws_sns, aws_sns_subscriptions, aws_cloudwatch_actions
+from aws_cdk import aws_lambda, aws_sns, aws_sns_subscriptions, aws_cloudwatch_actions
 from constructs import Construct
-from aws_cdk.aws_lambda_python_alpha import PythonFunction
 import os
 
 email = os.environ["AWS_ALARM_EMAIL"]
 
 class Alerts(Construct):
-    def __init__(self, scope: Construct, construct_id: str, scraper_function: NodejsFunction, predictor_function: PythonFunction) -> None:
+    def __init__(self, scope: Construct, construct_id: str, scraper_function: aws_lambda.IFunction, predictor_function: aws_lambda.IFunction) -> None:
         super().__init__(scope, construct_id)
 
         topic = aws_sns.Topic(self, "ScraperAlerts")
