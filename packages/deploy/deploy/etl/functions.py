@@ -30,6 +30,7 @@ class EtlFunctions(Construct):
             timeout=Duration.minutes(5),
             memory_size=1024,
             tracing=aws_lambda.Tracing.ACTIVE,
+            timeout=Duration.minutes(15),
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
             },

@@ -55,7 +55,7 @@ Check predictor logs (use name from above):
 ```bash
 aws logs tail \
   "/aws/lambda/DeployStack-EtlFunctionsPredictorFunctionE33E3D43-CcmNKbXb8AH6" \
-  --since 24h
+  --since 1h
 ```
 
 Check S3 files were updated:
