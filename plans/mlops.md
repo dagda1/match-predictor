@@ -64,7 +64,7 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] SQS queue — scraper Lambda sends message on completion, triggers Python Lambda
     - [X] SNS notifications on success and CloudWatch alarms on error
     - [X] X-Ray tracing enabled on both Lambdas
-    - [ ] Verify full pipeline runs (check 2026-03-29 morning): EventBridge → scraper → SQS → predictor → S3
+    - [X] Verify full pipeline runs: EventBridge → scraper → SQS → predictor → S3
   - [ ] Deploy web app to AWS:
     - [ ] Frontend: build React app, deploy to S3 + CloudFront
     - [ ] API: deploy FastAPI as Lambda behind API Gateway

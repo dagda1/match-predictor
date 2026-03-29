@@ -65,6 +65,15 @@ aws s3 ls s3://cuttingedge-matchpredictor-data-us-west-2-313095418189/prediction
 aws s3 ls s3://cuttingedge-matchpredictor-data-us-west-2-313095418189/upcoming/
 ```
 
+## Check Lambda timeout
+
+```bash
+aws lambda get-function-configuration \
+  --function-name DeployStack-EtlFunctionsPredictorFunctionE33E3D43-CcmNKbXb8AH6 \
+  --query "Timeout" \
+  --output text
+```
+
 ## Check Lambda errors
 
 ```bash
