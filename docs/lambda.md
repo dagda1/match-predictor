@@ -54,7 +54,7 @@ Check predictor logs (use name from above):
 
 ```bash
 aws logs tail \
-  "/aws/lambda/<predictor-function-name>" \
+  "/aws/lambda/DeployStack-EtlFunctionsPredictorFunctionE33E3D43-Qa2I4Ak6piTI" \
   --since 24h
 ```
 
@@ -69,6 +69,6 @@ aws s3 ls s3://cuttingedge-matchpredictor-data-us-west-2-313095418189/upcoming/
 
 ```bash
 aws logs filter-log-events \
-  --log-group-name "/aws/lambda/<function-name>" \
+  --log-group-name "/aws/lambda/DeployStack-EtlFunctionsPredictorFunctionE33E3D43-Qa2I4Ak6piTI" \
   --filter-pattern "ERROR"
 ```

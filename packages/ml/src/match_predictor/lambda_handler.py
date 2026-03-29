@@ -9,9 +9,7 @@ from match_predictor.generate_predictions import generate as generate_prediction
 from match_predictor.generate_upcoming import generate as generate_upcoming
 
 s3 = boto3.client("s3")
-sns = boto3.client("sns")
 BUCKET = os.environ["BUCKET_NAME"]
-TOPIC_ARN = os.environ["TOPIC_ARN"]
 SEASONS = ["2024", "2025"]
 
 
@@ -37,11 +35,5 @@ def write_upcoming_to_s3(predictions: list[dict]) -> None:
 
 
 def handler(_event, _context):
-    predictions_summary = generate_predictions(load_matches_from_s3, write_predictions_to_s3)
-    upcoming_summary = generate_upcoming(load_matches_from_s3, write_upcoming_to_s3)
-
-    sns.publish(
-        TopicArn=TOPIC_ARN,
-        Subject="Predictions completed",
-        Message=f"{predictions_summary}\n{upcoming_summary}",
-    )
+    generate_predictions(load_matches_from_s3, write_predictions_to_s3)
+    generate_upcoming(load_matches_from_s3, write_upcoming_to_s3)

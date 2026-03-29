@@ -1,7 +1,5 @@
-import os
-
 from constructs import Construct
-from aws_cdk import aws_s3 as s3, aws_lambda, aws_sns, aws_sns_subscriptions, Duration
+from aws_cdk import aws_s3 as s3, aws_lambda, Duration
 from aws_cdk.aws_lambda_nodejs import NodejsFunction
 from aws_cdk.aws_lambda_python_alpha import PythonFunction
 from pathlib import Path
@@ -13,11 +11,6 @@ class EtlFunctions(Construct):
     def __init__(self, scope: Construct, construct_id: str, bucket: s3.Bucket) -> None:
         super().__init__(scope, construct_id)
 
-        self.topic = aws_sns.Topic(self, "ScraperAlerts")
-        self.topic.add_subscription(
-            aws_sns_subscriptions.EmailSubscription(os.environ["AWS_ALARM_EMAIL"])
-        )
-
         self.scraper = NodejsFunction(self, "ScraperFunction",
             entry=str(REPO_DIR / "packages" / "etl" / "src" / "lambda-handler.ts"),
             project_root=str(REPO_DIR),
@@ -28,7 +21,6 @@ class EtlFunctions(Construct):
             tracing=aws_lambda.Tracing.ACTIVE,
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
-                "TOPIC_ARN": self.topic.topic_arn,
             },
         )
 
@@ -41,11 +33,8 @@ class EtlFunctions(Construct):
             tracing=aws_lambda.Tracing.ACTIVE,
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
-                "TOPIC_ARN": self.topic.topic_arn,
             },
         )
 
         bucket.grant_write(self.scraper)
-        bucket.grant_write(self.predictor)
-        self.topic.grant_publish(self.scraper)
-        self.topic.grant_publish(self.predictor)
+        bucket.grant_read_write(self.predictor)
