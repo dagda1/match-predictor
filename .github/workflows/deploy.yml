@@ -45,10 +45,21 @@ jobs:
       - name: Install CDK CLI
         run: npm install -g aws-cdk
 
-      - name: Deploy
+      - name: Deploy infrastructure
         env:
           JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: 1
           AWS_ALARM_EMAIL: ${{ secrets.AWS_ALARM_EMAIL }}
         run: |
           cd packages/deploy
           cdk deploy --require-approval never
+
+      - name: Build frontend
+        run: pnpm --filter @match-predictor/frontend build
+
+      - name: Deploy frontend to S3
+        run: |
+          BUCKET=$(aws cloudformation describe-stacks \
+            --stack-name DeployStack \
+            --query "Stacks[0].Outputs[?OutputKey=='FrontendBucketName'].OutputValue" \
+            --output text)
+          aws s3 sync apps/frontend/dist "s3://${BUCKET}" --delete

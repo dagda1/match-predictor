@@ -1,6 +1,7 @@
 from aws_cdk import (
+    CfnOutput,
     Stack,
-    aws_iam as iam
+    aws_iam as iam,
 )
 from constructs import Construct
 from deploy.storage import Storage
@@ -47,3 +48,5 @@ class DeployStack(Stack):
         functions=EtlFunctions(self, "EtlFunctions", bucket=storage.bucket)
         Queuing(self, "Queuing", scraper=functions.scraper, predictor=functions.predictor)
         Events(self, "EventBridge", scraper_function=functions.scraper)
+
+        CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)
