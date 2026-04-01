@@ -44,3 +44,12 @@ class Storage(Construct):
                 )                                                                                                                                   
             ] 
         )
+
+        self.frontend_bucket: s3.Bucket = s3.Bucket(self, "FrontendBucket",
+            bucket_name=f"{base_name}-frontend",
+            versioned=False,
+            enforce_ssl=True,
+            removal_policy=RemovalPolicy.DESTROY,
+            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+            auto_delete_objects=True
+        )

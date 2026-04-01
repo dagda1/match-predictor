@@ -68,8 +68,15 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
   - [ ] Deploy web app to AWS:
     - [ ] Frontend: build React app, deploy to S3 + CloudFront
     - [ ] API: deploy FastAPI as Lambda behind API Gateway
-    - [ ] CDK constructs for CloudFront distribution, S3 static hosting, API Gateway, Lambda
-    - [ ] Wire frontend to hit API Gateway URL instead of localhost
+    - [ ] Single CloudFront distribution serves both frontend (S3) and API (API Gateway)
+    - [ ] API Gateway only accessible through CloudFront (not directly)
+    - [ ] WAF with rate limiting on CloudFront to prevent abuse
+    - [ ] CloudFront: HTTP/3, Brotli compression
+    - [ ] Cache: index.html `no-cache` (always revalidate), hashed assets `max-age=31536000, immutable`
+    - [ ] CDK constructs for CloudFront, S3 static hosting, API Gateway, Lambda, WAF
+    - [ ] CDK stack outputs: frontend bucket name, CloudFront distribution ID
+    - [ ] GitHub Actions: build React, cdk deploy, s3 sync, CloudFront invalidation (index.html only)
+    - [ ] Wire frontend to use relative `/api/*` paths through CloudFront
     - [ ] Custom domain (optional)
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
