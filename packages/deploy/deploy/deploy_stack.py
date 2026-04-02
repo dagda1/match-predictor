@@ -10,6 +10,7 @@ from deploy.etl.functions import EtlFunctions
 from deploy.events import Events
 from deploy.alerts import Alerts
 from deploy.queuing import Queuing
+from deploy.cdn import Cdn
 
 class DeployStack(Stack):
 
@@ -57,5 +58,7 @@ class DeployStack(Stack):
         Events(self, "EventBridge", scraper_function=functions.scraper)
 
         storage.frontend_bucket.grant_read_write(provider_role)
+
+        Cdn(self, "Cdn", frontend_bucket=storage.frontend_bucket)
 
         CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)
