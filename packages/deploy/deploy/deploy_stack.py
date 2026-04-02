@@ -43,10 +43,19 @@ class DeployStack(Stack):
             )
         )
 
+        provider_role.add_to_policy(
+            iam.PolicyStatement(
+                actions=["cloudformation:DescribeStacks"],
+                resources=[self.stack_id]
+            )
+        )
+
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
         functions=EtlFunctions(self, "EtlFunctions", bucket=storage.bucket)
         Queuing(self, "Queuing", scraper=functions.scraper, predictor=functions.predictor)
         Events(self, "EventBridge", scraper_function=functions.scraper)
+
+        storage.frontend_bucket.grant_read_write(provider_role)
 
         CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)
