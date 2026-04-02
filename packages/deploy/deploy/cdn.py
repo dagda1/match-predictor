@@ -34,6 +34,7 @@ class Cdn(Construct):
         )
 
         self.distribution = cloudfront.Distribution(self, "Distribution",
+        comment="match-predictor frontend",
             default_behavior=cloudfront.BehaviorOptions(
                 origin=s3_origin,
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
