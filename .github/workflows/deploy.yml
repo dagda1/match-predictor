@@ -54,7 +54,7 @@ jobs:
           cdk deploy --require-approval never
 
       - name: Build frontend
-        run: pnpm --filter @match-predictor/frontend build
+        run: pnpm build
 
       - name: Deploy frontend to S3
         run: |
