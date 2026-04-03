@@ -14,7 +14,7 @@ from deploy.cdn import Cdn
 
 class DeployStack(Stack):
 
-    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, certificate, hosted_zone, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         github_provider = iam.OpenIdConnectProvider(
@@ -59,6 +59,10 @@ class DeployStack(Stack):
 
         storage.frontend_bucket.grant_read_write(provider_role)
 
-        Cdn(self, "Cdn", frontend_bucket=storage.frontend_bucket)
+        Cdn(self, "Cdn",
+            frontend_bucket=storage.frontend_bucket,
+            certificate=certificate,
+            hosted_zone=hosted_zone,
+        )
 
         CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)

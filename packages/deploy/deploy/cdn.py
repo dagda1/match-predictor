@@ -1,15 +1,27 @@
 from aws_cdk import (
     CfnOutput,
     Duration,
+    aws_certificatemanager as acm,
     aws_cloudfront as cloudfront,
     aws_cloudfront_origins as origins,
+    aws_route53 as route53,
+    aws_route53_targets as targets,
     aws_s3 as s3,
 )
 from constructs import Construct
 
+from deploy.certificate import DOMAIN_NAME
+
 
 class Cdn(Construct):
-    def __init__(self, scope: Construct, construct_id: str, frontend_bucket: s3.Bucket) -> None:
+    def __init__(
+        self,
+        scope: Construct,
+        construct_id: str,
+        frontend_bucket: s3.Bucket,
+        certificate: acm.ICertificate,
+        hosted_zone: route53.IHostedZone,
+    ) -> None:
         super().__init__(scope, construct_id)
 
         oac = cloudfront.S3OriginAccessControl(self, "OAC")
@@ -34,7 +46,9 @@ class Cdn(Construct):
         )
 
         self.distribution = cloudfront.Distribution(self, "Distribution",
-        comment="match-predictor frontend",
+            comment="match-predictor frontend",
+            domain_names=[DOMAIN_NAME],
+            certificate=certificate,
             default_behavior=cloudfront.BehaviorOptions(
                 origin=s3_origin,
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -61,6 +75,11 @@ class Cdn(Construct):
                     response_page_path="/index.html",
                 ),
             ],
+        )
+
+        route53.ARecord(self, "AliasRecord",
+            zone=hosted_zone,
+            target=route53.RecordTarget.from_alias(targets.CloudFrontTarget(self.distribution)),
         )
 
         CfnOutput(scope, "DistributionId", value=self.distribution.distribution_id)
