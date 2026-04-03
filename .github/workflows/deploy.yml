@@ -50,6 +50,7 @@ jobs:
           JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: 1
           AWS_ALARM_EMAIL: ${{ secrets.AWS_ALARM_EMAIL }}
         run: |
+          cp cdk.context.json packages/deploy/cdk.context.json
           cd packages/deploy
           cdk deploy --all --require-approval never
 
