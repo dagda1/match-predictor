@@ -51,7 +51,7 @@ jobs:
           AWS_ALARM_EMAIL: ${{ secrets.AWS_ALARM_EMAIL }}
         run: |
           cd packages/deploy
-          cdk deploy --require-approval never
+          cdk deploy --all --require-approval never
 
       - name: Build frontend
         run: pnpm build
