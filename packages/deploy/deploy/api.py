@@ -15,7 +15,7 @@ class Api(Construct):
             code=aws_lambda.DockerImageCode.from_image_asset(
                 str(REPO_DIR),
                 file="packages/api/Dockerfile",
-                exclude=["node_modules", "cdk.out", ".git", "dist", ".venv", "__pycache__", ".turbo"],
+                exclude=["node_modules", "packages/deploy/cdk.out", ".git", "dist", ".venv", "__pycache__", ".turbo"],
             ),
             timeout=Duration.seconds(30),
             memory_size=1024,
