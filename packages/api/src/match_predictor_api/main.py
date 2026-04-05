@@ -1,11 +1,14 @@
 import json
+import os
 from datetime import date, datetime
 from pathlib import Path
 
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from match_predictor import load_matches, predict_match, poisson_predict
 from match_predictor.data import DATA_DIR
@@ -13,8 +16,37 @@ from match_predictor.model import load_model
 
 MODEL_PATH = DATA_DIR / "model.joblib"
 
+ORIGIN_SECRET_ARN = os.environ.get("ORIGIN_SECRET_ARN")
+
+_cached_secret: str | None = None
+
+
+def _get_origin_secret() -> str | None:
+    global _cached_secret
+    if _cached_secret:
+        return _cached_secret
+    if not ORIGIN_SECRET_ARN:
+        return None
+    import boto3
+    client = boto3.client("secretsmanager")
+    response = client.get_secret_value(SecretId=ORIGIN_SECRET_ARN)
+    _cached_secret = response["SecretString"]
+    return _cached_secret
+
+
+class OriginVerifyMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        secret = _get_origin_secret()
+        if secret:
+            header_value = request.headers.get("x-origin-verify")
+            if header_value != secret:
+                return JSONResponse(status_code=403, content={"detail": "forbidden"})
+        return await call_next(request)
+
+
 app = FastAPI(title="Match Predictor API")
 
+app.add_middleware(OriginVerifyMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3300"],

@@ -10,11 +10,13 @@ from deploy.etl.functions import EtlFunctions
 from deploy.events import Events
 from deploy.alerts import Alerts
 from deploy.queuing import Queuing
+from deploy.api import Api
 from deploy.cdn import Cdn
+from deploy.secrets import Secrets
 
 class DeployStack(Stack):
 
-    def __init__(self, scope: Construct, construct_id: str, certificate, hosted_zone, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, certificate, hosted_zone, web_acl_arn, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         github_provider = iam.OpenIdConnectProvider(
@@ -59,10 +61,17 @@ class DeployStack(Stack):
 
         storage.frontend_bucket.grant_read_write(provider_role)
 
+        app_secrets = Secrets(self, "Secrets")
+
+        api = Api(self, "Api", bucket=storage.bucket, origin_verify_secret=app_secrets.origin_verify)
+
         Cdn(self, "Cdn",
             frontend_bucket=storage.frontend_bucket,
             certificate=certificate,
             hosted_zone=hosted_zone,
+            http_api=api.http_api,
+            origin_verify_secret=app_secrets.origin_verify.secret_value.unsafe_unwrap(),
+            web_acl_arn=web_acl_arn,
         )
 
         CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)

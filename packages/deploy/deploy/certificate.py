@@ -1,16 +1,12 @@
-from aws_cdk import (
-    Stack,
-    aws_certificatemanager as acm,
-    aws_route53 as route53,
-)
+from aws_cdk import aws_certificatemanager as acm, aws_route53 as route53
 from constructs import Construct
 
 DOMAIN_NAME = "premierpredictor.co.uk"
 
 
-class CertificateStack(Stack):
-    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
-        super().__init__(scope, construct_id, **kwargs)
+class Certificate(Construct):
+    def __init__(self, scope: Construct, construct_id: str) -> None:
+        super().__init__(scope, construct_id)
 
         self.hosted_zone = route53.HostedZone.from_lookup(self, "HostedZone",
             domain_name=DOMAIN_NAME,

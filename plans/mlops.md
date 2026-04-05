@@ -78,6 +78,7 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [ ] GitHub Actions: build React, cdk deploy, s3 sync, CloudFront invalidation (index.html only)
     - [ ] Wire frontend to use relative `/api/*` paths through CloudFront
     - [ ] Custom domain (optional)
+    - [ ] Lambda@Edge for origin verify secret — read from Secrets Manager at request time, enables auto-rotation without redeploy
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue
