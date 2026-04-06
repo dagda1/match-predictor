@@ -14,7 +14,7 @@ class Queuing(Construct):
         super().__init__(scope, construct_id)
 
         self.queue = aws_sqs.Queue(self, "ScraperToPredictor",
-            visibility_timeout=Duration.minutes(10),
+            visibility_timeout=Duration.minutes(16),
         )
 
         self.queue.grant_send_messages(scraper)
