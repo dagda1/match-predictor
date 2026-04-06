@@ -1,5 +1,5 @@
 {
-  "app": "python3 app.py",
+  "app": "bash -c 'if [ -f .venv/bin/python3 ]; then .venv/bin/python3 app.py; else python3 app.py; fi'",
   "watch": {
     "include": [
       "**"
