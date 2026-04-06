@@ -1,7 +1,7 @@
 from aws_cdk import Stack
 from constructs import Construct
 
-from deploy.certificate import Certificate
+from deploy.certificate_stack.certificate import Certificate
 
 
 class GlobalStack(Stack):

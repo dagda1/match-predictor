@@ -12,7 +12,7 @@ from aws_cdk import (
 )
 from constructs import Construct
 
-from deploy.certificate import DOMAIN_NAME
+from deploy.certificate_stack.certificate import DOMAIN_NAME
 
 ORIGIN_VERIFY_HEADER = "x-origin-verify"
 

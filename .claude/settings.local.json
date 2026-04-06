@@ -49,7 +49,9 @@
       "Bash(ls:*)",
       "WebFetch(domain:gist.github.com)",
       "WebFetch(domain:vite.dev)",
-      "WebFetch(domain:rolldown.rs)"
+      "WebFetch(domain:rolldown.rs)",
+      "Bash(mkdir -p certificate_stack waf_stack deploy_stack)",
+      "Bash(touch certificate_stack/__init__.py waf_stack/__init__.py deploy_stack/__init__.py)"
     ]
   }
 }

@@ -3,8 +3,7 @@ from aws_cdk import aws_s3 as s3, aws_lambda, Duration
 from aws_cdk.aws_lambda_nodejs import NodejsFunction
 from pathlib import Path
 
-DEPLOY_DIR = Path(__file__).resolve().parent.parent.parent
-REPO_DIR = DEPLOY_DIR.parent.parent
+REPO_DIR = Path(__file__).resolve().parents[4]
 
 class EtlFunctions(Construct):
     def __init__(self, scope: Construct, construct_id: str, bucket: s3.Bucket) -> None:

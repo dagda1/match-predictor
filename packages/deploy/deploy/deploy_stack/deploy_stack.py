@@ -4,15 +4,15 @@ from aws_cdk import (
     aws_iam as iam,
 )
 from constructs import Construct
-from deploy.storage import Storage
-from deploy.data_storage import DataStorage
-from deploy.etl.functions import EtlFunctions
-from deploy.events import Events
-from deploy.alerts import Alerts
-from deploy.queuing import Queuing
-from deploy.api import Api
-from deploy.cdn import Cdn
-from deploy.secrets import Secrets
+from deploy.deploy_stack.storage import Storage
+from deploy.deploy_stack.data_storage import DataStorage
+from deploy.deploy_stack.functions import EtlFunctions
+from deploy.deploy_stack.events import Events
+from deploy.deploy_stack.alerts import Alerts
+from deploy.deploy_stack.queuing import Queuing
+from deploy.deploy_stack.api import Api
+from deploy.deploy_stack.cdn import Cdn
+from deploy.deploy_stack.secrets import Secrets
 
 class DeployStack(Stack):
 

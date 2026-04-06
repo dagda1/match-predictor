@@ -1,7 +1,7 @@
 from aws_cdk import Stack
 from constructs import Construct
 
-from deploy.waf import Waf
+from deploy.waf_stack.waf import Waf
 
 
 class WafStack(Stack):

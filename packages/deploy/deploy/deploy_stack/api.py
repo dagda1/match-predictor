@@ -3,8 +3,7 @@ from aws_cdk import aws_lambda, aws_apigatewayv2 as apigw, aws_s3 as s3, aws_sec
 from aws_cdk.aws_apigatewayv2_integrations import HttpLambdaIntegration
 from pathlib import Path
 
-DEPLOY_DIR = Path(__file__).resolve().parent.parent
-REPO_DIR = DEPLOY_DIR.parent.parent
+REPO_DIR = Path(__file__).resolve().parents[4]
 
 
 class Api(Construct):

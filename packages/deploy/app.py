@@ -3,9 +3,9 @@ import os
 
 import aws_cdk as cdk
 
-from deploy.global_stack import GlobalStack
-from deploy.waf_stack import WafStack
-from deploy.deploy_stack import DeployStack
+from deploy.certificate_stack.global_stack import GlobalStack
+from deploy.waf_stack.waf_stack import WafStack
+from deploy.deploy_stack.deploy_stack import DeployStack
 
 app = cdk.App()
 
