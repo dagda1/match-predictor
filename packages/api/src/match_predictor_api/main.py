@@ -3,7 +3,6 @@ import os
 from datetime import date, datetime
 from pathlib import Path
 
-import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -270,6 +269,7 @@ def get_results(startDate: str, endDate: str | None = None):
 
 
 def start():
+    import uvicorn
     uvicorn.run(
         "match_predictor_api.main:app",
         host="0.0.0.0",

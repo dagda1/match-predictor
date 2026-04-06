@@ -99,12 +99,22 @@ aws lambda get-function-configuration \
   --output text
 ```
 
-## Check Lambda errors
+## Check API Lambda errors (last hour)
+
+```bash
+aws logs filter-log-events \
+  --log-group-name "/aws/lambda/DeployStack-ApiApiFunctionAA82C666-POOunoG59B74" \
+  --filter-pattern "ERROR" \
+  --start-time $(python3 -c "import time; print(int((time.time() - 3600) * 1000))")
+```
+
+## Check predictor Lambda errors (last hour)
 
 ```bash
 aws logs filter-log-events \
   --log-group-name "/aws/lambda/DeployStack-EtlFunctionsPredictorFunctionE33E3D43-CcmNKbXb8AH6" \
-  --filter-pattern "ERROR"
+  --filter-pattern "ERROR" \
+  --start-time $(python3 -c "import time; print(int((time.time() - 3600) * 1000))")
 ```
 
 ## Invoke predictor manually
