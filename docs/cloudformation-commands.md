@@ -25,15 +25,7 @@ aws cloudformation describe-stack-resources \
   --output json
 ```
 
-## Skip a failed resource during rollback
 
-Use when a resource was deleted outside CloudFormation and the stack is stuck in `UPDATE_ROLLBACK_FAILED`.
-
-```bash
-aws cloudformation continue-update-rollback \
-  --stack-name DeployStack \
-  --resources-to-skip <LogicalResourceId>
-```
 
 ## List all S3 buckets
 
