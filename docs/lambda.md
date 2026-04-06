@@ -8,6 +8,31 @@ aws lambda list-functions \
   --output text
 ```
 
+## List API Lambda
+
+```bash
+aws lambda list-functions \
+  --query "Functions[?contains(FunctionName, 'Api')].FunctionName" \
+  --output text
+```
+
+## Check API Lambda logs
+
+```bash
+aws logs tail \
+  "/aws/lambda/DeployStack-ApiApiFunctionAA82C666-POOunoG59B74" \
+  --since 1h
+```
+
+## Invoke scraper Lambda
+
+```bash
+aws lambda invoke \
+  --function-name DeployStack-EtlFunctionsScraperFunctionF099BA00-y4cYA3lFkTkZ \
+  --cli-read-timeout 600 \
+  /tmp/scraper-output.json && cat /tmp/scraper-output.json
+```
+
 ## Invoke a Lambda manually
 
 ```bash

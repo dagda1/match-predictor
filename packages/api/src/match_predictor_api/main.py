@@ -14,7 +14,18 @@ from match_predictor import load_matches, predict_match, poisson_predict
 from match_predictor.data import DATA_DIR
 from match_predictor.model import load_model
 
+BUCKET_NAME = os.environ.get("BUCKET_NAME")
 MODEL_PATH = DATA_DIR / "model.joblib"
+
+
+def _load_model():
+    if BUCKET_NAME:
+        import boto3
+        s3 = boto3.client("s3")
+        local_path = Path("/tmp/model.joblib")
+        s3.download_file(BUCKET_NAME, "model/model.joblib", str(local_path))
+        return load_model(local_path)
+    return load_model(MODEL_PATH)
 
 ORIGIN_SECRET_ARN = os.environ.get("ORIGIN_SECRET_ARN")
 
@@ -55,7 +66,7 @@ app.add_middleware(
 )
 
 df = load_matches()
-model = load_model(MODEL_PATH)
+model = _load_model()
 
 
 class PredictRequest(BaseModel):
