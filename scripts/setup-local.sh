@@ -8,4 +8,4 @@ set +a
 docker compose up -d
 pnpm refresh
 uv run --directory packages/ml alembic upgrade head
-uv run python scripts/seed-db.py
+uv run --directory packages/ml python ../../scripts/seed-db.py

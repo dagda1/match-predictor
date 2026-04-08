@@ -1,8 +1,0 @@
-boto3
-fastapi
-joblib
-mangum
-numpy
-pandas
-requests
-scikit-learn

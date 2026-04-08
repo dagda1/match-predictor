@@ -51,7 +51,11 @@
       "WebFetch(domain:vite.dev)",
       "WebFetch(domain:rolldown.rs)",
       "Bash(mkdir -p certificate_stack waf_stack deploy_stack)",
-      "Bash(touch certificate_stack/__init__.py waf_stack/__init__.py deploy_stack/__init__.py)"
+      "Bash(touch certificate_stack/__init__.py waf_stack/__init__.py deploy_stack/__init__.py)",
+      "Bash(docker compose:*)",
+      "Bash(chmod +x:*)",
+      "Bash(PGPASSWORD=local psql:*)",
+      "Bash(docker exec match-predictor-postgres-1:*)"
     ]
   }
 }

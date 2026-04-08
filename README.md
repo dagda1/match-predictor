@@ -53,12 +53,36 @@ The Poisson baseline is the simplest credible model. If the ML model can't beat 
 
 621 Premier League matches from Understat (2024-25 full season + 2025-26 to date). Each match includes goals, xG, shots, shots on target, deep completions, PPDA, and pre-match win probabilities.
 
-## Dev
+## Local development
 
-```
+### Prerequisites
+
+- Node.js 22+ (managed by Volta)
+- pnpm 10+
+- Python 3.12+
+- uv (Python package manager)
+- Docker
+
+### First time setup
+
+```bash
 pnpm install
-pnpm dev              # starts API (port 4400) + frontend (port 3300)
-pnpm start:api        # API only
-pnpm start:frontend   # frontend only
+pnpm setup:local
+```
+
+This starts Postgres in Docker, scrapes match data, generates predictions, runs database migrations, and seeds the database.
+
+### Running
+
+```bash
+pnpm dev
+```
+
+Starts Postgres (Docker), FastAPI (port 4400), and React frontend (port 3300).
+
+### Other commands
+
+```bash
 pnpm test             # run all tests
+pnpm refresh          # re-scrape data and regenerate predictions
 ```

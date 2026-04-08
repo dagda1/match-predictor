@@ -102,10 +102,10 @@ aws lambda get-function-configuration \
 ## Check API Lambda errors (last hour)
 
 ```bash
-aws logs filter-log-events \
-  --log-group-name "/aws/lambda/DeployStack-ApiApiFunctionAA82C666-POOunoG59B74" \
-  --filter-pattern "ERROR" \
-  --start-time $(python3 -c "import time; print(int((time.time() - 3600) * 1000))")
+aws logs tail \
+  "/aws/lambda/DeployStack-ApiApiFunctionAA82C666-POOunoG59B74" \
+  --since 1h \
+  --filter-pattern "ERROR"
 ```
 
 ## Check predictor Lambda errors (last hour)

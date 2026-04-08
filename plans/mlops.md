@@ -79,6 +79,19 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [ ] Wire frontend to use relative `/api/*` paths through CloudFront
     - [ ] Custom domain (optional)
     - [ ] Lambda@Edge for origin verify secret — read from Secrets Manager at request time, enables auto-rotation without redeploy
+  - [ ] Move API data to Postgres (Aurora Serverless v2):
+    - [ ] Docker compose with Postgres for local dev
+    - [ ] SQLAlchemy models: teams, matches, predictions, upcoming, features
+    - [ ] Alembic migrations
+    - [ ] CDK: Aurora Serverless v2 in VPC with private subnets
+    - [ ] Lambda VPC configuration to connect to RDS
+    - [ ] IAM auth for Lambda → RDS connection (no passwords)
+    - [ ] Migration Lambda — runs Alembic on deploy
+    - [ ] Predictor Lambda writes to Postgres instead of S3 JSON
+    - [ ] API Lambda reads from Postgres
+    - [ ] Poisson back in /predict (can query match history from Postgres)
+    - [ ] Model file stays in S3 (binary blob, loaded on cold start)
+    - [ ] Remove DynamoDB and S3 file reading from API
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue

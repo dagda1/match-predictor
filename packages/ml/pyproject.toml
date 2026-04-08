@@ -4,10 +4,13 @@ version = "0.1.0"
 description = "Match prediction model using Monte Carlo simulation"
 requires-python = ">=3.13"
 dependencies = [
+    "alembic",
     "numpy",
     "pandas",
+    "psycopg2-binary",
     "requests>=2.32.5",
     "scikit-learn",
+    "sqlalchemy",
 ]
 
 [build-system]

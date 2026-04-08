@@ -24,7 +24,8 @@ class EtlFunctions(Construct):
 
         self.predictor = aws_lambda.DockerImageFunction(self, "PredictorFunction",
             code=aws_lambda.DockerImageCode.from_image_asset(
-                str(REPO_DIR / "packages" / "ml" / "src"),
+                str(REPO_DIR / "packages" / "ml"),
+                file="src/Dockerfile",
                 exclude=["__pycache__", ".venv"],
             ),
             memory_size=1024,
