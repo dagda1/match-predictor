@@ -55,7 +55,8 @@
       "Bash(docker compose:*)",
       "Bash(chmod +x:*)",
       "Bash(PGPASSWORD=local psql:*)",
-      "Bash(docker exec match-predictor-postgres-1:*)"
+      "Bash(docker exec match-predictor-postgres-1:*)",
+      "WebFetch(domain:gallery.ecr.aws)"
     ]
   }
 }

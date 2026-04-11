@@ -1,4 +1,6 @@
-FROM public.ecr.aws/lambda/python:3.12
+FROM public.ecr.aws/lambda/python:3.13
+
+RUN pip install --no-cache-dir --upgrade pip
 
 COPY packages/ml/pyproject.toml /tmp/ml/pyproject.toml
 COPY packages/ml/src/match_predictor/ /tmp/ml/src/match_predictor/
