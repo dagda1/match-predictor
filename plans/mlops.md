@@ -80,16 +80,20 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [ ] Custom domain (optional)
     - [ ] Lambda@Edge for origin verify secret — read from Secrets Manager at request time, enables auto-rotation without redeploy
   - [ ] Move API data to Postgres (Aurora Serverless v2):
-    - [ ] Docker compose with Postgres for local dev
-    - [ ] SQLAlchemy models: teams, matches, predictions, upcoming, features
-    - [ ] Alembic migrations
+    - [X] Docker compose with Postgres for local dev
+    - [X] SQLAlchemy models: teams, matches, predictions, upcoming, features
+    - [X] Alembic migrations
+    - [X] API reads from Postgres locally
+    - [X] Seed script for local dev
+    - [X] Poisson back in /predict (queries match history from Postgres)
+    - [ ] CDK: VPC with dual-stack IPv6, public + private subnets, NAT gateway
     - [ ] CDK: Aurora Serverless v2 in VPC with private subnets
+    - [ ] CDK: Security groups — Lambda → RDS on port 5432
     - [ ] Lambda VPC configuration to connect to RDS
     - [ ] IAM auth for Lambda → RDS connection (no passwords)
     - [ ] Migration Lambda — runs Alembic on deploy
     - [ ] Predictor Lambda writes to Postgres instead of S3 JSON
-    - [ ] API Lambda reads from Postgres
-    - [ ] Poisson back in /predict (can query match history from Postgres)
+    - [ ] API Lambda reads from Postgres in AWS
     - [ ] Model file stays in S3 (binary blob, loaded on cold start)
     - [ ] Remove DynamoDB and S3 file reading from API
 - [ ] Amazon Data Firehose

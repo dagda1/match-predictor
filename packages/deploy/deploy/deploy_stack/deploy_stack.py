@@ -13,6 +13,7 @@ from deploy.deploy_stack.queuing import Queuing
 from deploy.deploy_stack.api import Api
 from deploy.deploy_stack.cdn import Cdn
 from deploy.deploy_stack.secrets import Secrets
+from deploy.deploy_stack.vpc import Vpc
 
 class DeployStack(Stack):
 
@@ -52,6 +53,8 @@ class DeployStack(Stack):
                 resources=[self.stack_id]
             )
         )
+
+        network = Vpc(self, "Network")
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
