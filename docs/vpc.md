@@ -12,8 +12,8 @@ aws ec2 describe-vpcs \
 
 ```bash
 aws ec2 describe-subnets \
-  --filters "Name=vpc-id,Values=<vpc-id>" \
-  --query "Subnets[].{Id:SubnetId,Cidr:CidrBlock,Az:AvailabilityZone,Public:MapPublicIpOnLaunch}" \
+  --filters "Name=vpc-id,Values=vpc-08a168d94d0616192" \
+  --query "Subnets[].{Id:SubnetId,IPv4:CidrBlock,IPv6:Ipv6CidrBlockAssociationSet[0].Ipv6CidrBlock,Az:AvailabilityZone,Public:MapPublicIpOnLaunch}" \
   --output table
 ```
 
@@ -24,6 +24,15 @@ aws ec2 describe-security-groups \
   --filters "Name=vpc-id,Values=<vpc-id>" \
   --query "SecurityGroups[].{Id:GroupId,Name:GroupName,Description:Description}" \
   --output table
+```
+
+## Check IPv6 CIDR on VPC
+
+```bash
+aws ec2 describe-vpcs \
+  --vpc-ids vpc-08a168d94d0616192 \
+  --query "Vpcs[0].Ipv6CidrBlockAssociationSet" \
+  --output json
 ```
 
 ## Check NAT gateways
