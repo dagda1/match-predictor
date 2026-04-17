@@ -19,7 +19,7 @@ class Database(Construct):
 
         self.instance = rds.DatabaseInstance(self, "Postgres",
             engine=rds.DatabaseInstanceEngine.postgres(
-                version=rds.PostgresEngineVersion.VER_18_3,
+                version=rds.PostgresEngineVersion.of("18.3", "18"),
             ),
             instance_type=ec2.InstanceType.of(
                 ec2.InstanceClass.T4G,

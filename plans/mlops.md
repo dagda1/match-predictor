@@ -79,23 +79,28 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [ ] Wire frontend to use relative `/api/*` paths through CloudFront
     - [ ] Custom domain (optional)
     - [ ] Lambda@Edge for origin verify secret — read from Secrets Manager at request time, enables auto-rotation without redeploy
-  - [ ] Move API data to Postgres (Aurora Serverless v2):
-    - [X] Docker compose with Postgres for local dev
-    - [X] SQLAlchemy models: teams, matches, predictions, upcoming, features
-    - [X] Alembic migrations
-    - [X] API reads from Postgres locally
-    - [X] Seed script for local dev
-    - [X] Poisson back in /predict (queries match history from Postgres)
-    - [ ] CDK: VPC with dual-stack IPv6, public + private subnets, NAT gateway
-    - [ ] CDK: Aurora Serverless v2 in VPC with private subnets
-    - [ ] CDK: Security groups — Lambda → RDS on port 5432
-    - [ ] Lambda VPC configuration to connect to RDS
+  - [ ] Move API data to Postgres (RDS):
+    - [X] Docker compose with Postgres 17 for local dev
+    - [X] SQLAlchemy models in `packages/ml/src/match_predictor/db_models.py`: Team, Match, TeamFeatures, Prediction, Upcoming
+    - [X] Alembic migrations in `packages/ml/alembic/`
+    - [X] API reads from Postgres locally — `packages/api/src/match_predictor_api/db.py` connects via `DATABASE_URL` env var
+    - [X] Seed script `scripts/seed-db.py` — clears tables then seeds from JSON files
+    - [X] `pnpm setup:local` — docker compose, refresh, migrate, seed
+    - [X] `pnpm dev` — starts Postgres, API (port 4400), frontend (port 3300)
+    - [X] Poisson back in `/predict` — queries match history from Postgres via `load_matches_dataframe()`
+    - [X] CDK: VPC with dual-stack IPv6, public + private subnets, NAT gateway — `deploy_stack/vpc.py`
+    - [X] CDK: Security groups — Lambda SG → Database SG on port 5432 — `deploy_stack/vpc.py`
+    - [X] CDK: RDS Postgres 18.3 `db.t4g.micro` in VPC private subnets — `deploy_stack/database.py`
+    - [ ] Put Lambdas in VPC — add `vpc`, `vpc_subnets`, `security_groups` to Lambda constructs in `functions.py` and `api.py`
     - [ ] IAM auth for Lambda → RDS connection (no passwords)
-    - [ ] Migration Lambda — runs Alembic on deploy
-    - [ ] Predictor Lambda writes to Postgres instead of S3 JSON
-    - [ ] API Lambda reads from Postgres in AWS
+    - [ ] Pass `DATABASE_URL` to API Lambda and predictor Lambda as env var
+    - [ ] Migration Lambda — runs `alembic upgrade head` after deploy
+    - [ ] Predictor Lambda writes to Postgres instead of S3 JSON files
+    - [ ] Seed Lambda or migration step — initial data load into RDS
+    - [ ] API Lambda reads from Postgres in AWS (already works, just needs `DATABASE_URL`)
     - [ ] Model file stays in S3 (binary blob, loaded on cold start)
-    - [ ] Remove DynamoDB and S3 file reading from API
+    - [ ] Remove S3 JSON file reading from API
+    - [ ] Add `psycopg2-binary` and `sqlalchemy` to API Dockerfile
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue
