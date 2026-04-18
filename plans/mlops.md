@@ -66,18 +66,18 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] X-Ray tracing enabled on both Lambdas
     - [X] Verify full pipeline runs: EventBridge → scraper → SQS → predictor → S3
   - [ ] Deploy web app to AWS:
-    - [ ] Frontend: build React app, deploy to S3 + CloudFront
-    - [ ] API: deploy FastAPI as Lambda behind API Gateway
-    - [ ] Single CloudFront distribution serves both frontend (S3) and API (API Gateway)
-    - [ ] API Gateway only accessible through CloudFront (not directly)
-    - [ ] WAF with rate limiting on CloudFront to prevent abuse
-    - [ ] CloudFront: HTTP/3, Brotli compression
-    - [ ] Cache: index.html `no-cache` (always revalidate), hashed assets `max-age=31536000, immutable`
-    - [ ] CDK constructs for CloudFront, S3 static hosting, API Gateway, Lambda, WAF
-    - [ ] CDK stack outputs: frontend bucket name, CloudFront distribution ID
-    - [ ] GitHub Actions: build React, cdk deploy, s3 sync, CloudFront invalidation (index.html only)
-    - [ ] Wire frontend to use relative `/api/*` paths through CloudFront
-    - [ ] Custom domain (optional)
+    - [X] Frontend: build React app, deploy to S3 + CloudFront
+    - [X] API: deploy FastAPI as Lambda behind API Gateway
+    - [X] Single CloudFront distribution serves both frontend (S3) and API (API Gateway)
+    - [X] API Gateway only accessible through CloudFront (not directly)
+    - [X] WAF with rate limiting on CloudFront to prevent abuse
+    - [X] CloudFront: HTTP/3, Brotli compression
+    - [X] Cache: index.html `no-cache` (always revalidate), hashed assets `max-age=31536000, immutable`
+    - [X] CDK constructs for CloudFront, S3 static hosting, API Gateway, Lambda, WAF
+    - [X] CDK stack outputs: frontend bucket name, CloudFront distribution ID
+    - [X] GitHub Actions: build React, cdk deploy, s3 sync, CloudFront invalidation (index.html only)
+    - [X] Wire frontend to use relative `/api/*` paths through CloudFront
+    - [X] Custom domain (optional)
     - [ ] Lambda@Edge for origin verify secret — read from Secrets Manager at request time, enables auto-rotation without redeploy
   - [ ] Move API data to Postgres (RDS):
     - [X] Docker compose with Postgres 17 for local dev
@@ -91,7 +91,7 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] CDK: VPC with dual-stack IPv6, public + private subnets, NAT gateway — `deploy_stack/vpc.py`
     - [X] CDK: Security groups — Lambda SG → Database SG on port 5432 — `deploy_stack/vpc.py`
     - [X] CDK: RDS Postgres 18.3 `db.t4g.micro` in VPC private subnets — `deploy_stack/database.py`
-    - [ ] Put Lambdas in VPC — add `vpc`, `vpc_subnets`, `security_groups` to Lambda constructs in `functions.py` and `api.py`
+    - [X] Put Lambdas in VPC — add `vpc`, `vpc_subnets`, `security_groups` to Lambda constructs in `functions.py` and `api.py`
     - [ ] IAM auth for Lambda → RDS connection (no passwords)
     - [ ] Pass `DATABASE_URL` to API Lambda and predictor Lambda as env var
     - [ ] Migration Lambda — runs `alembic upgrade head` after deploy
