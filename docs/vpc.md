@@ -42,3 +42,18 @@ aws ec2 describe-nat-gateways \
   --query "NatGateways[].{Id:NatGatewayId,State:State,Subnet:SubnetId}" \
   --output table
 ```
+
+## List VPC endpoints
+
+```bash
+aws ec2 describe-vpc-endpoints \
+  --filters "Name=vpc-id,Values=vpc-08a168d94d0616192" \
+  --query "VpcEndpoints[].{Id:VpcEndpointId,Service:ServiceName,State:State}" \
+  --output table
+```
+
+## Delete a VPC endpoint
+
+```bash
+aws ec2 delete-vpc-endpoints --vpc-endpoint-ids vpce-01830162d1283a68b
+```
