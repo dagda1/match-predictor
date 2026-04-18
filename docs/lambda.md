@@ -20,7 +20,7 @@ aws lambda list-functions \
 
 ```bash
 aws logs tail \
-  "/aws/lambda/DeployStack-ApiApiFunctionAA82C666-POOunoG59B74" \
+  "/aws/lambda/DeployStack-EtlFunctionsScraperFunctionF099BA00-y4cYA3lFkTkZ" \
   --since 1h
 ```
 

@@ -15,6 +15,7 @@ from deploy.deploy_stack.cdn import Cdn
 from deploy.deploy_stack.secrets import Secrets
 from deploy.deploy_stack.database import Database
 from deploy.deploy_stack.vpc import Vpc
+from deploy.deploy_stack.bootstrap import Bootstrap
 
 class DeployStack(Stack):
 
@@ -60,6 +61,12 @@ class DeployStack(Stack):
         database = Database(self, "Database",
             vpc=network.vpc,
             security_group=network.database_security_group,
+        )
+
+        Bootstrap(self, "DatabaseBootstrap",
+            database=database.instance,
+            vpc=network.vpc,
+            security_group=network.lambda_security_group,
         )
 
         storage = Storage(self, "Storage")
