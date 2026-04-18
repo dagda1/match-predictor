@@ -22,6 +22,11 @@ class Vpc(Construct):
                     cidr_mask=24,
                 ),
             ],
+            gateway_endpoints={
+                "S3": ec2.GatewayVpcEndpointOptions(
+                    service=ec2.GatewayVpcEndpointAwsService.S3,
+                ),
+            },
         )
 
         self.database_security_group = ec2.SecurityGroup(self, "DatabaseSecurityGroup",
