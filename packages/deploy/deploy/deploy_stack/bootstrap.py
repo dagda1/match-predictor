@@ -29,12 +29,11 @@ class Bootstrap(Construct):
 
         handler_function = aws_lambda.DockerImageFunction(self, "HandlerFunction",
             code=aws_lambda.DockerImageCode.from_image_asset(
-                str(REPO_DIR / "packages" / "ml"),
-                file="src/Dockerfile",
-                exclude=["__pycache__", ".venv"],
-                cmd=["match_predictor.bootstrap_handler.handler"],
+                str(REPO_DIR / "packages" / "db-bootstrap"),
+                file="Dockerfile",
+                exclude=["__pycache__"],
             ),
-            memory_size=512,
+            memory_size=256,
             timeout=Duration.minutes(5),
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
