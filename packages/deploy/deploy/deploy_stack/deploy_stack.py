@@ -95,13 +95,20 @@ class DeployStack(Stack):
             security_group=network.lambda_security_group,
         )
 
-        Cdn(self, "Cdn",
+        cdn = Cdn(self, "Cdn",
             frontend_bucket=storage.frontend_bucket,
             certificate=certificate,
             hosted_zone=hosted_zone,
             http_api=api.http_api,
             origin_verify_secret=app_secrets.origin_verify.secret_value.unsafe_unwrap(),
             web_acl_arn=web_acl_arn,
+        )
+
+        provider_role.add_to_policy(
+            iam.PolicyStatement(
+                actions=["cloudfront:CreateInvalidation"],
+                resources=[f"arn:aws:cloudfront::{self.account}:distribution/{cdn.distribution.distribution_id}"],
+            )
         )
 
         CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)
