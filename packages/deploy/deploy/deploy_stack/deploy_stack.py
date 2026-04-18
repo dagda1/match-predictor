@@ -64,6 +64,18 @@ class DeployStack(Stack):
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
+
+        network.s3_endpoint.add_to_policy(
+            iam.PolicyStatement(
+                principals=[iam.AnyPrincipal()],
+                actions=["s3:GetObject", "s3:PutObject", "s3:ListBucket", "s3:DeleteObject"],
+                resources=[
+                    storage.bucket.bucket_arn,
+                    f"{storage.bucket.bucket_arn}/*",
+                ],
+            )
+        )
+
         functions=EtlFunctions(self, "EtlFunctions",
             bucket=storage.bucket,
             vpc=network.vpc,
