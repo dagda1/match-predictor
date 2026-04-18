@@ -1,13 +1,22 @@
 from constructs import Construct
-from aws_cdk import aws_s3 as s3, aws_lambda, Duration
+from aws_cdk import aws_s3 as s3, aws_lambda, aws_ec2 as ec2, Duration
 from aws_cdk.aws_lambda_nodejs import NodejsFunction
 from pathlib import Path
 
 REPO_DIR = Path(__file__).resolve().parents[4]
 
 class EtlFunctions(Construct):
-    def __init__(self, scope: Construct, construct_id: str, bucket: s3.Bucket) -> None:
+    def __init__(
+        self,
+        scope: Construct,
+        construct_id: str,
+        bucket: s3.Bucket,
+        vpc: ec2.Vpc,
+        security_group: ec2.SecurityGroup,
+    ) -> None:
         super().__init__(scope, construct_id)
+
+        subnet_selection = ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS)
 
         self.scraper = NodejsFunction(self, "ScraperFunction",
             entry=str(REPO_DIR / "packages" / "etl" / "src" / "lambda-handler.ts"),
@@ -17,6 +26,10 @@ class EtlFunctions(Construct):
             runtime=aws_lambda.Runtime.NODEJS_24_X,
             timeout=Duration.minutes(5),
             tracing=aws_lambda.Tracing.ACTIVE,
+            vpc=vpc,
+            vpc_subnets=subnet_selection,
+            security_groups=[security_group],
+            ipv6_allowed_for_dual_stack=True,
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
             },
@@ -31,6 +44,10 @@ class EtlFunctions(Construct):
             memory_size=1024,
             tracing=aws_lambda.Tracing.ACTIVE,
             timeout=Duration.minutes(15),
+            vpc=vpc,
+            vpc_subnets=subnet_selection,
+            security_groups=[security_group],
+            ipv6_allowed_for_dual_stack=True,
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
             },

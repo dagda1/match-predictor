@@ -64,7 +64,11 @@ class DeployStack(Stack):
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
-        functions=EtlFunctions(self, "EtlFunctions", bucket=storage.bucket)
+        functions=EtlFunctions(self, "EtlFunctions",
+            bucket=storage.bucket,
+            vpc=network.vpc,
+            security_group=network.lambda_security_group,
+        )
         Queuing(self, "Queuing", scraper=functions.scraper, predictor=functions.predictor)
         Events(self, "EventBridge", scraper_function=functions.scraper)
 
@@ -72,7 +76,12 @@ class DeployStack(Stack):
 
         app_secrets = Secrets(self, "Secrets")
 
-        api = Api(self, "Api", bucket=storage.bucket, origin_verify_secret=app_secrets.origin_verify)
+        api = Api(self, "Api",
+            bucket=storage.bucket,
+            origin_verify_secret=app_secrets.origin_verify,
+            vpc=network.vpc,
+            security_group=network.lambda_security_group,
+        )
 
         Cdn(self, "Cdn",
             frontend_bucket=storage.frontend_bucket,
