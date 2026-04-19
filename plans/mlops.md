@@ -91,13 +91,26 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] CDK: VPC with dual-stack IPv6, public + private subnets, NAT gateway — `deploy_stack/vpc.py`
     - [X] CDK: Security groups — Lambda SG → Database SG on port 5432 — `deploy_stack/vpc.py`
     - [X] CDK: RDS Postgres 18.3 `db.t4g.micro` in VPC private subnets — `deploy_stack/database.py`
-    - [X] Put Lambdas in VPC — add `vpc`, `vpc_subnets`, `security_groups` to Lambda constructs in `functions.py` and `api.py`
-    - [ ] IAM auth for Lambda → RDS connection (no passwords)
-    - [ ] Pass `DATABASE_URL` to API Lambda and predictor Lambda as env var
-    - [ ] Migration Lambda — runs `alembic upgrade head` after deploy
+    - [X] Put Lambdas in VPC — `vpc`, `vpc_subnets`, `security_groups` on Lambdas in `functions.py` and `api.py`
+    - [X] Lambdas use IPv6 dual-stack — `ipv6_allowed_for_dual_stack=True`
+    - [X] S3 gateway VPC endpoint + endpoint policy scoped to data bucket — `vpc.py`, `deploy_stack.py`
+    - [X] RDS has `iam_authentication=True` — `database.py`
+    - [X] Bootstrap Lambda custom resource — `packages/db-bootstrap/`, `deploy_stack/bootstrap.py`
+      - Runs once as master user
+      - Creates `match_predictor_migrator` and `match_predictor_app` users
+      - Grants `rds_iam` to both (password auth disabled on these users)
+      - Master user used only for bootstrap, never at runtime
+    - [ ] IAM auth for Lambda → RDS:
+      - [ ] Grant `rds-db:connect` on migrator user ARN to migration Lambda role
+      - [ ] Grant `rds-db:connect` on app user ARN to API + predictor Lambda roles
+      - [ ] Lambda code uses `generate_db_auth_token()` to mint token, passes as Postgres password
+    - [ ] Migration Lambda — runs `alembic upgrade head` as `match_predictor_migrator`
+      - Separate lean Docker image (alembic, sqlalchemy, psycopg2-binary)
+      - Custom resource triggered each deploy (alembic is idempotent)
+    - [ ] Pass `DATABASE_URL` / `DB_HOST` / `DB_USER` env vars to API + predictor Lambdas
     - [ ] Predictor Lambda writes to Postgres instead of S3 JSON files
-    - [ ] Seed Lambda or migration step — initial data load into RDS
-    - [ ] API Lambda reads from Postgres in AWS (already works, just needs `DATABASE_URL`)
+    - [ ] Seed step — initial data load into RDS (separate custom resource or manual script)
+    - [ ] API Lambda reads from Postgres in AWS (already works locally, needs env vars + IAM auth)
     - [ ] Model file stays in S3 (binary blob, loaded on cold start)
     - [ ] Remove S3 JSON file reading from API
     - [ ] Add `psycopg2-binary` and `sqlalchemy` to API Dockerfile

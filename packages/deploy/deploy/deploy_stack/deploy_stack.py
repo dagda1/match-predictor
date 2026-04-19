@@ -16,6 +16,7 @@ from deploy.deploy_stack.secrets import Secrets
 from deploy.deploy_stack.database import Database
 from deploy.deploy_stack.vpc import Vpc
 from deploy.deploy_stack.bootstrap import Bootstrap
+from deploy.deploy_stack.migration import Migration
 
 class DeployStack(Stack):
 
@@ -63,11 +64,18 @@ class DeployStack(Stack):
             security_group=network.database_security_group,
         )
 
-        Bootstrap(self, "DatabaseBootstrap",
+        bootstrap = Bootstrap(self, "DatabaseBootstrap",
             database=database.instance,
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )
+
+        migration = Migration(self, "DatabaseMigration",
+            database=database.instance,
+            vpc=network.vpc,
+            security_group=network.lambda_security_group,
+        )
+        migration.node.add_dependency(bootstrap)
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
