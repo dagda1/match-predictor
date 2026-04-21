@@ -6,8 +6,10 @@ import boto3
 
 
 def handler(event, context):
+    physical_id = event.get("PhysicalResourceId", "migration")
+
     if event.get("RequestType") == "Delete":
-        return {"PhysicalResourceId": "migration"}
+        return {"PhysicalResourceId": physical_id}
 
     host = os.environ["DB_HOST"]
     user = os.environ["DB_USER"]
@@ -37,8 +39,7 @@ def handler(event, context):
     print("alembic stderr:", result.stderr)
 
     if result.returncode != 0:
-        raise RuntimeError(
-            f"alembic failed with code {result.returncode}: {result.stderr}"
-        )
+        trimmed = (result.stderr or "")[-400:]
+        raise RuntimeError(f"alembic exit {result.returncode}: {trimmed}")
 
-    return {"PhysicalResourceId": "migration"}
+    return {"PhysicalResourceId": physical_id}
