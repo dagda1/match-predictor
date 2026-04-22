@@ -1,8 +1,8 @@
 import os
 import subprocess
-from urllib.parse import quote_plus
 
 import boto3
+from sqlalchemy.engine import URL
 
 
 def handler(event, context):
@@ -22,11 +22,16 @@ def handler(event, context):
         DBUsername=user,
     )
 
-    encoded_token = quote_plus(token)
-    os.environ["DATABASE_URL"] = (
-        f"postgresql+psycopg2://{user}:{encoded_token}"
-        f"@{host}:5432/{dbname}?sslmode=require"
+    database_url = URL.create(
+        drivername="postgresql+psycopg2",
+        username=user,
+        password=token,
+        host=host,
+        port=5432,
+        database=dbname,
+        query={"sslmode": "require"},
     )
+    os.environ["DATABASE_URL"] = database_url.render_as_string(hide_password=False)
 
     result = subprocess.run(
         ["alembic", "upgrade", "head"],
