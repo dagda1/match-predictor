@@ -2,7 +2,6 @@ import os
 import subprocess
 
 import boto3
-from sqlalchemy.engine import URL
 
 
 def handler(event, context):
@@ -13,7 +12,6 @@ def handler(event, context):
 
     host = os.environ["DB_HOST"]
     user = os.environ["DB_USER"]
-    dbname = os.environ["DB_NAME"]
 
     rds_client = boto3.client("rds")
     token = rds_client.generate_db_auth_token(
@@ -22,16 +20,7 @@ def handler(event, context):
         DBUsername=user,
     )
 
-    database_url = URL.create(
-        drivername="postgresql+psycopg2",
-        username=user,
-        password=token,
-        host=host,
-        port=5432,
-        database=dbname,
-        query={"sslmode": "require"},
-    )
-    os.environ["DATABASE_URL"] = database_url.render_as_string(hide_password=False)
+    os.environ["DB_PASSWORD"] = token
 
     result = subprocess.run(
         ["alembic", "upgrade", "head"],
