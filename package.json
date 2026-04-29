@@ -19,7 +19,10 @@
     "refresh": "pnpm --filter @match-predictor/etl fetch-data && uv run --directory packages/ml python -m match_predictor.generate_predictions && uv run --directory packages/ml python -m match_predictor.generate_upcoming",
     "test": "cross-env turbo run test:ci",
     "setup:deploy": "cd packages/deploy && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt",
-    "setup:local": "./scripts/setup-local.sh"
+    "setup:local": "./scripts/setup-local.sh",
+    "db:up": "./scripts/db-up.sh",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v && ./scripts/db-up.sh"
   },
   "keywords": [],
   "author": "",

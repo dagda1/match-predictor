@@ -12,9 +12,6 @@ from constructs import Construct
 
 REPO_DIR = Path(__file__).resolve().parents[4]
 
-MIGRATOR_USER = "match_predictor_migrator"
-APP_USER = "match_predictor_app"
-
 
 class Bootstrap(Construct):
     def __init__(
@@ -43,8 +40,6 @@ class Bootstrap(Construct):
                 "SECRET_ARN": database.secret.secret_arn,
                 "DB_HOST": database.db_instance_endpoint_address,
                 "DB_NAME": "match_predictor",
-                "MIGRATOR_USER": MIGRATOR_USER,
-                "APP_USER": APP_USER,
             },
         )
 
@@ -56,5 +51,5 @@ class Bootstrap(Construct):
 
         CustomResource(self, "Resource",
             service_token=provider.service_token,
-            properties={"Version": "1"},
+            properties={"Version": "2"},
         )

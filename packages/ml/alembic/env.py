@@ -24,7 +24,7 @@ def build_connectable():
                 "user": os.environ["DB_USER"],
                 "password": os.environ["DB_PASSWORD"],
                 "dbname": os.environ["DB_NAME"],
-                "sslmode": "require",
+                "sslmode": os.environ.get("DB_SSLMODE", "require"),
                 "port": 5432,
             },
         )

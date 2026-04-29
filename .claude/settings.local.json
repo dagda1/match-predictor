@@ -56,7 +56,8 @@
       "Bash(chmod +x:*)",
       "Bash(PGPASSWORD=local psql:*)",
       "Bash(docker exec match-predictor-postgres-1:*)",
-      "WebFetch(domain:gallery.ecr.aws)"
+      "WebFetch(domain:gallery.ecr.aws)",
+      "Bash(pnpm db:reset)"
     ]
   }
 }

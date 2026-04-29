@@ -21,6 +21,7 @@ def handler(event, context):
     )
 
     os.environ["DB_PASSWORD"] = token
+    os.environ["DB_SSLMODE"] = "require"
 
     result = subprocess.run(
         ["alembic", "upgrade", "head"],
