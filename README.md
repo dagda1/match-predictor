@@ -86,3 +86,38 @@ Starts Postgres (Docker), FastAPI (port 4400), and React frontend (port 3300).
 pnpm test             # run all tests
 pnpm refresh          # re-scrape data and regenerate predictions
 ```
+
+## Architecture
+
+_Auto-generated from `cdk.out/DeployStack.template.json` — run `pnpm arch:diagram` to refresh._
+
+<!-- ARCH:START -->
+```mermaid
+graph LR
+  subgraph VPC
+    ApiApiFunctionAA82C666[Api]
+    DatabaseBootstrapHandlerFunction53F1278C[DatabaseBootstrap]
+    DatabaseMigrationHandlerFunction71FE854B[DatabaseMigration]
+    DatabasePostgres277EF4CB[(Postgres)]
+    EtlFunctionsPredictorFunctionE33E3D43[Predictor]
+    EtlFunctionsScraperFunctionF099BA00[Scraper]
+  end
+  ApiHttpApi4C294DC0([HttpApi])
+  CdnDistribution149FA6C8{{Cdn}}
+  EventBridgeDailyScraperRule9BFD8304(DailyScraperRule)
+  QueuingScraperToPredictor12C65B00>ScraperToPredictor]
+  StorageBucket5CB7C8EA[(Storage)]
+  StorageFrontendBucketC065FEEF[(FrontendBucket)]
+  ApiApiFunctionAA82C666 --> StorageBucket5CB7C8EA
+  ApiHttpApi4C294DC0 --> ApiApiFunctionAA82C666
+  CdnDistribution149FA6C8 --> ApiHttpApi4C294DC0
+  CdnDistribution149FA6C8 --> StorageFrontendBucketC065FEEF
+  DatabaseBootstrapHandlerFunction53F1278C --> DatabasePostgres277EF4CB
+  DatabaseMigrationHandlerFunction71FE854B --> DatabasePostgres277EF4CB
+  EtlFunctionsPredictorFunctionE33E3D43 --> StorageBucket5CB7C8EA
+  EtlFunctionsScraperFunctionF099BA00 --> QueuingScraperToPredictor12C65B00
+  EtlFunctionsScraperFunctionF099BA00 --> StorageBucket5CB7C8EA
+  EventBridgeDailyScraperRule9BFD8304 --> EtlFunctionsScraperFunctionF099BA00
+  QueuingScraperToPredictor12C65B00 --> EtlFunctionsPredictorFunctionE33E3D43
+```
+<!-- ARCH:END -->
