@@ -51,5 +51,5 @@ class Bootstrap(Construct):
 
         CustomResource(self, "Resource",
             service_token=provider.service_token,
-            properties={"Version": "2"},
+            properties={"Version": "3"},
         )

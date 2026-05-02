@@ -9,6 +9,9 @@ BEGIN
 END
 $$;
 
+GRANT match_predictor_migrator TO CURRENT_USER;
+GRANT match_predictor_app TO CURRENT_USER;
+
 GRANT CREATE, USAGE ON SCHEMA public TO match_predictor_migrator;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO match_predictor_migrator;
 
