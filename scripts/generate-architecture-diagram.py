@@ -169,7 +169,7 @@ def render_mermaid(nodes: dict[str, dict], edges: list[tuple[str, str]]) -> str:
     def render_node(logical_id: str) -> str:
         node = nodes[logical_id]
         open_shape, close_shape = SHAPES[node["kind"]]
-        label = f"\"{node['id']}<br/><i>{node['service']}</i>\""
+        label = f"\"{node['id']}<br/>{node['service']}\""
         return f"  {logical_id}{open_shape}{label}{close_shape}"
 
     if in_vpc:
