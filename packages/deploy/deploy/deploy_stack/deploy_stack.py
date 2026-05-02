@@ -93,6 +93,7 @@ class DeployStack(Stack):
 
         functions=EtlFunctions(self, "EtlFunctions",
             bucket=storage.bucket,
+            database=database.instance,
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )

@@ -25,11 +25,9 @@ def handler(event, context):
     )
     connection.autocommit = True
 
-    try:
-        execute_sql_file(connection, "bootstrap.sql")
-        execute_sql_file(connection, "aws-iam.sql")
-    finally:
-        connection.close()
+    execute_sql_file(connection, "bootstrap.sql")
+    execute_sql_file(connection, "aws-iam.sql")
+    connection.close()
 
     return {"PhysicalResourceId": "bootstrap"}
 

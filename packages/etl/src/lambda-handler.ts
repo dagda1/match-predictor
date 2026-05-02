@@ -1,6 +1,8 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { SendMessageCommand, SQSClient } from '@aws-sdk/client-sqs';
 
+import { createClient } from './db';
+import { persistMatches } from './persistMatches';
 import { scrapeLeagueMatchIds } from './scrapeLeague';
 import { scrapeMatch } from './scrapeMatch';
 
@@ -10,6 +12,8 @@ const BUCKET = process.env.BUCKET_NAME;
 const QUEUE_URL = process.env.QUEUE_URL;
 
 export async function handler(): Promise<void> {
+  const db = await createClient();
+
   for (const season of ['2024', '2025']) {
     const matchIds = await scrapeLeagueMatchIds(season, new Set());
 
@@ -18,6 +22,8 @@ export async function handler(): Promise<void> {
     for (const id of matchIds) {
       matches.push(await scrapeMatch(id));
     }
+
+    await persistMatches(db, matches);
 
     const body = matches.map((match) => JSON.stringify(match)).join('\n');
     await s3.send(
@@ -28,6 +34,8 @@ export async function handler(): Promise<void> {
       }),
     );
   }
+
+  await db.end();
 
   await sqs.send(
     new SendMessageCommand({

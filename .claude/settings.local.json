@@ -65,7 +65,16 @@
       "Bash(.husky/pre-commit)",
       "Bash(cp /tmp/readme-backup.md README.md)",
       "Bash(pnpm arch:diagram)",
-      "Bash(sed -n '/<!-- ARCH:START -->/,/<!-- ARCH:END -->/p' /Users/paulcowan/projects/match-predictor/README.md)"
+      "Bash(sed -n '/<!-- ARCH:START -->/,/<!-- ARCH:END -->/p' /Users/paulcowan/projects/match-predictor/README.md)",
+      "Read(//Users/paulcowan/projects/harbour-ui/.windsurf/**)",
+      "Read(//Users/paulcowan/projects/harbour-ui/.windsurf/workflows/**)",
+      "Bash(mkdir -p ~/claude/workflows)",
+      "Bash(mv /Users/paulcowan/projects/match-predictor/.claude/commands/branch-review.md ~/claude/workflows/branch-review.md)",
+      "Bash(ln -s ~/claude/workflows/branch-review.md /Users/paulcowan/projects/match-predictor/.claude/commands/branch-review.md)",
+      "Read(//Users/paulcowan/projects/harbour-ui/.github/**)",
+      "Bash(ln -s ~/claude/skills /Users/paulcowan/projects/match-predictor/.claude/skills)",
+      "Bash(pnpm db:up)",
+      "Bash(pnpm exec *)"
     ]
   }
 }

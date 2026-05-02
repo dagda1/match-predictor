@@ -1,9 +1,20 @@
 from constructs import Construct
-from aws_cdk import aws_s3 as s3, aws_lambda, aws_ec2 as ec2, Duration
+from aws_cdk import (
+    aws_s3 as s3,
+    aws_lambda,
+    aws_ec2 as ec2,
+    aws_iam as iam,
+    aws_rds as rds,
+    Duration,
+    Stack,
+)
 from aws_cdk.aws_lambda_nodejs import NodejsFunction
 from pathlib import Path
 
 REPO_DIR = Path(__file__).resolve().parents[4]
+
+APP_USER = "match_predictor_app"
+
 
 class EtlFunctions(Construct):
     def __init__(
@@ -11,12 +22,26 @@ class EtlFunctions(Construct):
         scope: Construct,
         construct_id: str,
         bucket: s3.Bucket,
+        database: rds.DatabaseInstance,
         vpc: ec2.Vpc,
         security_group: ec2.SecurityGroup,
     ) -> None:
         super().__init__(scope, construct_id)
 
         subnet_selection = ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS)
+        stack = Stack.of(self)
+
+        db_user_arn = (
+            f"arn:aws:rds-db:{stack.region}:{stack.account}"
+            f":dbuser:{database.instance_resource_id}/{APP_USER}"
+        )
+
+        db_environment = {
+            "DB_HOST": database.db_instance_endpoint_address,
+            "DB_NAME": "match_predictor",
+            "DB_USER": APP_USER,
+            "DB_REGION": stack.region,
+        }
 
         self.scraper = NodejsFunction(self, "ScraperFunction",
             entry=str(REPO_DIR / "packages" / "etl" / "src" / "lambda-handler.ts"),
@@ -32,6 +57,7 @@ class EtlFunctions(Construct):
             ipv6_allowed_for_dual_stack=True,
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
+                **db_environment,
             },
         )
 
@@ -51,6 +77,13 @@ class EtlFunctions(Construct):
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
             },
+        )
+
+        self.scraper.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=["rds-db:connect"],
+                resources=[db_user_arn],
+            )
         )
 
         bucket.grant_write(self.scraper)

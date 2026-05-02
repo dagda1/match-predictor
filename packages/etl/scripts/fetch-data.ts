@@ -10,9 +10,16 @@ const SEASONS = ['2024', '2025'];
 
 async function loadExisting(season: string): Promise<MatchInfo[]> {
   const filePath = join(DATA_DIR, `matches-${season}.json`);
-  try {
-    await access(filePath);
-  } catch {
+  const exists = await access(filePath).then(
+    () => true,
+    (error: NodeJS.ErrnoException) => {
+      if (error.code === 'ENOENT') {
+        return false;
+      }
+      throw error;
+    },
+  );
+  if (!exists) {
     return [];
   }
   const raw = await readFile(filePath, 'utf-8');
