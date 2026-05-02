@@ -1,0 +1,7 @@
+if [ -f cdk.out/DeployStack.template.json ]; then
+  if ! pnpm --silent arch:check >/dev/null 2>&1; then
+    echo "[pre-commit] architecture diagram out of sync — updating README"
+    pnpm --silent arch:diagram
+    git add README.md
+  fi
+fi

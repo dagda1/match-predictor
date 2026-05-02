@@ -95,19 +95,19 @@ _Auto-generated from `cdk.out/DeployStack.template.json` — run `pnpm arch:diag
 ```mermaid
 graph LR
   subgraph VPC
-    ApiApiFunctionAA82C666[Api]
-    DatabaseBootstrapHandlerFunction53F1278C[DatabaseBootstrap]
-    DatabaseMigrationHandlerFunction71FE854B[DatabaseMigration]
-    DatabasePostgres277EF4CB[(Postgres)]
-    EtlFunctionsPredictorFunctionE33E3D43[Predictor]
-    EtlFunctionsScraperFunctionF099BA00[Scraper]
+    ApiApiFunctionAA82C666["Api<br/><i>Lambda</i>"]
+    DatabaseBootstrapHandlerFunction53F1278C["DatabaseBootstrap<br/><i>Lambda</i>"]
+    DatabaseMigrationHandlerFunction71FE854B["DatabaseMigration<br/><i>Lambda</i>"]
+    DatabasePostgres277EF4CB[("Postgres<br/><i>RDS</i>")]
+    EtlFunctionsPredictorFunctionE33E3D43["Predictor<br/><i>Lambda</i>"]
+    EtlFunctionsScraperFunctionF099BA00["Scraper<br/><i>Lambda</i>"]
   end
-  ApiHttpApi4C294DC0([HttpApi])
-  CdnDistribution149FA6C8{{Cdn}}
-  EventBridgeDailyScraperRule9BFD8304(DailyScraperRule)
-  QueuingScraperToPredictor12C65B00>ScraperToPredictor]
-  StorageBucket5CB7C8EA[(Storage)]
-  StorageFrontendBucketC065FEEF[(FrontendBucket)]
+  ApiHttpApi4C294DC0(["HttpApi<br/><i>API Gateway</i>"])
+  CdnDistribution149FA6C8{{"Cdn<br/><i>CloudFront</i>"}}
+  EventBridgeDailyScraperRule9BFD8304("DailyScraperRule<br/><i>EventBridge</i>")
+  QueuingScraperToPredictor12C65B00>"ScraperToPredictor<br/><i>SQS</i>"]
+  StorageBucket5CB7C8EA[("Storage<br/><i>S3</i>")]
+  StorageFrontendBucketC065FEEF[("FrontendBucket<br/><i>S3</i>")]
   ApiApiFunctionAA82C666 --> StorageBucket5CB7C8EA
   ApiHttpApi4C294DC0 --> ApiApiFunctionAA82C666
   CdnDistribution149FA6C8 --> ApiHttpApi4C294DC0

@@ -57,7 +57,15 @@
       "Bash(PGPASSWORD=local psql:*)",
       "Bash(docker exec match-predictor-postgres-1:*)",
       "WebFetch(domain:gallery.ecr.aws)",
-      "Bash(pnpm db:reset)"
+      "Bash(pnpm db:reset)",
+      "Bash(pnpm arch:check *)",
+      "Bash(cp README.md /tmp/readme-backup.md)",
+      "Bash(pnpm --silent arch:check)",
+      "Bash(echo \"\\(exit $?\\)\")",
+      "Bash(.husky/pre-commit)",
+      "Bash(cp /tmp/readme-backup.md README.md)",
+      "Bash(pnpm arch:diagram)",
+      "Bash(sed -n '/<!-- ARCH:START -->/,/<!-- ARCH:END -->/p' /Users/paulcowan/projects/match-predictor/README.md)"
     ]
   }
 }

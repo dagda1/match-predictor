@@ -22,7 +22,9 @@
     "setup:local": "./scripts/setup-local.sh",
     "db:up": "./scripts/db-up.sh",
     "db:down": "docker compose down",
-    "db:reset": "docker compose down -v && ./scripts/db-up.sh"
+    "db:reset": "docker compose down -v && ./scripts/db-up.sh",
+    "arch:diagram": "python3 ./scripts/generate-architecture-diagram.py",
+    "arch:check": "python3 ./scripts/generate-architecture-diagram.py --check"
   },
   "keywords": [],
   "author": "",
