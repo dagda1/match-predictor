@@ -74,7 +74,15 @@
       "Read(//Users/paulcowan/projects/harbour-ui/.github/**)",
       "Bash(ln -s ~/claude/skills /Users/paulcowan/projects/match-predictor/.claude/skills)",
       "Bash(pnpm db:up)",
-      "Bash(pnpm exec *)"
+      "Bash(pnpm exec *)",
+      "Bash(DB_HOST=localhost DB_USER=match_predictor_app DB_PASSWORD=WRONG DB_NAME=match_predictor DB_SSLMODE=disable pnpm exec tsx scripts/seed-local-db.ts)",
+      "Bash(echo \"=== exit code: $? ===\")",
+      "Bash(echo \"exit: $?\")",
+      "Read(//tmp/**)",
+      "Bash(DB_HOST=localhost.invalid DB_USER=match_predictor_app DB_PASSWORD=app DB_NAME=match_predictor DB_SSLMODE=disable pnpm exec tsx scripts/seed-local-db.ts)",
+      "Bash(unset DB_HOST)",
+      "Bash(env -u DB_HOST pnpm exec tsx -e \"delete process.env.DB_HOST; await import\\('./src/db.ts'\\).then\\(m => m.createClient\\(\\)\\);\")",
+      "Bash(cdk synth *)"
     ]
   }
 }

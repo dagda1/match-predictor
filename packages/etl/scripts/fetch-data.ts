@@ -1,9 +1,14 @@
 import { access, readFile, mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 
+import { z } from 'zod';
+
 import type { MatchInfo } from '../src/matchSchema';
+import { matchInfoSchema } from '../src/matchSchema';
 import { scrapeLeagueMatchIds } from '../src/scrapeLeague';
 import { scrapeMatch } from '../src/scrapeMatch';
+
+const matchesArraySchema = z.array(matchInfoSchema);
 
 const DATA_DIR = join(import.meta.dirname, '../data');
 const SEASONS = ['2024', '2025'];
@@ -23,7 +28,7 @@ async function loadExisting(season: string): Promise<MatchInfo[]> {
     return [];
   }
   const raw = await readFile(filePath, 'utf-8');
-  return JSON.parse(raw) as MatchInfo[];
+  return matchesArraySchema.parse(JSON.parse(raw));
 }
 
 const force = process.argv.includes('--force');

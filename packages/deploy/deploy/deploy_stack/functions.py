@@ -1,19 +1,44 @@
+from typing import List
+
+import jsii
 from constructs import Construct
 from aws_cdk import (
-    aws_s3 as s3,
-    aws_lambda,
-    aws_ec2 as ec2,
-    aws_iam as iam,
-    aws_rds as rds,
+    Arn,
+    ArnComponents,
+    ArnFormat,
     Duration,
     Stack,
+    aws_ec2 as ec2,
+    aws_iam as iam,
+    aws_lambda,
+    aws_rds as rds,
+    aws_s3 as s3,
 )
-from aws_cdk.aws_lambda_nodejs import NodejsFunction
+from aws_cdk.aws_lambda_nodejs import (
+    BundlingOptions,
+    ICommandHooks,
+    NodejsFunction,
+    OutputFormat,
+)
 from pathlib import Path
+
+from deploy.deploy_stack.database_users import APP_USER
 
 REPO_DIR = Path(__file__).resolve().parents[4]
 
-APP_USER = "match_predictor_app"
+
+@jsii.implements(ICommandHooks)
+class IncludeRdsCaBundle:
+    def before_bundling(self, _input_dir: str, _output_dir: str) -> List[str]:
+        return []
+
+    def before_install(self, _input_dir: str, _output_dir: str) -> List[str]:
+        return []
+
+    def after_bundling(self, input_dir: str, output_dir: str) -> List[str]:
+        return [
+            f"cp {input_dir}/packages/etl/src/rds-ca-bundle.pem {output_dir}/"
+        ]
 
 
 class EtlFunctions(Construct):
@@ -31,9 +56,14 @@ class EtlFunctions(Construct):
         subnet_selection = ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS)
         stack = Stack.of(self)
 
-        db_user_arn = (
-            f"arn:aws:rds-db:{stack.region}:{stack.account}"
-            f":dbuser:{database.instance_resource_id}/{APP_USER}"
+        db_user_arn = Arn.format(
+            components=ArnComponents(
+                service="rds-db",
+                resource="dbuser",
+                resource_name=f"{database.instance_resource_id}/{APP_USER}",
+                arn_format=ArnFormat.COLON_RESOURCE_NAME,
+            ),
+            stack=stack,
         )
 
         db_environment = {
@@ -55,6 +85,10 @@ class EtlFunctions(Construct):
             vpc_subnets=subnet_selection,
             security_groups=[security_group],
             ipv6_allowed_for_dual_stack=True,
+            bundling=BundlingOptions(
+                format=OutputFormat.ESM,
+                command_hooks=IncludeRdsCaBundle(),
+            ),
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
                 **db_environment,

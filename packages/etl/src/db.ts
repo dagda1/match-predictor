@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 import { assert } from '@cutting/assert';
 import { Signer } from '@aws-sdk/rds-signer';
 import { Client } from 'pg';
@@ -45,6 +48,10 @@ async function resolvePassword(config: DbConfig): Promise<string> {
   return signer.getAuthToken();
 }
 
+function loadRdsCaBundle(): Buffer {
+  return readFileSync(join(import.meta.dirname, 'rds-ca-bundle.pem'));
+}
+
 export async function createClient(): Promise<Client> {
   const config = readConfig();
   const password = await resolvePassword(config);
@@ -55,7 +62,9 @@ export async function createClient(): Promise<Client> {
     database: config.database,
     password,
     port: 5432,
-    ssl: config.sslmode === 'disable' ? false : { rejectUnauthorized: false },
+    ssl: config.sslmode === 'disable'
+      ? false
+      : { ca: loadRdsCaBundle(), rejectUnauthorized: true },
   });
 
   await client.connect();

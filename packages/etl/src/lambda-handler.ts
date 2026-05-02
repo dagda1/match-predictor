@@ -1,3 +1,4 @@
+import { assert } from '@cutting/assert';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { SendMessageCommand, SQSClient } from '@aws-sdk/client-sqs';
 
@@ -10,6 +11,8 @@ const s3 = new S3Client({});
 const sqs = new SQSClient({});
 const BUCKET = process.env.BUCKET_NAME;
 const QUEUE_URL = process.env.QUEUE_URL;
+assert(!!BUCKET, 'BUCKET_NAME is required');
+assert(!!QUEUE_URL, 'QUEUE_URL is required');
 
 export async function handler(): Promise<void> {
   const db = await createClient();

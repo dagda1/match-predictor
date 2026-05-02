@@ -1,0 +1,12 @@
+{
+  "hosted-zone:account=313095418189:domainName=premierpredictor.co.uk:region=us-east-1": {
+    "Id": "/hostedzone/Z0255839151UAR2OZEEA6",
+    "Name": "premierpredictor.co.uk."
+  },
+  "availability-zones:account=313095418189:region=us-west-2": [
+    "us-west-2a",
+    "us-west-2b",
+    "us-west-2c",
+    "us-west-2d"
+  ]
+}

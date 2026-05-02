@@ -2,6 +2,9 @@ import hashlib
 from pathlib import Path
 
 from aws_cdk import (
+    Arn,
+    ArnComponents,
+    ArnFormat,
     CustomResource,
     Duration,
     Stack,
@@ -13,9 +16,9 @@ from aws_cdk import (
 from aws_cdk.custom_resources import Provider
 from constructs import Construct
 
-REPO_DIR = Path(__file__).resolve().parents[4]
+from deploy.deploy_stack.database_users import MIGRATOR_USER
 
-MIGRATOR_USER = "match_predictor_migrator"
+REPO_DIR = Path(__file__).resolve().parents[4]
 
 
 def alembic_versions_hash() -> str:
@@ -59,9 +62,14 @@ class Migration(Construct):
         )
 
         stack = Stack.of(self)
-        db_user_arn = (
-            f"arn:aws:rds-db:{stack.region}:{stack.account}"
-            f":dbuser:{database.instance_resource_id}/{MIGRATOR_USER}"
+        db_user_arn = Arn.format(
+            components=ArnComponents(
+                service="rds-db",
+                resource="dbuser",
+                resource_name=f"{database.instance_resource_id}/{MIGRATOR_USER}",
+                arn_format=ArnFormat.COLON_RESOURCE_NAME,
+            ),
+            stack=stack,
         )
 
         handler_function.add_to_role_policy(
