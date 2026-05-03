@@ -17,6 +17,7 @@ from deploy.deploy_stack.database import Database
 from deploy.deploy_stack.vpc import Vpc
 from deploy.deploy_stack.bootstrap import Bootstrap
 from deploy.deploy_stack.migration import Migration
+from deploy.deploy_stack.model_storage import ModelStorage
 
 class DeployStack(Stack):
 
@@ -91,9 +92,15 @@ class DeployStack(Stack):
             )
         )
 
+        model_storage = ModelStorage(self, "ModelStorage",
+            vpc=network.vpc,
+            lambda_security_group=network.lambda_security_group,
+        )
+
         functions=EtlFunctions(self, "EtlFunctions",
             bucket=storage.bucket,
             database=database.instance,
+            model_storage=model_storage,
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )
@@ -107,6 +114,7 @@ class DeployStack(Stack):
         api = Api(self, "Api",
             bucket=storage.bucket,
             origin_verify_secret=app_secrets.origin_verify,
+            model_storage=model_storage,
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )

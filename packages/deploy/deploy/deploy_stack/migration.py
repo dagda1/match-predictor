@@ -51,7 +51,7 @@ class Migration(Construct):
                     ".venv",
                     "node_modules",
                     ".turbo",
-                    "cdk.out",
+                    "**/cdk.out",
                     ".git",
                     "dist",
                     "*.pyc",

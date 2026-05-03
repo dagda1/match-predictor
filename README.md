@@ -104,6 +104,7 @@ graph LR
   end
   ApiHttpApi4C294DC0(["HttpApi<br/>API Gateway"])
   CdnDistribution149FA6C8{{"Cdn<br/>CloudFront"}}
+  CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E["Custom::VpcRestrictDefaultSGCustomResourceProvider<br/>Lambda"]
   EventBridgeDailyScraperRule9BFD8304("DailyScraperRule<br/>EventBridge")
   QueuingScraperToPredictor12C65B00>"ScraperToPredictor<br/>SQS"]
   StorageBucket5CB7C8EA[("Storage<br/>S3")]
@@ -114,7 +115,9 @@ graph LR
   CdnDistribution149FA6C8 --> StorageFrontendBucketC065FEEF
   DatabaseBootstrapHandlerFunction53F1278C --> DatabasePostgres277EF4CB
   DatabaseMigrationHandlerFunction71FE854B --> DatabasePostgres277EF4CB
+  EtlFunctionsPredictorFunctionE33E3D43 --> DatabasePostgres277EF4CB
   EtlFunctionsPredictorFunctionE33E3D43 --> StorageBucket5CB7C8EA
+  EtlFunctionsScraperFunctionF099BA00 --> DatabasePostgres277EF4CB
   EtlFunctionsScraperFunctionF099BA00 --> QueuingScraperToPredictor12C65B00
   EtlFunctionsScraperFunctionF099BA00 --> StorageBucket5CB7C8EA
   EventBridgeDailyScraperRule9BFD8304 --> EtlFunctionsScraperFunctionF099BA00

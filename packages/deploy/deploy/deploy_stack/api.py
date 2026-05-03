@@ -3,6 +3,8 @@ from aws_cdk import aws_lambda, aws_apigatewayv2 as apigw, aws_s3 as s3, aws_sec
 from aws_cdk.aws_apigatewayv2_integrations import HttpLambdaIntegration
 from pathlib import Path
 
+from deploy.deploy_stack.model_storage import ModelStorage
+
 REPO_DIR = Path(__file__).resolve().parents[4]
 
 
@@ -13,6 +15,7 @@ class Api(Construct):
         construct_id: str,
         bucket: s3.Bucket,
         origin_verify_secret: secretsmanager.Secret,
+        model_storage: ModelStorage,
         vpc: ec2.Vpc,
         security_group: ec2.SecurityGroup,
     ) -> None:
@@ -22,7 +25,7 @@ class Api(Construct):
             code=aws_lambda.DockerImageCode.from_image_asset(
                 str(REPO_DIR),
                 file="packages/api/Dockerfile",
-                exclude=["node_modules", "packages/deploy/cdk.out", ".git", "dist", ".venv", "__pycache__", ".turbo"],
+                exclude=["node_modules", "**/cdk.out", ".git", "dist", ".venv", "__pycache__", ".turbo"],
             ),
             timeout=Duration.seconds(30),
             memory_size=1024,
@@ -31,9 +34,11 @@ class Api(Construct):
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
             security_groups=[security_group],
             ipv6_allowed_for_dual_stack=True,
+            filesystem=model_storage.lambda_file_system(),
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
                 "ORIGIN_SECRET_ARN": origin_verify_secret.secret_arn,
+                "MODEL_PATH": f"{ModelStorage.MOUNT_PATH}/model.joblib",
             },
         )
 

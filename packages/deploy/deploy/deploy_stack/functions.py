@@ -23,6 +23,7 @@ from aws_cdk.aws_lambda_nodejs import (
 from pathlib import Path
 
 from deploy.deploy_stack.database_users import APP_USER
+from deploy.deploy_stack.model_storage import ModelStorage
 
 REPO_DIR = Path(__file__).resolve().parents[4]
 
@@ -48,6 +49,7 @@ class EtlFunctions(Construct):
         construct_id: str,
         bucket: s3.Bucket,
         database: rds.DatabaseInstance,
+        model_storage: ModelStorage,
         vpc: ec2.Vpc,
         security_group: ec2.SecurityGroup,
     ) -> None:
@@ -104,7 +106,7 @@ class EtlFunctions(Construct):
                     ".venv",
                     "node_modules",
                     ".turbo",
-                    "cdk.out",
+                    "**/cdk.out",
                     ".git",
                     "dist",
                     "*.pyc",
@@ -117,8 +119,10 @@ class EtlFunctions(Construct):
             vpc_subnets=subnet_selection,
             security_groups=[security_group],
             ipv6_allowed_for_dual_stack=True,
+            filesystem=model_storage.lambda_file_system(),
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
+                "MODEL_PATH": f"{ModelStorage.MOUNT_PATH}/model.joblib",
                 **db_environment,
             },
         )

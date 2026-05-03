@@ -26,17 +26,11 @@ from match_predictor_api.models import (
     Team,
 )
 
-BUCKET_NAME = os.environ.get("BUCKET_NAME")
-MODEL_PATH = Path(__file__).resolve().parents[4] / "packages" / "etl" / "data" / "model.joblib"
+DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[4] / "packages" / "etl" / "data" / "model.joblib"
+MODEL_PATH = Path(os.environ.get("MODEL_PATH", DEFAULT_MODEL_PATH))
 
 
 def _load_model():
-    if BUCKET_NAME:
-        import boto3
-        s3 = boto3.client("s3")
-        local_path = Path("/tmp/model.joblib")
-        s3.download_file(BUCKET_NAME, "model/model.joblib", str(local_path))
-        return load_model(local_path)
     return load_model(MODEL_PATH)
 
 
