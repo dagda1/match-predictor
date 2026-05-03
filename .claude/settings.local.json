@@ -85,7 +85,8 @@
       "Bash(cdk synth *)",
       "Bash(mkdir -p assets)",
       "Bash(mv packages/etl/src/rds-ca-bundle.pem assets/rds-ca-bundle.pem)",
-      "Bash(rm packages/ml/src/rds-ca-bundle.pem)"
+      "Bash(rm packages/ml/src/rds-ca-bundle.pem)",
+      "Bash(pnpm predictor:local)"
     ]
   }
 }
