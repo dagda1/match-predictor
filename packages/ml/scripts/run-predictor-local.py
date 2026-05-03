@@ -14,7 +14,7 @@ from match_predictor.data import load_matches_from_db
 from match_predictor.db import create_db_engine
 from match_predictor.generate_predictions import generate as generate_predictions
 from match_predictor.generate_upcoming import generate as generate_upcoming
-from match_predictor.persistence import write_predictions, write_upcoming
+from match_predictor.persistence import write_predictions, write_team_features, write_upcoming
 
 MODEL_PATH = Path(__file__).resolve().parents[1] / "local-model.joblib"
 
@@ -25,16 +25,21 @@ def save_model_local(model) -> None:
 
 
 engine = create_db_engine()
+df = load_matches_from_db(engine)
 
-print("=== generate_predictions ===")
+print("=== write_team_features ===")
+write_team_features(engine, df)
+print(f"wrote team_features for {df['homeTeam'].nunique()} home teams")
+
+print("\n=== generate_predictions ===")
 generate_predictions(
-    lambda: load_matches_from_db(engine),
+    lambda: df,
     lambda predictions: write_predictions(engine, predictions),
     save_model_local,
 )
 
 print("\n=== generate_upcoming ===")
 generate_upcoming(
-    lambda: load_matches_from_db(engine),
+    lambda: df,
     lambda predictions: write_upcoming(engine, predictions),
 )

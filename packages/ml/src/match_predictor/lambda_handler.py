@@ -8,7 +8,7 @@ from match_predictor.data import load_matches_from_db
 from match_predictor.db import create_db_engine
 from match_predictor.generate_predictions import generate as generate_predictions
 from match_predictor.generate_upcoming import generate as generate_upcoming
-from match_predictor.persistence import write_predictions, write_upcoming
+from match_predictor.persistence import write_predictions, write_team_features, write_upcoming
 
 s3 = boto3.client("s3")
 BUCKET = os.environ["BUCKET_NAME"]
@@ -25,13 +25,16 @@ def save_model_to_s3(model) -> None:
 
 def handler(_event, _context):
     engine = create_db_engine()
+    df = load_matches_from_db(engine)
+
+    write_team_features(engine, df)
 
     generate_predictions(
-        lambda: load_matches_from_db(engine),
+        lambda: df,
         lambda predictions: write_predictions(engine, predictions),
         save_model_to_s3,
     )
     generate_upcoming(
-        lambda: load_matches_from_db(engine),
+        lambda: df,
         lambda predictions: write_upcoming(engine, predictions),
     )
