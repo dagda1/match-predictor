@@ -82,7 +82,10 @@
       "Bash(DB_HOST=localhost.invalid DB_USER=match_predictor_app DB_PASSWORD=app DB_NAME=match_predictor DB_SSLMODE=disable pnpm exec tsx scripts/seed-local-db.ts)",
       "Bash(unset DB_HOST)",
       "Bash(env -u DB_HOST pnpm exec tsx -e \"delete process.env.DB_HOST; await import\\('./src/db.ts'\\).then\\(m => m.createClient\\(\\)\\);\")",
-      "Bash(cdk synth *)"
+      "Bash(cdk synth *)",
+      "Bash(mkdir -p assets)",
+      "Bash(mv packages/etl/src/rds-ca-bundle.pem assets/rds-ca-bundle.pem)",
+      "Bash(rm packages/ml/src/rds-ca-bundle.pem)"
     ]
   }
 }

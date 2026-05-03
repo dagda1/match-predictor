@@ -44,9 +44,18 @@ class Migration(Construct):
 
         handler_function = aws_lambda.DockerImageFunction(self, "HandlerFunction",
             code=aws_lambda.DockerImageCode.from_image_asset(
-                str(REPO_DIR / "packages" / "ml"),
-                file="migration.Dockerfile",
-                exclude=["__pycache__", ".venv", ".turbo"],
+                str(REPO_DIR),
+                file="packages/ml/migration.Dockerfile",
+                exclude=[
+                    "__pycache__",
+                    ".venv",
+                    "node_modules",
+                    ".turbo",
+                    "cdk.out",
+                    ".git",
+                    "dist",
+                    "*.pyc",
+                ],
             ),
             memory_size=512,
             timeout=Duration.minutes(5),

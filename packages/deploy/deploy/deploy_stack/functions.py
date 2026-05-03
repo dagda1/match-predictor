@@ -37,7 +37,7 @@ class IncludeRdsCaBundle:
 
     def after_bundling(self, input_dir: str, output_dir: str) -> List[str]:
         return [
-            f"cp {input_dir}/packages/etl/src/rds-ca-bundle.pem {output_dir}/"
+            f"cp {input_dir}/assets/rds-ca-bundle.pem {output_dir}/"
         ]
 
 
@@ -97,9 +97,18 @@ class EtlFunctions(Construct):
 
         self.predictor = aws_lambda.DockerImageFunction(self, "PredictorFunction",
             code=aws_lambda.DockerImageCode.from_image_asset(
-                str(REPO_DIR / "packages" / "ml"),
-                file="src/Dockerfile",
-                exclude=["__pycache__", ".venv"],
+                str(REPO_DIR),
+                file="packages/ml/src/Dockerfile",
+                exclude=[
+                    "__pycache__",
+                    ".venv",
+                    "node_modules",
+                    ".turbo",
+                    "cdk.out",
+                    ".git",
+                    "dist",
+                    "*.pyc",
+                ],
             ),
             memory_size=1024,
             tracing=aws_lambda.Tracing.ACTIVE,
@@ -110,7 +119,15 @@ class EtlFunctions(Construct):
             ipv6_allowed_for_dual_stack=True,
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
+                **db_environment,
             },
+        )
+
+        self.predictor.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=["rds-db:connect"],
+                resources=[db_user_arn],
+            )
         )
 
         self.scraper.add_to_role_policy(

@@ -31,8 +31,9 @@ def _predicted_outcome(home_win: float, draw: float, away_win: float) -> str:
 
 
 def _write_to_disk(predictions: list[dict]) -> None:
-    with open(PREDICTIONS_PATH, "w") as f:
-        json.dump(predictions, f, indent=2)
+    f = open(PREDICTIONS_PATH, "w")
+    json.dump(predictions, f, indent=2)
+    f.close()
 
 
 def _save_model_to_disk(model: TrainedModel) -> None:

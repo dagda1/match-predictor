@@ -16,17 +16,20 @@ target_metadata = Base.metadata
 
 def build_connectable():
     if "DB_PASSWORD" in os.environ:
+        connect_args = {
+            "host": os.environ["DB_HOST"],
+            "user": os.environ["DB_USER"],
+            "password": os.environ["DB_PASSWORD"],
+            "dbname": os.environ["DB_NAME"],
+            "sslmode": os.environ.get("DB_SSLMODE", "require"),
+            "port": 5432,
+        }
+        if "DB_SSLROOTCERT" in os.environ:
+            connect_args["sslrootcert"] = os.environ["DB_SSLROOTCERT"]
         return create_engine(
             "postgresql+psycopg2://",
             poolclass=pool.NullPool,
-            connect_args={
-                "host": os.environ["DB_HOST"],
-                "user": os.environ["DB_USER"],
-                "password": os.environ["DB_PASSWORD"],
-                "dbname": os.environ["DB_NAME"],
-                "sslmode": os.environ.get("DB_SSLMODE", "require"),
-                "port": 5432,
-            },
+            connect_args=connect_args,
         )
 
     config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL"])

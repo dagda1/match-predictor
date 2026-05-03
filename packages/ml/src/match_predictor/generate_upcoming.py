@@ -46,8 +46,9 @@ def _fetch_upcoming_fixtures() -> list[dict]:
 
 
 def _write_to_disk(predictions: list[dict]) -> None:
-    with open(UPCOMING_PATH, "w") as f:
-        json.dump(predictions, f, indent=2)
+    f = open(UPCOMING_PATH, "w")
+    json.dump(predictions, f, indent=2)
+    f.close()
 
 
 def generate(

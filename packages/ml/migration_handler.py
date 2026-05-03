@@ -21,7 +21,8 @@ def handler(event, context):
     )
 
     os.environ["DB_PASSWORD"] = token
-    os.environ["DB_SSLMODE"] = "require"
+    os.environ["DB_SSLMODE"] = "verify-full"
+    os.environ["DB_SSLROOTCERT"] = "/var/task/rds-ca-bundle.pem"
 
     result = subprocess.run(
         ["alembic", "upgrade", "head"],
