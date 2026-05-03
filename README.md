@@ -121,3 +121,100 @@ graph LR
   QueuingScraperToPredictor12C65B00 --> EtlFunctionsPredictorFunctionE33E3D43
 ```
 <!-- ARCH:END -->
+
+## Database schema
+
+_Auto-generated from `packages/ml/src/match_predictor/db_models.py` — run `pnpm db:diagram` to refresh._
+
+<!-- DB-SCHEMA:START -->
+```mermaid
+erDiagram
+  MATCHES {
+    string id PK
+    datetime date
+    string season
+    string home_team
+    string away_team
+    int home_goals
+    int away_goals
+    float home_xg
+    float away_xg
+    int home_shots
+    int away_shots
+    int home_shots_on_target
+    int away_shots_on_target
+    int home_deep
+    int away_deep
+    float home_ppda
+    float away_ppda
+    float home_win_prob
+    float draw_prob
+    float away_win_prob
+  }
+  PREDICTIONS {
+    int id PK
+    string home_team
+    string away_team
+    datetime date
+    int actual_home_goals "nullable"
+    int actual_away_goals "nullable"
+    string actual_outcome "nullable"
+    float ml_home_win
+    float ml_draw
+    float ml_away_win
+    string ml_predicted_outcome
+    bool ml_correct "nullable"
+    int ml_top_home_goals
+    int ml_top_away_goals
+    float ml_top_probability
+    float poisson_home_win
+    float poisson_draw
+    float poisson_away_win
+    string poisson_predicted_outcome
+    bool poisson_correct "nullable"
+    float poisson_home_lambda
+    float poisson_away_lambda
+    int poisson_top_home_goals
+    int poisson_top_away_goals
+    float poisson_top_probability
+  }
+  TEAM_FEATURES {
+    string team_name PK
+    float xg_for_avg
+    float xg_against_avg
+    float xg_overperformance
+    float shot_conversion
+    float sot_pct
+    float ppda
+    float deep_avg
+    float goals_for_avg
+    float goals_against_avg
+    float home_advantage
+  }
+  TEAMS {
+    string name PK
+  }
+  UPCOMING {
+    int id PK
+    string home_team
+    string away_team
+    datetime date
+    float ml_home_win
+    float ml_draw
+    float ml_away_win
+    string ml_predicted_outcome
+    int ml_top_home_goals
+    int ml_top_away_goals
+    float ml_top_probability
+    float poisson_home_win
+    float poisson_draw
+    float poisson_away_win
+    string poisson_predicted_outcome
+    float poisson_home_lambda
+    float poisson_away_lambda
+    int poisson_top_home_goals
+    int poisson_top_away_goals
+    float poisson_top_probability
+  }
+```
+<!-- DB-SCHEMA:END -->

@@ -88,7 +88,10 @@
       "Bash(rm packages/ml/src/rds-ca-bundle.pem)",
       "Bash(pnpm predictor:local)",
       "Bash(cross-env NODE_ENV=development pnpm --filter @match-predictor/frontend dev)",
-      "Bash(echo \"started pid $!\")"
+      "Bash(echo \"started pid $!\")",
+      "Bash(pnpm db:diagram)",
+      "Bash(sed -n '/<!-- DB-SCHEMA:START -->/,/<!-- DB-SCHEMA:END -->/p' /Users/paulcowan/projects/match-predictor/README.md)",
+      "Bash(pnpm db:diagram:check *)"
     ]
   }
 }

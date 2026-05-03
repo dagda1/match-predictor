@@ -25,7 +25,9 @@
     "db:reset": "docker compose down -v && ./scripts/db-up.sh",
     "predictor:local": "uv run --directory packages/ml python scripts/run-predictor-local.py",
     "arch:diagram": "python3 ./scripts/generate-architecture-diagram.py",
-    "arch:check": "python3 ./scripts/generate-architecture-diagram.py --check"
+    "arch:check": "python3 ./scripts/generate-architecture-diagram.py --check",
+    "db:diagram": "uv run --directory packages/ml python scripts/generate-db-diagram.py",
+    "db:diagram:check": "uv run --directory packages/ml python scripts/generate-db-diagram.py --check"
   },
   "keywords": [],
   "author": "",
