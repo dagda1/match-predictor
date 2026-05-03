@@ -49,16 +49,18 @@ match_df = load_matches_dataframe()
 
 @app.get("/teams", response_model=list[Team])
 def get_teams():
-    with get_session() as session:
-        rows = session.execute(select(TeamRow).order_by(TeamRow.name)).scalars().all()
-        return [Team(id=row.name, name=row.name) for row in rows]
+    session = get_session()
+    rows = session.execute(select(TeamRow).order_by(TeamRow.name)).scalars().all()
+    session.close()
+    return [Team(id=row.name, name=row.name) for row in rows]
 
 
 @app.post("/predict", response_model=PredictResponse)
 def predict(req: PredictRequest):
-    with get_session() as session:
-        home = session.get(TeamFeatures, req.homeTeamId)
-        away = session.get(TeamFeatures, req.awayTeamId)
+    session = get_session()
+    home = session.get(TeamFeatures, req.homeTeamId)
+    away = session.get(TeamFeatures, req.awayTeamId)
+    session.close()
 
     if not home or not away:
         return JSONResponse(status_code=400, content={"detail": "insufficient data"})
@@ -148,9 +150,10 @@ def _to_match_result(row, is_prediction: bool) -> dict:
 
 @app.get("/results", response_model=ResultsResponse)
 def get_results(startDate: str, endDate: str | None = None):
-    with get_session() as session:
-        predictions = session.execute(select(PredictionRow)).scalars().all()
-        upcoming = session.execute(select(UpcomingRow)).scalars().all()
+    session = get_session()
+    predictions = session.execute(select(PredictionRow)).scalars().all()
+    upcoming = session.execute(select(UpcomingRow)).scalars().all()
+    session.close()
 
     all_matches = [_to_match_result(p, True) for p in predictions]
 

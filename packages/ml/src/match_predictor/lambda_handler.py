@@ -9,11 +9,8 @@ from match_predictor.generate_predictions import generate as generate_prediction
 from match_predictor.generate_upcoming import generate as generate_upcoming
 from match_predictor.persistence import write_predictions, write_team_features, write_upcoming
 
-MODEL_PATH = Path(os.environ["MODEL_PATH"])
-
-
 def save_model(model) -> None:
-    joblib.dump(model, MODEL_PATH)
+    joblib.dump(model, Path(os.environ["MODEL_PATH"]))
 
 
 def handler(_event, _context):

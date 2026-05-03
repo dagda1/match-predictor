@@ -16,8 +16,9 @@ def get_session() -> Session:
 
 
 def load_matches_dataframe() -> pd.DataFrame:
-    with get_session() as session:
-        rows = session.execute(select(Match).order_by(Match.date)).scalars().all()
+    session = get_session()
+    rows = session.execute(select(Match).order_by(Match.date)).scalars().all()
+    session.close()
 
     return pd.DataFrame([{
         "homeTeam": r.home_team,

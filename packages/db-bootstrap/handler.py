@@ -34,5 +34,6 @@ def handler(event, context):
 
 def execute_sql_file(connection, filename):
     sql_text = (SQL_DIR / filename).read_text()
-    with connection.cursor() as cursor:
-        cursor.execute(sql_text)
+    cursor = connection.cursor()
+    cursor.execute(sql_text)
+    cursor.close()
