@@ -90,7 +90,10 @@
       "Bash(pnpm db:diagram)",
       "Bash(sed -n '/<!-- DB-SCHEMA:START -->/,/<!-- DB-SCHEMA:END -->/p' /Users/paulcowan/projects/match-predictor/README.md)",
       "Bash(pnpm db:diagram:check *)",
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "WebFetch(domain:aws.amazon.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:awsipv6.neveragain.de)"
     ],
     "deny": [
       "Bash(aws *)",

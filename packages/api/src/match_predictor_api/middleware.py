@@ -1,11 +1,13 @@
 import os
 
+import boto3
 from fastapi import Request
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 ORIGIN_SECRET_ARN = os.environ.get("ORIGIN_SECRET_ARN")
 
+_secrets_client = boto3.client("secretsmanager") if ORIGIN_SECRET_ARN else None
 _cached_secret: str | None = None
 
 
@@ -13,11 +15,9 @@ def _get_origin_secret() -> str | None:
     global _cached_secret
     if _cached_secret:
         return _cached_secret
-    if not ORIGIN_SECRET_ARN:
+    if _secrets_client is None:
         return None
-    import boto3
-    client = boto3.client("secretsmanager")
-    response = client.get_secret_value(SecretId=ORIGIN_SECRET_ARN)
+    response = _secrets_client.get_secret_value(SecretId=ORIGIN_SECRET_ARN)
     _cached_secret = response["SecretString"]
     return _cached_secret
 
