@@ -35,6 +35,7 @@ class Bootstrap(Construct):
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
             security_groups=[security_group],
+            ipv6_allowed_for_dual_stack=True,
             environment={
                 "SECRET_ARN": database.secret.secret_arn,
                 "DB_HOST": database.db_instance_endpoint_address,

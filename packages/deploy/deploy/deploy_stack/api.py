@@ -60,6 +60,7 @@ class Api(Construct):
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
             security_groups=[security_group],
+            ipv6_allowed_for_dual_stack=True,
             filesystem=model_storage.lambda_file_system(),
             environment={
                 "BUCKET_NAME": bucket.bucket_name,

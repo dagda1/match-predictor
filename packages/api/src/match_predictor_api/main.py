@@ -94,6 +94,41 @@ def debug_secretsmanager():
     }
 
 
+@app.get("/_debug/ipv6")
+def debug_ipv6():
+    import socket
+    import time
+    host = "secretsmanager.us-west-2.amazonaws.com"
+
+    print(f"[IPV6-DEBUG] step=resolve host={host}", flush=True)
+    t = time.time()
+    addrs = socket.getaddrinfo(host, 443, socket.AF_INET6, socket.SOCK_STREAM)
+    resolve_ms = int((time.time() - t) * 1000)
+    ip = addrs[0][4][0]
+    print(f"[IPV6-DEBUG] step=resolved ip={ip} resolve_ms={resolve_ms}", flush=True)
+
+    print(f"[IPV6-DEBUG] step=socket_create", flush=True)
+    sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+    sock.settimeout(5)
+    print(f"[IPV6-DEBUG] step=socket_created timeout=5s", flush=True)
+
+    print(f"[IPV6-DEBUG] step=connect_start ip={ip}", flush=True)
+    t0 = time.time()
+    error: str | None = None
+    ok = False
+    try:
+        sock.connect((ip, 443, 0, 0))
+        ok = True
+    except Exception as e:
+        error = f"{type(e).__name__}: {e}"
+    elapsed = int((time.time() - t0) * 1000)
+    print(f"[IPV6-DEBUG] step=connect_end ok={ok} elapsed_ms={elapsed} error={error}", flush=True)
+
+    sock.close()
+    print(f"[IPV6-DEBUG] step=closed", flush=True)
+    return {"ip": ip, "resolve_ms": resolve_ms, "connect_ms": elapsed, "ok": ok, "error": error}
+
+
 @app.get("/teams", response_model=list[Team])
 def get_teams():
     session = get_session()
