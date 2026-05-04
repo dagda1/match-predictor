@@ -29,9 +29,25 @@ from match_predictor_api.models import (
 DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[4] / "packages" / "etl" / "data" / "model.joblib"
 MODEL_PATH = Path(os.environ.get("MODEL_PATH", DEFAULT_MODEL_PATH))
 
+_model_cache = None
+_match_df_cache = None
 
-def _load_model():
-    return load_model(MODEL_PATH)
+
+def _maybe_load_model():
+    global _model_cache
+    if _model_cache is not None:
+        return _model_cache
+    if not MODEL_PATH.exists():
+        return None
+    _model_cache = load_model(MODEL_PATH)
+    return _model_cache
+
+
+def _get_match_df():
+    global _match_df_cache
+    if _match_df_cache is None:
+        _match_df_cache = load_matches_dataframe()
+    return _match_df_cache
 
 
 app = FastAPI(title="Match Predictor API")
@@ -42,9 +58,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-model = _load_model()
-match_df = load_matches_dataframe()
 
 
 @app.get("/teams", response_model=list[Team])
@@ -57,6 +70,10 @@ def get_teams():
 
 @app.post("/predict", response_model=PredictResponse)
 def predict(req: PredictRequest):
+    model = _maybe_load_model()
+    if model is None:
+        return JSONResponse(status_code=503, content={"detail": "model not ready, predictor has not run yet"})
+
     session = get_session()
     home = session.get(TeamFeatures, req.homeTeamId)
     away = session.get(TeamFeatures, req.awayTeamId)
@@ -87,7 +104,7 @@ def predict(req: PredictRequest):
     proba = model.classifier.predict_proba(X)[0]
     classes = list(model.classifier.classes_)
 
-    poisson_result = poisson_predict(match_df, req.homeTeamId, req.awayTeamId)
+    poisson_result = poisson_predict(_get_match_df(), req.homeTeamId, req.awayTeamId)
 
     return PredictResponse(
         ml=MlPrediction(

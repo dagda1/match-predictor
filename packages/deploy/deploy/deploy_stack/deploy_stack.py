@@ -2,6 +2,7 @@ from aws_cdk import (
     CfnOutput,
     Stack,
     aws_iam as iam,
+    custom_resources as cr,
 )
 from constructs import Construct
 from deploy.deploy_stack.storage import Storage
@@ -106,6 +107,26 @@ class DeployStack(Stack):
         )
         Queuing(self, "Queuing", scraper=functions.scraper, predictor=functions.predictor)
         Events(self, "EventBridge", scraper_function=functions.scraper)
+
+        initial_data_load = cr.AwsCustomResource(self, "InitialDataLoad",
+            on_create=cr.AwsSdkCall(
+                service="Lambda",
+                action="invoke",
+                parameters={
+                    "FunctionName": functions.scraper.function_name,
+                    "InvocationType": "Event",
+                },
+                physical_resource_id=cr.PhysicalResourceId.of("InitialDataLoad"),
+            ),
+            policy=cr.AwsCustomResourcePolicy.from_statements([
+                iam.PolicyStatement(
+                    actions=["lambda:InvokeFunction"],
+                    resources=[functions.scraper.function_arn],
+                )
+            ]),
+        )
+        initial_data_load.node.add_dependency(functions.scraper)
+        initial_data_load.node.add_dependency(migration)
 
         storage.frontend_bucket.grant_read_write(provider_role)
 
