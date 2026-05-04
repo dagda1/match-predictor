@@ -103,6 +103,56 @@ def find_referenced(properties, known_logical_ids: set[str]) -> set[str]:
     return refs & known_logical_ids
 
 
+def secret_attachment_targets(resources: dict) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+    for logical_id, resource in resources.items():
+        if resource["Type"] != "AWS::SecretsManager::SecretTargetAttachment":
+            continue
+        secret_refs: set[str] = set()
+        collect_refs(resource.get("Properties", {}).get("SecretId"), secret_refs)
+        for secret in secret_refs:
+            mapping[logical_id] = secret
+    return mapping
+
+
+def iam_secret_targets(resources: dict, function_logical_id: str) -> set[str]:
+    targets: set[str] = set()
+    for resource in resources.values():
+        if resource["Type"] != "AWS::IAM::Policy":
+            continue
+        properties = resource.get("Properties", {})
+        role_refs: set[str] = set()
+        collect_refs(properties.get("Roles"), role_refs)
+        function_role_refs: set[str] = set()
+        collect_refs(_function_role(resources, function_logical_id), function_role_refs)
+        if not (role_refs & function_role_refs):
+            continue
+        for statement in properties.get("PolicyDocument", {}).get("Statement", []):
+            actions = statement.get("Action") or []
+            if isinstance(actions, str):
+                actions = [actions]
+            if not any("secretsmanager" in a.lower() for a in actions):
+                continue
+            collect_refs(statement.get("Resource"), targets)
+    return targets
+
+
+def _function_role(resources: dict, function_logical_id: str):
+    fn = resources.get(function_logical_id)
+    if fn is None:
+        return None
+    return fn.get("Properties", {}).get("Role")
+
+
+def _resolve_access_point_to_filesystem(resources: dict, access_point_id: str) -> str | None:
+    ap = resources.get(access_point_id)
+    if ap is None or ap["Type"] != "AWS::EFS::AccessPoint":
+        return access_point_id
+    fs_refs: set[str] = set()
+    collect_refs(ap.get("Properties", {}).get("FileSystemId"), fs_refs)
+    return next(iter(fs_refs), None)
+
+
 def build_graph(template: dict) -> tuple[dict[str, dict], list[tuple[str, str]]]:
     resources = template["Resources"]
     nodes: dict[str, dict] = {}
@@ -125,6 +175,7 @@ def build_graph(template: dict) -> tuple[dict[str, dict], list[tuple[str, str]]]
 
     known = set(nodes.keys())
     edges: set[tuple[str, str]] = set()
+    attachment_to_secret = secret_attachment_targets(resources)
 
     for logical_id, resource in resources.items():
         resource_type = resource["Type"]
@@ -132,7 +183,22 @@ def build_graph(template: dict) -> tuple[dict[str, dict], list[tuple[str, str]]]
 
         if logical_id in nodes and resource_type == "AWS::Lambda::Function":
             env_vars = properties.get("Environment", {}).get("Variables", {})
-            for target in find_referenced(env_vars, known):
+            env_refs: set[str] = set()
+            collect_refs(env_vars, env_refs)
+            for ref in env_refs:
+                target = attachment_to_secret.get(ref, ref)
+                if target in known and target != logical_id:
+                    edges.add((logical_id, target))
+
+            for fs_config in properties.get("FileSystemConfigs", []) or []:
+                arn_refs: set[str] = set()
+                collect_refs(fs_config.get("Arn"), arn_refs)
+                for ref in arn_refs:
+                    target = _resolve_access_point_to_filesystem(resources, ref)
+                    if target in known and target != logical_id:
+                        edges.add((logical_id, target))
+
+            for target in iam_secret_targets(resources, logical_id) & known:
                 if target != logical_id:
                     edges.add((logical_id, target))
 

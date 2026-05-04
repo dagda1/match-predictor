@@ -112,6 +112,7 @@ graph LR
   StorageBucket5CB7C8EA[("Storage<br/>S3")]
   StorageFrontendBucketC065FEEF[("FrontendBucket<br/>S3")]
   ApiApiFunctionAA82C666 --> DatabasePostgres277EF4CB
+  ApiApiFunctionAA82C666 --> ModelStorageModelFileSystem7131CD34
   ApiApiFunctionAA82C666 --> SecretsOriginVerifySecret2207D00B
   ApiApiFunctionAA82C666 --> StorageBucket5CB7C8EA
   ApiHttpApi4C294DC0 --> ApiApiFunctionAA82C666
@@ -119,8 +120,10 @@ graph LR
   CdnDistribution149FA6C8 --> SecretsOriginVerifySecret2207D00B
   CdnDistribution149FA6C8 --> StorageFrontendBucketC065FEEF
   DatabaseBootstrapHandlerFunction53F1278C --> DatabasePostgres277EF4CB
+  DatabaseBootstrapHandlerFunction53F1278C --> DatabasePostgresSecret6EBE3413
   DatabaseMigrationHandlerFunction71FE854B --> DatabasePostgres277EF4CB
   EtlFunctionsPredictorFunctionE33E3D43 --> DatabasePostgres277EF4CB
+  EtlFunctionsPredictorFunctionE33E3D43 --> ModelStorageModelFileSystem7131CD34
   EtlFunctionsPredictorFunctionE33E3D43 --> StorageBucket5CB7C8EA
   EtlFunctionsScraperFunctionF099BA00 --> DatabasePostgres277EF4CB
   EtlFunctionsScraperFunctionF099BA00 --> QueuingScraperToPredictor12C65B00
