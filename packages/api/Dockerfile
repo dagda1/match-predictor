@@ -12,5 +12,6 @@ RUN pip install --no-cache-dir mangum boto3 /tmp/api/
 
 COPY packages/ml/src/match_predictor/ match_predictor/
 COPY packages/api/src/match_predictor_api/ match_predictor_api/
+COPY assets/rds-ca-bundle.pem rds-ca-bundle.pem
 
 CMD ["match_predictor_api.lambda_handler.handler"]

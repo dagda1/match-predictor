@@ -1,14 +1,11 @@
-import os
-
 import pandas as pd
-from sqlalchemy import create_engine, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from match_predictor.db_models import Match
+from match_predictor.db import create_db_engine
 
-DATABASE_URL = os.environ["DATABASE_URL"]
-
-engine = create_engine(DATABASE_URL)
+engine = create_db_engine()
 
 
 def get_session() -> Session:

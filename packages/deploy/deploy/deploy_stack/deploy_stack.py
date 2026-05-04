@@ -136,6 +136,7 @@ class DeployStack(Stack):
             bucket=storage.bucket,
             origin_verify_secret=app_secrets.origin_verify,
             model_storage=model_storage,
+            database=database.instance,
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )

@@ -42,9 +42,7 @@
       "mcp__ide__getDiagnostics",
       "Bash(pnpm --filter @match-predictor/etl run fetch-data:*)",
       "Bash(pnpm refresh:*)",
-      "Bash(aws cloudformation:*)",
       "WebFetch(domain:repost.aws)",
-      "Bash(aws athena:*)",
       "Bash(pnpm list:*)",
       "Bash(ls:*)",
       "WebFetch(domain:gist.github.com)",
@@ -91,7 +89,12 @@
       "Bash(echo \"started pid $!\")",
       "Bash(pnpm db:diagram)",
       "Bash(sed -n '/<!-- DB-SCHEMA:START -->/,/<!-- DB-SCHEMA:END -->/p' /Users/paulcowan/projects/match-predictor/README.md)",
-      "Bash(pnpm db:diagram:check *)"
+      "Bash(pnpm db:diagram:check *)",
+      "Skill(update-config)"
+    ],
+    "deny": [
+      "Bash(aws *)",
+      "Bash(aws)"
     ]
   }
 }

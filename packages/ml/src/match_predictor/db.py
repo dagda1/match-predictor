@@ -34,6 +34,9 @@ def _ssl_connect_args(sslmode: str) -> dict:
 
 
 def create_db_engine() -> Engine:
+    if "DATABASE_URL" in os.environ:
+        return create_engine(os.environ["DATABASE_URL"], poolclass=NullPool)
+
     host = os.environ["DB_HOST"]
     user = os.environ["DB_USER"]
     dbname = os.environ["DB_NAME"]
