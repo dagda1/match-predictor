@@ -63,6 +63,33 @@ app.add_middleware(
 )
 
 
+@app.get("/_debug/dns")
+def debug_dns():
+    import socket
+    addr_info = socket.getaddrinfo("secretsmanager.us-west-2.amazonaws.com", 443)
+    return {
+        "addresses": [
+            {"family": str(a[0]), "socktype": str(a[1]), "addr": a[4][0]}
+            for a in addr_info
+        ]
+    }
+
+
+@app.get("/_debug/secretsmanager")
+def debug_secretsmanager():
+    import time
+    import boto3
+    from botocore.config import Config
+    cfg = Config(connect_timeout=5, read_timeout=5, retries={"max_attempts": 1})
+    client = boto3.client("secretsmanager", config=cfg)
+    t0 = time.time()
+    response = client.list_secrets(MaxResults=1)
+    return {
+        "duration_ms": int((time.time() - t0) * 1000),
+        "secret_count": len(response.get("SecretList", [])),
+    }
+
+
 @app.get("/teams", response_model=list[Team])
 def get_teams():
     session = get_session()
