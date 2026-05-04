@@ -86,7 +86,6 @@ class EtlFunctions(Construct):
             vpc=vpc,
             vpc_subnets=subnet_selection,
             security_groups=[security_group],
-            ipv6_allowed_for_dual_stack=True,
             bundling=BundlingOptions(
                 format=OutputFormat.ESM,
                 command_hooks=IncludeRdsCaBundle(),
@@ -118,7 +117,6 @@ class EtlFunctions(Construct):
             vpc=vpc,
             vpc_subnets=subnet_selection,
             security_groups=[security_group],
-            ipv6_allowed_for_dual_stack=True,
             filesystem=model_storage.lambda_file_system(),
             environment={
                 "BUCKET_NAME": bucket.bucket_name,
