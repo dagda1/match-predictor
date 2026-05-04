@@ -36,19 +36,8 @@ class Vpc(Construct):
         self.lambda_security_group = ec2.SecurityGroup(self, "LambdaSecurityGroup",
             vpc=self.vpc,
             description="Security group for Lambda functions",
-            allow_all_outbound=False,
-        )
-
-        self.lambda_security_group.add_egress_rule(
-            peer=ec2.Peer.any_ipv4(),
-            connection=ec2.Port.all_traffic(),
-            description="Allow all IPv4 outbound",
-        )
-
-        self.lambda_security_group.add_egress_rule(
-            peer=ec2.Peer.any_ipv6(),
-            connection=ec2.Port.all_traffic(),
-            description="Allow all IPv6 outbound",
+            allow_all_outbound=True,
+            allow_all_ipv6_outbound=True,
         )
 
         self.database_security_group.add_ingress_rule(
