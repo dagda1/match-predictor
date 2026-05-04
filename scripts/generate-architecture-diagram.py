@@ -29,6 +29,8 @@ NODE_TYPES = {
     "AWS::ApiGatewayV2::Api": ("api", "API Gateway"),
     "AWS::SQS::Queue": ("queue", "SQS"),
     "AWS::Events::Rule": ("schedule", "EventBridge"),
+    "AWS::SecretsManager::Secret": ("secret", "Secrets Manager"),
+    "AWS::EFS::FileSystem": ("filesystem", "EFS"),
 }
 
 PATH_SKIP_PATTERNS = (
@@ -38,6 +40,8 @@ PATH_SKIP_PATTERNS = (
     re.compile(r"framework-onEvent"),
     re.compile(r"AccessLogBucket"),
     re.compile(r"LogRetention"),
+    re.compile(r"VpcRestrictDefaultSG"),
+    re.compile(r"AWS[0-9a-f]{32}"),
 )
 
 SHAPES = {
@@ -48,6 +52,8 @@ SHAPES = {
     "api": ("([", "])"),
     "queue": (">", "]"),
     "schedule": ("(", ")"),
+    "secret": ("[/", "/]"),
+    "filesystem": ("[\\", "/]"),
 }
 
 
@@ -62,6 +68,8 @@ GENERIC_LEAF_NAMES = {
     "Distribution",
     "Bucket",
     "Instance",
+    "Secret",
+    "FileSystem",
 }
 
 

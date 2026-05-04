@@ -104,14 +104,19 @@ graph LR
   end
   ApiHttpApi4C294DC0(["HttpApi<br/>API Gateway"])
   CdnDistribution149FA6C8{{"Cdn<br/>CloudFront"}}
-  CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E["Custom::VpcRestrictDefaultSGCustomResourceProvider<br/>Lambda"]
+  DatabasePostgresSecret6EBE3413[/"Postgres<br/>Secrets Manager"/]
   EventBridgeDailyScraperRule9BFD8304("DailyScraperRule<br/>EventBridge")
+  ModelStorageModelFileSystem7131CD34[\"ModelFileSystem<br/>EFS"/]
   QueuingScraperToPredictor12C65B00>"ScraperToPredictor<br/>SQS"]
+  SecretsOriginVerifySecret2207D00B[/"OriginVerifySecret<br/>Secrets Manager"/]
   StorageBucket5CB7C8EA[("Storage<br/>S3")]
   StorageFrontendBucketC065FEEF[("FrontendBucket<br/>S3")]
+  ApiApiFunctionAA82C666 --> DatabasePostgres277EF4CB
+  ApiApiFunctionAA82C666 --> SecretsOriginVerifySecret2207D00B
   ApiApiFunctionAA82C666 --> StorageBucket5CB7C8EA
   ApiHttpApi4C294DC0 --> ApiApiFunctionAA82C666
   CdnDistribution149FA6C8 --> ApiHttpApi4C294DC0
+  CdnDistribution149FA6C8 --> SecretsOriginVerifySecret2207D00B
   CdnDistribution149FA6C8 --> StorageFrontendBucketC065FEEF
   DatabaseBootstrapHandlerFunction53F1278C --> DatabasePostgres277EF4CB
   DatabaseMigrationHandlerFunction71FE854B --> DatabasePostgres277EF4CB
