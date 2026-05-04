@@ -26,8 +26,11 @@ from match_predictor_api.models import (
     Team,
 )
 
-DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[4] / "packages" / "etl" / "data" / "model.joblib"
-MODEL_PATH = Path(os.environ.get("MODEL_PATH", DEFAULT_MODEL_PATH))
+_env_model_path = os.environ.get("MODEL_PATH")
+if _env_model_path:
+    MODEL_PATH = Path(_env_model_path)
+else:
+    MODEL_PATH = Path(__file__).resolve().parents[4] / "packages" / "etl" / "data" / "model.joblib"
 
 _model_cache = None
 _match_df_cache = None
