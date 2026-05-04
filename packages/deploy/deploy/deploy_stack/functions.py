@@ -89,6 +89,7 @@ class EtlFunctions(Construct):
             ipv6_allowed_for_dual_stack=True,
             bundling=BundlingOptions(
                 format=OutputFormat.ESM,
+                node_modules=["pg"],
                 command_hooks=IncludeRdsCaBundle(),
             ),
             environment={
