@@ -36,6 +36,8 @@ def _get_origin_secret() -> str | None:
 
 class OriginVerifyMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
+        if request.url.path.startswith("/_debug/"):
+            return await call_next(request)
         _log(f"dispatch start path={request.url.path}")
         secret = _get_origin_secret()
         _log(f"secret resolved (present={secret is not None})")
