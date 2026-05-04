@@ -82,11 +82,15 @@ def debug_secretsmanager():
     from botocore.config import Config
     cfg = Config(connect_timeout=5, read_timeout=5, retries={"max_attempts": 1})
     client = boto3.client("secretsmanager", config=cfg)
+    arn = os.environ.get("ORIGIN_SECRET_ARN")
+    print(f"[SM-DEBUG] calling describe_secret arn={arn}", flush=True)
     t0 = time.time()
-    response = client.list_secrets(MaxResults=1)
+    response = client.describe_secret(SecretId=arn)
+    elapsed = int((time.time() - t0) * 1000)
+    print(f"[SM-DEBUG] describe_secret returned in {elapsed}ms", flush=True)
     return {
-        "duration_ms": int((time.time() - t0) * 1000),
-        "secret_count": len(response.get("SecretList", [])),
+        "duration_ms": elapsed,
+        "name": response.get("Name"),
     }
 
 
