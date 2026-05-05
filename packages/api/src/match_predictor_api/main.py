@@ -1,12 +1,12 @@
 import os
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from sqlalchemy import select
+from sqlalchemy import select, text
 
 from match_predictor.db_models import Team as TeamRow, TeamFeatures, Prediction as PredictionRow, Upcoming as UpcomingRow
 from match_predictor.model import load_model, _scoreline_probabilities
@@ -61,6 +61,56 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/status")
+def get_status():
+    session = get_session()
+    matches_count, matches_latest = session.execute(
+        text("SELECT count(*), max(date) FROM matches")
+    ).one()
+    teams_count = session.execute(text("SELECT count(*) FROM teams")).scalar()
+    predictions_count, predictions_latest, predictions_correct, predictions_scored = session.execute(
+        text(
+            "SELECT count(*), max(date), "
+            "count(*) FILTER (WHERE ml_correct), "
+            "count(*) FILTER (WHERE ml_correct IS NOT NULL) "
+            "FROM predictions"
+        )
+    ).one()
+    upcoming_count, upcoming_latest = session.execute(
+        text("SELECT count(*), max(date) FROM upcoming")
+    ).one()
+    features_count = session.execute(text("SELECT count(*) FROM team_features")).scalar()
+    alembic_revision = session.execute(text("SELECT version_num FROM alembic_version")).scalar()
+    session.close()
+
+    now = datetime.now(timezone.utc)
+    scraped_hours_ago = None
+    if matches_latest is not None:
+        latest_aware = matches_latest if matches_latest.tzinfo else matches_latest.replace(tzinfo=timezone.utc)
+        scraped_hours_ago = round((now - latest_aware).total_seconds() / 3600, 1)
+
+    return {
+        "matches": {
+            "count": matches_count,
+            "latest": matches_latest.isoformat() if matches_latest else None,
+        },
+        "teams": {"count": teams_count},
+        "predictions": {
+            "count": predictions_count,
+            "latest": predictions_latest.isoformat() if predictions_latest else None,
+            "correct": predictions_correct,
+            "scored": predictions_scored,
+        },
+        "upcoming": {
+            "count": upcoming_count,
+            "latest": upcoming_latest.isoformat() if upcoming_latest else None,
+        },
+        "team_features": {"count": features_count},
+        "alembic_revision": alembic_revision,
+        "scraped_hours_ago": scraped_hours_ago,
+    }
 
 
 @app.get("/teams", response_model=list[Team])
