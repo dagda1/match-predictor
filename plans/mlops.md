@@ -26,7 +26,7 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 
 ### Analytics
 
-- [ ] Amazon Athena
+- [X] Amazon Athena
   - [X] Create a CDK project in `packages/deploy` (Python)
      - created with `cdk init app --language python`
   - [X] Set up GitHub Actions OIDC trust (one-time local deploy):
@@ -54,7 +54,7 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
   - [X] Create a Glue table definition for the match schema
   - [X] Query match data with SQL in Athena
   - [X] Understand when to use Athena vs pandas (cost, scale, serverless)
-  - [ ] Automate daily ETL (replaces manual scraper runs):
+  - [X] Automate daily ETL (replaces manual scraper runs):
     - [X] TypeScript Lambda — imports existing scraper, writes matches to S3
     - [X] EventBridge rule — cron schedule triggers scraper Lambda daily at 06:00 UTC
     - [X] CDK constructs for scraper Lambda and EventBridge in `packages/deploy/deploy/etl/`
@@ -79,7 +79,7 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] Wire frontend to use relative `/api/*` paths through CloudFront
     - [X] Custom domain (optional)
     - [ ] Lambda@Edge for origin verify secret — read from Secrets Manager at request time, enables auto-rotation without redeploy
-  - [ ] Move API data to Postgres (RDS):
+  - [X] Move API data to Postgres (RDS):
     - [X] Docker compose with Postgres 17 for local dev
     - [X] SQLAlchemy models in `packages/ml/src/match_predictor/db_models.py`: Team, Match, TeamFeatures, Prediction, Upcoming
     - [X] Alembic migrations in `packages/ml/alembic/`
@@ -100,20 +100,24 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
       - Creates `match_predictor_migrator` and `match_predictor_app` users
       - Grants `rds_iam` to both (password auth disabled on these users)
       - Master user used only for bootstrap, never at runtime
-    - [ ] IAM auth for Lambda → RDS:
-      - [ ] Grant `rds-db:connect` on migrator user ARN to migration Lambda role
-      - [ ] Grant `rds-db:connect` on app user ARN to API + predictor Lambda roles
-      - [ ] Lambda code uses `generate_db_auth_token()` to mint token, passes as Postgres password
-    - [ ] Migration Lambda — runs `alembic upgrade head` as `match_predictor_migrator`
+    - [X] IAM auth for Lambda → RDS:
+      - [X] Grant `rds-db:connect` on migrator user ARN to migration Lambda role
+      - [X] Grant `rds-db:connect` on app user ARN to API + predictor + scraper Lambda roles
+      - [X] Lambda code uses `generate_db_auth_token()` to mint token, passes as Postgres password
+    - [X] Migration Lambda — runs `alembic upgrade head` as `match_predictor_migrator`
       - Separate lean Docker image (alembic, sqlalchemy, psycopg2-binary)
-      - Custom resource triggered each deploy (alembic is idempotent)
-    - [ ] Pass `DATABASE_URL` / `DB_HOST` / `DB_USER` env vars to API + predictor Lambdas
-    - [ ] Predictor Lambda writes to Postgres instead of S3 JSON files
-    - [ ] Seed step — initial data load into RDS (separate custom resource or manual script)
-    - [ ] API Lambda reads from Postgres in AWS (already works locally, needs env vars + IAM auth)
-    - [ ] Model file stays in S3 (binary blob, loaded on cold start)
-    - [ ] Remove S3 JSON file reading from API
-    - [ ] Add `psycopg2-binary` and `sqlalchemy` to API Dockerfile
+      - Custom resource triggered each deploy (Version = hash of alembic versions dir)
+    - [X] Pass `DB_HOST` / `DB_USER` / `DB_NAME` / `DB_REGION` env vars to API + predictor + scraper Lambdas
+      - Diverged from `DATABASE_URL`: API uses shared `create_db_engine()` from ml package — falls through to env-var + IAM token in AWS, supports `DATABASE_URL` only for local dev via `.env`
+    - [X] Predictor Lambda writes to Postgres instead of S3 JSON files (predictions, upcoming, team_features)
+    - [X] Seed step — `InitialDataLoad` AwsCustomResource invokes scraper async on stack create; scraper writes matches → SQS → predictor populates the rest
+    - [X] API Lambda reads from Postgres in AWS
+    - [X] Model file moved to **EFS** (diverged from "stays in S3"): new `ModelStorage` construct mounts `/mnt/model` on predictor + API; predictor writes the joblib there, API reads it via `MODEL_PATH` env var
+    - [X] Remove S3 JSON file reading from API
+    - [X] `psycopg2-binary` + `sqlalchemy` already in API's dep chain via `match-predictor-ml`
+    - [X] RDS CA bundle baked into all Python Lambda images via `assets/rds-ca-bundle.pem` + Dockerfile COPYs; `sslmode=verify-full` everywhere; etl scraper bundles the same bundle via CDK `IncludeRdsCaBundle` command hook
+    - [X] Lambda SG allows IPv6 egress (`allow_all_ipv6_outbound=True`) — without this, IPv6 packets to AWS service public endpoints hung at the SG layer, causing `get_secret_value` to time out
+    - [X] EventBridge keep-warm rule pings API Lambda every 5 minutes with `{"source": "lambda.warmup"}`; handler short-circuits before Mangum to keep the container hot
 - [ ] Amazon Data Firehose
 - [ ] Amazon EMR
 - [ ] AWS Glue
@@ -128,10 +132,10 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 
 ### Application Integration
 
-- [ ] Amazon EventBridge (covered by daily ETL)
+- [X] Amazon EventBridge (covered by daily ETL + keep-warm rule)
 - [ ] Amazon MWAA (Managed Workflows for Apache Airflow)
-- [ ] Amazon SNS
-- [ ] Amazon SQS (covered by daily ETL)
+- [X] Amazon SNS (alerts construct)
+- [X] Amazon SQS (scraper → predictor queue)
 - [ ] AWS Step Functions
 
 ### Cloud Financial Management
@@ -144,12 +148,12 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 
 - [ ] AWS Batch
 - [ ] Amazon EC2
-- [ ] AWS Lambda
+- [X] AWS Lambda (scraper, predictor, API, bootstrap, migration; container + zip; VPC + EFS)
 - [ ] AWS Serverless Application Repository
 
 ### Containers
 
-- [ ] Amazon ECR
+- [X] Amazon ECR (CDK auto-publishes container images for predictor / migration / API)
 - [ ] Amazon ECS
 - [ ] Amazon EKS
 
@@ -159,16 +163,16 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 - [ ] Amazon DynamoDB
 - [ ] Amazon ElastiCache
 - [ ] Amazon Neptune
-- [ ] Amazon RDS
+- [X] Amazon RDS (Postgres in private subnets, IAM auth, TLS verify-full)
 
 ### Developer Tools
 
-- [ ] AWS CDK
+- [X] AWS CDK (entire stack)
 - [ ] AWS CodeArtifact
 - [ ] AWS CodeBuild
 - [ ] AWS CodeDeploy
 - [ ] AWS CodePipeline
-- [ ] AWS X-Ray
+- [X] AWS X-Ray (tracing on all Lambdas)
 
 ### Machine Learning
 
@@ -199,10 +203,10 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 
 - [ ] AWS Auto Scaling
 - [ ] AWS Chatbot
-- [ ] AWS CloudFormation
+- [X] AWS CloudFormation (synthed by CDK)
 - [ ] AWS CloudTrail
-- [ ] Amazon CloudWatch
-- [ ] Amazon CloudWatch Logs
+- [X] Amazon CloudWatch (alarms construct)
+- [X] Amazon CloudWatch Logs (Lambda logs everywhere)
 - [ ] AWS Compute Optimizer
 - [ ] AWS Config
 - [ ] AWS Organizations
@@ -220,24 +224,24 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 
 ### Networking and Content Delivery
 
-- [ ] Amazon API Gateway
-- [ ] Amazon CloudFront
+- [X] Amazon API Gateway (HTTP API in front of API Lambda)
+- [X] Amazon CloudFront (frontend + API origin + WAF)
 - [ ] AWS Direct Connect
-- [ ] Amazon VPC
+- [X] Amazon VPC (dual-stack, public/private subnets, NAT, EIGW, S3 gateway endpoint)
 
 ### Security, Identity, and Compliance
 
-- [ ] AWS IAM
+- [X] AWS IAM (OIDC trust for GitHub Actions, per-Lambda execution roles, scoped policies)
 - [ ] AWS KMS
 - [ ] Amazon Macie
-- [ ] AWS Secrets Manager
+- [X] AWS Secrets Manager (RDS master credentials, CloudFront origin verify token)
 
 ### Storage
 
 - [ ] Amazon EBS
-- [ ] Amazon EFS
+- [X] Amazon EFS (model storage shared between predictor and API via access point)
 - [ ] Amazon FSx
-- [ ] Amazon S3
+- [X] Amazon S3 (frontend bucket, data bucket, access logs)
 - [ ] Amazon S3 Glacier
 - [ ] AWS Storage Gateway
 
@@ -245,23 +249,23 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 
 ### Task 1.1: Ingest and store data
 
-- [ ] Data formats: Parquet, JSON, CSV, ORC, Avro, RecordIO
-- [ ] Core data sources: S3, EFS, FSx for NetApp ONTAP
+- [X] Data formats: Parquet, JSON, CSV, ORC, Avro, RecordIO — used JSON (S3) and now Postgres rows
+- [X] Core data sources: S3, EFS, FSx for NetApp ONTAP — using S3 (data + frontend) and EFS (model)
 - [ ] Streaming: Kinesis, Apache Flink, Apache Kafka
 - [ ] SageMaker Data Wrangler, SageMaker Feature Store
 - [ ] Merging data: AWS Glue, Apache Spark
 - [ ] S3 Transfer Acceleration, EBS Provisioned IOPS
-- [ ] Storage decisions: cost, performance, data structure
+- [X] Storage decisions: cost, performance, data structure — picked Postgres over S3 JSON for query needs, EFS over S3 for model file
 
 ### Task 1.2: Transform data and feature engineering
 
-- [ ] Cleaning: outliers, missing data, deduplication
-- [ ] Feature engineering: scaling, standardization, binning, log transform, normalization
+- [X] Cleaning: outliers, missing data, deduplication — `ON CONFLICT (id) DO UPDATE` on matches insert; Zod validation rejects malformed rows at scraper boundary
+- [X] Feature engineering: scaling, standardization, binning, log transform, normalization — rolling averages over last 5 matches per team in `features.py`
 - [ ] Encoding: one-hot, binary, label encoding, tokenization
 - [ ] Tools: SageMaker Data Wrangler, Glue, Glue DataBrew, Spark on EMR
-- [ ] SageMaker Feature Store for managing features
+- [ ] SageMaker Feature Store for managing features — `team_features` table is our hand-rolled equivalent
 - [ ] SageMaker Ground Truth, Mechanical Turk for labeling
-- [ ] Lambda, Spark for streaming transforms
+- [X] Lambda, Spark for streaming transforms — Lambda for the scrape → transform → DB pipeline
 
 ### Task 1.3: Ensure data integrity and prepare for modeling
 
@@ -278,60 +282,60 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 
 ### Task 2.1: Choose a modeling approach
 
-- [ ] ML algorithms and business problem matching
+- [X] ML algorithms and business problem matching — GradientBoostingClassifier for 3-class outcome, Poisson for goal counts
 - [ ] AWS AI services: Translate, Transcribe, Rekognition, Bedrock
-- [ ] Interpretability in model selection
+- [X] Interpretability in model selection — model returns probabilities + scoreline distributions, not just predicted class
 - [ ] SageMaker built-in algorithms
 - [ ] SageMaker JumpStart, Amazon Bedrock for foundation models
-- [ ] Model selection based on cost
+- [X] Model selection based on cost — sklearn on Lambda chosen over SageMaker endpoints to keep idle cost at $0
 
 ### Task 2.2: Train and refine models
 
-- [ ] Training elements: epoch, steps, batch size
+- [X] Training elements: epoch, steps, batch size — sklearn equivalents: `n_estimators=200`, `max_depth=4`, `learning_rate=0.1`
 - [ ] Reducing training time: early stopping, distributed training
 - [ ] Regularization: dropout, weight decay, L1, L2
 - [ ] Hyperparameter tuning: random search, Bayesian optimization
 - [ ] SageMaker script mode: TensorFlow, PyTorch
 - [ ] Fine-tuning pre-trained models: Bedrock, JumpStart
 - [ ] SageMaker automatic model tuning (AMT)
-- [ ] Overfitting, underfitting, catastrophic forgetting
-- [ ] Ensembling, stacking, boosting
+- [X] Overfitting, underfitting, catastrophic forgetting — 5-fold TimeSeriesSplit cross-validation prevents leakage; features only use pre-match data
+- [X] Ensembling, stacking, boosting — gradient boosting (sklearn GradientBoostingClassifier)
 - [ ] Model compression: pruning, data type changes, feature selection
 - [ ] SageMaker Model Registry for versioning
 
 ### Task 2.3: Analyze model performance
 
-- [ ] Metrics: confusion matrix, F1, accuracy, precision, recall, RMSE, ROC, AUC
-- [ ] Performance baselines
-- [ ] Overfitting and underfitting detection
+- [X] Metrics: confusion matrix, F1, accuracy, precision, recall, RMSE, ROC, AUC — accuracy tracked per-prediction in `predictions.ml_correct` / `poisson_correct`, surfaced on `/results`
+- [X] Performance baselines — Poisson model is the explicit baseline ML must beat
+- [X] Overfitting and underfitting detection — TimeSeriesSplit holds out future games during training
 - [ ] SageMaker Clarify for model interpretability
 - [ ] Convergence issues
-- [ ] Shadow variant vs production variant
+- [ ] Shadow variant vs production variant — both ML and Poisson predictions stored side-by-side, comparable per match
 - [ ] SageMaker Model Debugger
-- [ ] Tradeoffs: performance vs training time vs cost
+- [X] Tradeoffs: performance vs training time vs cost — sklearn on Lambda picked for cost; training fits inside the predictor Lambda's 15-min budget
 
 ## Domain 3: Deployment and Orchestration (22%)
 
 ### Task 3.1: Select deployment infrastructure
 
 - [ ] Versioning, rollback strategies
-- [ ] Real-time vs batch inference
-- [ ] CPU vs GPU provisioning
-- [ ] Endpoint types: serverless, real-time, asynchronous, batch
-- [ ] Containers: provided or custom
+- [X] Real-time vs batch inference — `/predict` is real-time, scheduled batch run computes historical predictions and `team_features`
+- [X] CPU vs GPU provisioning — CPU (Lambda has no GPU; sklearn doesn't need one)
+- [X] Endpoint types: serverless, real-time, asynchronous, batch — Lambda serverless real-time for `/predict`; EventBridge-scheduled batch for the daily run
+- [X] Containers: provided or custom — custom container images (Python 3.13 base) for predictor, migration, API
 - [ ] SageMaker Neo for edge optimization
 - [ ] Multi-model and multi-container deployments
-- [ ] Deployment targets: SageMaker endpoints, Kubernetes, ECS, EKS, Lambda
-- [ ] Orchestrators: Apache Airflow, SageMaker Pipelines
+- [X] Deployment targets: SageMaker endpoints, Kubernetes, ECS, EKS, Lambda — Lambda
+- [X] Orchestrators: Apache Airflow, SageMaker Pipelines — EventBridge + SQS chain (scraper → predictor) acts as a tiny orchestrator
 
 ### Task 3.2: Create and script infrastructure
 
-- [ ] On-demand vs provisioned resources
+- [X] On-demand vs provisioned resources — Lambda on-demand, considered Provisioned Concurrency for cold starts
 - [ ] Scaling policies
-- [ ] IaC: CloudFormation, AWS CDK
-- [ ] Containerization: ECR, EKS, ECS, BYOC with SageMaker
+- [X] IaC: CloudFormation, AWS CDK — entire stack in CDK Python
+- [X] Containerization: ECR, EKS, ECS, BYOC with SageMaker — ECR for predictor / migration / API images
 - [ ] SageMaker endpoint auto scaling
-- [ ] Spot Instances, EC2, Lambda behind endpoints
+- [X] Spot Instances, EC2, Lambda behind endpoints — Lambda behind API Gateway behind CloudFront
 - [ ] SageMaker endpoints within VPC
 - [ ] SageMaker SDK for deployment
 - [ ] Auto scaling metrics: latency, CPU utilization, invocations per instance
@@ -339,11 +343,11 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 ### Task 3.3: CI/CD pipelines for ML
 
 - [ ] CodePipeline, CodeBuild, CodeDeploy
-- [ ] Git, version control
-- [ ] CI/CD principles for ML workflows
+- [X] Git, version control
+- [X] CI/CD principles for ML workflows — GitHub Actions OIDC → cdk deploy on every push
 - [ ] Deployment strategies: blue/green, canary, linear
-- [ ] Gitflow, GitHub Flow
-- [ ] SageMaker Pipelines, EventBridge for automation
+- [X] Gitflow, GitHub Flow
+- [X] SageMaker Pipelines, EventBridge for automation — EventBridge daily scrape + 5-min keep-warm
 - [ ] Automated tests: integration, unit, end-to-end
 - [ ] Automated retraining mechanisms
 
@@ -360,23 +364,23 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 ### Task 4.2: Monitor and optimize infrastructure and costs
 
 - [ ] Metrics: utilization, throughput, availability, scalability, fault tolerance
-- [ ] X-Ray, CloudWatch Lambda Insights, CloudWatch Logs Insights
+- [X] X-Ray, CloudWatch Lambda Insights, CloudWatch Logs Insights — X-Ray active on all Lambdas, Lambda logs to CloudWatch
 - [ ] CloudTrail for logging and re-training triggers
 - [ ] Instance types: memory optimized, compute optimized, general purpose, inference optimized
 - [ ] Cost Explorer, Billing, Trusted Advisor
 - [ ] Resource tagging for cost tracking
-- [ ] CloudWatch alarms, dashboards
+- [X] CloudWatch alarms, dashboards — alarms in `alerts.py`
 - [ ] QuickSight for dashboards
-- [ ] EventBridge for monitoring events
+- [X] EventBridge for monitoring events — daily scrape + 5-min keep-warm
 - [ ] SageMaker Inference Recommender, Compute Optimizer for rightsizing
 - [ ] Purchasing: Spot, On-Demand, Reserved, SageMaker Savings Plans
 
 ### Task 4.3: Secure AWS resources
 
-- [ ] IAM roles, policies, groups
-- [ ] Bucket policies, SageMaker Role Manager
-- [ ] Network access controls for ML resources
-- [ ] Security for CI/CD pipelines
-- [ ] Least privilege access to ML artifacts
-- [ ] VPCs, subnets, security groups for ML isolation
-- [ ] Auditing and logging for compliance
+- [X] IAM roles, policies, groups — per-Lambda execution roles, scoped policies (`rds-db:connect` on specific user ARN, `grant_read` on specific bucket/secret), no wildcards
+- [X] Bucket policies — data bucket: block-public-access, enforce-SSL, server access logs, lifecycle rules; frontend bucket fronted by CloudFront OAC
+- [X] Network access controls for ML resources — three SGs (Lambda, Database, EFS) with port-specific ingress (5432 only Lambda→DB, 2049 only Lambda→EFS)
+- [X] Security for CI/CD pipelines — GitHub OIDC trust, scoped deploy role
+- [X] Least privilege access to ML artifacts — bootstrap creates `migrator` (DDL only) + `app` (DML only) DB users; model on EFS, predictor writes / API reads
+- [X] VPCs, subnets, security groups for ML isolation — dual-stack VPC, public/private subnets, Lambdas in private subnets only
+- [ ] Auditing and logging for compliance — CloudWatch Lambda logs exist, but no CloudTrail enabled, no Config rules, no compliance dashboards
