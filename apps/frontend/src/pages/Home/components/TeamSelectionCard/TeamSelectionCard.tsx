@@ -11,6 +11,7 @@ interface Props {
   home: string | null;
   away: string | null;
   teams: string[];
+  teamsLoading: boolean;
   phase: Phase;
   onHomeChange: (team: string | null) => void;
   onAwayChange: (team: string | null) => void;
@@ -22,6 +23,7 @@ export function TeamSelectionCard({
   home,
   away,
   teams,
+  teamsLoading,
   phase,
   onHomeChange,
   onAwayChange,
@@ -41,8 +43,8 @@ export function TeamSelectionCard({
       </Typography>
 
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={sx.teamStack}>
-        <TeamPicker label="Home team" value={home} onChange={onHomeChange} options={teams} exclude={away} />
-        <TeamPicker label="Away team" value={away} onChange={onAwayChange} options={teams} exclude={home} />
+        <TeamPicker label="Home team" value={home} onChange={onHomeChange} options={teams} exclude={away} loading={teamsLoading} />
+        <TeamPicker label="Away team" value={away} onChange={onAwayChange} options={teams} exclude={home} loading={teamsLoading} />
       </Stack>
 
       <Button

@@ -12,6 +12,8 @@ export type Phase = 'empty' | 'ready' | 'simulating' | 'result';
 
 interface UseMatchPredictionResult {
   teams: string[];
+  teamsLoading: boolean;
+  teamsError: Error | null;
   home: string | null;
   away: string | null;
   phase: Phase;
@@ -27,7 +29,7 @@ interface UseMatchPredictionResult {
 }
 
 export function useMatchPrediction(): UseMatchPredictionResult {
-  const { teams: teamData } = useTeams();
+  const { teams: teamData, isLoading: teamsLoading, error: teamsError } = useTeams();
   const { predict, data: prediction } = usePrediction();
   const animation = useSimulationAnimation();
 
@@ -77,6 +79,8 @@ export function useMatchPrediction(): UseMatchPredictionResult {
 
   return {
     teams,
+    teamsLoading,
+    teamsError,
     home,
     away,
     phase,

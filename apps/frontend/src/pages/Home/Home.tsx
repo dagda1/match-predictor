@@ -1,3 +1,4 @@
+import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 
@@ -10,6 +11,8 @@ import { sx } from './styles';
 export function Home(): JSX.Element {
   const {
     teams,
+    teamsLoading,
+    teamsError,
     home,
     away,
     phase,
@@ -30,10 +33,16 @@ export function Home(): JSX.Element {
   return (
     <Container maxWidth="md" sx={sx.container}>
       <Stack spacing={{ xs: 2, sm: 3 }}>
+        {teamsError && (
+          <Alert severity="error">
+            Failed to load teams: {teamsError.message}
+          </Alert>
+        )}
         <TeamSelectionCard
           home={home}
           away={away}
           teams={teams}
+          teamsLoading={teamsLoading}
           phase={phase}
           onHomeChange={setHome}
           onAwayChange={setAway}
