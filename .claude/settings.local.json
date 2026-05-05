@@ -93,7 +93,9 @@
       "Skill(update-config)",
       "WebFetch(domain:aws.amazon.com)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:awsipv6.neveragain.de)"
+      "WebFetch(domain:awsipv6.neveragain.de)",
+      "Bash(gh issue *)",
+      "WebFetch(domain:esbuild.github.io)"
     ],
     "deny": [
       "Bash(aws *)",

@@ -24,8 +24,6 @@ def _get_origin_secret() -> str | None:
 
 class OriginVerifyMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        if "/_debug/" in request.url.path:
-            return await call_next(request)
         secret = _get_origin_secret()
         if secret:
             if request.headers.get("x-origin-verify") != secret:
