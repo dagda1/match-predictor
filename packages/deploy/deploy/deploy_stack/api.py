@@ -7,6 +7,8 @@ from aws_cdk import (
     Stack,
     aws_apigatewayv2 as apigw,
     aws_ec2 as ec2,
+    aws_events as events,
+    aws_events_targets as targets,
     aws_iam as iam,
     aws_lambda,
     aws_rds as rds,
@@ -90,4 +92,14 @@ class Api(Construct):
             path="/{proxy+}",
             methods=[apigw.HttpMethod.ANY],
             integration=integration,
+        )
+
+        warmup_rule = events.Rule(self, "WarmupRule",
+            schedule=events.Schedule.rate(Duration.minutes(5)),
+        )
+        warmup_rule.add_target(
+            targets.LambdaFunction(
+                self.function,
+                event=events.RuleTargetInput.from_object({"source": "lambda.warmup"}),
+            )
         )
