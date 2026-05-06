@@ -35,7 +35,7 @@ export function TeamSelectionCard({
 
   return (
     <Paper sx={sx.card}>
-      <Typography variant="h5" sx={sx.title}>
+      <Typography variant="h5" component="h1" sx={sx.title}>
         Match Predictor
       </Typography>
       <Typography variant="subtitle2" sx={sx.subtitle}>

@@ -95,7 +95,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:awsipv6.neveragain.de)",
       "Bash(gh issue *)",
-      "WebFetch(domain:esbuild.github.io)"
+      "WebFetch(domain:esbuild.github.io)",
+      "Bash(pnpm test:ci PredictionChips)",
+      "Bash(pnpm test:ci)"
     ],
     "deny": [
       "Bash(aws *)",

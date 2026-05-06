@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -8,7 +7,8 @@ import Typography from '@mui/material/Typography';
 import type { MatchResult } from '~/api/types';
 import { ModelProbBars } from '~/pages/Home/components/ModelProbBars/ModelProbBars';
 
-import { cardSx, chipSx, sx } from './styles';
+import { PredictionChips } from '../PredictionChips/PredictionChips';
+import { cardSx, sx } from './styles';
 
 function pct(v: number): string {
   return `${(v * 100).toFixed(1)}%`;
@@ -18,15 +18,14 @@ interface MatchResultCardProps {
   match: MatchResult;
 }
 
-export function MatchResultCard({ match }: MatchResultCardProps): JSX.Element {
-  const hasResult = match.actualOutcome !== null;
-  const bothCorrect = hasResult && match.ml.correct === true && match.poisson.correct === true;
-  const bothWrong = hasResult && match.ml.correct === false && match.poisson.correct === false;
+export function MatchResultCard({ match }: Readonly<MatchResultCardProps>): JSX.Element {
+  const bothCorrect = match.played && match.ml.correct && match.poisson.correct;
+  const bothWrong = match.played && !match.ml.correct && !match.poisson.correct;
 
   return (
     <Paper sx={cardSx(bothCorrect, bothWrong)}>
       <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={sx.header}>
-        {hasResult ? (
+        {match.played ? (
           <Typography variant="h6" sx={sx.score}>
             {match.homeTeam}{' '}
             <Box component="span" sx={sx.goals}>
@@ -46,15 +45,8 @@ export function MatchResultCard({ match }: MatchResultCardProps): JSX.Element {
           </Typography>
         )}
 
-        {hasResult && (
-          <Stack direction="row" spacing={1} sx={sx.chips}>
-            <Chip label={`ML ${match.ml.correct ? '✓' : '✗'}`} size="small" sx={chipSx(match.ml.correct === true)} />
-            <Chip
-              label={`Poi ${match.poisson.correct ? '✓' : '✗'}`}
-              size="small"
-              sx={chipSx(match.poisson.correct === true)}
-            />
-          </Stack>
+        {match.played && (
+          <PredictionChips mlCorrect={match.ml.correct} poissonCorrect={match.poisson.correct} />
         )}
       </Stack>
 

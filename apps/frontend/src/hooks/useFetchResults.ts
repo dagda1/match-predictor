@@ -2,7 +2,8 @@ import type { UseSuspenseQueryResult } from '@tanstack/react-query';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import xior from 'xior';
 
-import type { ResultsResponse } from '~/api/types';
+import type { ApiResultsResponse, ResultsResponse } from '~/api/types';
+import { toResultsResponse } from '~/api/transforms';
 
 const api = xior.create({ baseURL: '/api' });
 
@@ -19,8 +20,8 @@ export function useFetchResults({ startDate, endDate }: UseFetchResultsProps): U
       if (endDate) {
         params.set('endDate', endDate);
       }
-      const response = await api.get<ResultsResponse>(`/results?${params}`);
-      return response.data;
+      const response = await api.get<ApiResultsResponse>(`/results?${params}`);
+      return toResultsResponse(response.data);
     },
   });
 }

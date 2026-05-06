@@ -25,10 +25,6 @@ export const sx: Record<string, SxProps<Theme>> = {
     mx: 2,
     display: { xs: 'none', sm: 'block' },
   },
-  chips: {
-    flexShrink: 0,
-    ml: 1.5,
-  },
   predictedScores: {
     mb: { xs: 1.5, sm: 2 },
   },
@@ -86,17 +82,3 @@ export function cardSx(bothCorrect: boolean, bothWrong: boolean): SxProps<Theme>
   };
 }
 
-export function chipSx(correct: boolean): SxProps<Theme> {
-  return (theme: Theme) => ({
-    fontWeight: 700,
-    fontSize: '0.72rem',
-    height: 24,
-    bgcolor: correct
-      ? `${theme.palette.success.main}1F`
-      : `${theme.palette.error.main}1A`,
-    color: correct
-      ? theme.palette.success.main
-      : theme.palette.error.main,
-    border: 'none',
-  });
-}

@@ -38,36 +38,46 @@ export interface TopScore {
 
 export type Outcome = 'home' | 'draw' | 'away';
 
-export interface MatchMlResult {
+interface MlBase {
   homeWin: number;
   draw: number;
   awayWin: number;
   predictedOutcome: Outcome;
-  correct: boolean | null;
   topScore: TopScore;
 }
 
-export interface MatchPoissonResult {
+interface PoissonBase {
   homeWin: number;
   draw: number;
   awayWin: number;
   predictedOutcome: Outcome;
-  correct: boolean | null;
   homeLambda: number;
   awayLambda: number;
   topScore: TopScore;
 }
 
-export interface MatchResult {
+export interface PlayedMatch {
+  played: true;
   homeTeam: string;
   awayTeam: string;
   date: string;
-  actualHomeGoals: number | null;
-  actualAwayGoals: number | null;
-  actualOutcome: Outcome | null;
-  ml: MatchMlResult;
-  poisson: MatchPoissonResult;
+  actualHomeGoals: number;
+  actualAwayGoals: number;
+  actualOutcome: Outcome;
+  ml: MlBase & { correct: boolean };
+  poisson: PoissonBase & { correct: boolean };
 }
+
+export interface UpcomingMatch {
+  played: false;
+  homeTeam: string;
+  awayTeam: string;
+  date: string;
+  ml: MlBase;
+  poisson: PoissonBase;
+}
+
+export type MatchResult = PlayedMatch | UpcomingMatch;
 
 export interface ResultsSummary {
   mlCorrect: number;
@@ -78,6 +88,24 @@ export interface ResultsSummary {
 
 export interface ResultsResponse {
   matches: MatchResult[];
+  summary: ResultsSummary;
+  earlierMatchDate: string | null;
+  laterMatchDate: string | null;
+}
+
+export interface ApiMatchResult {
+  homeTeam: string;
+  awayTeam: string;
+  date: string;
+  actualHomeGoals: number | null;
+  actualAwayGoals: number | null;
+  actualOutcome: Outcome | null;
+  ml: MlBase & { correct: boolean | null };
+  poisson: PoissonBase & { correct: boolean | null };
+}
+
+export interface ApiResultsResponse {
+  matches: ApiMatchResult[];
   summary: ResultsSummary;
   earlierMatchDate: string | null;
   laterMatchDate: string | null;
