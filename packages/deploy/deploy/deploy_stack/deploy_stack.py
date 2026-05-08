@@ -110,6 +110,7 @@ class DeployStack(Stack):
         Events(self, "EventBridge", scraper_function=functions.scraper)
 
         initial_data_load = cr.AwsCustomResource(self, "InitialDataLoad",
+            install_latest_aws_sdk=False,
             on_create=cr.AwsSdkCall(
                 service="Lambda",
                 action="invoke",
@@ -124,7 +125,8 @@ class DeployStack(Stack):
                     actions=["lambda:InvokeFunction"],
                     resources=[functions.scraper.function_arn],
                 )
-            ]),
+            ],
+            )
         )
         initial_data_load.node.add_dependency(functions.scraper)
         initial_data_load.node.add_dependency(migration)
@@ -161,5 +163,6 @@ class DeployStack(Stack):
         CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)
     
         firehose = Firehose(self, "Firehose", storage.bucket)
-        CfnOutput(self, "FirehoseDeliveryStreamName", value=firehose.firehose.ref)
+        firehose.subscribe(api.function.log_group)
+        CfnOutput(self, "FirehoseDeliveryStreamName", value=firehose.firehose.delivery_stream_name)
         
