@@ -103,6 +103,7 @@ graph LR
     EtlFunctionsScraperFunctionF099BA00["Scraper<br/>Lambda"]
   end
   ApiHttpApi4C294DC0(["HttpApi<br/>API Gateway"])
+  ApiWarmupRuleFD0BC37F("WarmupRule<br/>EventBridge")
   CdnDistribution149FA6C8{{"Cdn<br/>CloudFront"}}
   DatabasePostgresSecret6EBE3413[/"Postgres<br/>Secrets Manager"/]
   EventBridgeDailyScraperRule9BFD8304("DailyScraperRule<br/>EventBridge")
@@ -116,6 +117,7 @@ graph LR
   ApiApiFunctionAA82C666 --> SecretsOriginVerifySecret2207D00B
   ApiApiFunctionAA82C666 --> StorageBucket5CB7C8EA
   ApiHttpApi4C294DC0 --> ApiApiFunctionAA82C666
+  ApiWarmupRuleFD0BC37F --> ApiApiFunctionAA82C666
   CdnDistribution149FA6C8 --> ApiHttpApi4C294DC0
   CdnDistribution149FA6C8 --> SecretsOriginVerifySecret2207D00B
   CdnDistribution149FA6C8 --> StorageFrontendBucketC065FEEF

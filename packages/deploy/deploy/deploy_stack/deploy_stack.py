@@ -19,6 +19,7 @@ from deploy.deploy_stack.vpc import Vpc
 from deploy.deploy_stack.bootstrap import Bootstrap
 from deploy.deploy_stack.migration import Migration
 from deploy.deploy_stack.model_storage import ModelStorage
+from deploy.deploy_stack.firehose import Firehose
 
 class DeployStack(Stack):
 
@@ -158,3 +159,7 @@ class DeployStack(Stack):
         )
 
         CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)
+    
+        firehose = Firehose(self, "Firehose", storage.bucket)
+        CfnOutput(self, "FirehoseDeliveryStreamName", value=firehose.firehose.ref)
+        
