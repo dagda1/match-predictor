@@ -10,7 +10,7 @@ class Firehose(Construct):
     def __init__(self, scope: Construct, construct_id: str, bucket: s3.Bucket) -> None:
         super().__init__(scope, construct_id)
 
-        self.firehose = firehose.DeliveryStream(self, "DeliveryStream", destination=firehose.S3Bucket(bucket))
+        self.firehose = firehose.DeliveryStream(self, "DeliveryStream", destination=firehose.S3Bucket(bucket, data_output_prefix="logs/"))
 
     def subscribe(self, log_group):
         log_filter = logs.SubscriptionFilter(self, 
