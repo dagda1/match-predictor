@@ -19,7 +19,8 @@ class Firehose(Construct):
             destination=firehose.S3Bucket(
                 bucket,
                 data_output_prefix="logs/",
-                processors=[lambda_processor]
+                processors=[lambda_processor],
+                compression=firehose.Compression.GZIP
             ),
         )
 
