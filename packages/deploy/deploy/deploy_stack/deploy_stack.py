@@ -20,6 +20,7 @@ from deploy.deploy_stack.bootstrap import Bootstrap
 from deploy.deploy_stack.migration import Migration
 from deploy.deploy_stack.model_storage import ModelStorage
 from deploy.deploy_stack.firehose import Firehose
+from deploy.deploy_stack.firehose_lambda import FirehoseFunctions
 
 class DeployStack(Stack):
 
@@ -161,8 +162,10 @@ class DeployStack(Stack):
         )
 
         CfnOutput(self, "FrontendBucketName", value=storage.frontend_bucket.bucket_name)
+        
+        firehose_functions = FirehoseFunctions(self, "FirehoseFunctions")
     
-        firehose = Firehose(self, "Firehose", storage.bucket)
+        firehose = Firehose(self, "Firehose", storage.bucket, firehose_functions.transformer)
         firehose.subscribe(api.function.log_group)
         CfnOutput(self, "FirehoseDeliveryStreamName", value=firehose.firehose.delivery_stream_name)
         

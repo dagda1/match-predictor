@@ -107,6 +107,7 @@ graph LR
   CdnDistribution149FA6C8{{"Cdn<br/>CloudFront"}}
   DatabasePostgresSecret6EBE3413[/"Postgres<br/>Secrets Manager"/]
   EventBridgeDailyScraperRule9BFD8304("DailyScraperRule<br/>EventBridge")
+  FirehoseFunctionsLogTransformerFunctionE1614C32["LogTransformer<br/>Lambda"]
   ModelStorageModelFileSystem7131CD34[\"ModelFileSystem<br/>EFS"/]
   QueuingScraperToPredictor12C65B00>"ScraperToPredictor<br/>SQS"]
   SecretsOriginVerifySecret2207D00B[/"OriginVerifySecret<br/>Secrets Manager"/]
