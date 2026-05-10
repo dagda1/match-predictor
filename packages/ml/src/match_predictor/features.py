@@ -1,5 +1,6 @@
-import numpy as np
 import pandas as pd
+
+WINDOWS = (5, 10)
 
 
 def _rolling_stats(
@@ -61,36 +62,34 @@ def _home_advantage(df: pd.DataFrame) -> float:
     return df["homeXg"].mean() / df["awayXg"].mean()
 
 
+_ROLLING_KEYS = (
+    "xgForAvg", "xgAgainstAvg", "xgOverperformance",
+    "shotConversion", "sotPct", "ppda", "deepAvg",
+)
+
+
 def build_feature_row(
     df: pd.DataFrame, match_date: pd.Timestamp,
     home_team: str, away_team: str
 ) -> dict | None:
-    home_stats = _rolling_stats(df, home_team, match_date)
-    away_stats = _rolling_stats(df, away_team, match_date)
+    home_primary = _rolling_stats(df, home_team, match_date, n=WINDOWS[0])
+    away_primary = _rolling_stats(df, away_team, match_date, n=WINDOWS[0])
 
-    if not home_stats or not away_stats:
+    if not home_primary or not away_primary:
         return None
 
-    prior = df[df["date"] < match_date]
-    ha = _home_advantage(prior) if len(prior) > 0 else 1.0
+    features: dict = {}
+    for window in WINDOWS:
+        home_stats = _rolling_stats(df, home_team, match_date, n=window)
+        away_stats = _rolling_stats(df, away_team, match_date, n=window)
+        for key in _ROLLING_KEYS:
+            features[f"home_{key}_{window}"] = home_stats.get(key, float("nan")) if home_stats else float("nan")
+            features[f"away_{key}_{window}"] = away_stats.get(key, float("nan")) if away_stats else float("nan")
 
-    return {
-        "homeXgFor": home_stats["xgForAvg"],
-        "homeXgAgainst": home_stats["xgAgainstAvg"],
-        "homeXgOverperf": home_stats["xgOverperformance"],
-        "homeShotConv": home_stats["shotConversion"],
-        "homeSotPct": home_stats["sotPct"],
-        "homePpda": home_stats["ppda"],
-        "homeDeep": home_stats["deepAvg"],
-        "awayXgFor": away_stats["xgForAvg"],
-        "awayXgAgainst": away_stats["xgAgainstAvg"],
-        "awayXgOverperf": away_stats["xgOverperformance"],
-        "awayShotConv": away_stats["shotConversion"],
-        "awaySotPct": away_stats["sotPct"],
-        "awayPpda": away_stats["ppda"],
-        "awayDeep": away_stats["deepAvg"],
-        "homeAdvantage": ha,
-    }
+    prior = df[df["date"] < match_date]
+    features["homeAdvantage"] = _home_advantage(prior) if len(prior) > 0 else 1.0
+
+    return features
 
 
 def build_training_data(

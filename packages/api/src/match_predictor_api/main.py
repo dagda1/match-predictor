@@ -8,7 +8,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy import select, text
 
-from match_predictor.db_models import Team as TeamRow, TeamFeatures, Prediction as PredictionRow, Upcoming as UpcomingRow
+from match_predictor.db_models import Team as TeamRow, Prediction as PredictionRow, Upcoming as UpcomingRow
+from match_predictor.features import build_feature_row
 from match_predictor.model import load_model, scoreline_probabilities, outcome_probabilities
 from match_predictor.poisson_baseline import poisson_predict
 
@@ -127,36 +128,15 @@ def predict(req: PredictRequest):
     if model is None:
         return JSONResponse(status_code=503, content={"detail": "model not ready, predictor has not run yet"})
 
-    session = get_session()
-    home = session.get(TeamFeatures, req.homeTeamId)
-    away = session.get(TeamFeatures, req.awayTeamId)
-    session.close()
-
-    if not home or not away:
+    df = _get_match_df()
+    feature_row = build_feature_row(df, pd.Timestamp.now(), req.homeTeamId, req.awayTeamId)
+    if feature_row is None:
         return JSONResponse(status_code=400, content={"detail": "insufficient data"})
-
-    feature_row = {
-        "homeXgFor": home.xg_for_avg,
-        "homeXgAgainst": home.xg_against_avg,
-        "homeXgOverperf": home.xg_overperformance,
-        "homeShotConv": home.shot_conversion,
-        "homeSotPct": home.sot_pct,
-        "homePpda": home.ppda,
-        "homeDeep": home.deep_avg,
-        "awayXgFor": away.xg_for_avg,
-        "awayXgAgainst": away.xg_against_avg,
-        "awayXgOverperf": away.xg_overperformance,
-        "awayShotConv": away.shot_conversion,
-        "awaySotPct": away.sot_pct,
-        "awayPpda": away.ppda,
-        "awayDeep": away.deep_avg,
-        "homeAdvantage": home.home_advantage,
-    }
 
     X = pd.DataFrame([feature_row])
     ml_home_win, ml_draw, ml_away_win = outcome_probabilities(model, X)
 
-    poisson_result = poisson_predict(_get_match_df(), req.homeTeamId, req.awayTeamId)
+    poisson_result = poisson_predict(df, req.homeTeamId, req.awayTeamId)
 
     return PredictResponse(
         ml=MlPrediction(
