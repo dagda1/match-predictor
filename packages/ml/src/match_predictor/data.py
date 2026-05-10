@@ -72,3 +72,16 @@ def load_matches_from_db(engine: Engine) -> pd.DataFrame:
 
 def format_date(dt: pd.Timestamp) -> str:
     return dt.strftime("%Y-%m-%d %H:%M:%S")
+
+
+HOLDOUT_SIZE = 60
+
+
+def holdout_set(df: pd.DataFrame, n: int = HOLDOUT_SIZE) -> pd.DataFrame:
+    played = df[df["homeGoals"].notna()]
+    return played.sort_values("date").tail(n).reset_index(drop=True)
+
+
+def training_set(df: pd.DataFrame, n: int = HOLDOUT_SIZE) -> pd.DataFrame:
+    holdout_ids = set(holdout_set(df, n)["id"])
+    return df[~df["id"].isin(holdout_ids)].reset_index(drop=True)
