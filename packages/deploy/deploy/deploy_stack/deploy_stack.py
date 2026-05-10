@@ -170,6 +170,6 @@ class DeployStack(Stack):
         firehose.subscribe(api.function.log_group)
         CfnOutput(self, "FirehoseDeliveryStreamName", value=firehose.firehose.delivery_stream_name)
         
-        glue = Glue(self, "Glue", storage.bucket)
-        CfnOutput(self, "GlueLogsTableName", value=glue.logs_table.ref)
+        glue_catalog = Glue(self, "Glue", storage.bucket)
+        CfnOutput(self, "GlueLogsTableName", value=glue_catalog.logs_table.ref)
         
