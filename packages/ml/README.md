@@ -91,6 +91,31 @@ Scoreline probabilities come from the same simulation — count occurrences of e
 
 Poisson-xG is the standard naive model in football analytics. If the ML model can't beat it, the engineered features aren't adding signal. It sets the floor that any more complex model needs to clear.
 
+## Held-out evaluation
+
+The last 60 played matches by date are reserved as a held-out set (`data.py:holdout_set`). Training never sees these — `data.py:training_set` excludes them.
+
+`score_baseline.py` retrains the current 2-classifier architecture on the training set, scores it on the holdout, and logs the run to MLflow:
+
+```
+uv run python -m match_predictor.score_baseline
+```
+
+Metrics logged:
+- **RPS** (Ranked Probability Score) — primary metric. Lower is better. Penalises confident wrong predictions and respects the H/D/A ordering.
+- **Log loss** — penalises overconfidence in the wrong class.
+- **Brier score** — multi-class mean squared error of predicted probabilities.
+
+To browse runs:
+
+```
+uv run mlflow ui --backend-store-uri file://$PWD/../../mlruns
+```
+
+Open `http://localhost:5000`. Runs appear under the `match-predictor` experiment with parameters, metrics, and the model artefacts attached. Compare any two runs by selecting them in the UI.
+
+The `mlruns/` directory at the repo root is gitignored — experiment tracking is local.
+
 ## Data integrity
 
 Both models only use data from *before* the match being predicted — no future data leakage. The feature builder filters `df[df["date"] < match_date]` for every prediction.
