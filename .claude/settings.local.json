@@ -97,7 +97,8 @@
       "Bash(gh issue *)",
       "WebFetch(domain:esbuild.github.io)",
       "Bash(pnpm test:ci PredictionChips)",
-      "Bash(pnpm test:ci)"
+      "Bash(pnpm test:ci)",
+      "Skill(branch-review)"
     ],
     "deny": [
       "Bash(aws *)",
