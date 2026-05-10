@@ -6,7 +6,6 @@ requires-python = ">=3.13"
 dependencies = [
     "alembic",
     "boto3>=1.43.2",
-    "mlflow>=2.18.0",
     "numpy",
     "pandas",
     "psycopg2-binary",
@@ -24,5 +23,6 @@ packages = ["src/match_predictor"]
 
 [dependency-groups]
 dev = [
+    "mlflow>=2.18.0",
     "pytest>=9.0.2",
 ]
