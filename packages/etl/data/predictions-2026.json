@@ -7,21 +7,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.18150526028438685,
-      "draw": 0.30482557709072317,
-      "awayWin": 0.5136691626248898,
+      "homeWin": 0.16275238630463756,
+      "draw": 0.3423313250502217,
+      "awayWin": 0.4949162886451407,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
-        "awayGoals": 1,
-        "probability": 0.1987371898000553
+        "awayGoals": 0,
+        "probability": 0.18200832244424245
       }
     },
     "poisson": {
-      "homeWin": 0.48,
-      "draw": 0.234,
-      "awayWin": 0.286,
+      "homeWin": 0.4788,
+      "draw": 0.2274,
+      "awayWin": 0.2938,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.8333178928571432,
@@ -29,7 +29,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.101
+        "probability": 0.1038
       }
     }
   },
@@ -41,21 +41,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.5931932021130386,
-      "draw": 0.22036089236705717,
-      "awayWin": 0.18644590551990417,
+      "homeWin": 0.5766328477430814,
+      "draw": 0.25348160110697177,
+      "awayWin": 0.1698855511499469,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.10849799191091501
+        "awayGoals": 1,
+        "probability": 0.12104994476819969
       }
     },
     "poisson": {
-      "homeWin": 0.5883,
-      "draw": 0.2015,
-      "awayWin": 0.2102,
+      "homeWin": 0.584,
+      "draw": 0.2044,
+      "awayWin": 0.2116,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1083540714285713,
@@ -63,7 +63,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0964
+        "probability": 0.0974
       }
     }
   },
@@ -75,29 +75,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.15425869605485604,
-      "draw": 0.20481472695536185,
-      "awayWin": 0.640926576989782,
+      "homeWin": 0.1388504663085661,
+      "draw": 0.23563118644794176,
+      "awayWin": 0.6255183472434922,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
-        "awayGoals": 2,
-        "probability": 0.11242852781176033
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "probability": 0.11262834828871728
       }
     },
     "poisson": {
-      "homeWin": 0.5211,
-      "draw": 0.2076,
-      "awayWin": 0.2713,
+      "homeWin": 0.5187,
+      "draw": 0.2124,
+      "awayWin": 0.2689,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0374434642857144,
       "awayLambda": 1.4117828285714284,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0895
+        "probability": 0.0938
       }
     }
   },
@@ -109,29 +109,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.08210506638673283,
-      "draw": 0.2359427954299199,
-      "awayWin": 0.6819521381833473,
+      "homeWin": 0.06896320500093922,
+      "draw": 0.26222651820150694,
+      "awayWin": 0.6688102767975537,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.22341858117139807
+        "probability": 0.21027671978560444
       }
     },
     "poisson": {
-      "homeWin": 0.2216,
-      "draw": 0.2283,
-      "awayWin": 0.5501,
+      "homeWin": 0.2264,
+      "draw": 0.239,
+      "awayWin": 0.5346,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.0277713333333331,
       "awayLambda": 1.7336483571428574,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1122
+        "probability": 0.1152
       }
     }
   },
@@ -143,21 +143,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.33756057140786816,
-      "draw": 0.28223372618468995,
-      "awayWin": 0.3802057024074419,
+      "homeWin": 0.31661450757684423,
+      "draw": 0.32412585384673764,
+      "awayWin": 0.35925963857641807,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13216176304352667
+        "probability": 0.15310782687455052
       }
     },
     "poisson": {
-      "homeWin": 0.5479,
-      "draw": 0.2328,
-      "awayWin": 0.2193,
+      "homeWin": 0.5513,
+      "draw": 0.2269,
+      "awayWin": 0.2218,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.9179784642857143,
@@ -165,7 +165,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1101
+        "probability": 0.1048
       }
     }
   },
@@ -177,29 +177,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.22814614702523003,
-      "draw": 0.2923690528546601,
-      "awayWin": 0.47948480012010986,
+      "homeWin": 0.20793448400907102,
+      "draw": 0.3327923788869782,
+      "awayWin": 0.4592731371039508,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
-        "awayGoals": 1,
-        "probability": 0.16442416646503397
+        "awayGoals": 0,
+        "probability": 0.15012459543395262
       }
     },
     "poisson": {
-      "homeWin": 0.3578,
-      "draw": 0.2758,
-      "awayWin": 0.3664,
-      "predictedOutcome": "away",
+      "homeWin": 0.3649,
+      "draw": 0.2736,
+      "awayWin": 0.3615,
+      "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.2501631785714287,
       "awayLambda": 1.2339609285714288,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1306
+        "probability": 0.1276
       }
     }
   },
@@ -211,21 +211,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.3522108475145728,
-      "draw": 0.26397382694307575,
-      "awayWin": 0.3838153255423514,
+      "homeWin": 0.33231237786210854,
+      "draw": 0.30377076624800425,
+      "awayWin": 0.36391685588988715,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12555183887307192
+        "probability": 0.14545030852553617
       }
     },
     "poisson": {
-      "homeWin": 0.5315,
-      "draw": 0.2438,
-      "awayWin": 0.2247,
+      "homeWin": 0.5231,
+      "draw": 0.2468,
+      "awayWin": 0.2301,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.7243409285714286,
@@ -233,7 +233,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1163
+        "probability": 0.1188
       }
     }
   },
@@ -245,9 +245,9 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.5683218042937083,
-      "draw": 0.1934834314570051,
-      "awayWin": 0.23819476424928665,
+      "homeWin": 0.5568796838057468,
+      "draw": 0.21636767243292804,
+      "awayWin": 0.22675264376132517,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -257,9 +257,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.3778,
-      "draw": 0.2216,
-      "awayWin": 0.4006,
+      "homeWin": 0.3756,
+      "draw": 0.2167,
+      "awayWin": 0.4077,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.77415525,
@@ -267,7 +267,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0906
+        "probability": 0.0909
       }
     }
   },
@@ -279,21 +279,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.42355877157084404,
-      "draw": 0.2116566415660103,
-      "awayWin": 0.36478458686314563,
+      "homeWin": 0.4111465889908155,
+      "draw": 0.23648100672606742,
+      "awayWin": 0.35237240428311706,
       "predictedOutcome": "home",
-      "correct": false,
+      "correct": true,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.07891299293817301
+        "probability": 0.09072837345141554
       }
     },
     "poisson": {
-      "homeWin": 0.487,
-      "draw": 0.2198,
-      "awayWin": 0.2932,
+      "homeWin": 0.4862,
+      "draw": 0.2268,
+      "awayWin": 0.287,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.9511399999999999,
@@ -301,7 +301,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0984
+        "probability": 0.0933
       }
     }
   },
@@ -313,21 +313,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.6065315467329275,
-      "draw": 0.24714378538401474,
-      "awayWin": 0.14632466788305765,
+      "homeWin": 0.5892546382669451,
+      "draw": 0.28169760231597957,
+      "awayWin": 0.12904775941707516,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.17113897704417608
+        "probability": 0.15386206857819362
       }
     },
     "poisson": {
-      "homeWin": 0.5326,
-      "draw": 0.2414,
-      "awayWin": 0.226,
+      "homeWin": 0.5294,
+      "draw": 0.2454,
+      "awayWin": 0.2252,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.6334243571428568,
@@ -335,7 +335,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1206
+        "probability": 0.1216
       }
     }
   },
@@ -347,21 +347,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.44970343246631167,
-      "draw": 0.2677756805140182,
-      "awayWin": 0.2825208870196701,
+      "homeWin": 0.42961388334247724,
+      "draw": 0.307954778761687,
+      "awayWin": 0.26243133789583567,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12675747827250392
+        "probability": 0.14684702739633831
       }
     },
     "poisson": {
-      "homeWin": 0.2373,
-      "draw": 0.1912,
-      "awayWin": 0.5715,
+      "homeWin": 0.2266,
+      "draw": 0.1925,
+      "awayWin": 0.5809,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.4658270357142855,
@@ -369,7 +369,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.0903
+        "probability": 0.0892
       }
     }
   },
@@ -381,29 +381,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5672696859750005,
-      "draw": 0.23673634747448058,
-      "awayWin": 0.195993966550519,
+      "homeWin": 0.5494445230500563,
+      "draw": 0.27238667332436933,
+      "awayWin": 0.17816880362557466,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.12380021429526436
+        "awayGoals": 1,
+        "probability": 0.1302952182873028
       }
     },
     "poisson": {
-      "homeWin": 0.4692,
-      "draw": 0.2101,
-      "awayWin": 0.3207,
+      "homeWin": 0.4609,
+      "draw": 0.2123,
+      "awayWin": 0.3268,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.044774142857143,
       "awayLambda": 1.6970830714285714,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0857
+        "probability": 0.0879
       }
     }
   },
@@ -415,21 +415,21 @@
     "actualAwayGoals": 4,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.2928370655242915,
-      "draw": 0.35905103432287555,
-      "awayWin": 0.34811190015283294,
+      "homeWin": 0.2726871596407581,
+      "draw": 0.39935084608994226,
+      "awayWin": 0.32796199426929956,
       "predictedOutcome": "draw",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 0,
-        "probability": 0.21147869037965988
+        "probability": 0.23162859626319326
       }
     },
     "poisson": {
-      "homeWin": 0.3644,
-      "draw": 0.2458,
-      "awayWin": 0.3898,
+      "homeWin": 0.3575,
+      "draw": 0.2389,
+      "awayWin": 0.4036,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.4285255357142856,
@@ -437,7 +437,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1194
+        "probability": 0.1099
       }
     }
   },
@@ -449,21 +449,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.45968151848306443,
-      "draw": 0.24308558937630784,
-      "awayWin": 0.2972328921406277,
+      "homeWin": 0.4416672337677765,
+      "draw": 0.2791141588068839,
+      "awayWin": 0.2792186074253397,
       "predictedOutcome": "home",
       "correct": true,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1136633425328456
+        "probability": 0.1316776272481336
       }
     },
     "poisson": {
-      "homeWin": 0.4932,
-      "draw": 0.2064,
-      "awayWin": 0.3004,
+      "homeWin": 0.4921,
+      "draw": 0.2058,
+      "awayWin": 0.3021,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.2052362857142858,
@@ -471,7 +471,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0819
+        "probability": 0.083
       }
     }
   },
@@ -483,21 +483,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.1948932782154803,
-      "draw": 0.18622643286274426,
-      "awayWin": 0.6188802889217758,
+      "homeWin": 0.18304497569751063,
+      "draw": 0.20992303789868344,
+      "awayWin": 0.607031986403806,
       "predictedOutcome": "away",
       "correct": true,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.09215361782726164
+        "probability": 0.09215361782726161
       }
     },
     "poisson": {
-      "homeWin": 0.4054,
-      "draw": 0.2709,
-      "awayWin": 0.3237,
+      "homeWin": 0.3959,
+      "draw": 0.2796,
+      "awayWin": 0.3245,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.2893396551724137,
@@ -505,7 +505,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.128
+        "probability": 0.1299
       }
     }
   },
@@ -517,9 +517,9 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.7296801285672188,
-      "draw": 0.15717610646638105,
-      "awayWin": 0.11314376496640033,
+      "homeWin": 0.7184902673578226,
+      "draw": 0.17955582888517344,
+      "awayWin": 0.10195390375700414,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -529,9 +529,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.3264,
-      "draw": 0.2326,
-      "awayWin": 0.441,
+      "homeWin": 0.3129,
+      "draw": 0.2388,
+      "awayWin": 0.4483,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.4362875517241376,
@@ -539,7 +539,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1043
+        "probability": 0.1102
       }
     }
   },
@@ -551,21 +551,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.19195447217237904,
-      "draw": 0.2552039407336931,
-      "awayWin": 0.552841587093928,
+      "homeWin": 0.17324474666139986,
+      "draw": 0.2926233917556515,
+      "awayWin": 0.5341318615829489,
       "predictedOutcome": "away",
-      "correct": false,
+      "correct": true,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.14790714285761744
+        "probability": 0.13676103718172133
       }
     },
     "poisson": {
-      "homeWin": 0.4815,
-      "draw": 0.2709,
-      "awayWin": 0.2476,
+      "homeWin": 0.4821,
+      "draw": 0.2738,
+      "awayWin": 0.2441,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.4139439655172412,
@@ -573,7 +573,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1348
+        "probability": 0.1366
       }
     }
   },
@@ -585,21 +585,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.501256286323239,
-      "draw": 0.37488405705766004,
-      "awayWin": 0.12385965661910107,
+      "homeWin": 0.48764700138767975,
+      "draw": 0.4021026269287784,
+      "awayWin": 0.11025037168354186,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 0,
-        "probability": 0.282258738801347
+        "probability": 0.2958680237369062
       }
     },
     "poisson": {
-      "homeWin": 0.4565,
-      "draw": 0.2323,
-      "awayWin": 0.3112,
+      "homeWin": 0.4653,
+      "draw": 0.2312,
+      "awayWin": 0.3035,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.7456618275862068,
@@ -607,7 +607,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1034
+        "probability": 0.1046
       }
     }
   },
@@ -619,29 +619,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.4323903672997498,
-      "draw": 0.26665855304904446,
-      "awayWin": 0.3009510796512059,
+      "homeWin": 0.4123244718482693,
+      "draw": 0.30679034395200516,
+      "awayWin": 0.28088518419972547,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1266082325208448
+        "probability": 0.14667412797232512
       }
     },
     "poisson": {
-      "homeWin": 0.6225,
-      "draw": 0.2091,
-      "awayWin": 0.1684,
+      "homeWin": 0.625,
+      "draw": 0.2139,
+      "awayWin": 0.1611,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.9863696896551724,
       "awayLambda": 0.9114495,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.109
+        "awayGoals": 1,
+        "probability": 0.106
       }
     }
   },
@@ -653,21 +653,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.8037066755944166,
-      "draw": 0.12405681863882809,
-      "awayWin": 0.0722365057667555,
+      "homeWin": 0.7947479915281286,
+      "draw": 0.14197418677140383,
+      "awayWin": 0.06327782170046761,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.10543103335760426
+        "probability": 0.10543103335760425
       }
     },
     "poisson": {
-      "homeWin": 0.4884,
-      "draw": 0.2344,
-      "awayWin": 0.2772,
+      "homeWin": 0.4957,
+      "draw": 0.2286,
+      "awayWin": 0.2757,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8512538275862072,
@@ -675,7 +675,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1056
+        "probability": 0.1064
       }
     }
   },
@@ -687,21 +687,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.4996810182886252,
-      "draw": 0.26645694839560014,
-      "awayWin": 0.23386203331577474,
+      "homeWin": 0.47996447540730214,
+      "draw": 0.3058900341582463,
+      "awayWin": 0.21414549043445166,
       "predictedOutcome": "home",
-      "correct": false,
+      "correct": true,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.13783659351296357
+        "awayGoals": 1,
+        "probability": 0.14412049244150044
       }
     },
     "poisson": {
-      "homeWin": 0.5028,
-      "draw": 0.2025,
-      "awayWin": 0.2947,
+      "homeWin": 0.4981,
+      "draw": 0.2123,
+      "awayWin": 0.2896,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1647277931034483,
@@ -709,7 +709,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0891
+        "probability": 0.0873
       }
     }
   },
@@ -721,29 +721,29 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.2886821301323601,
-      "draw": 0.2321712621002409,
-      "awayWin": 0.479146607767399,
+      "homeWin": 0.2719478966764338,
+      "draw": 0.2656397290120934,
+      "awayWin": 0.4624123743114726,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.10558670185285485
+        "probability": 0.1223209353087811
       }
     },
     "poisson": {
-      "homeWin": 0.2526,
-      "draw": 0.264,
-      "awayWin": 0.4834,
+      "homeWin": 0.2529,
+      "draw": 0.2595,
+      "awayWin": 0.4876,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 0.9961578,
       "awayLambda": 1.4875039655172413,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.1286
+        "probability": 0.1304
       }
     }
   },
@@ -755,21 +755,21 @@
     "actualAwayGoals": 3,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5722977986710664,
-      "draw": 0.23913269373535948,
-      "awayWin": 0.18856950759357383,
+      "homeWin": 0.5543695065957073,
+      "draw": 0.27498927788607824,
+      "awayWin": 0.17064121551821454,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.13129209291687224
+        "awayGoals": 1,
+        "probability": 0.13104905348206008
       }
     },
     "poisson": {
-      "homeWin": 0.6019,
-      "draw": 0.2068,
-      "awayWin": 0.1913,
+      "homeWin": 0.6112,
+      "draw": 0.1989,
+      "awayWin": 0.1899,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0683212413793104,
@@ -777,7 +777,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.1009
+        "probability": 0.1021
       }
     }
   },
@@ -789,21 +789,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.6104621792643513,
-      "draw": 0.2004391579755292,
-      "awayWin": 0.18909866276011958,
+      "homeWin": 0.5961857228110323,
+      "draw": 0.22899207088216722,
+      "awayWin": 0.17482220630680054,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09863986602430652
+        "probability": 0.10435551236119667
       }
     },
     "poisson": {
-      "homeWin": 0.3733,
-      "draw": 0.1899,
-      "awayWin": 0.4368,
+      "homeWin": 0.3661,
+      "draw": 0.1889,
+      "awayWin": 0.445,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 2.1372853103448275,
@@ -811,7 +811,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 2,
-        "probability": 0.0674
+        "probability": 0.0685
       }
     }
   },
@@ -823,21 +823,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.4867874238224837,
-      "draw": 0.20511554089372014,
-      "awayWin": 0.3080970352837961,
+      "homeWin": 0.47499500297302377,
+      "draw": 0.22870038259264,
+      "awayWin": 0.2963046144343362,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0824828899083389
+        "probability": 0.08619814894179538
       }
     },
     "poisson": {
-      "homeWin": 0.4035,
-      "draw": 0.2203,
-      "awayWin": 0.3762,
+      "homeWin": 0.4031,
+      "draw": 0.2202,
+      "awayWin": 0.3767,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8135059310344828,
@@ -845,7 +845,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.091
+        "probability": 0.0866
       }
     }
   },
@@ -857,29 +857,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.4789850277267447,
-      "draw": 0.2700766217894853,
-      "awayWin": 0.25093835048377,
+      "homeWin": 0.45895838746194156,
+      "draw": 0.3101299023190915,
+      "awayWin": 0.23091171021896698,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.13413547037970155
+        "awayGoals": 1,
+        "probability": 0.14638718736266218
       }
     },
     "poisson": {
-      "homeWin": 0.4902,
-      "draw": 0.2178,
-      "awayWin": 0.292,
+      "homeWin": 0.5083,
+      "draw": 0.2092,
+      "awayWin": 0.2825,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0881340344827586,
       "awayLambda": 1.5480633448275862,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0911
+        "probability": 0.0893
       }
     }
   },
@@ -891,21 +891,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6315284815357998,
-      "draw": 0.23165820216669247,
-      "awayWin": 0.13681331629750773,
+      "homeWin": 0.6149273592130631,
+      "draw": 0.26486044681216614,
+      "awayWin": 0.12021219397477093,
       "predictedOutcome": "home",
       "correct": true,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1611901374804792
+        "probability": 0.14458901515774242
       }
     },
     "poisson": {
-      "homeWin": 0.4863,
-      "draw": 0.2281,
-      "awayWin": 0.2856,
+      "homeWin": 0.4839,
+      "draw": 0.223,
+      "awayWin": 0.2931,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8530398,
@@ -913,7 +913,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0951
+        "probability": 0.1013
       }
     }
   },
@@ -925,29 +925,29 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.7290805141801557,
-      "draw": 0.20417735601165618,
-      "awayWin": 0.066742129808188,
+      "homeWin": 0.7172417754936814,
+      "draw": 0.2278548333846052,
+      "awayWin": 0.0549033911217135,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.20927684508469843
+        "probability": 0.19743810639822396
       }
     },
     "poisson": {
-      "homeWin": 0.6374,
-      "draw": 0.1996,
-      "awayWin": 0.163,
+      "homeWin": 0.6324,
+      "draw": 0.2042,
+      "awayWin": 0.1634,
       "predictedOutcome": "home",
-      "correct": false,
+      "correct": true,
       "homeLambda": 2.093525655172414,
       "awayLambda": 0.9685174999999997,
       "topScore": {
-        "homeGoals": 2,
-        "awayGoals": 0,
-        "probability": 0.1088
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "probability": 0.0992
       }
     }
   },
@@ -959,21 +959,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.17015626697679828,
-      "draw": 0.26452729898538574,
-      "awayWin": 0.5653164340378162,
+      "homeWin": 0.15177686736899365,
+      "draw": 0.3012860982009949,
+      "awayWin": 0.5469370344300115,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.1717704729099912
+        "probability": 0.1533910733021866
       }
     },
     "poisson": {
-      "homeWin": 0.2281,
-      "draw": 0.2411,
-      "awayWin": 0.5308,
+      "homeWin": 0.2337,
+      "draw": 0.2418,
+      "awayWin": 0.5245,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.0212083,
@@ -981,7 +981,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1138
+        "probability": 0.1143
       }
     }
   },
@@ -993,21 +993,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.6370162252987519,
-      "draw": 0.21005894788220605,
-      "awayWin": 0.15292482681904226,
+      "homeWin": 0.6211813530335212,
+      "draw": 0.24172869241266737,
+      "awayWin": 0.13708995455381154,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.11864520860612293
+        "probability": 0.11708292495633944
       }
     },
     "poisson": {
-      "homeWin": 0.4759,
-      "draw": 0.2412,
-      "awayWin": 0.2829,
+      "homeWin": 0.4707,
+      "draw": 0.2483,
+      "awayWin": 0.281,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.625978689655172,
@@ -1015,7 +1015,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1141
+        "probability": 0.1159
       }
     }
   },
@@ -1027,21 +1027,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.21005109005927727,
-      "draw": 0.2725742863434519,
-      "awayWin": 0.5173746235972708,
+      "homeWin": 0.1904978606405678,
+      "draw": 0.31168074518087086,
+      "awayWin": 0.4978213941785613,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.15570023049754173
+        "probability": 0.1429267326228614
       }
     },
     "poisson": {
-      "homeWin": 0.3139,
-      "draw": 0.2373,
-      "awayWin": 0.4488,
+      "homeWin": 0.3168,
+      "draw": 0.2234,
+      "awayWin": 0.4598,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.4687265862068963,
@@ -1049,7 +1049,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1049
+        "probability": 0.0962
       }
     }
   },
@@ -1061,21 +1061,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.2035027186728752,
-      "draw": 0.2399514361343456,
-      "awayWin": 0.5565458451927793,
+      "homeWin": 0.18543578052059517,
+      "draw": 0.27608531243890566,
+      "awayWin": 0.5384789070404992,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12340650063217364
+        "probability": 0.13206250401449718
       }
     },
     "poisson": {
-      "homeWin": 0.3266,
-      "draw": 0.2499,
-      "awayWin": 0.4235,
+      "homeWin": 0.3214,
+      "draw": 0.2493,
+      "awayWin": 0.4293,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.2842696206896553,
@@ -1083,7 +1083,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1181
+        "probability": 0.1145
       }
     }
   },
@@ -1095,21 +1095,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.41758917142707325,
-      "draw": 0.2940347795389309,
-      "awayWin": 0.2883760490339958,
+      "homeWin": 0.3965230189514459,
+      "draw": 0.33616708449018556,
+      "awayWin": 0.2673098965583685,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.1418595753600718
+        "awayGoals": 1,
+        "probability": 0.15398562957561496
       }
     },
     "poisson": {
-      "homeWin": 0.5731,
-      "draw": 0.2231,
-      "awayWin": 0.2038,
+      "homeWin": 0.5671,
+      "draw": 0.2224,
+      "awayWin": 0.2105,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.9011474827586208,
@@ -1117,7 +1117,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1042
+        "probability": 0.1066
       }
     }
   },
@@ -1129,21 +1129,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.4275338925721997,
-      "draw": 0.24840018006651196,
-      "awayWin": 0.32406592736128836,
+      "homeWin": 0.4090503448833805,
+      "draw": 0.2853672754441504,
+      "awayWin": 0.30558237967246915,
       "predictedOutcome": "home",
       "correct": true,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11662421491503891
+        "probability": 0.13510776260385812
       }
     },
     "poisson": {
-      "homeWin": 0.3515,
-      "draw": 0.2149,
-      "awayWin": 0.4336,
+      "homeWin": 0.3426,
+      "draw": 0.2206,
+      "awayWin": 0.4368,
       "predictedOutcome": "away",
       "correct": true,
       "homeLambda": 1.715629172413793,
@@ -1151,7 +1151,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0845
+        "probability": 0.0893
       }
     }
   },
@@ -1163,9 +1163,9 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.24028325611161708,
-      "draw": 0.19776583909827375,
-      "awayWin": 0.5619509047901091,
+      "homeWin": 0.22809628955313496,
+      "draw": 0.22213977221523795,
+      "awayWin": 0.549763938231627,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
@@ -1175,9 +1175,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.4503,
-      "draw": 0.2738,
-      "awayWin": 0.2759,
+      "homeWin": 0.4364,
+      "draw": 0.2899,
+      "awayWin": 0.2737,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.3042606666666665,
@@ -1185,7 +1185,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1358
+        "probability": 0.1329
       }
     }
   },
@@ -1197,21 +1197,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.43304781455681063,
-      "draw": 0.2837227339981397,
-      "awayWin": 0.2832294514450495,
+      "homeWin": 0.41226660687984173,
+      "draw": 0.32528514935207736,
+      "awayWin": 0.2624482437680807,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.13500870274784066
+        "awayGoals": 1,
+        "probability": 0.15190279056329486
       }
     },
     "poisson": {
-      "homeWin": 0.254,
-      "draw": 0.2679,
-      "awayWin": 0.4781,
+      "homeWin": 0.2509,
+      "draw": 0.2724,
+      "awayWin": 0.4767,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 0.9346625454545454,
@@ -1219,7 +1219,7 @@
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.1389
+        "probability": 0.1328
       }
     }
   },
@@ -1231,21 +1231,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5131477988991874,
-      "draw": 0.23247302308382697,
-      "awayWin": 0.2543791780169857,
+      "homeWin": 0.49600285278455886,
+      "draw": 0.266762915313084,
+      "awayWin": 0.2372342319023572,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.10817814383051085
+        "probability": 0.12532308994513933
       }
     },
     "poisson": {
-      "homeWin": 0.341,
-      "draw": 0.2341,
-      "awayWin": 0.4249,
+      "homeWin": 0.34,
+      "draw": 0.2404,
+      "awayWin": 0.4196,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.4237489666666663,
@@ -1253,7 +1253,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1068
+        "probability": 0.1079
       }
     }
   },
@@ -1265,21 +1265,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5829945600533226,
-      "draw": 0.27897575629020116,
-      "awayWin": 0.13802968365647625,
+      "homeWin": 0.5660740513040822,
+      "draw": 0.3128167737886819,
+      "awayWin": 0.1211091749072359,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.2086199966052167
+        "probability": 0.19169948785597632
       }
     },
     "poisson": {
-      "homeWin": 0.658,
-      "draw": 0.1999,
-      "awayWin": 0.1421,
+      "homeWin": 0.6623,
+      "draw": 0.195,
+      "awayWin": 0.1427,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 2.1912048666666664,
@@ -1287,7 +1287,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.1037
+        "probability": 0.1074
       }
     }
   },
@@ -1299,21 +1299,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5161413861436895,
-      "draw": 0.22247705929808972,
-      "awayWin": 0.26138155455822054,
+      "homeWin": 0.5003867047383294,
+      "draw": 0.25398642210881034,
+      "awayWin": 0.24562687315286016,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09940609784820413
+        "probability": 0.11516077925356445
       }
     },
     "poisson": {
-      "homeWin": 0.3026,
-      "draw": 0.1972,
-      "awayWin": 0.5002,
+      "homeWin": 0.2979,
+      "draw": 0.1996,
+      "awayWin": 0.5025,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.7271444333333332,
@@ -1321,7 +1321,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.0841
+        "probability": 0.0789
       }
     }
   },
@@ -1333,21 +1333,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.6138308669446427,
-      "draw": 0.30651630664766993,
-      "awayWin": 0.07965282640768738,
+      "homeWin": 0.6022659101997971,
+      "draw": 0.32964622013736133,
+      "awayWin": 0.0680878696628417,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.2769555703806569
+        "probability": 0.26539061363581123
       }
     },
     "poisson": {
-      "homeWin": 0.5809,
-      "draw": 0.2118,
-      "awayWin": 0.2073,
+      "homeWin": 0.5764,
+      "draw": 0.2128,
+      "awayWin": 0.2108,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.048856033333333,
@@ -1355,7 +1355,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0987
+        "probability": 0.0972
       }
     }
   },
@@ -1367,21 +1367,21 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.7068816329176875,
-      "draw": 0.1627617781223268,
-      "awayWin": 0.13035658895998586,
+      "homeWin": 0.6957409648636679,
+      "draw": 0.18504311423036582,
+      "awayWin": 0.11921592090596633,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.09297366554080828
+        "probability": 0.09297366554080827
       }
     },
     "poisson": {
-      "homeWin": 0.4059,
-      "draw": 0.2165,
-      "awayWin": 0.3776,
+      "homeWin": 0.3987,
+      "draw": 0.2182,
+      "awayWin": 0.3831,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8337137000000001,
@@ -1389,7 +1389,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0869
+        "probability": 0.0929
       }
     }
   },
@@ -1401,21 +1401,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.5422872627671342,
-      "draw": 0.2827246935189205,
-      "awayWin": 0.17498804371394494,
+      "homeWin": 0.5236299764447465,
+      "draw": 0.3200392661636962,
+      "awayWin": 0.15633075739155713,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.18555555557251022
+        "probability": 0.1668982692501224
       }
     },
     "poisson": {
-      "homeWin": 0.5326,
-      "draw": 0.2099,
-      "awayWin": 0.2575,
+      "homeWin": 0.5456,
+      "draw": 0.2109,
+      "awayWin": 0.2435,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0805422,
@@ -1423,7 +1423,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0935
+        "probability": 0.095
       }
     }
   },
@@ -1435,21 +1435,21 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.5070712788532858,
-      "draw": 0.24562143998446037,
-      "awayWin": 0.24730728116225403,
+      "homeWin": 0.48857302264408387,
+      "draw": 0.2826179524028635,
+      "awayWin": 0.22880902495305241,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11671702013138768
+        "probability": 0.13521527634058922
       }
     },
     "poisson": {
-      "homeWin": 0.5037,
-      "draw": 0.2118,
-      "awayWin": 0.2845,
+      "homeWin": 0.5064,
+      "draw": 0.2089,
+      "awayWin": 0.2847,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.089436866666667,
@@ -1469,21 +1469,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.1786145327717875,
-      "draw": 0.24296683298066352,
-      "awayWin": 0.5784186342475489,
+      "homeWin": 0.16061330711655772,
+      "draw": 0.2789692842911231,
+      "awayWin": 0.5604174085923193,
       "predictedOutcome": "away",
-      "correct": false,
+      "correct": true,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.14237247693738184
+        "probability": 0.13158217044428397
       }
     },
     "poisson": {
-      "homeWin": 0.4244,
-      "draw": 0.2584,
-      "awayWin": 0.3172,
+      "homeWin": 0.4278,
+      "draw": 0.2587,
+      "awayWin": 0.3135,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.4212528333333332,
@@ -1491,7 +1491,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1211
+        "probability": 0.1241
       }
     }
   },
@@ -1503,21 +1503,21 @@
     "actualAwayGoals": 4,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.32882124072246055,
-      "draw": 0.22467637735717666,
-      "awayWin": 0.44650238192036296,
+      "homeWin": 0.31364838129313255,
+      "draw": 0.25502209621583266,
+      "awayWin": 0.4313295224910349,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09573502061143897
+        "probability": 0.11090788004076699
       }
     },
     "poisson": {
-      "homeWin": 0.4109,
-      "draw": 0.2095,
-      "awayWin": 0.3796,
+      "homeWin": 0.4009,
+      "draw": 0.2174,
+      "awayWin": 0.3817,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8817616363636362,
@@ -1525,7 +1525,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0851
+        "probability": 0.0836
       }
     }
   },
@@ -1537,21 +1537,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.3037952381075425,
-      "draw": 0.30576874971862383,
-      "awayWin": 0.39043601217383356,
+      "homeWin": 0.28248933725611464,
+      "draw": 0.34838055142147945,
+      "awayWin": 0.36913011132240575,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.14548713299334784
+        "probability": 0.1557380997825067
       }
     },
     "poisson": {
-      "homeWin": 0.2502,
-      "draw": 0.2203,
-      "awayWin": 0.5295,
+      "homeWin": 0.2357,
+      "draw": 0.226,
+      "awayWin": 0.5383,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.2544678333333334,
@@ -1559,7 +1559,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1062
+        "probability": 0.1022
       }
     }
   },
@@ -1571,21 +1571,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.6385332592895276,
-      "draw": 0.198848727907813,
-      "awayWin": 0.16261801280265953,
+      "homeWin": 0.623817570139411,
+      "draw": 0.22828010620804645,
+      "awayWin": 0.14790232365254283,
       "predictedOutcome": "home",
-      "correct": false,
+      "correct": true,
       "topScore": {
-        "homeGoals": 2,
-        "awayGoals": 0,
-        "probability": 0.10184002460437612
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "probability": 0.10756613771980654
       }
     },
     "poisson": {
-      "homeWin": 0.5159,
-      "draw": 0.2462,
-      "awayWin": 0.2379,
+      "homeWin": 0.522,
+      "draw": 0.2398,
+      "awayWin": 0.2382,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.6916340999999997,
@@ -1593,7 +1593,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1173
+        "probability": 0.1158
       }
     }
   },
@@ -1605,29 +1605,29 @@
     "actualAwayGoals": 2,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.44650781490307195,
-      "draw": 0.2756918380951543,
-      "awayWin": 0.27780034700177364,
+      "homeWin": 0.4260527696239718,
+      "draw": 0.31660192865335474,
+      "awayWin": 0.25734530172267345,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.1295536780167343
+        "awayGoals": 1,
+        "probability": 0.1495186664458131
       }
     },
     "poisson": {
-      "homeWin": 0.5583,
-      "draw": 0.2136,
-      "awayWin": 0.2281,
+      "homeWin": 0.5605,
+      "draw": 0.2147,
+      "awayWin": 0.2248,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0726172333333333,
       "awayLambda": 1.2518064666666668,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1017
+        "probability": 0.0921
       }
     }
   },
@@ -1639,21 +1639,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.18052438587601127,
-      "draw": 0.22427805181602622,
-      "awayWin": 0.5951975623079625,
+      "homeWin": 0.16361779593802583,
+      "draw": 0.25809123169199716,
+      "awayWin": 0.5782909723699772,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11758046225857331
+        "probability": 0.12358079618902611
       }
     },
     "poisson": {
-      "homeWin": 0.5245,
-      "draw": 0.205,
-      "awayWin": 0.2705,
+      "homeWin": 0.5219,
+      "draw": 0.2019,
+      "awayWin": 0.2762,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1400898,
@@ -1661,7 +1661,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0927
+        "probability": 0.0929
       }
     }
   },
@@ -1673,21 +1673,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.6570179404081179,
-      "draw": 0.1721617266011444,
-      "awayWin": 0.17082033299073765,
+      "homeWin": 0.6465148785910999,
+      "draw": 0.1931678502351802,
+      "awayWin": 0.16031727117371972,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.08873861276066299
+        "probability": 0.08873861276066297
       }
     },
     "poisson": {
-      "homeWin": 0.4598,
-      "draw": 0.2202,
-      "awayWin": 0.32,
+      "homeWin": 0.46,
+      "draw": 0.2205,
+      "awayWin": 0.3195,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8679556666666666,
@@ -1695,7 +1695,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0912
+        "probability": 0.0961
       }
     }
   },
@@ -1707,21 +1707,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5145639673357022,
-      "draw": 0.25335451856590807,
-      "awayWin": 0.23208151409838984,
+      "homeWin": 0.4955234455223662,
+      "draw": 0.2914355621925797,
+      "awayWin": 0.21304099228505397,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.12455106915943495
+        "awayGoals": 1,
+        "probability": 0.1391790333933506
       }
     },
     "poisson": {
-      "homeWin": 0.4974,
-      "draw": 0.2232,
-      "awayWin": 0.2794,
+      "homeWin": 0.4948,
+      "draw": 0.2204,
+      "awayWin": 0.2848,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8554817333333335,
@@ -1729,7 +1729,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0984
+        "probability": 0.0982
       }
     }
   },
@@ -1741,21 +1741,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.3920213393314065,
-      "draw": 0.2891779747985072,
-      "awayWin": 0.3188006858700862,
+      "homeWin": 0.370888796485192,
+      "draw": 0.3314430604909366,
+      "awayWin": 0.2976681430238716,
       "predictedOutcome": "home",
       "correct": true,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13333837529951184
+        "probability": 0.15447091814572647
       }
     },
     "poisson": {
-      "homeWin": 0.3368,
-      "draw": 0.2355,
-      "awayWin": 0.4277,
+      "homeWin": 0.3227,
+      "draw": 0.2391,
+      "awayWin": 0.4382,
       "predictedOutcome": "away",
       "correct": true,
       "homeLambda": 1.4303850666666664,
@@ -1763,7 +1763,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1109
+        "probability": 0.1074
       }
     }
   },
@@ -1775,21 +1775,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.5174126891430014,
-      "draw": 0.2008156799124485,
-      "awayWin": 0.28177163094455016,
+      "homeWin": 0.5058912487186363,
+      "draw": 0.22385856076117863,
+      "awayWin": 0.27025019052018506,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0839410218759108
+        "probability": 0.08421738423361363
       }
     },
     "poisson": {
-      "homeWin": 0.3614,
-      "draw": 0.2341,
-      "awayWin": 0.4045,
+      "homeWin": 0.3682,
+      "draw": 0.233,
+      "awayWin": 0.3988,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.626876733333333,
@@ -1797,7 +1797,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.097
+        "probability": 0.0996
       }
     }
   },
@@ -1809,21 +1809,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5125725444591548,
-      "draw": 0.2714419292112423,
-      "awayWin": 0.2159855263296028,
+      "homeWin": 0.4929366594763948,
+      "draw": 0.31071369917676256,
+      "awayWin": 0.19634964134684268,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.1515009952155086
+        "awayGoals": 1,
+        "probability": 0.14353091362283238
       }
     },
     "poisson": {
-      "homeWin": 0.392,
-      "draw": 0.3064,
-      "awayWin": 0.3016,
+      "homeWin": 0.394,
+      "draw": 0.2977,
+      "awayWin": 0.3083,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.0961902727272728,
@@ -1831,7 +1831,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1425
+        "probability": 0.1501
       }
     }
   },
@@ -1843,21 +1843,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.599604584185085,
-      "draw": 0.21730842118750132,
-      "awayWin": 0.18308699462741373,
+      "homeWin": 0.583297264449802,
+      "draw": 0.2499230606580672,
+      "awayWin": 0.16677967489213077,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.10653491271557007
+        "awayGoals": 1,
+        "probability": 0.11920035701980361
       }
     },
     "poisson": {
-      "homeWin": 0.514,
-      "draw": 0.2342,
-      "awayWin": 0.2518,
+      "homeWin": 0.5114,
+      "draw": 0.2352,
+      "awayWin": 0.2534,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.7398406666666666,
@@ -1865,7 +1865,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1045
+        "probability": 0.1096
       }
     }
   },
@@ -1877,21 +1877,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5244748410141384,
-      "draw": 0.23446069285441581,
-      "awayWin": 0.24106446613144564,
+      "homeWin": 0.50698666391061,
+      "draw": 0.26943704706147303,
+      "awayWin": 0.22357628902791707,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11034380192217691
+        "probability": 0.1278319790257055
       }
     },
     "poisson": {
-      "homeWin": 0.4763,
-      "draw": 0.2242,
-      "awayWin": 0.2995,
+      "homeWin": 0.4759,
+      "draw": 0.2305,
+      "awayWin": 0.2936,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8550990967741938,
@@ -1899,7 +1899,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0956
+        "probability": 0.1003
       }
     }
   },
@@ -1911,9 +1911,9 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6845601873268629,
-      "draw": 0.1991875980280062,
-      "awayWin": 0.11625221464513105,
+      "homeWin": 0.6697568858398065,
+      "draw": 0.22879420100211864,
+      "awayWin": 0.10144891315807482,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -1923,9 +1923,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.6343,
-      "draw": 0.2028,
-      "awayWin": 0.1629,
+      "homeWin": 0.6311,
+      "draw": 0.2071,
+      "awayWin": 0.1618,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0679747096774195,
@@ -1933,7 +1933,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.1007
+        "probability": 0.1052
       }
     }
   },
@@ -1945,21 +1945,21 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.26769792173991047,
-      "draw": 0.2600724935564478,
-      "awayWin": 0.47222958470364174,
+      "homeWin": 0.2481191097177481,
+      "draw": 0.29923011760077256,
+      "awayWin": 0.4526507726814793,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.123534919783556
+        "probability": 0.1431137318057184
       }
     },
     "poisson": {
-      "homeWin": 0.2791,
-      "draw": 0.2324,
-      "awayWin": 0.4885,
+      "homeWin": 0.2749,
+      "draw": 0.2282,
+      "awayWin": 0.4969,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.2818569354838711,
@@ -1967,7 +1967,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1096
+        "probability": 0.1026
       }
     }
   },
@@ -1979,21 +1979,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.5683390185002625,
-      "draw": 0.2600104997180156,
-      "awayWin": 0.1716504817817221,
+      "homeWin": 0.5499823583620731,
+      "draw": 0.2967238199943942,
+      "awayWin": 0.15329382164353275,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.16612623989729744
+        "probability": 0.14776957975910807
       }
     },
     "poisson": {
-      "homeWin": 0.4575,
-      "draw": 0.2642,
-      "awayWin": 0.2783,
+      "homeWin": 0.445,
+      "draw": 0.2643,
+      "awayWin": 0.2907,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.414351580645161,
@@ -2001,7 +2001,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1253
+        "probability": 0.1224
       }
     }
   },
@@ -2013,21 +2013,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.5192840191648596,
-      "draw": 0.21740731937531682,
-      "awayWin": 0.26330866145982385,
+      "homeWin": 0.5043245808471235,
+      "draw": 0.24732619601078892,
+      "awayWin": 0.24834922314208774,
       "predictedOutcome": "home",
-      "correct": false,
+      "correct": true,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09459121273039933
+        "probability": 0.10934785220600986
       }
     },
     "poisson": {
-      "homeWin": 0.4724,
-      "draw": 0.2334,
-      "awayWin": 0.2942,
+      "homeWin": 0.4699,
+      "draw": 0.229,
+      "awayWin": 0.3011,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.778357193548387,
@@ -2035,7 +2035,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1076
+        "probability": 0.1048
       }
     }
   },
@@ -2047,21 +2047,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.2664279454896251,
-      "draw": 0.30298524961796286,
-      "awayWin": 0.4305868048924119,
+      "homeWin": 0.24550592360531487,
+      "draw": 0.34482929338658347,
+      "awayWin": 0.40966478300810166,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
-        "awayGoals": 1,
-        "probability": 0.1564487583120841
+        "awayGoals": 0,
+        "probability": 0.15588561922873298
       }
     },
     "poisson": {
-      "homeWin": 0.2897,
-      "draw": 0.2874,
-      "awayWin": 0.4229,
+      "homeWin": 0.2822,
+      "draw": 0.2871,
+      "awayWin": 0.4307,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 0.985844,
@@ -2069,7 +2069,7 @@
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.1329
+        "probability": 0.1331
       }
     }
   },
@@ -2081,29 +2081,29 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.6124026058231294,
-      "draw": 0.2019292104105805,
-      "awayWin": 0.18566818376628988,
+      "homeWin": 0.597837561861631,
+      "draw": 0.23105929833357733,
+      "awayWin": 0.17110313980479144,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09919809127143094
+        "probability": 0.10646497820628048
       }
     },
     "poisson": {
-      "homeWin": 0.5037,
-      "draw": 0.2107,
-      "awayWin": 0.2856,
+      "homeWin": 0.5012,
+      "draw": 0.2196,
+      "awayWin": 0.2792,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0764872903225804,
       "awayLambda": 1.5059342903225803,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0923
+        "probability": 0.0898
       }
     }
   },
@@ -2115,21 +2115,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.4133475922780634,
-      "draw": 0.24581598263656115,
-      "awayWin": 0.3408364250853754,
+      "homeWin": 0.3952093691386541,
+      "draw": 0.2820924289153798,
+      "awayWin": 0.32269820194596616,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11444534724613441
+        "probability": 0.13258357038554372
       }
     },
     "poisson": {
-      "homeWin": 0.3858,
-      "draw": 0.2309,
-      "awayWin": 0.3833,
+      "homeWin": 0.3895,
+      "draw": 0.2264,
+      "awayWin": 0.3841,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.6831378387096771,
@@ -2137,7 +2137,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1006
+        "probability": 0.0998
       }
     }
   },
@@ -2149,21 +2149,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.37648316850418845,
-      "draw": 0.26907316633426603,
-      "awayWin": 0.3544436651615454,
+      "homeWin": 0.35621859725303257,
+      "draw": 0.3096023088365779,
+      "awayWin": 0.33417909391038947,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12786180188695714
+        "probability": 0.14812637313811308
       }
     },
     "poisson": {
-      "homeWin": 0.4928,
-      "draw": 0.2055,
-      "awayWin": 0.3017,
+      "homeWin": 0.4799,
+      "draw": 0.2034,
+      "awayWin": 0.3167,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.171045935483871,
@@ -2171,7 +2171,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0832
+        "probability": 0.0819
       }
     }
   },
@@ -2183,21 +2183,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.3734862409304928,
-      "draw": 0.28482525063341857,
-      "awayWin": 0.3416885084360887,
+      "homeWin": 0.3524366016073998,
+      "draw": 0.3269245292796046,
+      "awayWin": 0.3206388691129957,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1328152853353706
+        "probability": 0.1538649246584636
       }
     },
     "poisson": {
-      "homeWin": 0.4155,
-      "draw": 0.2448,
-      "awayWin": 0.3397,
+      "homeWin": 0.4188,
+      "draw": 0.2381,
+      "awayWin": 0.3431,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.6226994193548383,
@@ -2205,7 +2205,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1066
+        "probability": 0.1054
       }
     }
   },
@@ -2217,21 +2217,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.3198387236507858,
-      "draw": 0.28764033790323984,
-      "awayWin": 0.3925209384459744,
+      "homeWin": 0.2987464734923889,
+      "draw": 0.32982483822003356,
+      "awayWin": 0.3714286882875775,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13308414363561943
+        "probability": 0.15417639379401632
       }
     },
     "poisson": {
-      "homeWin": 0.5712,
-      "draw": 0.1999,
-      "awayWin": 0.2289,
+      "homeWin": 0.5696,
+      "draw": 0.2039,
+      "awayWin": 0.2265,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0916079677419357,
@@ -2239,7 +2239,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.1005
+        "probability": 0.0964
       }
     }
   },
@@ -2251,21 +2251,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.4449103363158194,
-      "draw": 0.29430512508486234,
-      "awayWin": 0.260784538599318,
+      "homeWin": 0.42413178381863903,
+      "draw": 0.33586223007922333,
+      "awayWin": 0.2400059861021376,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.15199610792856816
+        "awayGoals": 1,
+        "probability": 0.15188338220043307
       }
     },
     "poisson": {
-      "homeWin": 0.2857,
-      "draw": 0.2222,
-      "awayWin": 0.4921,
+      "homeWin": 0.2907,
+      "draw": 0.2249,
+      "awayWin": 0.4844,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.4041129354838708,
@@ -2273,7 +2273,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.095
+        "probability": 0.0999
       }
     }
   },
@@ -2285,21 +2285,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.6509396562160766,
-      "draw": 0.21263002111925505,
-      "awayWin": 0.13643032266466817,
+      "homeWin": 0.6350776373570383,
+      "draw": 0.24435405883733205,
+      "awayWin": 0.12056830380562966,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.13672983291851115
+        "probability": 0.1303474922138365
       }
     },
     "poisson": {
-      "homeWin": 0.3374,
-      "draw": 0.2551,
-      "awayWin": 0.4075,
+      "homeWin": 0.3346,
+      "draw": 0.2424,
+      "awayWin": 0.423,
       "predictedOutcome": "away",
       "correct": true,
       "homeLambda": 1.3327280645161286,
@@ -2307,7 +2307,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1238
+        "probability": 0.1134
       }
     }
   },
@@ -2319,21 +2319,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.5232257216854185,
-      "draw": 0.32528898530160194,
-      "awayWin": 0.15148529301297967,
+      "homeWin": 0.5063663798474443,
+      "draw": 0.3590076689775503,
+      "awayWin": 0.13462595117500545,
       "predictedOutcome": "home",
-      "correct": false,
+      "correct": true,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 0,
         "awayGoals": 0,
-        "probability": 0.22999876577600653
+        "probability": 0.22109227955395452
       }
     },
     "poisson": {
-      "homeWin": 0.4878,
-      "draw": 0.2719,
-      "awayWin": 0.2403,
+      "homeWin": 0.4973,
+      "draw": 0.2664,
+      "awayWin": 0.2363,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.416090516129032,
@@ -2341,7 +2341,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1423
+        "probability": 0.1418
       }
     }
   },
@@ -2353,29 +2353,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5352613276347061,
-      "draw": 0.22633441389629755,
-      "awayWin": 0.23840425846899643,
+      "homeWin": 0.518648944104394,
+      "draw": 0.25955918095692176,
+      "awayWin": 0.22179187493868435,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1048178747774766
+        "probability": 0.1214302583077887
       }
     },
     "poisson": {
-      "homeWin": 0.5511,
-      "draw": 0.2029,
-      "awayWin": 0.246,
+      "homeWin": 0.5469,
+      "draw": 0.2117,
+      "awayWin": 0.2414,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.154888580645161,
       "awayLambda": 1.3660247741935483,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0942
+        "probability": 0.0953
       }
     }
   },
@@ -2387,21 +2387,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.27410437405914156,
-      "draw": 0.2731323041181125,
-      "awayWin": 0.45276332182274576,
+      "homeWin": 0.2537819964972067,
+      "draw": 0.3137770592419823,
+      "awayWin": 0.43244094426081087,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12839220412436972
+        "probability": 0.14854891546847176
       }
     },
     "poisson": {
-      "homeWin": 0.4353,
-      "draw": 0.2176,
-      "awayWin": 0.3471,
+      "homeWin": 0.4356,
+      "draw": 0.2255,
+      "awayWin": 0.3389,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8771558064516127,
@@ -2409,7 +2409,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.093
+        "probability": 0.0968
       }
     }
   },
@@ -2421,9 +2421,9 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.7566513242391713,
-      "draw": 0.1461113346026775,
-      "awayWin": 0.09723734115815123,
+      "homeWin": 0.7461678833705716,
+      "draw": 0.1670782163398768,
+      "awayWin": 0.08675390028955159,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -2433,17 +2433,17 @@
       }
     },
     "poisson": {
-      "homeWin": 0.6036,
-      "draw": 0.2273,
-      "awayWin": 0.1691,
+      "homeWin": 0.6001,
+      "draw": 0.224,
+      "awayWin": 0.1759,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8525593870967743,
       "awayLambda": 0.8632097499999998,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.1158
+        "probability": 0.1164
       }
     }
   },
@@ -2455,21 +2455,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.20102216820294805,
-      "draw": 0.2558353468394236,
-      "awayWin": 0.5431424849576281,
+      "homeWin": 0.18214210687434,
+      "draw": 0.29359546949663984,
+      "awayWin": 0.5242624236290201,
       "predictedOutcome": "away",
-      "correct": true,
+      "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1432804410889302
+        "probability": 0.1380061277670672
       }
     },
     "poisson": {
-      "homeWin": 0.193,
-      "draw": 0.195,
-      "awayWin": 0.612,
+      "homeWin": 0.1892,
+      "draw": 0.1959,
+      "awayWin": 0.6149,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.1620494166666666,
@@ -2477,7 +2477,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.0992
+        "probability": 0.0972
       }
     }
   },
@@ -2489,29 +2489,29 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.28888565650310416,
-      "draw": 0.22479971240015367,
-      "awayWin": 0.4863146310967422,
+      "homeWin": 0.273212790446299,
+      "draw": 0.2561454445137639,
+      "awayWin": 0.47064176503993704,
       "predictedOutcome": "away",
       "correct": true,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09888987385517574
+        "probability": 0.11456273991198083
       }
     },
     "poisson": {
-      "homeWin": 0.4287,
-      "draw": 0.2143,
-      "awayWin": 0.357,
+      "homeWin": 0.4204,
+      "draw": 0.2087,
+      "awayWin": 0.3709,
       "predictedOutcome": "home",
-      "correct": false,
+      "correct": true,
       "homeLambda": 2.0474132580645157,
       "awayLambda": 1.895438064516129,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0806
+        "probability": 0.0762
       }
     }
   },
@@ -2523,21 +2523,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.05925081119750545,
-      "draw": 0.2043878362213308,
-      "awayWin": 0.7363613525811635,
+      "homeWin": 0.04826790246843339,
+      "draw": 0.226353653679475,
+      "awayWin": 0.7253784438520915,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.22090267851352324
+        "probability": 0.20991976978445118
       }
     },
     "poisson": {
-      "homeWin": 0.2609,
-      "draw": 0.223,
-      "awayWin": 0.5161,
+      "homeWin": 0.2689,
+      "draw": 0.2243,
+      "awayWin": 0.5068,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.2766026562500001,
@@ -2545,7 +2545,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1026
+        "probability": 0.1003
       }
     }
   },
@@ -2557,21 +2557,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.35055118795497536,
-      "draw": 0.23887134469692992,
-      "awayWin": 0.4105774673480948,
+      "homeWin": 0.33333371745636337,
+      "draw": 0.27330628569415377,
+      "awayWin": 0.3933599968494828,
       "predictedOutcome": "away",
       "correct": true,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1086357453411443
+        "probability": 0.12585321583975623
       }
     },
     "poisson": {
-      "homeWin": 0.518,
-      "draw": 0.2275,
-      "awayWin": 0.2545,
+      "homeWin": 0.5186,
+      "draw": 0.2347,
+      "awayWin": 0.2467,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.836499,
@@ -2579,7 +2579,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1083
+        "probability": 0.1069
       }
     }
   },
@@ -2591,21 +2591,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.3819117626022793,
-      "draw": 0.23014872223217084,
-      "awayWin": 0.38793951516555003,
+      "homeWin": 0.3660822878237012,
+      "draw": 0.26180767178932696,
+      "awayWin": 0.37211004038697193,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.099878015825165
+        "probability": 0.11570749060374308
       }
     },
     "poisson": {
-      "homeWin": 0.4887,
-      "draw": 0.209,
-      "awayWin": 0.3023,
+      "homeWin": 0.4838,
+      "draw": 0.2127,
+      "awayWin": 0.3035,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.04004221875,
@@ -2613,7 +2613,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.086
+        "probability": 0.0917
       }
     }
   },
@@ -2625,9 +2625,9 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.6759031438331102,
-      "draw": 0.19543130029302644,
-      "awayWin": 0.12866555587386322,
+      "homeWin": 0.6611744086106208,
+      "draw": 0.2248887707380054,
+      "awayWin": 0.11393682065137377,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -2637,17 +2637,17 @@
       }
     },
     "poisson": {
-      "homeWin": 0.6667,
-      "draw": 0.1927,
-      "awayWin": 0.1406,
+      "homeWin": 0.6728,
+      "draw": 0.1904,
+      "awayWin": 0.1368,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1266127187499997,
       "awayLambda": 0.849983846153846,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.1168
+        "probability": 0.1171
       }
     }
   },
@@ -2659,21 +2659,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.29133509234920735,
-      "draw": 0.27516690121047954,
-      "awayWin": 0.4334980064403134,
+      "homeWin": 0.270833204548247,
+      "draw": 0.31617067681240013,
+      "awayWin": 0.412996118639353,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12935917981316675
+        "probability": 0.14986106761412704
       }
     },
     "poisson": {
-      "homeWin": 0.2638,
-      "draw": 0.2261,
-      "awayWin": 0.5101,
+      "homeWin": 0.2676,
+      "draw": 0.2148,
+      "awayWin": 0.5176,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.3319384375,
@@ -2681,7 +2681,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1034
+        "probability": 0.0997
       }
     }
   },
@@ -2693,20 +2693,20 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.7243144164836678,
-      "draw": 0.1703908740200189,
-      "awayWin": 0.10529470949631332,
+      "homeWin": 0.7114897121861689,
+      "draw": 0.1960402826150166,
+      "awayWin": 0.09247000519881445,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.12421513293876872
+        "probability": 0.12421513293876871
       }
     },
     "poisson": {
-      "homeWin": 0.534,
-      "draw": 0.2045,
+      "homeWin": 0.5297,
+      "draw": 0.2088,
       "awayWin": 0.2615,
       "predictedOutcome": "home",
       "correct": true,
@@ -2715,7 +2715,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0908
+        "probability": 0.0895
       }
     }
   },
@@ -2727,21 +2727,21 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.396240664763996,
-      "draw": 0.2897642132396372,
-      "awayWin": 0.3139951219963667,
+      "homeWin": 0.3751112655832002,
+      "draw": 0.33202301160122893,
+      "awayWin": 0.2928657228155708,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13331853995634124
+        "probability": 0.1544479391371371
       }
     },
     "poisson": {
-      "homeWin": 0.3106,
-      "draw": 0.2714,
-      "awayWin": 0.418,
+      "homeWin": 0.3097,
+      "draw": 0.2634,
+      "awayWin": 0.4269,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.1260297692307693,
@@ -2749,7 +2749,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1279
+        "probability": 0.1275
       }
     }
   },
@@ -2761,21 +2761,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.3645506569315528,
-      "draw": 0.3151111215261862,
-      "awayWin": 0.3203382215422608,
-      "predictedOutcome": "home",
+      "homeWin": 0.3431673025740882,
+      "draw": 0.35787783024111547,
+      "awayWin": 0.29895486718479625,
+      "predictedOutcome": "draw",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 0,
         "awayGoals": 0,
-        "probability": 0.14629389149885555
+        "probability": 0.16687789133972042
       }
     },
     "poisson": {
-      "homeWin": 0.2559,
-      "draw": 0.1979,
-      "awayWin": 0.5462,
+      "homeWin": 0.248,
+      "draw": 0.2002,
+      "awayWin": 0.5518,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.4871795625000002,
@@ -2783,7 +2783,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.0907
+        "probability": 0.0903
       }
     }
   },
@@ -2795,21 +2795,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.58957609525466,
-      "draw": 0.26457515814157995,
-      "awayWin": 0.1458487466037597,
+      "homeWin": 0.5721703281805751,
+      "draw": 0.29938669228975,
+      "awayWin": 0.12844297952967473,
       "predictedOutcome": "home",
       "correct": true,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1895925411872245
+        "probability": 0.1721867741131395
       }
     },
     "poisson": {
-      "homeWin": 0.6034,
-      "draw": 0.2148,
-      "awayWin": 0.1818,
+      "homeWin": 0.6083,
+      "draw": 0.2131,
+      "awayWin": 0.1786,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.86115440625,
@@ -2817,7 +2817,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1185
+        "probability": 0.119
       }
     }
   },
@@ -2829,29 +2829,29 @@
     "actualAwayGoals": 4,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.185336692207778,
-      "draw": 0.2376884331644574,
-      "awayWin": 0.5769748746277645,
+      "homeWin": 0.16751839697066123,
+      "draw": 0.27332502363869093,
+      "awayWin": 0.5591565793906479,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13157047676355926
+        "probability": 0.1302450180794062
       }
     },
     "poisson": {
-      "homeWin": 0.3386,
-      "draw": 0.2197,
-      "awayWin": 0.4417,
+      "homeWin": 0.3391,
+      "draw": 0.2306,
+      "awayWin": 0.4303,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.6247791249999999,
       "awayLambda": 1.8652406060606062,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 2,
-        "probability": 0.0924
+        "awayGoals": 1,
+        "probability": 0.0951
       }
     }
   },
@@ -2863,29 +2863,29 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.270529586150612,
-      "draw": 0.32721497012626016,
-      "awayWin": 0.4022554437231278,
+      "homeWin": 0.24973416069846865,
+      "draw": 0.36880582103054693,
+      "awayWin": 0.3814600182709844,
       "predictedOutcome": "away",
-      "correct": true,
+      "correct": false,
       "topScore": {
         "homeGoals": 0,
-        "awayGoals": 1,
-        "probability": 0.17011727103546512
+        "awayGoals": 0,
+        "probability": 0.18885496640705002
       }
     },
     "poisson": {
-      "homeWin": 0.376,
-      "draw": 0.2499,
-      "awayWin": 0.3741,
-      "predictedOutcome": "home",
+      "homeWin": 0.3635,
+      "draw": 0.2456,
+      "awayWin": 0.3909,
+      "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.4330825312500002,
       "awayLambda": 1.469973875,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1179
+        "probability": 0.1168
       }
     }
   },
@@ -2897,21 +2897,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.057687788201544514,
-      "draw": 0.30844102021569386,
-      "awayWin": 0.6338711915827615,
+      "homeWin": 0.04872133049124247,
+      "draw": 0.32637393563629796,
+      "awayWin": 0.6249047338724595,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.29905508646792534
+        "probability": 0.2900886287576233
       }
     },
     "poisson": {
-      "homeWin": 0.3389,
-      "draw": 0.2612,
-      "awayWin": 0.3999,
+      "homeWin": 0.3455,
+      "draw": 0.264,
+      "awayWin": 0.3905,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.2431637575757577,
@@ -2919,7 +2919,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1239
+        "probability": 0.1267
       }
     }
   },
@@ -2931,21 +2931,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.3725553620165275,
-      "draw": 0.32544396891960903,
-      "awayWin": 0.30200066906386347,
-      "predictedOutcome": "home",
+      "homeWin": 0.35139154932503835,
+      "draw": 0.3677715943025871,
+      "awayWin": 0.2808368563723744,
+      "predictedOutcome": "draw",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 0,
-        "probability": 0.16166780237981412
+        "probability": 0.18283161507130316
       }
     },
     "poisson": {
-      "homeWin": 0.5761,
-      "draw": 0.2321,
-      "awayWin": 0.1918,
+      "homeWin": 0.5724,
+      "draw": 0.2403,
+      "awayWin": 0.1873,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.77986040625,
@@ -2953,7 +2953,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1181
+        "probability": 0.121
       }
     }
   },
@@ -2965,21 +2965,21 @@
     "actualAwayGoals": 4,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.2627138526818935,
-      "draw": 0.29918368786078325,
-      "awayWin": 0.43810245945732296,
+      "homeWin": 0.24186244933702852,
+      "draw": 0.34088649455051334,
+      "awayWin": 0.41725105611245794,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.15505002010986424
+        "probability": 0.15241589442158043
       }
     },
     "poisson": {
-      "homeWin": 0.2577,
-      "draw": 0.2566,
-      "awayWin": 0.4857,
+      "homeWin": 0.2603,
+      "draw": 0.2599,
+      "awayWin": 0.4798,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.0520436923076923,
@@ -2987,7 +2987,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.123
+        "probability": 0.1226
       }
     }
   },
@@ -2999,21 +2999,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6302932283035351,
-      "draw": 0.22372230546182537,
-      "awayWin": 0.14598446623463948,
+      "homeWin": 0.6137224316893685,
+      "draw": 0.25686389869015896,
+      "awayWin": 0.12941366962047274,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.14309173364537248
+        "probability": 0.12942822563413886
       }
     },
     "poisson": {
-      "homeWin": 0.5866,
-      "draw": 0.2024,
-      "awayWin": 0.211,
+      "homeWin": 0.575,
+      "draw": 0.2075,
+      "awayWin": 0.2175,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1427795,
@@ -3021,7 +3021,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0953
+        "probability": 0.0941
       }
     }
   },
@@ -3033,21 +3033,21 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.4559311595844907,
-      "draw": 0.2287122834012162,
-      "awayWin": 0.31535655701429294,
+      "homeWin": 0.43997563108549054,
+      "draw": 0.2606233403992166,
+      "awayWin": 0.2994010285152928,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.10067336726033563
+        "probability": 0.11662889575933583
       }
     },
     "poisson": {
-      "homeWin": 0.6135,
-      "draw": 0.2043,
-      "awayWin": 0.1822,
+      "homeWin": 0.6193,
+      "draw": 0.1987,
+      "awayWin": 0.182,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1153939375000004,
@@ -3055,7 +3055,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0961
+        "probability": 0.103
       }
     }
   },
@@ -3067,21 +3067,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.29906336026781916,
-      "draw": 0.29413831582606154,
-      "awayWin": 0.4067983239061193,
+      "homeWin": 0.27791682567767984,
+      "draw": 0.33643138500634,
+      "awayWin": 0.38565178931598015,
       "predictedOutcome": "away",
-      "correct": true,
+      "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13851443654102297
+        "probability": 0.15457319251688117
       }
     },
     "poisson": {
-      "homeWin": 0.409,
-      "draw": 0.2107,
-      "awayWin": 0.3803,
+      "homeWin": 0.4111,
+      "draw": 0.2179,
+      "awayWin": 0.371,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8661444615384613,
@@ -3089,7 +3089,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0866
+        "probability": 0.0901
       }
     }
   },
@@ -3101,21 +3101,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.649593026212433,
-      "draw": 0.1849737514012588,
-      "awayWin": 0.1654332223863084,
+      "homeWin": 0.6367259909580825,
+      "draw": 0.21070782190995932,
+      "awayWin": 0.15256618713195808,
       "predictedOutcome": "home",
       "correct": true,
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.09680134233051906
+        "probability": 0.09680134233051904
       }
     },
     "poisson": {
-      "homeWin": 0.426,
-      "draw": 0.2253,
-      "awayWin": 0.3487,
+      "homeWin": 0.4334,
+      "draw": 0.2211,
+      "awayWin": 0.3455,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.86480725,
@@ -3123,7 +3123,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0941
+        "probability": 0.0943
       }
     }
   },
@@ -3135,21 +3135,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.41386214884765227,
-      "draw": 0.2876035332122786,
-      "awayWin": 0.2985343179400691,
+      "homeWin": 0.3928682413688908,
+      "draw": 0.3295913481698017,
+      "awayWin": 0.2775404104613076,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.1334256213546646
+        "awayGoals": 1,
+        "probability": 0.15345754589545843
       }
     },
     "poisson": {
-      "homeWin": 0.3816,
-      "draw": 0.2507,
-      "awayWin": 0.3677,
+      "homeWin": 0.3855,
+      "draw": 0.2488,
+      "awayWin": 0.3657,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.43894246875,
@@ -3157,7 +3157,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1187
+        "probability": 0.1164
       }
     }
   },
@@ -3169,21 +3169,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.35029029109833654,
-      "draw": 0.24313478489030438,
-      "awayWin": 0.40657492401135903,
+      "homeWin": 0.33250726848487305,
+      "draw": 0.2787008301172312,
+      "awayWin": 0.3887919013978955,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11220416588997609
+        "probability": 0.12998718850343952
       }
     },
     "poisson": {
-      "homeWin": 0.4822,
-      "draw": 0.2488,
-      "awayWin": 0.269,
+      "homeWin": 0.4852,
+      "draw": 0.2433,
+      "awayWin": 0.2715,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.65359596875,
@@ -3191,7 +3191,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1134
+        "probability": 0.1156
       }
     }
   },
@@ -3203,29 +3203,29 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5298545471860315,
-      "draw": 0.25476939435963875,
-      "awayWin": 0.21537605845432972,
+      "homeWin": 0.5108504730173618,
+      "draw": 0.2927775426969783,
+      "awayWin": 0.19637198428565994,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.13429910583229052
+        "awayGoals": 1,
+        "probability": 0.13891261485693576
       }
     },
     "poisson": {
-      "homeWin": 0.4379,
-      "draw": 0.2022,
-      "awayWin": 0.3599,
+      "homeWin": 0.4307,
+      "draw": 0.2034,
+      "awayWin": 0.3659,
       "predictedOutcome": "home",
-      "correct": true,
+      "correct": false,
       "homeLambda": 2.0406633125000004,
       "awayLambda": 1.8550855625,
       "topScore": {
-        "homeGoals": 2,
-        "awayGoals": 1,
-        "probability": 0.0848
+        "homeGoals": 1,
+        "awayGoals": 2,
+        "probability": 0.0763
       }
     }
   },
@@ -3237,21 +3237,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.40773788890289,
-      "draw": 0.2521836326938198,
-      "awayWin": 0.3400784784032901,
+      "homeWin": 0.38889263133240887,
+      "draw": 0.28987414783478216,
+      "awayWin": 0.3212332208328089,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11890646785078611
+        "probability": 0.13775172542126723
       }
     },
     "poisson": {
-      "homeWin": 0.4341,
-      "draw": 0.227,
-      "awayWin": 0.3389,
+      "homeWin": 0.4445,
+      "draw": 0.2264,
+      "awayWin": 0.3291,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.781208272727273,
@@ -3259,7 +3259,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0941
+        "probability": 0.1018
       }
     }
   },
@@ -3271,21 +3271,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5883754125571646,
-      "draw": 0.23459314128302192,
-      "awayWin": 0.1770314461598132,
+      "homeWin": 0.570808916346078,
+      "draw": 0.2697261337051952,
+      "awayWin": 0.15946494994872656,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.13322378877957358
+        "awayGoals": 1,
+        "probability": 0.1284044621641942
       }
     },
     "poisson": {
-      "homeWin": 0.4974,
-      "draw": 0.2772,
-      "awayWin": 0.2254,
+      "homeWin": 0.495,
+      "draw": 0.2757,
+      "awayWin": 0.2293,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.406653484848485,
@@ -3293,7 +3293,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1485
+        "probability": 0.1457
       }
     }
   },
@@ -3305,21 +3305,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.23926105449149998,
-      "draw": 0.3027843058082522,
-      "awayWin": 0.45795463970024797,
+      "homeWin": 0.21878999190782975,
+      "draw": 0.3437264309755927,
+      "awayWin": 0.4374835771165777,
       "predictedOutcome": "away",
-      "correct": true,
+      "correct": false,
       "topScore": {
         "homeGoals": 0,
-        "awayGoals": 1,
-        "probability": 0.1674609341975152
+        "awayGoals": 0,
+        "probability": 0.16126816608225258
       }
     },
     "poisson": {
-      "homeWin": 0.5885,
-      "draw": 0.2268,
-      "awayWin": 0.1847,
+      "homeWin": 0.5924,
+      "draw": 0.2206,
+      "awayWin": 0.187,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8312941428571428,
@@ -3327,7 +3327,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1211
+        "probability": 0.1172
       }
     }
   },
@@ -3339,21 +3339,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.07971716250453106,
-      "draw": 0.24406938706658798,
-      "awayWin": 0.6762134504288806,
+      "homeWin": 0.06691684815587877,
+      "draw": 0.2696700157638926,
+      "awayWin": 0.6634131360802284,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.23400447302734348
+        "probability": 0.22120415867869123
       }
     },
     "poisson": {
-      "homeWin": 0.203,
-      "draw": 0.1968,
-      "awayWin": 0.6002,
+      "homeWin": 0.205,
+      "draw": 0.1949,
+      "awayWin": 0.6001,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.250944529411765,
@@ -3361,7 +3361,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.1001
+        "probability": 0.0939
       }
     }
   },
@@ -3373,21 +3373,21 @@
     "actualAwayGoals": 4,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.30676988605200317,
-      "draw": 0.2522116997827105,
-      "awayWin": 0.44101841416528625,
+      "homeWin": 0.28784695264217747,
+      "draw": 0.29005756660236204,
+      "awayWin": 0.4220954807554605,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11939657310189605
+        "probability": 0.13831950651172178
       }
     },
     "poisson": {
-      "homeWin": 0.3928,
-      "draw": 0.2111,
-      "awayWin": 0.3961,
+      "homeWin": 0.3862,
+      "draw": 0.2198,
+      "awayWin": 0.394,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.8188593333333334,
@@ -3395,7 +3395,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0824
+        "probability": 0.0912
       }
     }
   },
@@ -3407,21 +3407,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.13483176749779618,
-      "draw": 0.23721128561166369,
-      "awayWin": 0.62795694689054,
+      "homeWin": 0.11818001766602768,
+      "draw": 0.2705147852752007,
+      "awayWin": 0.6113051970587716,
       "predictedOutcome": "away",
       "correct": true,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.16962002363309206
+        "probability": 0.15296827380132355
       }
     },
     "poisson": {
-      "homeWin": 0.332,
-      "draw": 0.2268,
-      "awayWin": 0.4412,
+      "homeWin": 0.3335,
+      "draw": 0.2206,
+      "awayWin": 0.4459,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.6398830606060606,
@@ -3429,7 +3429,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0897
+        "probability": 0.0901
       }
     }
   },
@@ -3441,21 +3441,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.6464024355730744,
-      "draw": 0.19049150218118743,
-      "awayWin": 0.16310606224573815,
+      "homeWin": 0.6326967902219728,
+      "draw": 0.21790279288339065,
+      "awayWin": 0.1494004168946365,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0985717026948083
+        "probability": 0.1001830984832761
       }
     },
     "poisson": {
-      "homeWin": 0.4205,
-      "draw": 0.2507,
-      "awayWin": 0.3288,
+      "homeWin": 0.413,
+      "draw": 0.2563,
+      "awayWin": 0.3307,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.465662393939394,
@@ -3463,7 +3463,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1189
+        "probability": 0.1215
       }
     }
   },
@@ -3475,21 +3475,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.4700331973509563,
-      "draw": 0.3036646295922669,
-      "awayWin": 0.2263021730567768,
+      "homeWin": 0.44984750561906395,
+      "draw": 0.3440360130560514,
+      "awayWin": 0.20611648132488458,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 0,
         "awayGoals": 0,
-        "probability": 0.17403537784738163
+        "probability": 0.16576876776777244
       }
     },
     "poisson": {
-      "homeWin": 0.6043,
-      "draw": 0.2023,
-      "awayWin": 0.1934,
+      "homeWin": 0.5986,
+      "draw": 0.2055,
+      "awayWin": 0.1959,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1425832121212123,
@@ -3497,7 +3497,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.099
+        "probability": 0.0985
       }
     }
   },
@@ -3509,21 +3509,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.547587403235278,
-      "draw": 0.27725672774057886,
-      "awayWin": 0.17515586902414312,
+      "homeWin": 0.5289315729110656,
+      "draw": 0.31456838838900336,
+      "awayWin": 0.15650003869993082,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.18061333559414178
+        "probability": 0.16195750526992947
       }
     },
     "poisson": {
-      "homeWin": 0.5225,
-      "draw": 0.2142,
-      "awayWin": 0.2633,
+      "homeWin": 0.5187,
+      "draw": 0.212,
+      "awayWin": 0.2693,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 2.0851968484848484,
@@ -3531,7 +3531,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0921
+        "probability": 0.0949
       }
     }
   },
@@ -3543,29 +3543,29 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.2635747126719068,
-      "draw": 0.2597263478837079,
-      "awayWin": 0.4766989394443853,
+      "homeWin": 0.2440278308987559,
+      "draw": 0.2988201114300098,
+      "awayWin": 0.45715205767123446,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12333345195466844
+        "probability": 0.14288033372781936
       }
     },
     "poisson": {
-      "homeWin": 0.3799,
-      "draw": 0.2387,
-      "awayWin": 0.3814,
-      "predictedOutcome": "away",
+      "homeWin": 0.3843,
+      "draw": 0.2366,
+      "awayWin": 0.3791,
+      "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.5871574545454543,
       "awayLambda": 1.603314212121212,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1073
+        "probability": 0.1062
       }
     }
   },
@@ -3577,29 +3577,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.3656162406076094,
-      "draw": 0.2469280437171565,
-      "awayWin": 0.3874557156752343,
+      "homeWin": 0.3473914265732977,
+      "draw": 0.2833776717857799,
+      "awayWin": 0.3692309016409226,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1149917031355338
+        "probability": 0.13321651716984548
       }
     },
     "poisson": {
-      "homeWin": 0.2125,
-      "draw": 0.2208,
-      "awayWin": 0.5667,
+      "homeWin": 0.2097,
+      "draw": 0.2308,
+      "awayWin": 0.5595,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.0357422857142857,
       "awayLambda": 1.854565909090909,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1058
+        "probability": 0.1076
       }
     }
   },
@@ -3611,21 +3611,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.4283833810759838,
-      "draw": 0.31687199717141395,
-      "awayWin": 0.25474462175260226,
+      "homeWin": 0.4076977308414423,
+      "draw": 0.35824329764049684,
+      "awayWin": 0.2340589715180609,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 0,
         "awayGoals": 0,
-        "probability": 0.17043726119559935
+        "probability": 0.17716430479974984
       }
     },
     "poisson": {
-      "homeWin": 0.272,
-      "draw": 0.2527,
-      "awayWin": 0.4753,
+      "homeWin": 0.28,
+      "draw": 0.2508,
+      "awayWin": 0.4692,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.171377642857143,
@@ -3633,7 +3633,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1205
+        "probability": 0.1201
       }
     }
   },
@@ -3645,29 +3645,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5574562785550844,
-      "draw": 0.20879940509393619,
-      "awayWin": 0.23374431635097923,
+      "homeWin": 0.5431736002336522,
+      "draw": 0.23736476173680093,
+      "awayWin": 0.2194616380295469,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09581616292498084
+        "probability": 0.10440099187055071
       }
     },
     "poisson": {
-      "homeWin": 0.5826,
-      "draw": 0.216,
-      "awayWin": 0.2014,
+      "homeWin": 0.5911,
+      "draw": 0.2103,
+      "awayWin": 0.1986,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0308244242424247,
       "awayLambda": 1.1210981515151517,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.1036
+        "probability": 0.1012
       }
     }
   },
@@ -3679,21 +3679,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.26083648015033367,
-      "draw": 0.27795202121428,
-      "awayWin": 0.4612114986353863,
+      "homeWin": 0.2404246735844603,
+      "draw": 0.3187756343460268,
+      "awayWin": 0.44079969206951286,
       "predictedOutcome": "away",
-      "correct": true,
+      "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13781628719908973
+        "probability": 0.14920260775944544
       }
     },
     "poisson": {
-      "homeWin": 0.5278,
-      "draw": 0.2131,
-      "awayWin": 0.2591,
+      "homeWin": 0.524,
+      "draw": 0.2079,
+      "awayWin": 0.2681,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.138392333333333,
@@ -3701,7 +3701,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0901
+        "probability": 0.0921
       }
     }
   },
@@ -3713,21 +3713,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.19780285513012796,
-      "draw": 0.2498404652971431,
-      "awayWin": 0.5523566795727289,
+      "homeWin": 0.17922442605815236,
+      "draw": 0.2869973234410943,
+      "awayWin": 0.5337782505007533,
       "predictedOutcome": "away",
-      "correct": false,
+      "correct": true,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13839428055833497
+        "probability": 0.13580130973056975
       }
     },
     "poisson": {
-      "homeWin": 0.2918,
-      "draw": 0.2341,
-      "awayWin": 0.4741,
+      "homeWin": 0.2958,
+      "draw": 0.2343,
+      "awayWin": 0.4699,
       "predictedOutcome": "away",
       "correct": true,
       "homeLambda": 1.362610606060606,
@@ -3735,7 +3735,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1033
+        "probability": 0.107
       }
     }
   },
@@ -3747,21 +3747,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.506877283678591,
-      "draw": 0.255068827770339,
-      "awayWin": 0.23805388855107,
+      "homeWin": 0.48770612515650225,
+      "draw": 0.29341114481451624,
+      "awayWin": 0.21888273002898137,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.12377418914624895
+        "awayGoals": 1,
+        "probability": 0.14013393846518354
       }
     },
     "poisson": {
-      "homeWin": 0.52,
-      "draw": 0.225,
-      "awayWin": 0.255,
+      "homeWin": 0.5214,
+      "draw": 0.2207,
+      "awayWin": 0.2579,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8664403333333333,
@@ -3769,7 +3769,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1043
+        "probability": 0.1019
       }
     }
   },
@@ -3781,21 +3781,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6900524096493269,
-      "draw": 0.22494013255270556,
-      "awayWin": 0.0850074577979678,
+      "homeWin": 0.6765521308736021,
+      "draw": 0.25194069010415476,
+      "awayWin": 0.07150717902224313,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.2083374434861421
+        "probability": 0.19483716471041743
       }
     },
     "poisson": {
-      "homeWin": 0.4998,
-      "draw": 0.2254,
-      "awayWin": 0.2748,
+      "homeWin": 0.4956,
+      "draw": 0.2332,
+      "awayWin": 0.2712,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8793915757575756,
@@ -3803,7 +3803,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0978
+        "probability": 0.1056
       }
     }
   },
@@ -3815,21 +3815,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.27067925677766186,
-      "draw": 0.28059314055264184,
-      "awayWin": 0.44872760266969625,
+      "homeWin": 0.2500940292029805,
+      "draw": 0.3217635957020046,
+      "awayWin": 0.42814237509501485,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1365810884621973
+        "probability": 0.1504702499287417
       }
     },
     "poisson": {
-      "homeWin": 0.397,
-      "draw": 0.2406,
-      "awayWin": 0.3624,
+      "homeWin": 0.3929,
+      "draw": 0.249,
+      "awayWin": 0.3581,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.4704398181818183,
@@ -3837,7 +3837,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1112
+        "probability": 0.1142
       }
     }
   },
@@ -3849,21 +3849,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.6541493098087191,
-      "draw": 0.2437094379247318,
-      "awayWin": 0.10214125226654935,
+      "homeWin": 0.6393460464186389,
+      "draw": 0.27331596470489206,
+      "awayWin": 0.08733798887646924,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.2086526530240398
+        "probability": 0.19384938963395967
       }
     },
     "poisson": {
-      "homeWin": 0.5426,
-      "draw": 0.2061,
-      "awayWin": 0.2513,
+      "homeWin": 0.5482,
+      "draw": 0.2117,
+      "awayWin": 0.2401,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.141464666666667,
@@ -3871,7 +3871,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0929
+        "probability": 0.0958
       }
     }
   },
@@ -3883,21 +3883,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.5693409824174286,
-      "draw": 0.20602055698528976,
-      "awayWin": 0.2246384605972817,
+      "homeWin": 0.5552488396360136,
+      "draw": 0.23420484254811982,
+      "awayWin": 0.21054631781586663,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09612039865073477
+        "probability": 0.10300824893279588
       }
     },
     "poisson": {
-      "homeWin": 0.637,
-      "draw": 0.2041,
-      "awayWin": 0.1589,
+      "homeWin": 0.6292,
+      "draw": 0.2063,
+      "awayWin": 0.1645,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0294418484848484,
@@ -3905,7 +3905,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.1122
+        "probability": 0.1128
       }
     }
   },
@@ -3917,9 +3917,9 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.7400384135079835,
-      "draw": 0.17090953891948135,
-      "awayWin": 0.08905204757253517,
+      "homeWin": 0.7272831838558268,
+      "draw": 0.19641999822379455,
+      "awayWin": 0.07629681792037855,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -3929,17 +3929,17 @@
       }
     },
     "poisson": {
-      "homeWin": 0.4577,
-      "draw": 0.2246,
-      "awayWin": 0.3177,
+      "homeWin": 0.4516,
+      "draw": 0.2313,
+      "awayWin": 0.3171,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.7969874411764708,
       "awayLambda": 1.4793992352941177,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0954
+        "probability": 0.0959
       }
     }
   },
@@ -3951,21 +3951,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.28426650842422396,
-      "draw": 0.2643964422808706,
-      "awayWin": 0.4513370492949052,
+      "homeWin": 0.2643743416839871,
+      "draw": 0.3041807757613444,
+      "awayWin": 0.43144488255466834,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12551206987403693
+        "probability": 0.1454042366142738
       }
     },
     "poisson": {
-      "homeWin": 0.2849,
-      "draw": 0.1984,
-      "awayWin": 0.5167,
+      "homeWin": 0.2694,
+      "draw": 0.1991,
+      "awayWin": 0.5315,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.6186873235294117,
@@ -3973,7 +3973,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.0826
+        "probability": 0.0882
       }
     }
   },
@@ -3985,21 +3985,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6558448015567486,
-      "draw": 0.20714703713848842,
-      "awayWin": 0.1370081613047628,
+      "homeWin": 0.6402845977195949,
+      "draw": 0.2382674448127961,
+      "awayWin": 0.121447957467609,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.12850132891966143
+        "probability": 0.1265773242383871
       }
     },
     "poisson": {
-      "homeWin": 0.5111,
-      "draw": 0.2637,
-      "awayWin": 0.2252,
+      "homeWin": 0.5039,
+      "draw": 0.2718,
+      "awayWin": 0.2243,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.4410288823529414,
@@ -4007,7 +4007,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1456
+        "probability": 0.1406
       }
     }
   },
@@ -4019,21 +4019,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5393203043962098,
-      "draw": 0.200580921610105,
-      "awayWin": 0.26009877399368514,
+      "homeWin": 0.5272302010532351,
+      "draw": 0.22476112829605438,
+      "awayWin": 0.24800867065071047,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.08777053571157717
+        "probability": 0.08837409569954081
       }
     },
     "poisson": {
-      "homeWin": 0.287,
-      "draw": 0.2277,
-      "awayWin": 0.4853,
+      "homeWin": 0.2888,
+      "draw": 0.2255,
+      "awayWin": 0.4857,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.3993533823529414,
@@ -4041,7 +4041,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1011
+        "probability": 0.0973
       }
     }
   },
@@ -4053,29 +4053,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.30001260455642753,
-      "draw": 0.28655769595401787,
-      "awayWin": 0.4134296994895546,
+      "homeWin": 0.27904005018909195,
+      "draw": 0.328502804688689,
+      "awayWin": 0.392457145122219,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13232890833684607
+        "probability": 0.15330146270418163
       }
     },
     "poisson": {
-      "homeWin": 0.4405,
-      "draw": 0.2173,
-      "awayWin": 0.3422,
+      "homeWin": 0.4347,
+      "draw": 0.2303,
+      "awayWin": 0.335,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.7684233333333332,
       "awayLambda": 1.513337088235294,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0948
+        "probability": 0.1014
       }
     }
   },
@@ -4087,21 +4087,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.33691251433026315,
-      "draw": 0.27418657311074873,
-      "awayWin": 0.3889009125589883,
+      "homeWin": 0.31634796869756926,
+      "draw": 0.31531566437613656,
+      "awayWin": 0.3683363669262944,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12975452710023697
+        "probability": 0.15031907273293088
       }
     },
     "poisson": {
-      "homeWin": 0.6423,
-      "draw": 0.1962,
-      "awayWin": 0.1615,
+      "homeWin": 0.6463,
+      "draw": 0.2023,
+      "awayWin": 0.1514,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.081701941176471,
@@ -4109,7 +4109,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.1091
+        "probability": 0.1131
       }
     }
   },
@@ -4121,21 +4121,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6265794339764837,
-      "draw": 0.20113481196313227,
-      "awayWin": 0.17228575406038388,
+      "homeWin": 0.6118006051034298,
+      "draw": 0.23069246970924054,
+      "awayWin": 0.15750692518732975,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09974142994218053
+        "probability": 0.10802766528156674
       }
     },
     "poisson": {
-      "homeWin": 0.5054,
-      "draw": 0.2313,
-      "awayWin": 0.2633,
+      "homeWin": 0.4915,
+      "draw": 0.2381,
+      "awayWin": 0.2704,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.796791117647059,
@@ -4143,7 +4143,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1042
+        "probability": 0.1112
       }
     }
   },
@@ -4155,21 +4155,21 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.29322796806431634,
-      "draw": 0.23386170800607317,
-      "awayWin": 0.4729103239296105,
+      "homeWin": 0.2763138329493327,
+      "draw": 0.2676899782360403,
+      "awayWin": 0.4559961888146269,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.10672181347226356
+        "probability": 0.12363594858724715
       }
     },
     "poisson": {
-      "homeWin": 0.4746,
-      "draw": 0.2427,
-      "awayWin": 0.2827,
+      "homeWin": 0.4693,
+      "draw": 0.2545,
+      "awayWin": 0.2762,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.5785984117647056,
@@ -4177,7 +4177,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1135
+        "probability": 0.1149
       }
     }
   },
@@ -4189,29 +4189,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.4156682006334266,
-      "draw": 0.28723348916288327,
-      "awayWin": 0.29709831020369015,
+      "homeWin": 0.394692993558707,
+      "draw": 0.32918390331232245,
+      "awayWin": 0.27612310312897054,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.13355823786857177
+        "awayGoals": 1,
+        "probability": 0.1533208529947
       }
     },
     "poisson": {
-      "homeWin": 0.4528,
-      "draw": 0.2814,
-      "awayWin": 0.2658,
+      "homeWin": 0.4522,
+      "draw": 0.2817,
+      "awayWin": 0.2661,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.3369156470588235,
       "awayLambda": 0.9389128823529411,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.1395
+        "awayGoals": 1,
+        "probability": 0.1341
       }
     }
   },
@@ -4223,21 +4223,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.5614720620325019,
-      "draw": 0.1855633531957468,
-      "awayWin": 0.2529645847717514,
+      "homeWin": 0.5522435165115027,
+      "draw": 0.20402044423774524,
+      "awayWin": 0.24373603925075224,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.07690998569798199
+        "probability": 0.076909985697982
       }
     },
     "poisson": {
-      "homeWin": 0.426,
-      "draw": 0.207,
-      "awayWin": 0.367,
+      "homeWin": 0.4169,
+      "draw": 0.2114,
+      "awayWin": 0.3717,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0272281176470592,
@@ -4245,7 +4245,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0813
+        "probability": 0.0789
       }
     }
   },
@@ -4257,21 +4257,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.08739944576963098,
-      "draw": 0.2828158025609512,
-      "awayWin": 0.6297847516694178,
+      "homeWin": 0.07450487215908937,
+      "draw": 0.30860494978203445,
+      "awayWin": 0.6168901780588764,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.2560860130750199
+        "probability": 0.2431914394644783
       }
     },
     "poisson": {
-      "homeWin": 0.2637,
-      "draw": 0.2356,
-      "awayWin": 0.5007,
+      "homeWin": 0.2506,
+      "draw": 0.2584,
+      "awayWin": 0.491,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.0784894666666667,
@@ -4279,7 +4279,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1148
+        "probability": 0.1241
       }
     }
   },
@@ -4291,21 +4291,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.2585696764984357,
-      "draw": 0.244469050077099,
-      "awayWin": 0.4969612734244651,
+      "homeWin": 0.24020901064848532,
+      "draw": 0.28119038177700006,
+      "awayWin": 0.4786006075745147,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11584887685620675
+        "probability": 0.13420954270615726
       }
     },
     "poisson": {
-      "homeWin": 0.578,
-      "draw": 0.2179,
-      "awayWin": 0.2041,
+      "homeWin": 0.5821,
+      "draw": 0.2119,
+      "awayWin": 0.206,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0520053235294116,
@@ -4313,7 +4313,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0995
+        "probability": 0.0972
       }
     }
   },
@@ -4325,9 +4325,9 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6795476198291744,
-      "draw": 0.18012833451454807,
-      "awayWin": 0.14032404565627743,
+      "homeWin": 0.6664539362430976,
+      "draw": 0.20631570168670202,
+      "awayWin": 0.12723036207020047,
       "predictedOutcome": "home",
       "correct": true,
       "topScore": {
@@ -4337,9 +4337,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.5478,
-      "draw": 0.2071,
-      "awayWin": 0.2451,
+      "homeWin": 0.5389,
+      "draw": 0.2134,
+      "awayWin": 0.2477,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1167380588235294,
@@ -4347,7 +4347,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0904
+        "probability": 0.0941
       }
     }
   },
@@ -4359,21 +4359,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.1589860180907907,
-      "draw": 0.25223055535571376,
-      "awayWin": 0.5887834265534956,
+      "homeWin": 0.14117126431872615,
+      "draw": 0.28786006289984295,
+      "awayWin": 0.5709686727814312,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.1668581301885432
+        "probability": 0.14904337641647866
       }
     },
     "poisson": {
-      "homeWin": 0.3971,
-      "draw": 0.258,
-      "awayWin": 0.3449,
+      "homeWin": 0.4052,
+      "draw": 0.248,
+      "awayWin": 0.3468,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.4513389705882354,
@@ -4381,7 +4381,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1207
+        "probability": 0.1157
       }
     }
   },
@@ -4393,21 +4393,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5200978250797506,
-      "draw": 0.22601729149092295,
-      "awayWin": 0.2538848834293264,
+      "homeWin": 0.503741576169659,
+      "draw": 0.25872978931110635,
+      "awayWin": 0.23752863451923487,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.10320176192410697
+        "probability": 0.11955801083419863
       }
     },
     "poisson": {
-      "homeWin": 0.3052,
-      "draw": 0.2672,
-      "awayWin": 0.4276,
+      "homeWin": 0.3027,
+      "draw": 0.2677,
+      "awayWin": 0.4296,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.1372246666666668,
@@ -4415,7 +4415,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1294
+        "probability": 0.1275
       }
     }
   },
@@ -4427,21 +4427,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6797553810284207,
-      "draw": 0.2175227233177433,
-      "awayWin": 0.10272189565383615,
+      "homeWin": 0.6649760045176278,
+      "draw": 0.247081476339329,
+      "awayWin": 0.08794251914304324,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.17837182496933504
+        "probability": 0.16359244845854215
       }
     },
     "poisson": {
-      "homeWin": 0.4525,
-      "draw": 0.2287,
-      "awayWin": 0.3188,
+      "homeWin": 0.4676,
+      "draw": 0.231,
+      "awayWin": 0.3014,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8269922352941177,
@@ -4449,7 +4449,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1035
+        "probability": 0.0972
       }
     }
   },
@@ -4461,9 +4461,9 @@
     "actualAwayGoals": 3,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.5677115974237815,
-      "draw": 0.1884743534469872,
-      "awayWin": 0.24381404912923102,
+      "homeWin": 0.5574970367925876,
+      "draw": 0.2089034747093751,
+      "awayWin": 0.23359948849803708,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -4473,17 +4473,17 @@
       }
     },
     "poisson": {
-      "homeWin": 0.4625,
-      "draw": 0.2001,
-      "awayWin": 0.3374,
+      "homeWin": 0.4616,
+      "draw": 0.2058,
+      "awayWin": 0.3326,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1262360882352938,
       "awayLambda": 1.7719258529411763,
       "topScore": {
         "homeGoals": 2,
-        "awayGoals": 2,
-        "probability": 0.0724
+        "awayGoals": 1,
+        "probability": 0.0789
       }
     }
   },
@@ -4495,21 +4495,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.30582905533096627,
-      "draw": 0.24034369717542903,
-      "awayWin": 0.45382724749360476,
+      "homeWin": 0.2881895634922625,
+      "draw": 0.27562268085283664,
+      "awayWin": 0.4361877556549009,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1112985408333417
+        "probability": 0.12893803267204548
       }
     },
     "poisson": {
-      "homeWin": 0.5243,
-      "draw": 0.2265,
-      "awayWin": 0.2492,
+      "homeWin": 0.5202,
+      "draw": 0.2313,
+      "awayWin": 0.2485,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8734750588235292,
@@ -4517,7 +4517,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1074
+        "probability": 0.1086
       }
     }
   },
@@ -4529,21 +4529,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.4945334679477622,
-      "draw": 0.24272486583386255,
-      "awayWin": 0.2627416662183752,
+      "homeWin": 0.4763581058053177,
+      "draw": 0.2790755901187515,
+      "awayWin": 0.24456630407593072,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.11467968034844926
+        "probability": 0.13285504249089372
       }
     },
     "poisson": {
-      "homeWin": 0.5444,
-      "draw": 0.2074,
-      "awayWin": 0.2482,
+      "homeWin": 0.5321,
+      "draw": 0.2141,
+      "awayWin": 0.2538,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.058034314285714,
@@ -4551,7 +4551,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0942
+        "probability": 0.094
       }
     }
   },
@@ -4563,9 +4563,9 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6942371128830362,
-      "draw": 0.16838293357838183,
-      "awayWin": 0.13737995353858182,
+      "homeWin": 0.6826084834598521,
+      "draw": 0.19164019242475003,
+      "awayWin": 0.12575132411539774,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -4575,9 +4575,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.5525,
-      "draw": 0.2439,
-      "awayWin": 0.2036,
+      "homeWin": 0.5605,
+      "draw": 0.2386,
+      "awayWin": 0.2009,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.6839778749999998,
@@ -4585,7 +4585,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1241
+        "probability": 0.1188
       }
     }
   },
@@ -4597,21 +4597,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.34019016596369545,
-      "draw": 0.23684854410362535,
-      "awayWin": 0.42296128993267934,
+      "homeWin": 0.323212839083964,
+      "draw": 0.27080319786308826,
+      "awayWin": 0.4059839630529479,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.107120529675283
+        "probability": 0.12409785655501446
       }
     },
     "poisson": {
-      "homeWin": 0.4305,
-      "draw": 0.2086,
-      "awayWin": 0.3609,
+      "homeWin": 0.4326,
+      "draw": 0.2118,
+      "awayWin": 0.3556,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0584261714285716,
@@ -4619,7 +4619,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0772
+        "probability": 0.0788
       }
     }
   },
@@ -4631,9 +4631,9 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.06058668947396859,
-      "draw": 0.14540195645478776,
-      "awayWin": 0.7940113540712436,
+      "homeWin": 0.04997879669323405,
+      "draw": 0.16661774201625684,
+      "awayWin": 0.7834034612905091,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
@@ -4643,9 +4643,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.3814,
-      "draw": 0.2402,
-      "awayWin": 0.3784,
+      "homeWin": 0.3834,
+      "draw": 0.236,
+      "awayWin": 0.3806,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.5797498857142853,
@@ -4653,7 +4653,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1072
+        "probability": 0.1056
       }
     }
   },
@@ -4665,21 +4665,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.4307412406254153,
-      "draw": 0.26252644986502743,
-      "awayWin": 0.3067323095095572,
+      "homeWin": 0.41095231183961933,
+      "draw": 0.30210430743661926,
+      "awayWin": 0.28694338072376124,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12486067731732596
+        "probability": 0.14464960610312186
       }
     },
     "poisson": {
-      "homeWin": 0.5226,
-      "draw": 0.2076,
-      "awayWin": 0.2698,
+      "homeWin": 0.5185,
+      "draw": 0.2158,
+      "awayWin": 0.2657,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1003744857142856,
@@ -4687,7 +4687,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.093
+        "probability": 0.0972
       }
     }
   },
@@ -4699,29 +4699,29 @@
     "actualAwayGoals": 3,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5068427345262618,
-      "draw": 0.24508775594684,
-      "awayWin": 0.24806950952689838,
+      "homeWin": 0.48839143187472245,
+      "draw": 0.2819903612499183,
+      "awayWin": 0.22961820687535914,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1164207608908979
+        "probability": 0.13487206354243705
       }
     },
     "poisson": {
-      "homeWin": 0.56,
-      "draw": 0.2286,
-      "awayWin": 0.2114,
+      "homeWin": 0.5588,
+      "draw": 0.229,
+      "awayWin": 0.2122,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8164622285714287,
       "awayLambda": 1.021955875,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 1,
-        "probability": 0.1061
+        "awayGoals": 0,
+        "probability": 0.1088
       }
     }
   },
@@ -4733,21 +4733,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.5354412695008179,
-      "draw": 0.21477893956542196,
-      "awayWin": 0.2497797909337601,
+      "homeWin": 0.5206100447437768,
+      "draw": 0.24444138907950405,
+      "awayWin": 0.23494856617671905,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09553462153470599
+        "probability": 0.10841065943259802
       }
     },
     "poisson": {
-      "homeWin": 0.2468,
-      "draw": 0.1981,
-      "awayWin": 0.5551,
+      "homeWin": 0.2452,
+      "draw": 0.2029,
+      "awayWin": 0.5519,
       "predictedOutcome": "away",
       "correct": true,
       "homeLambda": 1.4006667142857145,
@@ -4755,7 +4755,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.094
+        "probability": 0.0896
       }
     }
   },
@@ -4767,29 +4767,29 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.4037977589236771,
-      "draw": 0.2777728776334429,
-      "awayWin": 0.31842936344288,
+      "homeWin": 0.38308348252928914,
+      "draw": 0.31920143042221877,
+      "awayWin": 0.29771508704849203,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1306992717361253
+        "probability": 0.15141354813051322
       }
     },
     "poisson": {
-      "homeWin": 0.4837,
-      "draw": 0.271,
-      "awayWin": 0.2453,
+      "homeWin": 0.4853,
+      "draw": 0.2712,
+      "awayWin": 0.2435,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.4341707142857143,
       "awayLambda": 0.9218830625000001,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.1331
+        "awayGoals": 1,
+        "probability": 0.1354
       }
     }
   },
@@ -4801,9 +4801,9 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.43497452233962447,
-      "draw": 0.19522070973844843,
-      "awayWin": 0.36980476792192696,
+      "homeWin": 0.4263211416557325,
+      "draw": 0.2125274711062324,
+      "awayWin": 0.36115138723803497,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -4813,17 +4813,17 @@
       }
     },
     "poisson": {
-      "homeWin": 0.4495,
-      "draw": 0.2003,
-      "awayWin": 0.3502,
+      "homeWin": 0.4573,
+      "draw": 0.2017,
+      "awayWin": 0.341,
       "predictedOutcome": "home",
-      "correct": true,
+      "correct": false,
       "homeLambda": 2.159758705882353,
       "awayLambda": 1.8681358000000001,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0785
+        "probability": 0.0742
       }
     }
   },
@@ -4835,21 +4835,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.3241803355579156,
-      "draw": 0.27416269881194394,
-      "awayWin": 0.40165696563014053,
+      "homeWin": 0.30363422442507054,
+      "draw": 0.3152549210776341,
+      "awayWin": 0.3811108544972954,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12963821235869422
+        "probability": 0.15018432349153932
       }
     },
     "poisson": {
-      "homeWin": 0.5135,
-      "draw": 0.2298,
-      "awayWin": 0.2567,
+      "homeWin": 0.5134,
+      "draw": 0.2362,
+      "awayWin": 0.2504,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.8644876,
@@ -4857,7 +4857,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1054
+        "probability": 0.1059
       }
     }
   },
@@ -4869,21 +4869,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5423215757631751,
-      "draw": 0.2472401941632947,
-      "awayWin": 0.2104382300735302,
+      "homeWin": 0.5237634163734334,
+      "draw": 0.284356512942778,
+      "awayWin": 0.19188007068378857,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
-        "awayGoals": 0,
-        "probability": 0.12830068723120636
+        "awayGoals": 1,
+        "probability": 0.13565314599807501
       }
     },
     "poisson": {
-      "homeWin": 0.3436,
-      "draw": 0.2211,
-      "awayWin": 0.4353,
+      "homeWin": 0.3487,
+      "draw": 0.225,
+      "awayWin": 0.4263,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.6704265428571428,
@@ -4891,7 +4891,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0901
+        "probability": 0.0931
       }
     }
   },
@@ -4903,9 +4903,9 @@
     "actualAwayGoals": 2,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.8705391067824879,
-      "draw": 0.07715424094970603,
-      "awayWin": 0.05230665226780606,
+      "homeWin": 0.8673536897785205,
+      "draw": 0.0835250749576409,
+      "awayWin": 0.04912123526383863,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -4915,9 +4915,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.4821,
-      "draw": 0.2271,
-      "awayWin": 0.2908,
+      "homeWin": 0.4853,
+      "draw": 0.2287,
+      "awayWin": 0.286,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.7961203714285716,
@@ -4925,7 +4925,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1005
+        "probability": 0.1025
       }
     }
   },
@@ -4937,21 +4937,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.12970489193707163,
-      "draw": 0.25999196757380705,
-      "awayWin": 0.6103031404891214,
+      "homeWin": 0.11314326832390727,
+      "draw": 0.2931152148001356,
+      "awayWin": 0.593741516875957,
       "predictedOutcome": "away",
       "correct": true,
       "topScore": {
         "homeGoals": 0,
         "awayGoals": 1,
-        "probability": 0.198453368177478
+        "probability": 0.1818917445643137
       }
     },
     "poisson": {
-      "homeWin": 0.2212,
-      "draw": 0.2333,
-      "awayWin": 0.5455,
+      "homeWin": 0.2252,
+      "draw": 0.2306,
+      "awayWin": 0.5442,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.0618356875,
@@ -4959,7 +4959,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1121
+        "probability": 0.1086
       }
     }
   },
@@ -4971,21 +4971,21 @@
     "actualAwayGoals": 5,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.2721494554258606,
-      "draw": 0.2695918238705856,
-      "awayWin": 0.4582587207035538,
+      "homeWin": 0.25200566777715655,
+      "draw": 0.30987939916799373,
+      "awayWin": 0.4381149330548497,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12709970290857336
+        "probability": 0.14724349055727742
       }
     },
     "poisson": {
-      "homeWin": 0.3552,
-      "draw": 0.2817,
-      "awayWin": 0.3631,
+      "homeWin": 0.3565,
+      "draw": 0.2856,
+      "awayWin": 0.3579,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.177138125,
@@ -4993,7 +4993,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1332
+        "probability": 0.1342
       }
     }
   },
@@ -5005,21 +5005,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.4706699541939505,
-      "draw": 0.26388339434659963,
-      "awayWin": 0.26544665145944984,
+      "homeWin": 0.45086352125592677,
+      "draw": 0.30349626022264703,
+      "awayWin": 0.2456402185214261,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12497112191625712
+        "probability": 0.1447775548542808
       }
     },
     "poisson": {
-      "homeWin": 0.4094,
-      "draw": 0.2458,
-      "awayWin": 0.3448,
+      "homeWin": 0.411,
+      "draw": 0.2517,
+      "awayWin": 0.3373,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.499410342857143,
@@ -5027,7 +5027,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.121
+        "probability": 0.1191
       }
     }
   },
@@ -5039,21 +5039,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6298776120880156,
-      "draw": 0.216748761055841,
-      "awayWin": 0.1533736268561433,
+      "homeWin": 0.6135802911721829,
+      "draw": 0.24934340288750634,
+      "awayWin": 0.13707630594031067,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.12756652713330058
+        "probability": 0.12096195785841887
       }
     },
     "poisson": {
-      "homeWin": 0.5025,
-      "draw": 0.2095,
-      "awayWin": 0.288,
+      "homeWin": 0.492,
+      "draw": 0.2104,
+      "awayWin": 0.2976,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.1138309714285715,
@@ -5061,7 +5061,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.0852
+        "probability": 0.0892
       }
     }
   },
@@ -5073,21 +5073,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.21182714464883584,
-      "draw": 0.2754255883466409,
-      "awayWin": 0.5127472670045234,
+      "homeWin": 0.19217823138315077,
+      "draw": 0.31472341487801103,
+      "awayWin": 0.4930983537388382,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.15750890261074754
+        "probability": 0.14362614545744523
       }
     },
     "poisson": {
-      "homeWin": 0.4169,
-      "draw": 0.2697,
-      "awayWin": 0.3134,
+      "homeWin": 0.4226,
+      "draw": 0.2674,
+      "awayWin": 0.31,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.3713977714285714,
@@ -5095,7 +5095,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1297
+        "probability": 0.1286
       }
     }
   },
@@ -5107,21 +5107,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "away",
     "ml": {
-      "homeWin": 0.25580249078308537,
-      "draw": 0.2730915645974386,
-      "awayWin": 0.4711059446194761,
+      "homeWin": 0.23561216181918843,
+      "draw": 0.31347222252523255,
+      "awayWin": 0.45091561565557914,
       "predictedOutcome": "away",
-      "correct": true,
+      "correct": false,
       "topScore": {
-        "homeGoals": 0,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.13515098355322105
+        "probability": 0.14758369001845303
       }
     },
     "poisson": {
-      "homeWin": 0.3287,
-      "draw": 0.2649,
-      "awayWin": 0.4064,
+      "homeWin": 0.3375,
+      "draw": 0.2661,
+      "awayWin": 0.3964,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.2333756285714288,
@@ -5129,7 +5129,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1209
+        "probability": 0.1261
       }
     }
   },
@@ -5141,29 +5141,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.47644241507217805,
-      "draw": 0.25262774374344216,
-      "awayWin": 0.27092984118437974,
+      "homeWin": 0.4574067394183526,
+      "draw": 0.2906990950510932,
+      "awayWin": 0.25189416553055427,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.12010793414121573
+        "probability": 0.13914360979504126
       }
     },
     "poisson": {
-      "homeWin": 0.518,
-      "draw": 0.2133,
-      "awayWin": 0.2687,
+      "homeWin": 0.5221,
+      "draw": 0.2229,
+      "awayWin": 0.255,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.0596918857142863,
       "awayLambda": 1.4403974571428573,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0947
+        "probability": 0.0928
       }
     }
   },
@@ -5175,21 +5175,21 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5128462226751357,
-      "draw": 0.19116382640306862,
-      "awayWin": 0.2959899509217956,
+      "homeWin": 0.5038092378308671,
+      "draw": 0.2092377960916062,
+      "awayWin": 0.2869529660775269,
       "predictedOutcome": "home",
       "correct": true,
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.07263518391455456
+        "probability": 0.07263518391455458
       }
     },
     "poisson": {
-      "homeWin": 0.4706,
-      "draw": 0.2232,
-      "awayWin": 0.3062,
+      "homeWin": 0.4701,
+      "draw": 0.2233,
+      "awayWin": 0.3066,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.858962914285714,
@@ -5197,7 +5197,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0953
+        "probability": 0.0948
       }
     }
   },
@@ -5209,9 +5209,9 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.7560365007581885,
-      "draw": 0.1645468235775256,
-      "awayWin": 0.07941667566428592,
+      "homeWin": 0.7438598567392277,
+      "draw": 0.18890011161544706,
+      "awayWin": 0.06724003164532517,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
@@ -5221,9 +5221,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.5897,
-      "draw": 0.2235,
-      "awayWin": 0.1868,
+      "homeWin": 0.5768,
+      "draw": 0.2365,
+      "awayWin": 0.1867,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.7942168235294118,
@@ -5231,7 +5231,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 0,
-        "probability": 0.1185
+        "probability": 0.1223
       }
     }
   },
@@ -5243,21 +5243,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.4242225180809614,
-      "draw": 0.20815833144709275,
-      "awayWin": 0.3676191504719457,
+      "homeWin": 0.4125732583258442,
+      "draw": 0.2314568509573274,
+      "awayWin": 0.35596989071682844,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.07643705335433308
+        "probability": 0.08515169533482621
       }
     },
     "poisson": {
-      "homeWin": 0.5664,
-      "draw": 0.2104,
-      "awayWin": 0.2232,
+      "homeWin": 0.5652,
+      "draw": 0.2092,
+      "awayWin": 0.2256,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.06574225,
@@ -5265,7 +5265,7 @@
       "topScore": {
         "homeGoals": 2,
         "awayGoals": 1,
-        "probability": 0.1023
+        "probability": 0.0939
       }
     }
   },
@@ -5277,9 +5277,9 @@
     "actualAwayGoals": 1,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.09747329894215177,
-      "draw": 0.1863777827063258,
-      "awayWin": 0.7161489183515224,
+      "homeWin": 0.08374956546023477,
+      "draw": 0.21382524967015984,
+      "awayWin": 0.7024251848696054,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
@@ -5289,17 +5289,17 @@
       }
     },
     "poisson": {
-      "homeWin": 0.5007,
-      "draw": 0.2071,
-      "awayWin": 0.2922,
+      "homeWin": 0.4845,
+      "draw": 0.2127,
+      "awayWin": 0.3028,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.046016277777778,
       "awayLambda": 1.5467670000000002,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0906
+        "probability": 0.0873
       }
     }
   },
@@ -5311,9 +5311,9 @@
     "actualAwayGoals": 1,
     "actualOutcome": "draw",
     "ml": {
-      "homeWin": 0.11813679339957392,
-      "draw": 0.1865079358033514,
-      "awayWin": 0.6953552707970748,
+      "homeWin": 0.10407819873436006,
+      "draw": 0.21462512513377913,
+      "awayWin": 0.681296676131861,
       "predictedOutcome": "away",
       "correct": false,
       "topScore": {
@@ -5323,9 +5323,9 @@
       }
     },
     "poisson": {
-      "homeWin": 0.4008,
-      "draw": 0.2795,
-      "awayWin": 0.3197,
+      "homeWin": 0.3942,
+      "draw": 0.2891,
+      "awayWin": 0.3167,
       "predictedOutcome": "home",
       "correct": true,
       "homeLambda": 1.2203000833333335,
@@ -5333,7 +5333,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.1346
+        "probability": 0.1323
       }
     }
   },
@@ -5345,29 +5345,29 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5246822762015606,
-      "draw": 0.21977292615663696,
-      "awayWin": 0.2555447976418023,
+      "homeWin": 0.5092166532191377,
+      "draw": 0.250704172121483,
+      "awayWin": 0.24007917465937936,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09758224821678087
+        "probability": 0.11304787119920388
       }
     },
     "poisson": {
-      "homeWin": 0.5332,
-      "draw": 0.2182,
-      "awayWin": 0.2486,
+      "homeWin": 0.5358,
+      "draw": 0.22,
+      "awayWin": 0.2442,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 2.020233472222223,
       "awayLambda": 1.3530970277777776,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.0986
+        "probability": 0.0946
       }
     }
   },
@@ -5379,21 +5379,21 @@
     "actualAwayGoals": 0,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.6803881886684946,
-      "draw": 0.20289179098823884,
-      "awayWin": 0.1167200203432667,
+      "homeWin": 0.665403019655563,
+      "draw": 0.23286212901410175,
+      "awayWin": 0.10173485133033525,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 1,
+        "homeGoals": 2,
         "awayGoals": 0,
-        "probability": 0.14295789680822335
+        "probability": 0.1402251269630472
       }
     },
     "poisson": {
-      "homeWin": 0.4214,
-      "draw": 0.2229,
-      "awayWin": 0.3557,
+      "homeWin": 0.4258,
+      "draw": 0.2183,
+      "awayWin": 0.3559,
       "predictedOutcome": "home",
       "correct": false,
       "homeLambda": 1.7993823055555558,
@@ -5401,7 +5401,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.096
+        "probability": 0.0931
       }
     }
   },
@@ -5413,21 +5413,21 @@
     "actualAwayGoals": 2,
     "actualOutcome": "home",
     "ml": {
-      "homeWin": 0.5769553373508859,
-      "draw": 0.1983297461470438,
-      "awayWin": 0.22471491650207046,
+      "homeWin": 0.5641372182785105,
+      "draw": 0.22396598429179443,
+      "awayWin": 0.21189679742969508,
       "predictedOutcome": "home",
       "correct": false,
       "topScore": {
-        "homeGoals": 2,
+        "homeGoals": 1,
         "awayGoals": 1,
-        "probability": 0.09296610024623561
+        "probability": 0.09369561611302903
       }
     },
     "poisson": {
-      "homeWin": 0.3267,
-      "draw": 0.2089,
-      "awayWin": 0.4644,
+      "homeWin": 0.3212,
+      "draw": 0.2033,
+      "awayWin": 0.4755,
       "predictedOutcome": "away",
       "correct": false,
       "homeLambda": 1.8586728333333329,
@@ -5435,7 +5435,7 @@
       "topScore": {
         "homeGoals": 1,
         "awayGoals": 2,
-        "probability": 0.0765
+        "probability": 0.0796
       }
     }
   }

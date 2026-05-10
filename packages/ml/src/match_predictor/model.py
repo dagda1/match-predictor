@@ -2,15 +2,21 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import joblib
+import numpy as np
 import pandas as pd
+from scipy.optimize import minimize_scalar
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 from match_predictor.features import build_feature_row, build_training_data
 from match_predictor.grid import (
+    MAX_GOALS,
     build_grid,
     outcome_probs_from_grid,
     top_scorelines_from_grid,
 )
+
+
+RHO_UPPER = 0.05
 
 
 @dataclass
@@ -30,7 +36,7 @@ class TrainedModel:
     feature_names: list[str] = field(default_factory=list)
 
 
-def train(df: pd.DataFrame, rho: float = 0.0) -> TrainedModel:
+def train(df: pd.DataFrame) -> TrainedModel:
     X, y_home, y_away = build_training_data(df)
 
     home_reg = HistGradientBoostingRegressor(
@@ -51,6 +57,13 @@ def train(df: pd.DataFrame, rho: float = 0.0) -> TrainedModel:
     )
     away_reg.fit(X, y_away)
 
+    rho = _fit_rho(
+        home_reg.predict(X),
+        away_reg.predict(X),
+        y_home.to_numpy(),
+        y_away.to_numpy(),
+    )
+
     return TrainedModel(
         home_goals_regressor=home_reg,
         away_goals_regressor=away_reg,
@@ -58,6 +71,36 @@ def train(df: pd.DataFrame, rho: float = 0.0) -> TrainedModel:
         rho=rho,
         feature_names=list(X.columns),
     )
+
+
+def _fit_rho(
+    home_lambdas: np.ndarray,
+    away_lambdas: np.ndarray,
+    actual_home: np.ndarray,
+    actual_away: np.ndarray,
+) -> float:
+    capped_home = np.minimum(actual_home.astype(int), MAX_GOALS)
+    capped_away = np.minimum(actual_away.astype(int), MAX_GOALS)
+
+    max_lambda = float(max(home_lambdas.max(), away_lambdas.max()))
+    safe_lower = -1.0 / max_lambda + 1e-3
+
+    def negative_log_likelihood(rho: float) -> float:
+        total = 0.0
+        for lh, la, kh, ka in zip(home_lambdas, away_lambdas, capped_home, capped_away):
+            grid = build_grid(float(lh), float(la), rho=rho)
+            p = grid[kh, ka]
+            if p <= 0.0:
+                return float("inf")
+            total += float(np.log(p))
+        return -total
+
+    result = minimize_scalar(
+        negative_log_likelihood,
+        bounds=(safe_lower, RHO_UPPER),
+        method="bounded",
+    )
+    return float(result.x)
 
 
 def save_model(model: TrainedModel, path: Path) -> None:

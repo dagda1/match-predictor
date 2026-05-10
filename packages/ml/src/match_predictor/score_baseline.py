@@ -44,8 +44,9 @@ def main() -> None:
         })
 
         model = train(train_df)
+        mlflow.log_param("rho_fitted", model.rho)
 
-        print(f"scoring on {len(holdout)} holdout matches")
+        print(f"scoring on {len(holdout)} holdout matches (fitted rho={model.rho:.4f})")
         metrics = evaluate(make_predict_fn(model), df, holdout)
 
         mlflow.log_metrics({

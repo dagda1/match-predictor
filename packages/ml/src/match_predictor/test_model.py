@@ -62,3 +62,8 @@ def test_trained_model_exposes_two_regressors():
     field_names = [f.name for f in dataclasses.fields(TrainedModel)]
     assert "home_goals_regressor" in field_names
     assert "away_goals_regressor" in field_names
+
+
+def test_dixon_coles_rho_fitted_to_negative_value(trained_model):
+    assert -0.2 <= trained_model.rho <= 0.0
+    assert trained_model.rho != 0.0
