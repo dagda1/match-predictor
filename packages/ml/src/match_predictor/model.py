@@ -80,7 +80,7 @@ def outcome_probabilities(
     return outcome_probs_from_grid(_grid_for(model, X))
 
 
-def _scoreline_probabilities(
+def scoreline_probabilities(
     model: TrainedModel, X: pd.DataFrame, n: int = 10,
 ) -> list[dict]:
     return top_scorelines_from_grid(_grid_for(model, X), n=n)

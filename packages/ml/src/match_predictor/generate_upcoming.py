@@ -6,7 +6,7 @@ import pandas as pd
 import requests
 
 from match_predictor.data import load_matches as load_matches_from_disk, DATA_DIR, format_date
-from match_predictor.model import train, _scoreline_probabilities, outcome_probabilities
+from match_predictor.model import train, scoreline_probabilities, outcome_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
@@ -79,7 +79,7 @@ def generate(
         X = pd.DataFrame([features])
         ml_home_win, ml_draw, ml_away_win = outcome_probabilities(model, X)
 
-        ml_scorelines = _scoreline_probabilities(model, X)
+        ml_scorelines = scoreline_probabilities(model, X)
         ml_top = ml_scorelines[0]
 
         poisson_result = poisson_predict(df, home_team, away_team)

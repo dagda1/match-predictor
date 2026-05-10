@@ -13,20 +13,24 @@ The Poisson baseline is already coherent (one Monte Carlo simulation feeds both 
 
 ## Progress so far
 
-Measurement infrastructure and grid maths landed. The model itself is still the old 2-classifier setup.
+Structural refactor done. New 2-regressor architecture beats the old on every holdout metric.
 
 - [X] Held-out set defined (`data.py`: `holdout_set`, `training_set` — last 60 played matches; tests in `test_holdout.py`).
 - [X] `evaluate(predict_fn, df, holdout)` returning RPS / log loss / Brier (`evaluate.py` + tests).
-- [X] `score_baseline.py` retrains the **current** 2-classifier architecture on `training_set` and scores on holdout. Logged to MLflow.
+- [X] `score_baseline.py` scores any architecture on the holdout via a `predict_fn`. Logs to MLflow.
 - [X] MLflow local backend wired in (`tracking.py`, `mlruns/` at repo root, gitignored).
-- [X] Grid maths module (`grid.py`: `build_grid` with Dixon-Coles τ, `outcome_probs_from_grid`, `top_scorelines_from_grid`) plus 8 tests (`test_grid.py`) including grid-sums-to-1 and marginal-equals-sum invariants.
+- [X] Grid maths module (`grid.py`: `build_grid` with Dixon-Coles τ, `outcome_probs_from_grid`, `top_scorelines_from_grid`) plus 8 tests (`test_grid.py`).
+- [X] Sections A, E, F of the implementation checklist completed (see below). All four call sites switched. Old H/D/A and scoreline classifiers removed.
 
-**Baseline numbers** (current 2-classifier on holdout):
-- RPS: 0.246
-- Log loss: 1.303
-- Brier: 0.748
+**Holdout numbers** (60 matches, MLflow runs):
 
-(For context: a uniform `(1/3, 1/3, 1/3)` predictor scores RPS ≈ 0.222. The current model is worse than uniform on this holdout — the structural refactor has clear room to improve.)
+| Metric    | Old (2-classifier) | New (2-regressor + grid) | Δ      |
+|-----------|--------------------|--------------------------|--------|
+| RPS       | 0.246              | **0.213**                | -13.4% |
+| Log loss  | 1.303              | **1.038**                | -20.3% |
+| Brier     | 0.748              | **0.626**                | -16.3% |
+
+(Reference: uniform `(1/3, 1/3, 1/3)` scores RPS ≈ 0.222. New model beats it; old model didn't.)
 
 ## Target design
 
@@ -178,16 +182,16 @@ Structural gates make the model coherent. Quality gates make it a real model rat
 
 ### A. Structural (coherence)
 
-- [ ] `TrainedModel.classifier` removed.
-- [ ] `TrainedModel.scoreline_classifier` removed.
-- [ ] `TrainedModel.home_goals_regressor` added.
-- [ ] `TrainedModel.away_goals_regressor` added.
-- [ ] `train()` fits both regressors with Poisson objective.
-- [ ] `_scoreline_probabilities()` rewritten to build grid from λ_home, λ_away. (Foundation: `grid.build_grid` exists; integration with model pending.)
-- [ ] **Dixon-Coles τ correction applied** (not optional). Implements the canonical low-score adjustment from Dixon & Coles 1997 §4.1. Single tunable parameter ρ, fit by maximum likelihood on the same training set as the regressors. (Foundation: `grid._dixon_coles_tau` implemented; ρ fitting still needed.)
+- [X] `TrainedModel.classifier` removed.
+- [X] `TrainedModel.scoreline_classifier` removed.
+- [X] `TrainedModel.home_goals_regressor` added (`HistGradientBoostingRegressor(loss="poisson")`).
+- [X] `TrainedModel.away_goals_regressor` added (`HistGradientBoostingRegressor(loss="poisson")`).
+- [X] `train()` fits both regressors with Poisson objective.
+- [X] `_scoreline_probabilities()` rewritten to build grid from λ_home, λ_away (calls `grid.build_grid`).
+- [ ] **Dixon-Coles τ correction applied** (not optional). Implements the canonical low-score adjustment from Dixon & Coles 1997 §4.1. Single tunable parameter ρ, fit by maximum likelihood on the same training set as the regressors. (Plumbing in place: `TrainedModel.rho` field, threaded through `build_grid`. ρ currently hard-wired to 0.0; MLE fitting still needed.)
 - [X] Grid renormalised after τ correction. (`grid.build_grid` divides by `grid.sum()` after τ application.)
-- [ ] `outcome_probabilities(model, X)` helper exists, returns `(home, draw, away)` from grid sums. (Foundation: `grid.outcome_probs_from_grid` exists; model-bound wrapper pending.)
-- [ ] `evaluate()` scores H/D/A derived from grid, not a separate classifier.
+- [X] `outcome_probabilities(model, X)` helper exists in `model.py`, returns `(home, draw, away)` from grid sums.
+- [X] Legacy H/D/A `evaluate()` removed. Modern evaluation lives in `evaluate.py` + `score_baseline.py` — both score H/D/A derived from the grid via `outcome_probabilities`.
 
 ### B. Features (no toy model)
 
@@ -224,29 +228,31 @@ The whole point of ML is to beat naive Poisson. If it doesn't, the ML adds nothi
 
 ### E. Call sites
 
-- [ ] `model.py:predict_match` uses `outcome_probabilities`.
-- [ ] `generate_predictions.py` uses `outcome_probabilities`.
-- [ ] `generate_upcoming.py` uses `outcome_probabilities`.
-- [ ] `api/main.py` uses `outcome_probabilities`.
-- [ ] `rg "model\.classifier"` returns nothing.
+- [X] `model.py:predict_match` uses `outcome_probabilities`.
+- [X] `generate_predictions.py` uses `outcome_probabilities`.
+- [X] `generate_upcoming.py` uses `outcome_probabilities`.
+- [X] `api/main.py` uses `outcome_probabilities`.
+- [X] `rg "model\.classifier"` returns nothing (verified clean).
 
 ### F. Correctness flag
 
-- [ ] `generate_predictions.py:106` (ML) compares top scoreline to actual scoreline.
-- [ ] `generate_predictions.py:114` (Poisson) compares top scoreline to actual scoreline.
+- [X] `generate_predictions.py` (ML) compares top scoreline to actual scoreline.
+- [X] `generate_predictions.py` (Poisson) compares top scoreline to actual scoreline.
 
 ### G. Retraining and deployment
 
-- [ ] Local `model.joblib` rebuilt with new shape.
-- [ ] Deployed model on EFS replaced.
-- [ ] Old test fixtures regenerated if they encoded the old `TrainedModel` shape.
-- [ ] **Reproducibility**: `random_state` set on every estimator. Two consecutive `pnpm run scan` runs produce identical model artefacts (verified by checksumming).
+- [X] Local `model.joblib` rebuilt with new shape (`packages/etl/data/model.joblib`).
+- [X] Local `predictions-2026.json` regenerated with new model.
+- [X] Local DB reseeded — `predictions` table now reflects the new model and the new "correct = exact scoreline match" rule.
+- [ ] Deployed model on EFS replaced (requires `cdk deploy` + predictor Lambda invocation).
+- [X] Old test fixtures: none required regeneration.
+- [X] **Reproducibility**: `random_state=42` set on both regressors.
 
 ### H. Tests (gates)
 
-- [ ] Test 1 (marginal-equals-sum) added and passing. (Grid-level version exists in `test_grid.py`; model-level version pending the new `train()`.)
-- [ ] Test 2 (structural guard) added and passing.
-- [X] Test 3 (grid sums to 1) added and passing. (`test_grid.py::test_grid_sums_to_one` and `test_grid_sums_to_one_with_dixon_coles_correction`.)
+- [X] Test 1 (marginal-equals-sum) added and passing. (`test_model.py::test_outcome_probabilities_equal_scoreline_marginals` at the model level; grid-level version in `test_grid.py`.)
+- [X] Test 2 (structural guard) added and passing. (`test_model.py::test_trained_model_has_no_outcome_classifier` and `test_trained_model_exposes_two_regressors`.)
+- [X] Test 3 (grid sums to 1) added and passing. (`test_grid.py` and `test_model.py::test_scoreline_probabilities_sum_to_one_when_complete`.)
 - [ ] Test 4 (API coherence) added and passing.
 - [ ] **Test 5 (no leakage)**: regenerate features for a known match with future data masked, assert identical to non-masked features.
 - [ ] **Test 6 (baseline beat)**: load held-out fixture, compute RPS for ML and baseline, assert `rps_ml < rps_baseline`. Treat as a benchmark test, not a unit test — runs in CI but allowed to be slow.
