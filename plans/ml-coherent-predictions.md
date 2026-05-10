@@ -248,3 +248,17 @@ The whole point of ML is to beat naive Poisson. If it doesn't, the ML adds nothi
 - [ ] All quality gates pass (model earns its complexity).
 - [ ] Evaluation report committed showing the ML model beats the Poisson baseline on RPS, log loss, and Brier on a held-out final season.
 - [ ] If any quality gate fails, the answer is **not** "ship anyway" — it's either improve the features/tuning, or document that ML doesn't beat baseline and stop pretending it does.
+
+### K. MLflow remote backend (final task)
+
+The local `mlruns/` directory is gitignored — fine for solo iteration, but tracking history is lost on a clean clone or new machine. The proper fix is a remote backend reusing the existing RDS + S3.
+
+- [ ] Create a CDK construct adding an `mlflow` schema (or separate DB) on the existing RDS instance.
+- [ ] Add an `mlflow/` prefix on the existing data bucket as the artefact store.
+- [ ] IAM: grant the relevant Lambda / local dev role write access to that prefix and DB.
+- [ ] Run `mlflow db upgrade postgresql://...` once to create the schema.
+- [ ] Update `tracking.py` to read `MLFLOW_TRACKING_URI` from env, fall back to local file path for offline work.
+- [ ] Document how to run `mlflow server` against the remote backend so the UI reads shared history.
+- [ ] (Optional) Run an MLflow server in a small Fargate task or Lambda container for always-on UI access.
+- [ ] Backfill existing local runs into the remote backend if any are worth keeping (likely none — start fresh).
+- [ ] Once remote works: every `score_baseline` and future `score_*` run lands in shared tracking, history survives across machines.

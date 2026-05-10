@@ -30,5 +30,5 @@ class Firehose(Construct):
             "SubscriptionFilter", 
             log_group=log_group, 
             destination=logs_destinations.FirehoseDestination(self.firehose),
-            filter_pattern=logs.FilterPattern.all_events()
+            filter_pattern=logs.FilterPattern.any_term("ERROR", "Error", "Exception", "Traceback")
         )
