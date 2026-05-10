@@ -172,6 +172,20 @@ Structural gates make the model coherent. Quality gates make it a real model rat
 - [ ] `outcome_probabilities(model, X)` helper exists, returns `(home, draw, away)` from grid sums.
 - [ ] `evaluate()` scores H/D/A derived from grid, not a separate classifier.
 
+### A.5. Data: expand training set
+
+Current training set is **602 usable rows** (726 played matches − 60 holdout − 64 dropped for insufficient rolling history). That's small for ML — typical tabular ML datasets are 10k+. Part of why the current model barely beats a uniform baseline on the holdout (RPS 0.246 vs uniform 0.222) is that there isn't enough data to learn rich feature interactions.
+
+Understat carries Premier League data back to the 2014/15 season. Pulling more history is a cheap win that benefits every subsequent training run.
+
+- [ ] Extend the Understat scraper to fetch 2014/15 → present (currently only 2024/25 + 2025/26).
+- [ ] Persist all historical seasons to the matches table. Idempotent — re-running the scraper for an already-loaded season is a no-op.
+- [ ] Re-derive the holdout set after the full backfill (still last 60 played by date — should be unchanged, but verify).
+- [ ] Re-run `score_baseline` on the expanded training set. Log to MLflow as `baseline-2classifier-extended-data`. Compare RPS against the original 602-row baseline. This is the "free" improvement before any architectural change.
+- [ ] If the dataset is now large enough, drop the rolling-history skip threshold from 5 to 3 matches per team to reduce dropped rows.
+
+Decision rule: if the extended-data baseline is significantly better, the model restructure should be evaluated against the **extended** baseline, not the original 602-row one. Otherwise we'd be giving the new architecture credit for what was actually a data win.
+
 ### B. Features (no toy model)
 
 The regressors must use a non-trivial feature set. A model with only "team played at home" and "opponent name" is the naive baseline — it doesn't earn ML's complexity.

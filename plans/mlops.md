@@ -118,9 +118,9 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
     - [X] RDS CA bundle baked into all Python Lambda images via `assets/rds-ca-bundle.pem` + Dockerfile COPYs; `sslmode=verify-full` everywhere; etl scraper bundles the same bundle via CDK `IncludeRdsCaBundle` command hook
     - [X] Lambda SG allows IPv6 egress (`allow_all_ipv6_outbound=True`) — without this, IPv6 packets to AWS service public endpoints hung at the SG layer, causing `get_secret_value` to time out
     - [X] EventBridge keep-warm rule pings API Lambda every 5 minutes with `{"source": "lambda.warmup"}`; handler short-circuits before Mangum to keep the container hot
-- [ ] Amazon Data Firehose
+- [X] Amazon Data Firehose — CloudWatch Logs subscription filter on API Lambda log group → Firehose delivery stream → S3 (`logs/` prefix, GZIP). Transform Lambda (NodejsFunction) decompresses each CloudWatch envelope and emits one NDJSON line per `logEvent` with `{timestamp, message, logGroup, logStream}`.
 - [ ] Amazon EMR
-- [ ] AWS Glue
+- [X] AWS Glue — `LogsDatabase` + `LogsTable` over the `logs/` S3 prefix using `org.openx.data.jsonserde.JsonSerDe`. Column-to-JSON-key mapping handles camelCase keys (`logGroup` → `log_group`, `timestamp` → `event_time`). Athena queries against `logs.logs` confirmed working.
 - [ ] AWS Glue DataBrew
 - [ ] AWS Glue Data Quality
 - [ ] Amazon Kinesis
