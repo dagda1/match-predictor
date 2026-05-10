@@ -93,26 +93,12 @@ def build_feature_row(
     }
 
 
-def _scoreline_label(home_goals: int, away_goals: int) -> str:
-    h = min(int(home_goals), 4)
-    a = min(int(away_goals), 4)
-    return f"{h}-{a}"
-
-
-def _outcome_label(home_goals: int, away_goals: int) -> str:
-    if home_goals > away_goals:
-        return "home"
-    if home_goals < away_goals:
-        return "away"
-    return "draw"
-
-
 def build_training_data(
     df: pd.DataFrame,
 ) -> tuple[pd.DataFrame, pd.Series, pd.Series]:
     rows = []
-    outcome_labels = []
-    scoreline_labels = []
+    home_goals = []
+    away_goals = []
 
     for _, match in df.iterrows():
         features = build_feature_row(
@@ -122,11 +108,11 @@ def build_training_data(
             continue
 
         rows.append(features)
-        outcome_labels.append(_outcome_label(match["homeGoals"], match["awayGoals"]))
-        scoreline_labels.append(_scoreline_label(match["homeGoals"], match["awayGoals"]))
+        home_goals.append(int(match["homeGoals"]))
+        away_goals.append(int(match["awayGoals"]))
 
     return (
         pd.DataFrame(rows),
-        pd.Series(outcome_labels, name="outcome"),
-        pd.Series(scoreline_labels, name="scoreline"),
+        pd.Series(home_goals, name="homeGoals"),
+        pd.Series(away_goals, name="awayGoals"),
     )

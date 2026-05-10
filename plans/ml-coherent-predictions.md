@@ -11,6 +11,23 @@ Both produce final answers shown on the card. They can disagree because nothing 
 
 The Poisson baseline is already coherent (one Monte Carlo simulation feeds both the scoreline grid and the H/D/A counts).
 
+## Progress so far
+
+Measurement infrastructure and grid maths landed. The model itself is still the old 2-classifier setup.
+
+- [X] Held-out set defined (`data.py`: `holdout_set`, `training_set` — last 60 played matches; tests in `test_holdout.py`).
+- [X] `evaluate(predict_fn, df, holdout)` returning RPS / log loss / Brier (`evaluate.py` + tests).
+- [X] `score_baseline.py` retrains the **current** 2-classifier architecture on `training_set` and scores on holdout. Logged to MLflow.
+- [X] MLflow local backend wired in (`tracking.py`, `mlruns/` at repo root, gitignored).
+- [X] Grid maths module (`grid.py`: `build_grid` with Dixon-Coles τ, `outcome_probs_from_grid`, `top_scorelines_from_grid`) plus 8 tests (`test_grid.py`) including grid-sums-to-1 and marginal-equals-sum invariants.
+
+**Baseline numbers** (current 2-classifier on holdout):
+- RPS: 0.246
+- Log loss: 1.303
+- Brier: 0.748
+
+(For context: a uniform `(1/3, 1/3, 1/3)` predictor scores RPS ≈ 0.222. The current model is worse than uniform on this holdout — the structural refactor has clear room to improve.)
+
 ## Target design
 
 ### Single source of truth: λ_home, λ_away
@@ -166,25 +183,11 @@ Structural gates make the model coherent. Quality gates make it a real model rat
 - [ ] `TrainedModel.home_goals_regressor` added.
 - [ ] `TrainedModel.away_goals_regressor` added.
 - [ ] `train()` fits both regressors with Poisson objective.
-- [ ] `_scoreline_probabilities()` rewritten to build grid from λ_home, λ_away.
-- [ ] **Dixon-Coles τ correction applied** (not optional). Implements the canonical low-score adjustment from Dixon & Coles 1997 §4.1. Single tunable parameter ρ, fit by maximum likelihood on the same training set as the regressors.
-- [ ] Grid renormalised after τ correction.
-- [ ] `outcome_probabilities(model, X)` helper exists, returns `(home, draw, away)` from grid sums.
+- [ ] `_scoreline_probabilities()` rewritten to build grid from λ_home, λ_away. (Foundation: `grid.build_grid` exists; integration with model pending.)
+- [ ] **Dixon-Coles τ correction applied** (not optional). Implements the canonical low-score adjustment from Dixon & Coles 1997 §4.1. Single tunable parameter ρ, fit by maximum likelihood on the same training set as the regressors. (Foundation: `grid._dixon_coles_tau` implemented; ρ fitting still needed.)
+- [X] Grid renormalised after τ correction. (`grid.build_grid` divides by `grid.sum()` after τ application.)
+- [ ] `outcome_probabilities(model, X)` helper exists, returns `(home, draw, away)` from grid sums. (Foundation: `grid.outcome_probs_from_grid` exists; model-bound wrapper pending.)
 - [ ] `evaluate()` scores H/D/A derived from grid, not a separate classifier.
-
-### A.5. Data: expand training set
-
-Current training set is **602 usable rows** (726 played matches − 60 holdout − 64 dropped for insufficient rolling history). That's small for ML — typical tabular ML datasets are 10k+. Part of why the current model barely beats a uniform baseline on the holdout (RPS 0.246 vs uniform 0.222) is that there isn't enough data to learn rich feature interactions.
-
-Understat carries Premier League data back to the 2014/15 season. Pulling more history is a cheap win that benefits every subsequent training run.
-
-- [ ] Extend the Understat scraper to fetch 2014/15 → present (currently only 2024/25 + 2025/26).
-- [ ] Persist all historical seasons to the matches table. Idempotent — re-running the scraper for an already-loaded season is a no-op.
-- [ ] Re-derive the holdout set after the full backfill (still last 60 played by date — should be unchanged, but verify).
-- [ ] Re-run `score_baseline` on the expanded training set. Log to MLflow as `baseline-2classifier-extended-data`. Compare RPS against the original 602-row baseline. This is the "free" improvement before any architectural change.
-- [ ] If the dataset is now large enough, drop the rolling-history skip threshold from 5 to 3 matches per team to reduce dropped rows.
-
-Decision rule: if the extended-data baseline is significantly better, the model restructure should be evaluated against the **extended** baseline, not the original 602-row one. Otherwise we'd be giving the new architecture credit for what was actually a data win.
 
 ### B. Features (no toy model)
 
@@ -241,9 +244,9 @@ The whole point of ML is to beat naive Poisson. If it doesn't, the ML adds nothi
 
 ### H. Tests (gates)
 
-- [ ] Test 1 (marginal-equals-sum) added and passing.
+- [ ] Test 1 (marginal-equals-sum) added and passing. (Grid-level version exists in `test_grid.py`; model-level version pending the new `train()`.)
 - [ ] Test 2 (structural guard) added and passing.
-- [ ] Test 3 (grid sums to 1) added and passing.
+- [X] Test 3 (grid sums to 1) added and passing. (`test_grid.py::test_grid_sums_to_one` and `test_grid_sums_to_one_with_dixon_coles_correction`.)
 - [ ] Test 4 (API coherence) added and passing.
 - [ ] **Test 5 (no leakage)**: regenerate features for a known match with future data masked, assert identical to non-masked features.
 - [ ] **Test 6 (baseline beat)**: load held-out fixture, compute RPS for ML and baseline, assert `rps_ml < rps_baseline`. Treat as a benchmark test, not a unit test — runs in CI but allowed to be slow.
@@ -263,7 +266,18 @@ The whole point of ML is to beat naive Poisson. If it doesn't, the ML adds nothi
 - [ ] Evaluation report committed showing the ML model beats the Poisson baseline on RPS, log loss, and Brier on a held-out final season.
 - [ ] If any quality gate fails, the answer is **not** "ship anyway" — it's either improve the features/tuning, or document that ML doesn't beat baseline and stop pretending it does.
 
-### K. MLflow remote backend (final task)
+### K. Data: expand training set (post-restructure)
+
+Defer until the structural refactor is complete and scored. Doing this earlier conflates a data win with an architectural win — neither change is measurable in isolation.
+
+Current training set is **602 usable rows** (726 played matches − 60 holdout − 64 dropped for insufficient rolling history). Typical tabular ML datasets are 10k+. Understat carries Premier League data back to the 2014/15 season — pulling more history is a cheap follow-up win.
+
+- [ ] Extend the Understat scraper to fetch 2014/15 → present (currently only 2024/25 + 2025/26).
+- [ ] Persist all historical seasons to the matches table. Idempotent — re-running the scraper for an already-loaded season is a no-op.
+- [ ] Re-derive the holdout set after the full backfill (still last 60 played by date — should be unchanged, but verify).
+- [ ] Re-run scoring on the expanded training set with the new architecture. Log to MLflow as `regressor-extended-data`. Compare RPS against the post-restructure baseline.
+
+### L. MLflow remote backend (final task)
 
 The local `mlruns/` directory is gitignored — fine for solo iteration, but tracking history is lost on a clean clone or new machine. The proper fix is a remote backend reusing the existing RDS + S3.
 

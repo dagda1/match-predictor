@@ -4,7 +4,7 @@ from collections.abc import Callable
 import pandas as pd
 
 from match_predictor.data import load_matches as load_matches_from_disk, DATA_DIR, format_date
-from match_predictor.model import train, save_model, TrainedModel, _scoreline_probabilities
+from match_predictor.model import train, save_model, TrainedModel, _scoreline_probabilities, outcome_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
@@ -71,12 +71,7 @@ def generate(
             continue
 
         X = pd.DataFrame([features])
-        proba = model.classifier.predict_proba(X)[0]
-        classes = list(model.classifier.classes_)
-
-        ml_home_win = float(proba[classes.index("home")])
-        ml_draw = float(proba[classes.index("draw")])
-        ml_away_win = float(proba[classes.index("away")])
+        ml_home_win, ml_draw, ml_away_win = outcome_probabilities(model, X)
 
         ml_scorelines = _scoreline_probabilities(model, X)
         ml_top = ml_scorelines[0]
@@ -91,6 +86,9 @@ def generate(
         ml_pred = _predicted_outcome(ml_home_win, ml_draw, ml_away_win)
         poisson_pred = _predicted_outcome(poisson_result.home_win, poisson_result.draw, poisson_result.away_win)
 
+        ml_correct_flag = ml_top["homeGoals"] == actual_home and ml_top["awayGoals"] == actual_away
+        poisson_correct_flag = poisson_top["homeGoals"] == actual_home and poisson_top["awayGoals"] == actual_away
+
         predictions.append({
             "homeTeam": home_team,
             "awayTeam": away_team,
@@ -103,7 +101,7 @@ def generate(
                 "draw": ml_draw,
                 "awayWin": ml_away_win,
                 "predictedOutcome": ml_pred,
-                "correct": ml_pred == actual_outcome,
+                "correct": ml_correct_flag,
                 "topScore": ml_top,
             },
             "poisson": {
@@ -111,7 +109,7 @@ def generate(
                 "draw": poisson_result.draw,
                 "awayWin": poisson_result.away_win,
                 "predictedOutcome": poisson_pred,
-                "correct": poisson_pred == actual_outcome,
+                "correct": poisson_correct_flag,
                 "homeLambda": poisson_result.home_lambda,
                 "awayLambda": poisson_result.away_lambda,
                 "topScore": {
@@ -122,7 +120,7 @@ def generate(
             },
         })
 
-        print(f"  {home_team} {actual_home}-{actual_away} {away_team}  ML:{ml_pred}({'✓' if ml_pred == actual_outcome else '✗'})  Poi:{poisson_pred}({'✓' if poisson_pred == actual_outcome else '✗'})  ML top:{ml_top['homeGoals']}-{ml_top['awayGoals']}")
+        print(f"  {home_team} {actual_home}-{actual_away} {away_team}  ML top:{ml_top['homeGoals']}-{ml_top['awayGoals']}({'✓' if ml_correct_flag else '✗'})  Poi top:{poisson_top['homeGoals']}-{poisson_top['awayGoals']}({'✓' if poisson_correct_flag else '✗'})")
 
     write_output(predictions)
 

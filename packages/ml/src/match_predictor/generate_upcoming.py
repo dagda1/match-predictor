@@ -6,7 +6,7 @@ import pandas as pd
 import requests
 
 from match_predictor.data import load_matches as load_matches_from_disk, DATA_DIR, format_date
-from match_predictor.model import train, _scoreline_probabilities
+from match_predictor.model import train, _scoreline_probabilities, outcome_probabilities
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
@@ -77,12 +77,7 @@ def generate(
             continue
 
         X = pd.DataFrame([features])
-        proba = model.classifier.predict_proba(X)[0]
-        classes = list(model.classifier.classes_)
-
-        ml_home_win = float(proba[classes.index("home")])
-        ml_draw = float(proba[classes.index("draw")])
-        ml_away_win = float(proba[classes.index("away")])
+        ml_home_win, ml_draw, ml_away_win = outcome_probabilities(model, X)
 
         ml_scorelines = _scoreline_probabilities(model, X)
         ml_top = ml_scorelines[0]

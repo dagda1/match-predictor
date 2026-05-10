@@ -4,7 +4,7 @@ import pandas as pd
 from match_predictor.data import HOLDOUT_SIZE, holdout_set, load_matches, training_set
 from match_predictor.evaluate import evaluate
 from match_predictor.features import build_feature_row
-from match_predictor.model import TrainedModel, train
+from match_predictor.model import TrainedModel, outcome_probabilities, train
 from match_predictor.tracking import REPO_ROOT, configure
 
 
@@ -14,13 +14,7 @@ def make_predict_fn(model: TrainedModel):
         if features is None:
             return None
         X = pd.DataFrame([features])
-        proba = model.classifier.predict_proba(X)[0]
-        classes = list(model.classifier.classes_)
-        return (
-            float(proba[classes.index("home")]),
-            float(proba[classes.index("draw")]),
-            float(proba[classes.index("away")]),
-        )
+        return outcome_probabilities(model, X)
 
     return predict_fn
 
@@ -34,14 +28,15 @@ def main() -> None:
 
     print(f"training on {len(train_df)} matches (holdout: last {HOLDOUT_SIZE} played)")
 
-    with mlflow.start_run(run_name="baseline-2classifier") as run:
+    with mlflow.start_run(run_name="regressor-2-poisson") as run:
         mlflow.log_params({
-            "architecture": "2-classifier",
-            "outcome_classifier": "GradientBoostingClassifier",
-            "scoreline_classifier": "GradientBoostingClassifier",
+            "architecture": "2-regressor",
+            "home_goals_regressor": "GradientBoostingRegressor(loss=poisson)",
+            "away_goals_regressor": "GradientBoostingRegressor(loss=poisson)",
             "n_estimators": 200,
             "max_depth": 4,
             "learning_rate": 0.1,
+            "rho": 0.0,
             "training_matches": len(train_df),
             "holdout_size": HOLDOUT_SIZE,
             "holdout_first_date": str(holdout["date"].min().date()),
@@ -61,8 +56,8 @@ def main() -> None:
             "n_skipped": metrics["skipped"],
         })
 
-        mlflow.sklearn.log_model(model.classifier, name="outcome_classifier")
-        mlflow.sklearn.log_model(model.scoreline_classifier, name="scoreline_classifier")
+        mlflow.sklearn.log_model(model.home_goals_regressor, name="home_goals_regressor")
+        mlflow.sklearn.log_model(model.away_goals_regressor, name="away_goals_regressor")
 
         print()
         print(f"=== run {run.info.run_id} ===")

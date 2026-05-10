@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import select, text
 
 from match_predictor.db_models import Team as TeamRow, TeamFeatures, Prediction as PredictionRow, Upcoming as UpcomingRow
-from match_predictor.model import load_model, _scoreline_probabilities
+from match_predictor.model import load_model, _scoreline_probabilities, outcome_probabilities
 from match_predictor.poisson_baseline import poisson_predict
 
 from match_predictor_api.db import get_session, load_matches_dataframe
@@ -154,16 +154,15 @@ def predict(req: PredictRequest):
     }
 
     X = pd.DataFrame([feature_row])
-    proba = model.classifier.predict_proba(X)[0]
-    classes = list(model.classifier.classes_)
+    ml_home_win, ml_draw, ml_away_win = outcome_probabilities(model, X)
 
     poisson_result = poisson_predict(_get_match_df(), req.homeTeamId, req.awayTeamId)
 
     return PredictResponse(
         ml=MlPrediction(
-            homeWin=float(proba[classes.index("home")]),
-            draw=float(proba[classes.index("draw")]),
-            awayWin=float(proba[classes.index("away")]),
+            homeWin=ml_home_win,
+            draw=ml_draw,
+            awayWin=ml_away_win,
             scorelines=[Scoreline(**s) for s in _scoreline_probabilities(model, X)],
         ),
         poisson=PoissonPrediction(

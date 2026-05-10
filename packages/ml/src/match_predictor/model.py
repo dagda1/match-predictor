@@ -2,20 +2,15 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import joblib
-import numpy as np
 import pandas as pd
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.model_selection import TimeSeriesSplit
-from sklearn.metrics import (
-    accuracy_score,
-    brier_score_loss,
-    log_loss,
-    roc_auc_score,
-    confusion_matrix,
-)
-from sklearn.preprocessing import LabelBinarizer
+from sklearn.ensemble import HistGradientBoostingRegressor
 
-from match_predictor.features import build_training_data, build_feature_row
+from match_predictor.features import build_feature_row, build_training_data
+from match_predictor.grid import (
+    build_grid,
+    outcome_probs_from_grid,
+    top_scorelines_from_grid,
+)
 
 
 @dataclass
@@ -27,100 +22,41 @@ class Prediction:
 
 
 @dataclass
-class EvalMetrics:
-    accuracy: float
-    brier_score: float
-    log_loss_val: float
-    roc_auc: float
-    confusion: np.ndarray
-    baseline_accuracy: float
-
-
-@dataclass
 class TrainedModel:
-    classifier: GradientBoostingClassifier
-    scoreline_classifier: GradientBoostingClassifier
+    home_goals_regressor: HistGradientBoostingRegressor
+    away_goals_regressor: HistGradientBoostingRegressor
     df: pd.DataFrame
-    metrics: EvalMetrics | None = None
+    rho: float = 0.0
     feature_names: list[str] = field(default_factory=list)
 
 
-def train(df: pd.DataFrame) -> TrainedModel:
-    X, y_outcome, y_scoreline = build_training_data(df)
+def train(df: pd.DataFrame, rho: float = 0.0) -> TrainedModel:
+    X, y_home, y_away = build_training_data(df)
 
-    clf = GradientBoostingClassifier(
-        n_estimators=200,
+    home_reg = HistGradientBoostingRegressor(
+        loss="poisson",
+        max_iter=200,
         max_depth=4,
         learning_rate=0.1,
         random_state=42,
     )
-    clf.fit(X, y_outcome)
+    home_reg.fit(X, y_home)
 
-    scoreline_clf = GradientBoostingClassifier(
-        n_estimators=200,
+    away_reg = HistGradientBoostingRegressor(
+        loss="poisson",
+        max_iter=200,
         max_depth=4,
         learning_rate=0.1,
         random_state=42,
     )
-    scoreline_clf.fit(X, y_scoreline)
-
-    metrics = evaluate(clf, X, y_outcome)
+    away_reg.fit(X, y_away)
 
     return TrainedModel(
-        classifier=clf,
-        scoreline_classifier=scoreline_clf,
+        home_goals_regressor=home_reg,
+        away_goals_regressor=away_reg,
         df=df,
-        metrics=metrics,
+        rho=rho,
         feature_names=list(X.columns),
-    )
-
-
-def evaluate(
-    clf: GradientBoostingClassifier,
-    X: pd.DataFrame,
-    y: pd.Series,
-) -> EvalMetrics:
-    tscv = TimeSeriesSplit(n_splits=5)
-    all_y_true = []
-    all_y_pred = []
-    all_y_proba = []
-
-    for train_idx, test_idx in tscv.split(X):
-        X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
-        y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
-
-        fold_clf = GradientBoostingClassifier(
-            n_estimators=200,
-            max_depth=4,
-            learning_rate=0.1,
-            random_state=42,
-        )
-        fold_clf.fit(X_train, y_train)
-
-        all_y_true.extend(y_test)
-        all_y_pred.extend(fold_clf.predict(X_test))
-        all_y_proba.extend(fold_clf.predict_proba(X_test))
-
-    y_true = np.array(all_y_true)
-    y_pred = np.array(all_y_pred)
-    y_proba = np.array(all_y_proba)
-
-    lb = LabelBinarizer()
-    y_true_bin = lb.fit_transform(y_true)
-
-    classes = clf.classes_
-    baseline_acc = (y_true == "home").mean()
-
-    return EvalMetrics(
-        accuracy=accuracy_score(y_true, y_pred),
-        brier_score=np.mean([
-            brier_score_loss(y_true_bin[:, i], y_proba[:, i])
-            for i in range(len(classes))
-        ]),
-        log_loss_val=log_loss(y_true, y_proba, labels=classes),
-        roc_auc=roc_auc_score(y_true_bin, y_proba, multi_class="ovr", average="weighted"),
-        confusion=confusion_matrix(y_true, y_pred, labels=list(classes)),
-        baseline_accuracy=baseline_acc,
     )
 
 
@@ -132,24 +68,22 @@ def load_model(path: Path) -> TrainedModel:
     return joblib.load(path)
 
 
-def _scoreline_probabilities(
+def _grid_for(model: TrainedModel, X: pd.DataFrame):
+    lambda_home = float(model.home_goals_regressor.predict(X)[0])
+    lambda_away = float(model.away_goals_regressor.predict(X)[0])
+    return build_grid(lambda_home, lambda_away, rho=model.rho)
+
+
+def outcome_probabilities(
     model: TrainedModel, X: pd.DataFrame,
+) -> tuple[float, float, float]:
+    return outcome_probs_from_grid(_grid_for(model, X))
+
+
+def _scoreline_probabilities(
+    model: TrainedModel, X: pd.DataFrame, n: int = 10,
 ) -> list[dict]:
-    proba = model.scoreline_classifier.predict_proba(X)[0]
-    classes = list(model.scoreline_classifier.classes_)
-
-    scored = sorted(
-        zip(classes, proba), key=lambda x: x[1], reverse=True,
-    )[:10]
-
-    return [
-        {
-            "homeGoals": int(label.split("-")[0]),
-            "awayGoals": int(label.split("-")[1]),
-            "probability": float(prob),
-        }
-        for label, prob in scored
-    ]
+    return top_scorelines_from_grid(_grid_for(model, X), n=n)
 
 
 def predict_match(
@@ -162,12 +96,12 @@ def predict_match(
         raise ValueError(f"not enough match history for {home_team} or {away_team}")
 
     X = pd.DataFrame([features])
-    proba = model.classifier.predict_proba(X)[0]
-    classes = list(model.classifier.classes_)
+    grid = _grid_for(model, X)
+    home_win, draw, away_win = outcome_probs_from_grid(grid)
 
     return Prediction(
-        home_win=float(proba[classes.index("home")]),
-        draw=float(proba[classes.index("draw")]),
-        away_win=float(proba[classes.index("away")]),
-        scorelines=_scoreline_probabilities(model, X),
+        home_win=home_win,
+        draw=draw,
+        away_win=away_win,
+        scorelines=top_scorelines_from_grid(grid, n=10),
     )
