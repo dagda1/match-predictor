@@ -1,7 +1,12 @@
 from dataclasses import dataclass
 
-import numpy as np
 import pandas as pd
+
+from match_predictor.grid import (
+    build_grid,
+    outcome_probs_from_grid,
+    top_scorelines_from_grid,
+)
 
 
 @dataclass
@@ -28,7 +33,6 @@ def poisson_predict(
     df: pd.DataFrame,
     home_team: str,
     away_team: str,
-    n_simulations: int = 10_000,
 ) -> PoissonPrediction:
     home_matches = _team_xg(df, home_team, is_home=True)
     away_matches = _team_xg(df, away_team, is_home=False)
@@ -41,35 +45,14 @@ def poisson_predict(
     home_lambda = float(home_matches["xgFor"].mean())
     away_lambda = float(away_matches["xgFor"].mean())
 
-    rng = np.random.default_rng()
-    home_goals = rng.poisson(home_lambda, n_simulations)
-    away_goals = rng.poisson(away_lambda, n_simulations)
-
-    home_wins = int(np.sum(home_goals > away_goals))
-    draws = int(np.sum(home_goals == away_goals))
-    away_wins = int(np.sum(home_goals < away_goals))
-
-    scoreline_counts: dict[tuple[int, int], int] = {}
-    for h, a in zip(home_goals, away_goals):
-        key = (int(h), int(a))
-        scoreline_counts[key] = scoreline_counts.get(key, 0) + 1
-
-    top_scorelines = sorted(
-        scoreline_counts.items(), key=lambda x: x[1], reverse=True
-    )[:10]
+    grid = build_grid(home_lambda, away_lambda)
+    home_win, draw, away_win = outcome_probs_from_grid(grid)
 
     return PoissonPrediction(
-        home_win=home_wins / n_simulations,
-        draw=draws / n_simulations,
-        away_win=away_wins / n_simulations,
-        scorelines=[
-            {
-                "homeGoals": score[0],
-                "awayGoals": score[1],
-                "probability": count / n_simulations,
-            }
-            for score, count in top_scorelines
-        ],
+        home_win=home_win,
+        draw=draw,
+        away_win=away_win,
+        scorelines=top_scorelines_from_grid(grid, n=10),
         home_lambda=home_lambda,
         away_lambda=away_lambda,
     )
