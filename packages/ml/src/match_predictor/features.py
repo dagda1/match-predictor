@@ -4,7 +4,7 @@ WINDOWS = (5, 10)
 
 
 def _rolling_stats(
-    df: pd.DataFrame, team: str, before_date: pd.Timestamp, n: int = 5
+    df: pd.DataFrame, team: str, before_date: pd.Timestamp, n: int
 ) -> dict:
     home = df[(df["homeTeam"] == team) & (df["date"] < before_date)].copy()
     home = home.rename(columns={
@@ -83,8 +83,8 @@ def build_feature_row(
         home_stats = _rolling_stats(df, home_team, match_date, n=window)
         away_stats = _rolling_stats(df, away_team, match_date, n=window)
         for key in _ROLLING_KEYS:
-            features[f"home_{key}_{window}"] = home_stats.get(key, float("nan")) if home_stats else float("nan")
-            features[f"away_{key}_{window}"] = away_stats.get(key, float("nan")) if away_stats else float("nan")
+            features[f"home_{key}_{window}"] = home_stats[key] if home_stats else float("nan")
+            features[f"away_{key}_{window}"] = away_stats[key] if away_stats else float("nan")
 
     prior = df[df["date"] < match_date]
     features["homeAdvantage"] = _home_advantage(prior) if len(prior) > 0 else 1.0

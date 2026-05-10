@@ -31,12 +31,11 @@ def main() -> None:
     with mlflow.start_run(run_name="regressor-2-poisson") as run:
         mlflow.log_params({
             "architecture": "2-regressor",
-            "home_goals_regressor": "GradientBoostingRegressor(loss=poisson)",
-            "away_goals_regressor": "GradientBoostingRegressor(loss=poisson)",
-            "n_estimators": 200,
+            "home_goals_regressor": "HistGradientBoostingRegressor(loss=poisson)",
+            "away_goals_regressor": "HistGradientBoostingRegressor(loss=poisson)",
+            "max_iter": 200,
             "max_depth": 4,
             "learning_rate": 0.1,
-            "rho": 0.0,
             "training_matches": len(train_df),
             "holdout_size": HOLDOUT_SIZE,
             "holdout_first_date": str(holdout["date"].min().date()),
@@ -44,17 +43,20 @@ def main() -> None:
         })
 
         model = train(train_df)
-        mlflow.log_param("rho_fitted", model.rho)
+        mlflow.log_param("rho", model.rho)
 
         print(f"scoring on {len(holdout)} holdout matches (fitted rho={model.rho:.4f})")
         metrics = evaluate(make_predict_fn(model), df, holdout)
+
+        mlflow.log_params({
+            "n_scored": metrics["n"],
+            "n_skipped": metrics["skipped"],
+        })
 
         mlflow.log_metrics({
             "rps": metrics["rps"],
             "log_loss": metrics["log_loss"],
             "brier": metrics["brier"],
-            "n_scored": metrics["n"],
-            "n_skipped": metrics["skipped"],
         })
 
         mlflow.sklearn.log_model(model.home_goals_regressor, name="home_goals_regressor")

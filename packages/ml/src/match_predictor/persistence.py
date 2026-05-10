@@ -5,7 +5,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 
 from match_predictor.db_models import Prediction, TeamFeatures, Upcoming
-from match_predictor.features import _home_advantage, _rolling_stats
+from match_predictor.features import WINDOWS, _home_advantage, _rolling_stats
 
 
 def _parse_date(value: str) -> datetime:
@@ -115,7 +115,7 @@ def write_team_features(engine: Engine, df: pd.DataFrame) -> None:
     rows: list[TeamFeatures] = []
 
     for team in teams:
-        stats = _rolling_stats(df, team, cutoff)
+        stats = _rolling_stats(df, team, cutoff, n=WINDOWS[0])
         if not stats:
             continue
         rows.append(_team_feature_row(team, stats, home_advantage))

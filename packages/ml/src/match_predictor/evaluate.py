@@ -45,6 +45,15 @@ def evaluate(
         actual = outcome_of(int(match["homeGoals"]), int(match["awayGoals"]))
         actuals.append(OUTCOMES.index(actual))
 
+    if not probs_list:
+        return {
+            "rps": float("nan"),
+            "log_loss": float("nan"),
+            "brier": float("nan"),
+            "n": 0,
+            "skipped": skipped,
+        }
+
     probs_arr = np.array(probs_list)
     actuals_arr = np.array(actuals)
 

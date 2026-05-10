@@ -5,6 +5,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from scipy.optimize import minimize_scalar
+from scipy.stats import poisson
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 from match_predictor.features import build_feature_row, build_training_data
@@ -82,18 +83,47 @@ def _fit_rho(
     capped_home = np.minimum(actual_home.astype(int), MAX_GOALS)
     capped_away = np.minimum(actual_away.astype(int), MAX_GOALS)
 
+    p_home_at_obs = poisson.pmf(capped_home, home_lambdas)
+    p_away_at_obs = poisson.pmf(capped_away, away_lambdas)
+    p_obs_indep = p_home_at_obs * p_away_at_obs
+
+    p_h0 = poisson.pmf(0, home_lambdas)
+    p_h1 = poisson.pmf(1, home_lambdas)
+    p_a0 = poisson.pmf(0, away_lambdas)
+    p_a1 = poisson.pmf(1, away_lambdas)
+    p00 = p_h0 * p_a0
+    p01 = p_h0 * p_a1
+    p10 = p_h1 * p_a0
+    p11 = p_h1 * p_a1
+
+    mask_00 = (capped_home == 0) & (capped_away == 0)
+    mask_01 = (capped_home == 0) & (capped_away == 1)
+    mask_10 = (capped_home == 1) & (capped_away == 0)
+    mask_11 = (capped_home == 1) & (capped_away == 1)
+
     max_lambda = float(max(home_lambdas.max(), away_lambdas.max()))
     safe_lower = -1.0 / max_lambda + 1e-3
 
     def negative_log_likelihood(rho: float) -> float:
-        total = 0.0
-        for lh, la, kh, ka in zip(home_lambdas, away_lambdas, capped_home, capped_away):
-            grid = build_grid(float(lh), float(la), rho=rho)
-            p = grid[kh, ka]
-            if p <= 0.0:
-                return float("inf")
-            total += float(np.log(p))
-        return -total
+        tau00 = 1.0 - home_lambdas * away_lambdas * rho
+        tau01 = 1.0 + home_lambdas * rho
+        tau10 = 1.0 + away_lambdas * rho
+        tau11 = 1.0 - rho
+
+        z = 1.0 + (tau00 - 1) * p00 + (tau01 - 1) * p01 + (tau10 - 1) * p10 + (tau11 - 1) * p11
+
+        tau_at_obs = np.ones_like(p_obs_indep)
+        tau_at_obs = np.where(mask_00, tau00, tau_at_obs)
+        tau_at_obs = np.where(mask_01, tau01, tau_at_obs)
+        tau_at_obs = np.where(mask_10, tau10, tau_at_obs)
+        tau_at_obs = np.where(mask_11, tau11, tau_at_obs)
+
+        p = (tau_at_obs * p_obs_indep) / z
+
+        if np.any(p <= 0.0):
+            return float("inf")
+
+        return -float(np.sum(np.log(p)))
 
     result = minimize_scalar(
         negative_log_likelihood,
