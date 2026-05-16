@@ -75,13 +75,13 @@ class DeployStack(Stack):
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )
+        CfnOutput(self, "BootstrapFunctionName", value=bootstrap.function.function_name)
 
         migration = Migration(self, "DatabaseMigration",
             database=database.instance,
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )
-        migration.node.add_dependency(bootstrap)
 
         mlflow = Mlflow(self, "Mlflow",
             database=database.instance,

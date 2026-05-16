@@ -56,6 +56,20 @@ jobs:
           cd packages/deploy
           cdk deploy --all --require-approval never
 
+      - name: Bootstrap database
+        run: |
+          FN=$(aws cloudformation describe-stacks \
+            --stack-name DeployStack \
+            --query "Stacks[0].Outputs[?OutputKey=='BootstrapFunctionName'].OutputValue" \
+            --output text)
+          aws lambda invoke \
+            --function-name "$FN" \
+            --cli-binary-format raw-in-base64-out \
+            --payload '{}' \
+            /tmp/bootstrap.out
+          cat /tmp/bootstrap.out
+          grep -q '"status": "ok"' /tmp/bootstrap.out
+
       - name: Set up Graphviz
         uses: ts-graphviz/setup-graphviz@v2
 

@@ -8,9 +8,6 @@ SQL_DIR = Path(__file__).parent / "sql"
 
 
 def handler(event, context):
-    if event.get("RequestType") == "Delete":
-        return {"PhysicalResourceId": "bootstrap"}
-
     host = os.environ["DB_HOST"]
     user = os.environ["DB_USER"]
     dbname = os.environ["DB_NAME"]
@@ -37,7 +34,7 @@ def handler(event, context):
     execute_sql_file(connection, "aws-iam.sql")
     connection.close()
 
-    return {"PhysicalResourceId": "bootstrap"}
+    return {"status": "ok"}
 
 
 def execute_sql_file(connection, filename):

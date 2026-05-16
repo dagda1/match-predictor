@@ -1,57 +1,36 @@
-## return all logical IDs for all failed resources
+# CloudFormation stack ops
 
-```bash
-aws cloudformation describe-stack-events \
-    --stack-name CertificateStack \
-    --region us-east-1 \
-    --query "StackEvents[?ResourceStatus=='UPDATE_FAILED'].LogicalResourceId" \
-    --output text
-```
-
-## Skip a failed resource during rollback
-
-Use when a resource was deleted outside CloudFormation and the stack is stuck in `UPDATE_ROLLBACK_FAILED`.
-
-```bash
-aws cloudformation continue-update-rollback \
-  --stack-name DeployStack \
-  --resources-to-skip <LogicalResourceId>
-```
-
-e.g.
-
-```bash
-aws cloudformation continue-update-rollback \
-  --stack-name CertificateStack \
-  --region us-east-1 \
-  --resources-to-skip ExportsWriteruswest209BD44F0A7CF058B
-```
-
-## Check why a stack delete failed
-
-```bash
-aws cloudformation describe-stack-events \
-  --stack-name DeployStack \
-  --query "StackEvents[?ResourceStatus=='DELETE_FAILED'].{LogicalId:LogicalResourceId,Reason:ResourceStatusReason}" \
-  --output json
-```
-
-## Check stack status
+## Check status
 
 ```bash
 aws cloudformation describe-stacks \
-  --stack-name CertificateStack \
-  --region us-east-1 \
+  --stack-name DeployStack \
+  --region us-west-2 \
   --query "Stacks[0].StackStatus" \
   --output text
 ```
 
-aws cloudformation delete-stack \
-    --stack-name CertificateStack \
-    --region us-east-1
+## Recover from UPDATE_ROLLBACK_FAILED
 
-aws cloudformation describe-stacks \
-  --stack-name CertificateStack \
-  --query "Stacks[0].StackStatus" \
-  --region us-east-1 \
-  --output text
+1. List the resources that failed (skip the stack-level row):
+
+   ```bash
+   aws cloudformation describe-stack-events \
+     --stack-name DeployStack --region us-west-2 \
+     --query "StackEvents[?ResourceStatus=='UPDATE_FAILED'].LogicalResourceId" \
+     --output text | tr '\t' '\n' | sort -u | grep -v '^DeployStack$'
+   ```
+
+2. Continue the rollback, skipping those resources (space-separated):
+
+   ```bash
+aws cloudformation continue-update-rollback \
+  --stack-name DeployStack --region us-west-2 \
+  --resources-to-skip <id1> <id2>
+   ```
+
+3. Re-check status. When it reads `UPDATE_ROLLBACK_COMPLETE`, re-deploy.
+
+aws cloudformation continue-update-rollback \
+  --stack-name DeployStack --region us-west-2 \
+  --resources-to-skip ApiApiFunctionAA82C666 DatabaseBootstrapC5F0F99D EtlFunctionsPredictorFunctionE33E3D43
