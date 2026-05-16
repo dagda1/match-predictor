@@ -1,5 +1,4 @@
 import os
-import json
 from pathlib import Path
 
 import boto3
@@ -12,16 +11,25 @@ def handler(event, context):
     if event.get("RequestType") == "Delete":
         return {"PhysicalResourceId": "bootstrap"}
 
-    secrets = boto3.client("secretsmanager")
-    credentials = json.loads(
-        secrets.get_secret_value(SecretId=os.environ["SECRET_ARN"])["SecretString"]
+    host = os.environ["DB_HOST"]
+    user = os.environ["DB_USER"]
+    dbname = os.environ["DB_NAME"]
+
+    rds_client = boto3.client("rds")
+    token = rds_client.generate_db_auth_token(
+        DBHostname=host,
+        Port=5432,
+        DBUsername=user,
     )
 
     connection = psycopg2.connect(
-        host=os.environ["DB_HOST"],
-        dbname=os.environ["DB_NAME"],
-        user=credentials["username"],
-        password=credentials["password"],
+        host=host,
+        port=5432,
+        dbname=dbname,
+        user=user,
+        password=token,
+        sslmode="verify-full",
+        sslrootcert="/var/task/rds-ca-bundle.pem",
     )
     connection.autocommit = True
 
