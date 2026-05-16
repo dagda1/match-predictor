@@ -101,6 +101,7 @@ graph LR
     DatabasePostgres277EF4CB[("Postgres<br/>RDS")]
     EtlFunctionsPredictorFunctionE33E3D43["Predictor<br/>Lambda"]
     EtlFunctionsScraperFunctionF099BA00["Scraper<br/>Lambda"]
+    MlflowHandlerFunction89C90A9C["Mlflow<br/>Lambda"]
   end
   ApiHttpApi4C294DC0(["HttpApi<br/>API Gateway"])
   ApiWarmupRuleFD0BC37F("WarmupRule<br/>EventBridge")
@@ -132,6 +133,7 @@ graph LR
   EtlFunctionsScraperFunctionF099BA00 --> QueuingScraperToPredictor12C65B00
   EtlFunctionsScraperFunctionF099BA00 --> StorageBucket5CB7C8EA
   EventBridgeDailyScraperRule9BFD8304 --> EtlFunctionsScraperFunctionF099BA00
+  MlflowHandlerFunction89C90A9C --> DatabasePostgres277EF4CB
   QueuingScraperToPredictor12C65B00 --> EtlFunctionsPredictorFunctionE33E3D43
 ```
 <!-- ARCH:END -->

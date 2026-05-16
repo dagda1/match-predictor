@@ -22,6 +22,7 @@ from deploy.deploy_stack.model_storage import ModelStorage
 from deploy.deploy_stack.firehose import Firehose
 from deploy.deploy_stack.firehose_lambda import FirehoseFunctions
 from deploy.deploy_stack.glue import Glue
+from deploy.deploy_stack.mlflow import Mlflow
 
 class DeployStack(Stack):
 
@@ -81,6 +82,12 @@ class DeployStack(Stack):
             security_group=network.lambda_security_group,
         )
         migration.node.add_dependency(bootstrap)
+
+        mlflow = Mlflow(self, "Mlflow",
+            database=database.instance,
+            vpc=network.vpc,
+            security_group=network.lambda_security_group,
+        )
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)
