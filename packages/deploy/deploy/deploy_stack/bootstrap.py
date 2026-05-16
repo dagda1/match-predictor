@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 
 from aws_cdk import (
@@ -11,6 +12,11 @@ from aws_cdk.custom_resources import Provider
 from constructs import Construct
 
 REPO_DIR = Path(__file__).resolve().parents[4]
+
+
+def bootstrap_sql_hash() -> str:
+    sql_path = REPO_DIR / "packages" / "db-bootstrap" / "sql" / "bootstrap.sql"
+    return hashlib.sha256(sql_path.read_bytes()).hexdigest()
 
 
 class Bootstrap(Construct):
@@ -51,5 +57,5 @@ class Bootstrap(Construct):
 
         CustomResource(self, "Resource",
             service_token=provider.service_token,
-            properties={"Version": "3"},
+            properties={"Version": bootstrap_sql_hash()},
         )

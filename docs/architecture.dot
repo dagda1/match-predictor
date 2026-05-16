@@ -1,0 +1,768 @@
+digraph "Diagram" {
+  splines = "ortho";
+  pad = 1;
+  nodesep = 0.6;
+  ranksep = 0.75;
+  fontname = "Sans-Serif";
+  fontsize = 15;
+  dpi = 200;
+  rankdir = "BT";
+  compound = true;
+  fontcolor = "#222222";
+  edge [
+    color = "#D5871488";
+    penwidth = 2;
+    arrowhead = "dot";
+    arrowtail = "dot";
+  ];
+  node [
+    shape = "box";
+    style = "rounded";
+    fixedsize = true;
+    width = 1.7;
+    height = 1.7;
+    labelloc = "c";
+    imagescale = true;
+    fontname = "Sans-Serif";
+    fontsize = 8;
+    margin = 8;
+  ];
+  subgraph "App" {
+    subgraph "cluster-SubGraph.App" {
+      graph [
+        label = "App";
+        labelloc = "b";
+        labeljust = "l";
+        margin = 10;
+        fontsize = 16;
+        penwidth = 2;
+        pencolor = "#888888";
+        style = "filled,rounded";
+        fillcolor = "#f3f3f3";
+      ];
+      subgraph "cluster-SubGraph.EdgeStack" {
+        graph [
+          label = "EdgeStack";
+          labelloc = "b";
+          labeljust = "l";
+          margin = 10;
+          fontsize = 16;
+          penwidth = 2;
+          pencolor = "#888888";
+          style = "filled,rounded";
+          fillcolor = "#e4e4e4";
+        ];
+        "EdgeStack/ExportsWriteruswest209BD44F0" [
+          label = "\nExportsWriteruswest20";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.682;
+        ];
+        "EdgeStack/Certificate/Certificate" [
+          label = " Certificate";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Certificate-Manager_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        "EdgeStack/Waf/WebAcl" [
+          label = " WAFv2 WebACL WebAcl";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-WAF_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.266;
+        ];
+      }
+      subgraph "cluster-SubGraph.DeployStack" {
+        graph [
+          label = "DeployStack";
+          labelloc = "b";
+          labeljust = "l";
+          margin = 10;
+          fontsize = 16;
+          penwidth = 2;
+          pencolor = "#888888";
+          style = "filled,rounded";
+          fillcolor = "#e4e4e4";
+        ];
+        "DeployStack/GitHubProvider" [
+          label = " GitHubProvider";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        "DeployStack/GitHubActionRole" [
+          label = " GitHubActionRole";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        "DeployStack/DatabaseBootstrap" [
+          label = " DatabaseBootstrap";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        "DeployStack/DatabaseMigration" [
+          label = " DatabaseMigration";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        "DeployStack/InitialDataLoad" [
+          label = " InitialDataLoad";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        "DeployStack/AWS679f53fac002430cb0da5b7982bd2287" [
+          label = "\nAWS679f53fac002430cb0";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.4819999999999998;
+        ];
+        "DeployStack/ExportsReader" [
+          label = " ExportsReader";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        "DeployStack/Database/Postgres" [
+          label = " Postgres";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Compute/Res_48_Dark/Res_Amazon-EC2_Instance_48_Dark_gen.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.266;
+        ];
+        "DeployStack/Queuing/ScraperToPredictor" [
+          label = " ScraperToPredictor";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_AWS-Simple-Queue-Service_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.266;
+        ];
+        "DeployStack/EventBridge/DailyScraperRule" [
+          label = " DailyScraperRule";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        "DeployStack/Secrets/OriginVerifySecret" [
+          label = " OriginVerifySecret";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Secrets-Manager_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 1.2;
+          height = 1.466;
+        ];
+        subgraph "cluster-SubGraph.Network" {
+          graph [
+            label = "Network";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/Network/Vpc" [
+            label = " Vpc";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-Virtual-Private-Cloud_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "DeployStack/Network/DatabaseSecurityGroup" [
+            label = "\nDatabaseSecurityGroup";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.4819999999999998;
+          ];
+          "DeployStack/Network/LambdaSecurityGroup" [
+            label = " LambdaSecurityGroup";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+        }
+        subgraph "cluster-SubGraph.Storage" {
+          graph [
+            label = "Storage";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/Storage/AccessLogBucket" [
+            label = " AccessLogBucket";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "DeployStack/Storage/Bucket" [
+            label = " Bucket";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "DeployStack/Storage/FrontendBucket" [
+            label = " FrontendBucket";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+        }
+        subgraph "cluster-SubGraph.DataStorage" {
+          graph [
+            label = "DataStorage";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/DataStorage/Database" [
+            label = " Database";
+            fontsize = 12;
+          ];
+          "DeployStack/DataStorage/MatchesTable/Table" [
+            label = " GLUE TABLE Table";
+            fontsize = 12;
+          ];
+          "DeployStack/DataStorage/PredictionsTable/Table" [
+            label = " GLUE TABLE Table";
+            fontsize = 12;
+          ];
+          "DeployStack/DataStorage/UpcomingTable/Table" [
+            label = " GLUE TABLE Table";
+            fontsize = 12;
+          ];
+        }
+        subgraph "cluster-SubGraph.ModelStorage" {
+          graph [
+            label = "ModelStorage";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/ModelStorage/EfsSecurityGroup" [
+            label = " EfsSecurityGroup";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "DeployStack/ModelStorage/ModelFileSystem" [
+            label = " ModelFileSystem";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-Elastic-File-System_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+        }
+        subgraph "cluster-SubGraph.EtlFunctions" {
+          graph [
+            label = "EtlFunctions";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/EtlFunctions/ScraperFunction" [
+            label = " ScraperFunction";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "DeployStack/EtlFunctions/PredictorFunction" [
+            label = " PredictorFunction";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+        }
+        subgraph "cluster-SubGraph.Api" {
+          graph [
+            label = "Api";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/Api/ApiFunction" [
+            label = " ApiFunction";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "DeployStack/Api/HttpApi" [
+            label = " HttpApi";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-API-Gateway_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+          "DeployStack/Api/WarmupRule" [
+            label = " WarmupRule";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+        }
+        subgraph "cluster-SubGraph.Cdn" {
+          graph [
+            label = "Cdn";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/Cdn/OAC" [
+            label = " OAC";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+          "DeployStack/Cdn/AssetCachePolicy" [
+            label = " AssetCachePolicy";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+          "DeployStack/Cdn/NoCachePolicy" [
+            label = " NoCachePolicy";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+          "DeployStack/Cdn/Distribution" [
+            label = " Distribution";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "DeployStack/Cdn/AliasRecord" [
+            label = " AliasRecord";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-Route-53-Hosted-Zone_48_Dark_gen.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+        }
+      }
+    }
+  }
+  "DeployStack/GitHubActionRole" -> "DeployStack/GitHubProvider" [
+    dir = "both";
+  ];
+  "DeployStack/GitHubActionRole" -> "DeployStack/Storage/FrontendBucket" [
+    dir = "both";
+  ];
+  "DeployStack/GitHubActionRole" -> "DeployStack/Cdn/Distribution" [
+    dir = "both";
+  ];
+  "DeployStack/Network/Vpc" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/Network/DatabaseSecurityGroup" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/Network/DatabaseSecurityGroup" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/Network/LambdaSecurityGroup" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseBootstrap" -> "DeployStack/Database/Postgres" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseBootstrap" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseBootstrap" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseMigration" -> "DeployStack/Database/Postgres" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseMigration" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseMigration" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/Storage/AccessLogBucket" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/Storage/Bucket" -> "DeployStack/Storage/AccessLogBucket" [
+    dir = "both";
+  ];
+  "DeployStack/Storage/FrontendBucket" -> "DeployStack/Cdn/Distribution" [
+    dir = "both";
+  ];
+  "DeployStack/DataStorage/MatchesTable/Table" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/DataStorage/MatchesTable/Table" -> "DeployStack/DataStorage/Database" [
+    dir = "both";
+  ];
+  "DeployStack/DataStorage/PredictionsTable/Table" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/DataStorage/PredictionsTable/Table" -> "DeployStack/DataStorage/Database" [
+    dir = "both";
+  ];
+  "DeployStack/DataStorage/UpcomingTable/Table" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/DataStorage/UpcomingTable/Table" -> "DeployStack/DataStorage/Database" [
+    dir = "both";
+  ];
+  "DeployStack/ModelStorage/EfsSecurityGroup" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/ModelStorage/EfsSecurityGroup" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/ModelStorage/ModelFileSystem" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/ModelStorage/ModelFileSystem" -> "DeployStack/ModelStorage/EfsSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/ScraperFunction" -> "DeployStack/Database/Postgres" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/ScraperFunction" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/ScraperFunction" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/ScraperFunction" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/ScraperFunction" -> "DeployStack/Queuing/ScraperToPredictor" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/PredictorFunction" -> "DeployStack/Database/Postgres" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/PredictorFunction" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/PredictorFunction" -> "DeployStack/ModelStorage/ModelFileSystem" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/PredictorFunction" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/PredictorFunction" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/EtlFunctions/PredictorFunction" -> "DeployStack/Queuing/ScraperToPredictor" [
+    dir = "both";
+  ];
+  "DeployStack/InitialDataLoad" -> "DeployStack/EtlFunctions/ScraperFunction" [
+    dir = "both";
+  ];
+  "DeployStack/InitialDataLoad" -> "DeployStack/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both";
+  ];
+  "DeployStack/Api/ApiFunction" -> "DeployStack/Database/Postgres" [
+    dir = "both";
+  ];
+  "DeployStack/Api/ApiFunction" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/Api/ApiFunction" -> "DeployStack/ModelStorage/ModelFileSystem" [
+    dir = "both";
+  ];
+  "DeployStack/Api/ApiFunction" -> "DeployStack/Secrets/OriginVerifySecret" [
+    dir = "both";
+  ];
+  "DeployStack/Api/ApiFunction" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/Api/ApiFunction" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/Api/HttpApi" -> "DeployStack/Api/ApiFunction" [
+    dir = "both";
+  ];
+  "DeployStack/Api/WarmupRule" -> "DeployStack/Api/ApiFunction" [
+    dir = "both";
+  ];
+  "DeployStack/Cdn/Distribution" -> "DeployStack/Storage/FrontendBucket" [
+    dir = "both";
+  ];
+  "DeployStack/Cdn/Distribution" -> "DeployStack/Secrets/OriginVerifySecret" [
+    dir = "both";
+  ];
+  "DeployStack/Cdn/Distribution" -> "DeployStack/Api/HttpApi" [
+    dir = "both";
+  ];
+  "DeployStack/Cdn/Distribution" -> "DeployStack/Cdn/OAC" [
+    dir = "both";
+  ];
+  "DeployStack/Cdn/Distribution" -> "DeployStack/Cdn/AssetCachePolicy" [
+    dir = "both";
+  ];
+  "DeployStack/Cdn/Distribution" -> "DeployStack/Cdn/NoCachePolicy" [
+    dir = "both";
+  ];
+  "DeployStack/Cdn/Distribution" -> "DeployStack/ExportsReader" [
+    dir = "both";
+  ];
+  "DeployStack/Cdn/AliasRecord" -> "DeployStack/Cdn/Distribution" [
+    dir = "both";
+  ];
+  "DeployStack/Database/Postgres" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/Database/Postgres" -> "DeployStack/Network/DatabaseSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/EventBridge/DailyScraperRule" -> "DeployStack/EtlFunctions/ScraperFunction" [
+    dir = "both";
+  ];
+}

@@ -26,6 +26,7 @@
     "predictor:local": "uv run --directory packages/ml python scripts/run-predictor-local.py",
     "arch:diagram": "python3 ./scripts/generate-architecture-diagram.py",
     "arch:check": "python3 ./scripts/generate-architecture-diagram.py --check",
+    "arch:dia": "cdk-dia --target docs/architecture.png --tree packages/deploy/cdk.out/tree.json && cdk-dia --target docs/architecture.dot --tree packages/deploy/cdk.out/tree.json",
     "db:diagram": "uv run --directory packages/ml python scripts/generate-db-diagram.py",
     "db:diagram:check": "uv run --directory packages/ml python scripts/generate-db-diagram.py --check"
   },
@@ -64,6 +65,7 @@
     "@typescript-eslint/parser": "8.57.2",
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.2",
+    "cdk-dia": "^0.12.3",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "eslint": "10.1.0",
