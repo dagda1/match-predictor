@@ -88,6 +88,7 @@ class DeployStack(Stack):
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )
+        CfnOutput(self, "MlflowFunctionName", value=mlflow.function.function_name)
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)

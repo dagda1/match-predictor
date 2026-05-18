@@ -7,11 +7,6 @@ from psycopg2 import sql
 
 
 def handler(event, context):
-    physical_id = event.get("PhysicalResourceId", "mlflow-bootstrap")
-
-    if event.get("RequestType") == "Delete":
-        return {"PhysicalResourceId": physical_id}
-
     host = os.environ["DB_HOST"]
     user = os.environ["DB_USER"]
     mlflow_db = os.environ["MLFLOW_DB_NAME"]
@@ -60,4 +55,4 @@ def handler(event, context):
         trimmed = (result.stderr or "")[-400:]
         raise RuntimeError(f"mlflow db upgrade exit {result.returncode}: {trimmed}")
 
-    return {"PhysicalResourceId": physical_id}
+    return {"status": "ok"}

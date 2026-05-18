@@ -2,7 +2,6 @@ from aws_cdk import (
     Arn,
     ArnComponents,
     ArnFormat,
-    CustomResource,
     Duration,
     Stack,
     aws_ec2 as ec2,
@@ -10,7 +9,6 @@ from aws_cdk import (
     aws_lambda,
     aws_rds as rds,
 )
-from aws_cdk.custom_resources import Provider
 from constructs import Construct
 
 from deploy.deploy_stack.database_users import MLFLOW_MIGRATOR_USER
@@ -32,7 +30,7 @@ class Mlflow(Construct):
 
         version = mlflow_version()
 
-        handler_function = aws_lambda.DockerImageFunction(self, "HandlerFunction",
+        self.function = aws_lambda.DockerImageFunction(self, "HandlerFunction",
             code=aws_lambda.DockerImageCode.from_image_asset(
                 str(REPO_DIR),
                 file="packages/ml/mlflow.Dockerfile",
@@ -72,18 +70,9 @@ class Mlflow(Construct):
             stack=stack,
         )
 
-        handler_function.add_to_role_policy(
+        self.function.add_to_role_policy(
             iam.PolicyStatement(
                 actions=["rds-db:connect"],
                 resources=[db_user_arn],
             )
-        )
-
-        provider = Provider(self, "Provider",
-            on_event_handler=handler_function,
-        )
-
-        CustomResource(self, "Resource",
-            service_token=provider.service_token,
-            properties={"Version": version},
         )
