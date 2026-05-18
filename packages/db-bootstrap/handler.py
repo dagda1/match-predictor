@@ -1,3 +1,4 @@
+import json
 import os
 from pathlib import Path
 
@@ -8,25 +9,16 @@ SQL_DIR = Path(__file__).parent / "sql"
 
 
 def handler(event, context):
-    host = os.environ["DB_HOST"]
-    user = os.environ["DB_USER"]
-    dbname = os.environ["DB_NAME"]
-
-    rds_client = boto3.client("rds")
-    token = rds_client.generate_db_auth_token(
-        DBHostname=host,
-        Port=5432,
-        DBUsername=user,
+    secrets = boto3.client("secretsmanager")
+    credentials = json.loads(
+        secrets.get_secret_value(SecretId=os.environ["SECRET_ARN"])["SecretString"]
     )
 
     connection = psycopg2.connect(
-        host=host,
-        port=5432,
-        dbname=dbname,
-        user=user,
-        password=token,
-        sslmode="verify-full",
-        sslrootcert="/var/task/rds-ca-bundle.pem",
+        host=os.environ["DB_HOST"],
+        dbname=os.environ["DB_NAME"],
+        user=credentials["username"],
+        password=credentials["password"],
     )
     connection.autocommit = True
 

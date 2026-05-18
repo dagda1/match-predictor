@@ -29,7 +29,17 @@ aws cloudformation continue-update-rollback \
   --resources-to-skip <id1> <id2>
    ```
 
-3. Re-check status. When it reads `UPDATE_ROLLBACK_COMPLETE`, re-deploy.
+3. Re-check status.
+   - `UPDATE_ROLLBACK_COMPLETE` — done, re-deploy.
+   - flips back to `UPDATE_ROLLBACK_FAILED` after `UPDATE_ROLLBACK_IN_PROGRESS` — a different resource failed this attempt. Get the latest failing ones with reasons and add them to `--resources-to-skip`:
+
+     ```bash
+     aws cloudformation describe-stack-events \
+       --stack-name DeployStack --region us-west-2 \
+       --max-items 50 \
+       --query "StackEvents[?ResourceStatus=='UPDATE_FAILED'].[Timestamp,LogicalResourceId,ResourceStatusReason]" \
+       --output table
+     ```
 
 aws cloudformation continue-update-rollback \
   --stack-name DeployStack --region us-west-2 \
