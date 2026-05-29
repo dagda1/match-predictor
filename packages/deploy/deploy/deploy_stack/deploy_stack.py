@@ -23,6 +23,7 @@ from deploy.deploy_stack.firehose import Firehose
 from deploy.deploy_stack.firehose_lambda import FirehoseFunctions
 from deploy.deploy_stack.glue import Glue
 from deploy.deploy_stack.mlflow import Mlflow
+from deploy.deploy_stack.post_deploy import PostDeploy
 
 class DeployStack(Stack):
 
@@ -75,7 +76,6 @@ class DeployStack(Stack):
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )
-        CfnOutput(self, "BootstrapFunctionName", value=bootstrap.function.function_name)
 
         migration = Migration(self, "DatabaseMigration",
             database=database.instance,
@@ -88,7 +88,11 @@ class DeployStack(Stack):
             vpc=network.vpc,
             security_group=network.lambda_security_group,
         )
-        CfnOutput(self, "MlflowFunctionName", value=mlflow.function.function_name)
+
+        PostDeploy(self, "PostDeploy",
+            bootstrap_function=bootstrap.function,
+            mlflow_function=mlflow.function,
+        )
 
         storage = Storage(self, "Storage")
         DataStorage(self, "DataStorage", bucket=storage.bucket)

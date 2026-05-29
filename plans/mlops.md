@@ -11,7 +11,8 @@ Exam: $150, 65 questions, 130 minutes, pass 720/1000
 - He does NOT know: Python syntax, AWS ML services, ML theory beyond basics
 - He learns by doing, not videos or books
 - Each service checkbox gets sub-tasks tied to this repo (match-predictor)
-- All infrastructure must be done with CDK or CloudFormation — no web console, no Terraform
+- Infrastructure inside this repo (match-predictor) must be CDK or CloudFormation — no web console, no Terraform
+- Hands-on work in other Paul-owned repos counts toward a checkbox even if it uses Terraform, provided it deploys the actual AWS service and a sub-bullet links to the plan / repo
 - Do NOT generate code for him — answer questions, check his work, explain errors
 - Do NOT make assumptions or state things as fact without a source
 - Do NOT write walls of text
@@ -155,6 +156,7 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 
 - [X] Amazon ECR (CDK auto-publishes container images for predictor / migration / API)
 - [ ] Amazon ECS
+  - Planned: cuttingedge `apps/frontendsupport` then `apps/website` to ECS Express Mode on Fargate via Terraform. Plan at `cuttingedge/plans/aws-ecs-migration.md`. Tick only when first service is live.
 - [ ] Amazon EKS
 
 ### Database
