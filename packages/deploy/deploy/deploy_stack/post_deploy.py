@@ -1,9 +1,14 @@
+import os
+
 from aws_cdk import (
     Duration,
     Stack,
+    aws_cloudwatch_actions,
     aws_events,
     aws_events_targets,
     aws_lambda,
+    aws_sns,
+    aws_sns_subscriptions,
     aws_stepfunctions as sfn,
     aws_stepfunctions_tasks as tasks,
 )
@@ -54,3 +59,14 @@ class PostDeploy(Construct):
         )
 
         rule.add_target(aws_events_targets.SfnStateMachine(self.state_machine))
+
+        topic = aws_sns.Topic(self, "FailureAlerts")
+        topic.add_subscription(
+            aws_sns_subscriptions.EmailSubscription(os.environ["AWS_ALARM_EMAIL"])
+        )
+
+        failure_alarm = self.state_machine.metric_failed().create_alarm(self, "ExecutionFailedAlarm",
+            threshold=1,
+            evaluation_periods=1,
+        )
+        failure_alarm.add_alarm_action(aws_cloudwatch_actions.SnsAction(topic))

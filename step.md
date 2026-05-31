@@ -16,34 +16,35 @@ If you still get `401 Bad credentials` after logging in, a stale token env var i
 unset GH_TOKEN GITHUB_TOKEN
 ```
 
+Everything deploys to **us-west-2**, so every command pins `--region us-west-2`.
+
 ## 1. Check the state machine was created
 
 ```
-aws cloudformation describe-stack-resources --stack-name DeployStack --query "StackResources[?ResourceType=='AWS::StepFunctions::StateMachine'].PhysicalResourceId" --output text
+aws stepfunctions list-state-machines --region us-west-2
 ```
 
-Prints the state machine ARN if it exists, empty if not.
+Lists every state machine with its `stateMachineArn` and `name`.
 
 ## 2. Get the ARN into a variable
 
 ```
-SM_ARN=$(aws cloudformation describe-stack-resources --stack-name DeployStack --query "StackResources[?ResourceType=='AWS::StepFunctions::StateMachine'].PhysicalResourceId" --output text)
+SM_ARN=$(aws stepfunctions list-state-machines --region us-west-2 --query "stateMachines[?contains(name, 'PostDeploy')].stateMachineArn | [0]" --output text)
 echo "$SM_ARN"
 ```
 
-## 3. First-run manual trigger
-
-The EventBridge rule can't catch the deploy event that created it, so the very first run is manual:
+## 3. Manually trigger a run
 
 ```
-aws stepfunctions start-execution --state-machine-arn "$SM_ARN" --input '{}'
+aws stepfunctions start-execution --region us-west-2 --state-machine-arn "$SM_ARN" --input '{}'
 ```
 
-## 4. Watch the execution result
+## 4. Why the latest FAILED execution failed
 
 ```
-EXEC_ARN=$(aws stepfunctions list-executions --state-machine-arn "$SM_ARN" --max-results 1 --query "executions[0].executionArn" --output text)
-aws stepfunctions describe-execution --execution-arn "$EXEC_ARN" --query "{status:status,error:error,cause:cause}" --output table
+SM_ARN=$(aws stepfunctions list-state-machines --region us-west-2 --query "stateMachines[?contains(name, 'PostDeploy')].stateMachineArn | [0]" --output text) \
+&& EXEC_ARN=$(aws stepfunctions list-executions --region us-west-2 --state-machine-arn "$SM_ARN" --status-filter FAILED --max-results 1 --query "executions[0].executionArn" --output text) \
+&& aws stepfunctions describe-execution --region us-west-2 --execution-arn "$EXEC_ARN" --query "{status:status,error:error,cause:cause}" --output json
 ```
 
-`status` should be `SUCCEEDED`.
+The `cause` field shows which Lambda threw and the exception text.
