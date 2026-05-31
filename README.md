@@ -110,6 +110,7 @@ graph LR
   EventBridgeDailyScraperRule9BFD8304("DailyScraperRule<br/>EventBridge")
   FirehoseFunctionsLogTransformerFunctionE1614C32["LogTransformer<br/>Lambda"]
   ModelStorageModelFileSystem7131CD34[\"ModelFileSystem<br/>EFS"/]
+  PostDeployStackCompleteRuleC785A5C7("StackCompleteRule<br/>EventBridge")
   QueuingScraperToPredictor12C65B00>"ScraperToPredictor<br/>SQS"]
   SecretsOriginVerifySecret2207D00B[/"OriginVerifySecret<br/>Secrets Manager"/]
   StorageBucket5CB7C8EA[("Storage<br/>S3")]

@@ -130,19 +130,6 @@ digraph "Diagram" {
           width = 1.2;
           height = 1.466;
         ];
-        "DeployStack/DatabaseBootstrap" [
-          label = " DatabaseBootstrap";
-          fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
-          imagescale = "true";
-          imagepos = "tc";
-          penwidth = 0;
-          shape = "node";
-          fixedsize = "true";
-          labelloc = "b";
-          width = 1.2;
-          height = 1.466;
-        ];
         "DeployStack/DatabaseMigration" [
           label = " DatabaseMigration";
           fontsize = 12;
@@ -208,6 +195,32 @@ digraph "Diagram" {
           width = 2;
           height = 2.266;
         ];
+        "DeployStack/DatabaseBootstrap/HandlerFunction" [
+          label = " HandlerFunction";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.266;
+        ];
+        "DeployStack/Mlflow/HandlerFunction" [
+          label = " HandlerFunction";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.266;
+        ];
         "DeployStack/Queuing/ScraperToPredictor" [
           label = " ScraperToPredictor";
           fontsize = 12;
@@ -246,6 +259,19 @@ digraph "Diagram" {
           labelloc = "b";
           width = 1.2;
           height = 1.466;
+        ];
+        "DeployStack/FirehoseFunctions/LogTransformerFunction" [
+          label = "\nLogTransformerFunctio";
+          fontsize = 12;
+          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.4819999999999998;
         ];
         subgraph "cluster-SubGraph.Network" {
           graph [
@@ -297,6 +323,45 @@ digraph "Diagram" {
             labelloc = "b";
             width = 2;
             height = 2.266;
+          ];
+        }
+        subgraph "cluster-SubGraph.PostDeploy" {
+          graph [
+            label = "PostDeploy";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/PostDeploy/StateMachine" [
+            label = " StateMachine";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_AWS-Step-Functions_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+          "DeployStack/PostDeploy/StackCompleteRule" [
+            label = " StackCompleteRule";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
           ];
         }
         subgraph "cluster-SubGraph.Storage" {
@@ -588,6 +653,57 @@ digraph "Diagram" {
             height = 1.466;
           ];
         }
+        subgraph "cluster-SubGraph.Firehose" {
+          graph [
+            label = "Firehose";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/Firehose/DeliveryStream" [
+            label = " DeliveryStream";
+            fontsize = 12;
+          ];
+          "DeployStack/Firehose/SubscriptionFilter" [
+            label = " SubscriptionFilter";
+            fontsize = 12;
+            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Management-Governance/Res_48_Dark/Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+        }
+        subgraph "cluster-SubGraph.Glue" {
+          graph [
+            label = "Glue";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "DeployStack/Glue/LogsDatabase" [
+            label = " GLUE DATABASE\nLogsDatabase";
+            fontsize = 12;
+          ];
+          "DeployStack/Glue/LogsTable" [
+            label = " GLUE TABLE LogsTable";
+            fontsize = 12;
+          ];
+        }
       }
     }
   }
@@ -612,15 +728,6 @@ digraph "Diagram" {
   "DeployStack/Network/LambdaSecurityGroup" -> "DeployStack/Network/Vpc" [
     dir = "both";
   ];
-  "DeployStack/DatabaseBootstrap" -> "DeployStack/Database/Postgres" [
-    dir = "both";
-  ];
-  "DeployStack/DatabaseBootstrap" -> "DeployStack/Network/Vpc" [
-    dir = "both";
-  ];
-  "DeployStack/DatabaseBootstrap" -> "DeployStack/Network/LambdaSecurityGroup" [
-    dir = "both";
-  ];
   "DeployStack/DatabaseMigration" -> "DeployStack/Database/Postgres" [
     dir = "both";
   ];
@@ -628,6 +735,15 @@ digraph "Diagram" {
     dir = "both";
   ];
   "DeployStack/DatabaseMigration" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/PostDeploy/StateMachine" -> "DeployStack/DatabaseBootstrap/HandlerFunction" [
+    dir = "both";
+  ];
+  "DeployStack/PostDeploy/StateMachine" -> "DeployStack/Mlflow/HandlerFunction" [
+    dir = "both";
+  ];
+  "DeployStack/PostDeploy/StackCompleteRule" -> "DeployStack/PostDeploy/StateMachine" [
     dir = "both";
   ];
   "DeployStack/Storage/AccessLogBucket" -> "DeployStack/Storage/Bucket" [
@@ -756,10 +872,43 @@ digraph "Diagram" {
   "DeployStack/Cdn/AliasRecord" -> "DeployStack/Cdn/Distribution" [
     dir = "both";
   ];
+  "DeployStack/Firehose/DeliveryStream" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
+  "DeployStack/Firehose/DeliveryStream" -> "DeployStack/FirehoseFunctions/LogTransformerFunction" [
+    dir = "both";
+  ];
+  "DeployStack/Firehose/SubscriptionFilter" -> "DeployStack/Firehose/DeliveryStream" [
+    dir = "both";
+  ];
+  "DeployStack/Firehose/SubscriptionFilter" -> "DeployStack/Api/ApiFunction" [
+    dir = "both";
+  ];
+  "DeployStack/Glue/LogsTable" -> "DeployStack/Storage/Bucket" [
+    dir = "both";
+  ];
   "DeployStack/Database/Postgres" -> "DeployStack/Network/Vpc" [
     dir = "both";
   ];
   "DeployStack/Database/Postgres" -> "DeployStack/Network/DatabaseSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseBootstrap/HandlerFunction" -> "DeployStack/Database/Postgres" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseBootstrap/HandlerFunction" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/DatabaseBootstrap/HandlerFunction" -> "DeployStack/Network/LambdaSecurityGroup" [
+    dir = "both";
+  ];
+  "DeployStack/Mlflow/HandlerFunction" -> "DeployStack/Database/Postgres" [
+    dir = "both";
+  ];
+  "DeployStack/Mlflow/HandlerFunction" -> "DeployStack/Network/Vpc" [
+    dir = "both";
+  ];
+  "DeployStack/Mlflow/HandlerFunction" -> "DeployStack/Network/LambdaSecurityGroup" [
     dir = "both";
   ];
   "DeployStack/EventBridge/DailyScraperRule" -> "DeployStack/EtlFunctions/ScraperFunction" [
