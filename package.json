@@ -26,7 +26,7 @@
     "predictor:local": "uv run --directory packages/ml python scripts/run-predictor-local.py",
     "arch:diagram": "python3 ./scripts/generate-architecture-diagram.py",
     "arch:check": "python3 ./scripts/generate-architecture-diagram.py --check",
-    "arch:dia": "cdk-dia --target docs/architecture.png --tree packages/deploy/cdk.out/tree.json && cdk-dia --target docs/architecture.dot --tree packages/deploy/cdk.out/tree.json",
+    "arch:dia": "cdk-dia --target docs/architecture.png --tree packages/deploy/cdk.out/tree.json && cdk-dia --target docs/architecture.dot --tree packages/deploy/cdk.out/tree.json && node -e \"const f='docs/architecture.dot';const fs=require('fs');fs.writeFileSync(f,fs.readFileSync(f,'utf8').split(process.cwd()+'/').join(''))\"",
     "db:diagram": "uv run --directory packages/ml python scripts/generate-db-diagram.py",
     "db:diagram:check": "uv run --directory packages/ml python scripts/generate-db-diagram.py --check"
   },

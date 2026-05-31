@@ -55,7 +55,7 @@ digraph "Diagram" {
         "EdgeStack/ExportsWriteruswest209BD44F0" [
           label = "\nExportsWriteruswest20";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -68,7 +68,7 @@ digraph "Diagram" {
         "EdgeStack/Certificate/Certificate" [
           label = " Certificate";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Certificate-Manager_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Certificate-Manager_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -81,7 +81,7 @@ digraph "Diagram" {
         "EdgeStack/Waf/WebAcl" [
           label = " WAFv2 WebACL WebAcl";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-WAF_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-WAF_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -107,7 +107,7 @@ digraph "Diagram" {
         "DeployStack/GitHubProvider" [
           label = " GitHubProvider";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -120,7 +120,7 @@ digraph "Diagram" {
         "DeployStack/GitHubActionRole" [
           label = " GitHubActionRole";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -133,7 +133,7 @@ digraph "Diagram" {
         "DeployStack/DatabaseMigration" [
           label = " DatabaseMigration";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -146,7 +146,7 @@ digraph "Diagram" {
         "DeployStack/InitialDataLoad" [
           label = " InitialDataLoad";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -159,7 +159,7 @@ digraph "Diagram" {
         "DeployStack/AWS679f53fac002430cb0da5b7982bd2287" [
           label = "\nAWS679f53fac002430cb0";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -172,7 +172,7 @@ digraph "Diagram" {
         "DeployStack/ExportsReader" [
           label = " ExportsReader";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -185,7 +185,7 @@ digraph "Diagram" {
         "DeployStack/Database/Postgres" [
           label = " Postgres";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Compute/Res_48_Dark/Res_Amazon-EC2_Instance_48_Dark_gen.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Compute/Res_48_Dark/Res_Amazon-EC2_Instance_48_Dark_gen.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -198,7 +198,7 @@ digraph "Diagram" {
         "DeployStack/DatabaseBootstrap/HandlerFunction" [
           label = " HandlerFunction";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -211,7 +211,7 @@ digraph "Diagram" {
         "DeployStack/Mlflow/HandlerFunction" [
           label = " HandlerFunction";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -224,7 +224,7 @@ digraph "Diagram" {
         "DeployStack/Queuing/ScraperToPredictor" [
           label = " ScraperToPredictor";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_AWS-Simple-Queue-Service_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_AWS-Simple-Queue-Service_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -237,7 +237,7 @@ digraph "Diagram" {
         "DeployStack/EventBridge/DailyScraperRule" [
           label = " DailyScraperRule";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -250,7 +250,7 @@ digraph "Diagram" {
         "DeployStack/Secrets/OriginVerifySecret" [
           label = " OriginVerifySecret";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Secrets-Manager_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Secrets-Manager_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -263,7 +263,7 @@ digraph "Diagram" {
         "DeployStack/FirehoseFunctions/LogTransformerFunction" [
           label = "\nLogTransformerFunctio";
           fontsize = 12;
-          image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
           imagescale = "true";
           imagepos = "tc";
           penwidth = 0;
@@ -288,7 +288,7 @@ digraph "Diagram" {
           "DeployStack/Network/Vpc" [
             label = " Vpc";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-Virtual-Private-Cloud_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-Virtual-Private-Cloud_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -301,7 +301,7 @@ digraph "Diagram" {
           "DeployStack/Network/DatabaseSecurityGroup" [
             label = "\nDatabaseSecurityGroup";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -314,7 +314,7 @@ digraph "Diagram" {
           "DeployStack/Network/LambdaSecurityGroup" [
             label = " LambdaSecurityGroup";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -340,7 +340,7 @@ digraph "Diagram" {
           "DeployStack/PostDeploy/StateMachine" [
             label = " StateMachine";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_AWS-Step-Functions_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_AWS-Step-Functions_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -353,7 +353,7 @@ digraph "Diagram" {
           "DeployStack/PostDeploy/StackCompleteRule" [
             label = " StackCompleteRule";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -379,7 +379,7 @@ digraph "Diagram" {
           "DeployStack/Storage/AccessLogBucket" [
             label = " AccessLogBucket";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -392,7 +392,7 @@ digraph "Diagram" {
           "DeployStack/Storage/Bucket" [
             label = " Bucket";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -405,7 +405,7 @@ digraph "Diagram" {
           "DeployStack/Storage/FrontendBucket" [
             label = " FrontendBucket";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -460,7 +460,7 @@ digraph "Diagram" {
           "DeployStack/ModelStorage/EfsSecurityGroup" [
             label = " EfsSecurityGroup";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -473,7 +473,7 @@ digraph "Diagram" {
           "DeployStack/ModelStorage/ModelFileSystem" [
             label = " ModelFileSystem";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-Elastic-File-System_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-Elastic-File-System_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -499,7 +499,7 @@ digraph "Diagram" {
           "DeployStack/EtlFunctions/ScraperFunction" [
             label = " ScraperFunction";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -512,7 +512,7 @@ digraph "Diagram" {
           "DeployStack/EtlFunctions/PredictorFunction" [
             label = " PredictorFunction";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -538,7 +538,7 @@ digraph "Diagram" {
           "DeployStack/Api/ApiFunction" [
             label = " ApiFunction";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -551,7 +551,7 @@ digraph "Diagram" {
           "DeployStack/Api/HttpApi" [
             label = " HttpApi";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-API-Gateway_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-API-Gateway_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -564,7 +564,7 @@ digraph "Diagram" {
           "DeployStack/Api/WarmupRule" [
             label = " WarmupRule";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -590,7 +590,7 @@ digraph "Diagram" {
           "DeployStack/Cdn/OAC" [
             label = " OAC";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -603,7 +603,7 @@ digraph "Diagram" {
           "DeployStack/Cdn/AssetCachePolicy" [
             label = " AssetCachePolicy";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -616,7 +616,7 @@ digraph "Diagram" {
           "DeployStack/Cdn/NoCachePolicy" [
             label = " NoCachePolicy";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -629,7 +629,7 @@ digraph "Diagram" {
           "DeployStack/Cdn/Distribution" [
             label = " Distribution";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -642,7 +642,7 @@ digraph "Diagram" {
           "DeployStack/Cdn/AliasRecord" [
             label = " AliasRecord";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-Route-53-Hosted-Zone_48_Dark_gen.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-Route-53-Hosted-Zone_48_Dark_gen.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -672,7 +672,7 @@ digraph "Diagram" {
           "DeployStack/Firehose/SubscriptionFilter" [
             label = " SubscriptionFilter";
             fontsize = 12;
-            image = "/Users/paulcowan/projects/match-predictor/node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Management-Governance/Res_48_Dark/Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Management-Governance/Res_48_Dark/Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
