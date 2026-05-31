@@ -56,14 +56,6 @@ jobs:
           cd packages/deploy
           cdk deploy --all --require-approval never
 
-      - name: Set up Graphviz
-        uses: ts-graphviz/setup-graphviz@v2
-
-      - name: Check architecture diagram is up to date
-        run: |
-          pnpm arch:dia
-          git diff --exit-code docs/architecture.dot
-
       - name: Build frontend
         run: pnpm build
 
@@ -84,3 +76,11 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id "${DISTRIBUTION_ID}" \
             --paths "/index.html" "/"
+
+      - name: Set up Graphviz
+        uses: ts-graphviz/setup-graphviz@v2
+
+      - name: Check architecture diagram is up to date
+        run: |
+          pnpm arch:dia
+          git diff --exit-code docs/architecture.dot
