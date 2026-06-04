@@ -48,3 +48,11 @@ SM_ARN=$(aws stepfunctions list-state-machines --region us-west-2 --query "state
 ```
 
 The `cause` field shows which Lambda threw and the exception text.
+
+## 5. Fix the failing architecture-diagram CI check
+
+The email/alarm additions to `post_deploy.py` changed CDK synth output, so the committed `docs/architecture.dot` is stale and `git diff --exit-code` fails. Regenerate and commit:
+
+```
+pnpm arch:dia && git add docs/architecture.dot docs/architecture.png && git commit -m "chore: regenerate architecture diagram for PostDeploy failure alerts" && git push
+```
