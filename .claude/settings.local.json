@@ -100,7 +100,9 @@
       "Bash(pnpm test:ci)",
       "Skill(branch-review)",
       "Bash(dot -V)",
-      "Bash(pnpm arch:dia)"
+      "Bash(pnpm arch:dia)",
+      "Read(//Users/paulcowan/projects/cuttingedge/**)",
+      "Read(//Users/paulcowan/projects/cuttingedge/plans/**)"
     ],
     "deny": [
       "Bash(aws *)",
