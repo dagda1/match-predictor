@@ -130,6 +130,58 @@ digraph "Diagram" {
             height = 1.466;
           ];
         }
+        subgraph "cluster-SubGraph.Ecs" {
+          graph [
+            label = "Ecs";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "WebsiteStack/Ecs/Cluster" [
+            label = " Cluster";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_Amazon-Elastic-Container-Service_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "WebsiteStack/Ecs/TaskDef" [
+            label = " TaskDef";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Containers/Res_48_Dark/Res_Amazon-Elastic-Container-Service_Task_48_Dark_gen.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "WebsiteStack/Ecs/Service/Service" [
+            label = " ECS Service Service";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Containers/Res_48_Dark/Res_Amazon-Elastic-Container-Service_Service_48_Dark_gen.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+        }
       }
       subgraph "cluster-SubGraph.EdgeStack" {
         graph [
@@ -831,6 +883,18 @@ digraph "Diagram" {
     dir = "both";
   ];
   "WebsiteStack/Alb/Lb" -> "WebsiteStack/Alb/Tg" [
+    dir = "both";
+  ];
+  "WebsiteStack/Ecs/Service/Service" -> "WebsiteStack/Network/TaskSg" [
+    dir = "both";
+  ];
+  "WebsiteStack/Ecs/Service/Service" -> "WebsiteStack/Alb/Tg" [
+    dir = "both";
+  ];
+  "WebsiteStack/Ecs/Service/Service" -> "WebsiteStack/Ecs/Cluster" [
+    dir = "both";
+  ];
+  "WebsiteStack/Ecs/Service/Service" -> "WebsiteStack/Ecs/TaskDef" [
     dir = "both";
   ];
   "DeployStack/GitHubActionRole" -> "DeployStack/GitHubProvider" [
