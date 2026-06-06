@@ -52,19 +52,84 @@ digraph "Diagram" {
           style = "filled,rounded";
           fillcolor = "#e4e4e4";
         ];
-        "WebsiteStack/AlbSg" [
-          label = " AlbSg";
-          fontsize = 12;
-          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
-          imagescale = "true";
-          imagepos = "tc";
-          penwidth = 0;
-          shape = "node";
-          fixedsize = "true";
-          labelloc = "b";
-          width = 2;
-          height = 2.266;
-        ];
+        subgraph "cluster-SubGraph.Network" {
+          graph [
+            label = "Network";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "WebsiteStack/Network/AlbSg" [
+            label = " AlbSg";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "WebsiteStack/Network/TaskSg" [
+            label = " TaskSg";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+        }
+        subgraph "cluster-SubGraph.Alb" {
+          graph [
+            label = "Alb";
+            labelloc = "b";
+            labeljust = "l";
+            margin = 10;
+            fontsize = 16;
+            penwidth = 2;
+            pencolor = "#888888";
+            style = "filled,rounded";
+            fillcolor = "#d6d6d6";
+          ];
+          "WebsiteStack/Alb/Lb" [
+            label = " Lb";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Elastic-Load-Balancing_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "WebsiteStack/Alb/Tg" [
+            label = " Tg";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Elastic-Load-Balancing_Application-Load-Balancer_48_Dark_gen.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+        }
       }
       subgraph "cluster-SubGraph.EdgeStack" {
         graph [
@@ -759,6 +824,15 @@ digraph "Diagram" {
       }
     }
   }
+  "WebsiteStack/Network/TaskSg" -> "WebsiteStack/Network/AlbSg" [
+    dir = "both";
+  ];
+  "WebsiteStack/Alb/Lb" -> "WebsiteStack/Network/AlbSg" [
+    dir = "both";
+  ];
+  "WebsiteStack/Alb/Lb" -> "WebsiteStack/Alb/Tg" [
+    dir = "both";
+  ];
   "DeployStack/GitHubActionRole" -> "DeployStack/GitHubProvider" [
     dir = "both";
   ];
