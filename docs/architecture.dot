@@ -40,10 +40,32 @@ digraph "Diagram" {
         style = "filled,rounded";
         fillcolor = "#f3f3f3";
       ];
-      "WebsiteStack" [
-        label = " WebsiteStack";
-        fontsize = 12;
-      ];
+      subgraph "cluster-SubGraph.WebsiteStack" {
+        graph [
+          label = "WebsiteStack";
+          labelloc = "b";
+          labeljust = "l";
+          margin = 10;
+          fontsize = 16;
+          penwidth = 2;
+          pencolor = "#888888";
+          style = "filled,rounded";
+          fillcolor = "#e4e4e4";
+        ];
+        "WebsiteStack/AlbSg" [
+          label = " AlbSg";
+          fontsize = 12;
+          image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/security_group.png";
+          imagescale = "true";
+          imagepos = "tc";
+          penwidth = 0;
+          shape = "node";
+          fixedsize = "true";
+          labelloc = "b";
+          width = 2;
+          height = 2.266;
+        ];
+      }
       subgraph "cluster-SubGraph.EdgeStack" {
         graph [
           label = "EdgeStack";
