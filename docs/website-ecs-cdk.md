@@ -2,6 +2,10 @@
 
 Migrate `apps/website` (currently DigitalOcean droplet) onto ECS Fargate behind ALB + CloudFront. Built as CDK in this repo for learning. Domain swap is the **last** step — everything below comes up on AWS-owned hostnames and touches nothing public.
 
+## Stack
+
+Its own stack — `WebsiteStack` — not part of `DeployStack`. Separate file under `packages/deploy/deploy/`, added to `app.py` in **`us-east-1`** (CloudFront viewer cert must be issued there). Fully isolated: independent deploy, separate blast radius, unaffected by the database/ML pipeline in `DeployStack`.
+
 ## Build order (bottom-up by dependency)
 
 1. **Network** — reuse default VPC (`Vpc.from_lookup`). Two security groups:

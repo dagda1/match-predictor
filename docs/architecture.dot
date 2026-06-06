@@ -40,6 +40,10 @@ digraph "Diagram" {
         style = "filled,rounded";
         fillcolor = "#f3f3f3";
       ];
+      "WebsiteStack" [
+        label = " WebsiteStack";
+        fontsize = 12;
+      ];
       subgraph "cluster-SubGraph.EdgeStack" {
         graph [
           label = "EdgeStack";
@@ -354,6 +358,32 @@ digraph "Diagram" {
             label = " StackCompleteRule";
             fontsize = 12;
             image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_Amazon-EventBridge_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 1.2;
+            height = 1.466;
+          ];
+          "DeployStack/PostDeploy/FailureAlerts" [
+            label = " FailureAlerts";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_AWS-Simple-Notification-Service_64@5x.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
+          "DeployStack/PostDeploy/ExecutionFailedAlarm" [
+            label = " ExecutionFailedAlarm";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_Amazon-CloudWatch_64@5x.png";
             imagescale = "true";
             imagepos = "tc";
             penwidth = 0;
@@ -744,6 +774,12 @@ digraph "Diagram" {
     dir = "both";
   ];
   "DeployStack/PostDeploy/StackCompleteRule" -> "DeployStack/PostDeploy/StateMachine" [
+    dir = "both";
+  ];
+  "DeployStack/PostDeploy/ExecutionFailedAlarm" -> "DeployStack/PostDeploy/StateMachine" [
+    dir = "both";
+  ];
+  "DeployStack/PostDeploy/ExecutionFailedAlarm" -> "DeployStack/PostDeploy/FailureAlerts" [
     dir = "both";
   ];
   "DeployStack/Storage/AccessLogBucket" -> "DeployStack/Storage/Bucket" [
