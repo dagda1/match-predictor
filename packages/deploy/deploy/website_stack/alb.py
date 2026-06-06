@@ -1,5 +1,6 @@
 from constructs import Construct
 from aws_cdk import (
+    Duration,
     aws_ec2 as ec2,
     aws_elasticloadbalancingv2 as elbv2,
 )
@@ -12,6 +13,7 @@ class Alb(Construct):
             vpc=vpc,
             internet_facing=True,
             security_group=alb_sg,
+            idle_timeout=Duration.seconds(3600),
         )
 
         self.target_group = elbv2.ApplicationTargetGroup(self, "Tg",
