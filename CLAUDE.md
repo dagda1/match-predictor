@@ -4,6 +4,10 @@
 
 Build the smallest correct solution that matches the spec.
 
+## Response length (hard rule)
+
+Default to 1-3 sentences. No tables, no bullet dumps, no recaps of what you just did, no restating the question. Expand only when explicitly asked. One code block max unless asked for more.
+
 ## Skills
 
 All conventions live as skills under `.claude/skills/` (symlinked from `~/claude/skills/`). Read the relevant ones before working in that area.

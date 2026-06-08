@@ -22,6 +22,15 @@ Its own stack — `WebsiteStack` — not part of `DeployStack`. Separate file un
 
 In CDK you don't hand-order resources — pass references (the service takes the target group object) and CDK derives deploy order. "ALB first" just means the target group object must exist before the service that registers into it.
 
+## Deploy (just this stack)
+
+```
+cd packages/deploy
+cdk deploy WebsiteStack --require-approval never
+```
+
+Note the `WebsiteDistributionDomain` output — that's the `xxxx.cloudfront.net` URL to test.
+
 ## Verify (no DNS needed)
 
 - ALB target health → `["healthy"]`.

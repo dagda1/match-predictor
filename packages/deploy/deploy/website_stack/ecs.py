@@ -27,5 +27,8 @@ class Ecs(Construct):
             desired_count=1,
             security_groups=[task_sg],
             assign_public_ip=True,
+            vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),
+            min_healthy_percent=0,
+            circuit_breaker=ecs.DeploymentCircuitBreaker(rollback=True),
         )
         self.service.attach_to_application_target_group(target_group)
