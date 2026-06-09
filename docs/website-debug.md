@@ -1,8 +1,8 @@
-# Website deploy — diagnose NotStabilized
+# Website deploy — debug
 
-Stack rolled back, but the CloudWatch log group survives. Find it, then tail it.
+Container now pulls and runs, then exits (`EssentialContainerExited`). Need its logs.
 
-## 1. Find the log group
+## Step 1 — find the current log group
 
 ```
 aws logs describe-log-groups \
@@ -11,41 +11,24 @@ aws logs describe-log-groups \
   --output text
 ```
 
-## 2. Tail the container output
+## Step 2 — tail it (paste the name from step 1)
 
 ```
-aws logs tail WebsiteStack-EcsTaskDefWebLogGroupDC2E1B4B-6bzeQcw4Erpr \
-  --region us-east-1 \
-  --since 72h \
-  --format short
+aws logs tail <log-group-name> --region us-east-1 --since 1h --format short
 ```
 
-That prints the container's stdout/stderr — a stack trace or "missing env" means it crashed on boot; clean startup logs mean it's a health-check problem instead.
+---
 
-## 3. No logs = container never started — catch the reason live
-
-The task is failing before it runs (image pull / execution role / network). Once the
-stack rolls back, the cluster and its tasks are deleted, so capture the reason **during**
-the deploy. The circuit breaker gives a few-minute window.
-
-**Terminal A** — start the deploy:
+## Redeploy from scratch (when needed)
 
 ```
-cd packages/deploy
-cdk deploy WebsiteStack --require-approval never
+aws cloudformation delete-stack --region us-east-1 --stack-name WebsiteStack
+aws cloudformation wait stack-delete-complete --region us-east-1 --stack-name WebsiteStack
+cd packages/deploy && cdk deploy WebsiteStack --no-rollback --require-approval never
 ```
 
-**Terminal B** — once Terminal A reaches the `AWS::ECS::Service` step, run:
+## Tail the newest log group (one line)
 
 ```
-CLUSTER=$(aws ecs list-clusters --region us-east-1 \
-  --query "clusterArns[?contains(@, 'WebsiteStack')]" --output text)
-
-TASK=$(aws ecs list-tasks --region us-east-1 --cluster "$CLUSTER" \
-  --desired-status STOPPED --query "taskArns[0]" --output text)
-
-aws ecs describe-tasks --region us-east-1 --cluster "$CLUSTER" --tasks "$TASK" \
-  --query "tasks[0].{stopCode:stopCode,reason:stoppedReason,containers:containers[].reason}"
+NEWEST=$(aws logs describe-log-groups --region us-east-1 --query "reverse(sort_by(logGroups[?contains(logGroupName,'Website')],&creationTime))[0].logGroupName" --output text); aws logs tail "$NEWEST" --region us-east-1 --since 1h --format short
 ```
-
-The `containers[].reason` line is the one that matters — e.g. `CannotPullContainerError`.

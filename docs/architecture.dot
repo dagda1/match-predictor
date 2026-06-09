@@ -155,6 +155,19 @@ digraph "Diagram" {
             width = 2;
             height = 2.266;
           ];
+          "WebsiteStack/Ecs/LogGroup" [
+            label = " LogGroup";
+            fontsize = 12;
+            image = "node_modules/.pnpm/cdk-dia@0.12.3/node_modules/cdk-dia/icons/aws/Resource/Res_Management-Governance/Res_48_Dark/Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png";
+            imagescale = "true";
+            imagepos = "tc";
+            penwidth = 0;
+            shape = "node";
+            fixedsize = "true";
+            labelloc = "b";
+            width = 2;
+            height = 2.266;
+          ];
           "WebsiteStack/Ecs/TaskDef" [
             label = " TaskDef";
             fontsize = 12;
@@ -935,6 +948,9 @@ digraph "Diagram" {
     dir = "both";
   ];
   "WebsiteStack/Alb/Lb" -> "WebsiteStack/Alb/Tg" [
+    dir = "both";
+  ];
+  "WebsiteStack/Ecs/TaskDef" -> "WebsiteStack/Ecs/LogGroup" [
     dir = "both";
   ];
   "WebsiteStack/Ecs/Service/Service" -> "WebsiteStack/Network/TaskSg" [
