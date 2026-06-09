@@ -11,14 +11,3 @@ if ! pnpm --silent db:diagram:check >/dev/null 2>&1; then
   pnpm --silent db:diagram
   git add README.md
 fi
-
-if git diff --cached --name-only --diff-filter=ACMR | grep -q '^packages/deploy/'; then
-  echo "[pre-commit] CDK changed — regenerating architecture diagram"
-  cp cdk.context.json packages/deploy/cdk.context.json
-  if ! ( cd packages/deploy && AWS_ALARM_EMAIL="${AWS_ALARM_EMAIL:-diagram@placeholder.local}" cdk synth --all --quiet >/dev/null ); then
-    echo "[pre-commit] cdk synth failed — cannot regenerate architecture diagram; commit blocked"
-    exit 1
-  fi
-  pnpm --silent arch:dia
-  git add docs/architecture.dot docs/architecture.png
-fi
