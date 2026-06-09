@@ -4,13 +4,19 @@ from aws_cdk import (
     aws_elasticloadbalancingv2 as elbv2,
     aws_cloudfront as cloudfront,
     aws_cloudfront_origins as origins,
+    aws_certificatemanager as acm,
 )
 from constructs import Construct
+
+DOMAIN_NAME = "cutting.scot"
+CERTIFICATE_ARN = "arn:aws:acm:us-east-1:313095418189:certificate/6fa707bc-01eb-4b1d-ab8c-38be4e2d7585"
 
 
 class Cdn(Construct):
     def __init__(self, scope: Construct, construct_id: str, alb: elbv2.ApplicationLoadBalancer) -> None:
         super().__init__(scope, construct_id)
+
+        certificate = acm.Certificate.from_certificate_arn(self, "Certificate", CERTIFICATE_ARN)
 
         asset_cache_policy = cloudfront.CachePolicy(self, "AssetCachePolicy",
             default_ttl=Duration.days(365),
@@ -32,6 +38,9 @@ class Cdn(Construct):
 
         self.distribution = cloudfront.Distribution(self, "Distribution",
             comment="cutting.scot website",
+            domain_names=[DOMAIN_NAME],
+            certificate=certificate,
+            minimum_protocol_version=cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
             default_behavior=cloudfront.BehaviorOptions(
                 origin=origin,
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
