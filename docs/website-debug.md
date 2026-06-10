@@ -16,6 +16,24 @@ TASK=$(aws ecs list-tasks --cluster website --region us-east-1 --desired-status 
 
 ---
 
+## Delete orphaned log groups
+
+Leftovers from the failed deploys, auto-named `WebsiteStack-EcsTaskDefWebLogGroup...`. Live logs are in `/ecs/website`, so anything under `WebsiteStack-` is safe to delete.
+
+List them:
+
+```
+aws logs describe-log-groups --region us-east-1 --query "logGroups[?starts_with(logGroupName, 'WebsiteStack-')].logGroupName" --output text
+```
+
+Delete all of them in one go:
+
+```
+for lg in $(aws logs describe-log-groups --region us-east-1 --query "logGroups[?starts_with(logGroupName, 'WebsiteStack-')].logGroupName" --output text); do aws logs delete-log-group --region us-east-1 --log-group-name "$lg"; done
+```
+
+---
+
 ## Redeploy from scratch (when needed)
 
 ```
