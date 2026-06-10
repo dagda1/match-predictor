@@ -155,8 +155,9 @@ Source: https://docs.aws.amazon.com/aws-certification/latest/examguides/mla-01-i
 ### Containers
 
 - [X] Amazon ECR (CDK auto-publishes container images for predictor / migration / API)
-- [ ] Amazon ECS
-  - Planned: cuttingedge `apps/frontendsupport` then `apps/website` to ECS Express Mode on Fargate via Terraform. Plan at `cuttingedge/plans/aws-ecs-migration.md`. Tick only when first service is live.
+- [X] Amazon ECS
+  - cuttingedge `apps/frontendsupport` live on Fargate (Terraform, in the cuttingedge repo).
+  - cuttingedge `apps/website` live on Fargate behind ALB + CloudFront, deployed via **CDK** in this repo (`packages/deploy/deploy/website_stack/`): Network + Alb + Ecs + Cdn constructs, cluster/service `website`, image from ECR `website_server`. Serving `https://cutting.scot` (us-east-1), migrated off a DigitalOcean droplet.
 - [ ] Amazon EKS
 
 ### Database
