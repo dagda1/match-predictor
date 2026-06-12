@@ -7,6 +7,7 @@ from aws_cdk import (
     aws_ec2 as ec2,
     aws_iam as iam,
     aws_lambda,
+    aws_ecr_assets as ecr_assets,
     aws_rds as rds,
 )
 from constructs import Construct
@@ -34,6 +35,7 @@ class Mlflow(Construct):
             code=aws_lambda.DockerImageCode.from_image_asset(
                 str(REPO_DIR),
                 file="packages/ml/mlflow.Dockerfile",
+                platform=ecr_assets.Platform.LINUX_AMD64,
                 build_args={"MLFLOW_VERSION": version},
                 exclude=[
                     "__pycache__",
