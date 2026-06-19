@@ -13,13 +13,14 @@ class Storage(Construct):
             encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=False,
             removal_policy=RemovalPolicy.DESTROY,
+            auto_delete_objects=True,
             object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
             lifecycle_rules=[
                 s3.LifecycleRule(
                     expiration=Duration.days(30)
                 )
             ]
-        )   
+        )
         
         self.bucket: s3.Bucket = s3.Bucket(self, "Bucket",
             bucket_name=base_name,
@@ -28,6 +29,7 @@ class Storage(Construct):
             enforce_ssl=True,
             versioned=False,
             removal_policy=RemovalPolicy.DESTROY,
+            auto_delete_objects=True,
             server_access_logs_bucket=log_bucket,
             lifecycle_rules=[                                                                                                                          
                 s3.LifecycleRule(                                                                                                                   

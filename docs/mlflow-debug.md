@@ -27,7 +27,6 @@ If this prints nothing, the mlflow Lambda isn't deployed — `cdk deploy DeployS
 ```
 aws lambda invoke --region us-west-2 --function-name $(aws lambda list-functions --region us-west-2 --query "Functions[?contains(FunctionName,'lflow')].FunctionName" --output text) /tmp/mlflow-out.json && cat /tmp/mlflow-out.json
 ```
-
 ## 3. Tail the mlflow Lambda logs
 
 ```

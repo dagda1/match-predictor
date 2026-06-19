@@ -1,5 +1,6 @@
 import os
 import subprocess
+from urllib.parse import quote_plus
 
 import boto3
 import psycopg2
@@ -39,7 +40,7 @@ def handler(event, context):
     cur.close()
     conn.close()
 
-    upgrade_url = f"postgresql://{user}:{token}@{host}:5432/{mlflow_db}?sslmode=verify-full&sslrootcert=/var/task/rds-ca-bundle.pem"
+    upgrade_url = f"postgresql://{user}:{quote_plus(token)}@{host}:5432/{mlflow_db}?sslmode=verify-full&sslrootcert=/var/task/rds-ca-bundle.pem"
 
     result = subprocess.run(
         ["mlflow", "db", "upgrade", upgrade_url],

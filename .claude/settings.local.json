@@ -103,7 +103,12 @@
       "Bash(pnpm arch:dia)",
       "Read(//Users/paulcowan/projects/cuttingedge/**)",
       "Read(//Users/paulcowan/projects/cuttingedge/plans/**)",
-      "Bash(scutil --proxy)"
+      "Bash(scutil --proxy)",
+      "Bash(cd /Users/paulcowan/projects/cuttingedge/apps/website)",
+      "Bash(ls src *)",
+      "Bash(find . -name 'server.*' -not -path '*/node_modules/*' -not -path '*/dist/*')",
+      "Bash(cat scripts/prebuild-posts.mts)",
+      "Bash(ls blog-posts *)"
     ],
     "deny": [
       "Bash(aws *)",
