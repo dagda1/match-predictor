@@ -108,11 +108,21 @@
       "Bash(ls src *)",
       "Bash(find . -name 'server.*' -not -path '*/node_modules/*' -not -path '*/dist/*')",
       "Bash(cat scripts/prebuild-posts.mts)",
-      "Bash(ls blog-posts *)"
+      "Bash(ls blog-posts *)",
+      "Bash(pnpm build *)",
+      "Bash(grep -o '<div id=\"root\">.\\\\{1,300\\\\}' dist/client/about/index.html)",
+      "Bash(grep -oiE \"\\(react-loading-skeleton|about us|who we are|<h1[^>]*>[^<]{1,60}\\)\" dist/client/about/index.html)",
+      "Bash(grep -oiE \"<h1[^>]*>[^<]{1,80}\" dist/client/index.html)",
+      "Bash(pnpm --filter @cutting/devtools build-tools)",
+      "Bash(npx tsc *)"
     ],
     "deny": [
       "Bash(aws *)",
-      "Bash(aws)"
+      "Bash(aws)",
+      "Bash(terraform:*)",
+      "Bash(terraform)",
+      "Bash(cdk:*)",
+      "Bash(cdk)"
     ]
   }
 }

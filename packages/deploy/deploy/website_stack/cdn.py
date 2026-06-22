@@ -1,7 +1,7 @@
 from aws_cdk import (
     CfnOutput,
     Duration,
-    aws_elasticloadbalancingv2 as elbv2,
+    aws_s3 as s3,
     aws_cloudfront as cloudfront,
     aws_cloudfront_origins as origins,
     aws_certificatemanager as acm,
@@ -13,7 +13,7 @@ CERTIFICATE_ARN = "arn:aws:acm:us-east-1:313095418189:certificate/6fa707bc-01eb-
 
 
 class Cdn(Construct):
-    def __init__(self, scope: Construct, construct_id: str, alb: elbv2.ApplicationLoadBalancer) -> None:
+    def __init__(self, scope: Construct, construct_id: str, bucket: s3.Bucket) -> None:
         super().__init__(scope, construct_id)
 
         certificate = acm.Certificate.from_certificate_arn(self, "Certificate", CERTIFICATE_ARN)
@@ -32,7 +32,7 @@ class Cdn(Construct):
             min_ttl=Duration.seconds(0),
         )
 
-        origin = origins.LoadBalancerV2Origin(alb,
+        origin = origins.S3StaticWebsiteOrigin(bucket,
             protocol_policy=cloudfront.OriginProtocolPolicy.HTTP_ONLY,
         )
 
@@ -40,13 +40,13 @@ class Cdn(Construct):
             comment="cutting.scot website",
             domain_names=[DOMAIN_NAME],
             certificate=certificate,
+            default_root_object="index.html",
             minimum_protocol_version=cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
             default_behavior=cloudfront.BehaviorOptions(
                 origin=origin,
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
                 cache_policy=no_cache_policy,
-                origin_request_policy=cloudfront.OriginRequestPolicy.ALL_VIEWER,
-                allowed_methods=cloudfront.AllowedMethods.ALLOW_ALL,
+                allowed_methods=cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
             ),
             additional_behaviors={
                 "/assets/*": cloudfront.BehaviorOptions(
