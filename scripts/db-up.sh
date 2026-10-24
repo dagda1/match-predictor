@@ -4,6 +4,11 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
+if grep -n "rds_iam" packages/db-bootstrap/sql/bootstrap.sql; then
+  echo "bootstrap.sql also runs in local Postgres, which has no rds_iam role. Put RDS-only grants in packages/db-bootstrap/sql/aws-iam.sql." >&2
+  exit 1
+fi
+
 docker compose up -d --wait postgres
 
 cd packages/ml

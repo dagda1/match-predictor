@@ -5,7 +5,7 @@ set -a
 source .env
 set +a
 
-docker compose up -d
+./scripts/db-up.sh
 pnpm refresh
 uv run --directory packages/ml alembic upgrade head
 uv run --directory packages/ml python ../../scripts/seed-db.py
