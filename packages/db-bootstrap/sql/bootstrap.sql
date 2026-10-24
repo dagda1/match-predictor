@@ -34,4 +34,3 @@ ALTER DEFAULT PRIVILEGES FOR ROLE match_predictor_migrator IN SCHEMA public
   GRANT USAGE, SELECT ON SEQUENCES TO match_predictor_app;
 
 ALTER ROLE mlflow_migrator CREATEDB;
-GRANT rds_iam TO mlflow_migrator;

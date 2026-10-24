@@ -9,9 +9,20 @@ const leagueEntrySchema = z.object({
   datetime: z.string(),
 });
 
+const teamSchema = z.object({ title: z.string() });
+
 const leagueDataSchema = z.object({
+  teams: z.union([z.record(z.string(), teamSchema), z.array(teamSchema)]),
   dates: z.array(leagueEntrySchema),
 });
+
+export interface SeasonSummary {
+  season: string;
+  firstMatchDate: string;
+  lastMatchDate: string;
+  ended: boolean;
+  teams: string[];
+}
 
 type LeagueEntry = z.infer<typeof leagueEntrySchema>;
 
@@ -50,6 +61,20 @@ export async function findSeasons(now: Date): Promise<string[]> {
 
     seasons.push(season);
   }
+}
+
+export async function scrapeSeason(season: string): Promise<SeasonSummary> {
+  const data = await fetchLeagueData(season);
+  const dates = sortedDates(data.dates);
+  assert(dates.length > 0, `season ${season} has no matches`);
+
+  return {
+    season,
+    firstMatchDate: dates[0],
+    lastMatchDate: dates[dates.length - 1],
+    ended: data.dates.every((entry) => entry.isResult),
+    teams: Object.values(data.teams).map((team) => team.title).sort(),
+  };
 }
 
 export async function scrapeLeagueMatchIds(season: string, existingIds: Set<string>): Promise<string[]> {

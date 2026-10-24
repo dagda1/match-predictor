@@ -195,6 +195,13 @@ erDiagram
     int poisson_top_away_goals
     float poisson_top_probability
   }
+  SEASONS {
+    string season PK
+    datetime first_match_date
+    datetime last_match_date
+    bool ended
+    array teams
+  }
   TEAM_FEATURES {
     string team_name PK
     float xg_for_avg

@@ -10,12 +10,31 @@ from sqlalchemy.orm import Session
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[0] / ".." / "packages" / "ml" / "src"))
 
-from match_predictor.db_models import Team, Match, TeamFeatures, Prediction, Upcoming
+from match_predictor.db_models import Team, Match, TeamFeatures, Prediction, Upcoming, Season
+from match_predictor.generate_upcoming import FIRST_SEASON, KICKOFF_FORMAT, current_season, fetch_understat_league_data
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 DATA_DIR = Path(__file__).resolve().parent.parent / "packages" / "etl" / "data"
 
 engine = create_engine(DATABASE_URL)
+
+
+def seed_seasons(session: Session) -> None:
+    last = current_season(fetch_understat_league_data, datetime.now())
+
+    for year in range(FIRST_SEASON, last + 1):
+        data = fetch_understat_league_data(str(year))
+        kickoffs = sorted(entry["datetime"] for entry in data["dates"])
+        session.merge(Season(
+            season=str(year),
+            first_match_date=datetime.strptime(kickoffs[0], KICKOFF_FORMAT),
+            last_match_date=datetime.strptime(kickoffs[-1], KICKOFF_FORMAT),
+            ended=all(entry["isResult"] for entry in data["dates"]),
+            teams=sorted(team["title"] for team in data["teams"].values()),
+        ))
+
+    session.commit()
+    print(f"seeded seasons {FIRST_SEASON} to {last}")
 
 
 def seed_teams(session: Session) -> None:
@@ -70,7 +89,7 @@ def seed_matches(session: Session) -> None:
 
 def seed_features(session: Session) -> None:
     from match_predictor.data import load_matches
-    from match_predictor.features import _rolling_stats, _home_advantage
+    from match_predictor.features import WINDOWS, _rolling_stats, _home_advantage
     import pandas as pd
 
     df = load_matches()
@@ -80,7 +99,7 @@ def seed_features(session: Session) -> None:
     count = 0
 
     for team in teams:
-        stats = _rolling_stats(df, team, now)
+        stats = _rolling_stats(df, team, now, n=WINDOWS[0])
         if not stats:
             continue
         session.merge(TeamFeatures(
@@ -103,7 +122,7 @@ def seed_features(session: Session) -> None:
 
 
 def seed_predictions(session: Session) -> None:
-    path = DATA_DIR / "predictions-2026.json"
+    path = DATA_DIR / "predictions.json"
     if not path.exists():
         print("no predictions file, skipping")
         return
@@ -180,11 +199,12 @@ def seed_upcoming(session: Session) -> None:
 
 
 with Session(engine) as session:
-    for table in [Upcoming, Prediction, TeamFeatures, Match, Team]:
+    for table in [Upcoming, Prediction, TeamFeatures, Match, Team, Season]:
         session.execute(table.__table__.delete())
     session.commit()
     print("cleared all tables")
 
+    seed_seasons(session)
     seed_teams(session)
     seed_matches(session)
     seed_features(session)

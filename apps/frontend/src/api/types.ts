@@ -86,11 +86,18 @@ export interface ResultsSummary {
   poissonTotal: number;
 }
 
+export interface Season {
+  name: string;
+  lastMatchDate: string;
+  ended: boolean;
+}
+
 export interface ResultsResponse {
   matches: MatchResult[];
   summary: ResultsSummary;
   earlierMatchDate: string | null;
   laterMatchDate: string | null;
+  season: Season;
 }
 
 export interface ApiMatchResult {
@@ -109,4 +116,5 @@ export interface ApiResultsResponse {
   summary: ResultsSummary;
   earlierMatchDate: string | null;
   laterMatchDate: string | null;
+  season: Season;
 }

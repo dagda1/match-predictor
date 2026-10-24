@@ -1,13 +1,13 @@
 import { ThemeProvider } from '@match-predictor/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { BrowserRouter } from 'react-router';
 
 import { AppRoutes } from './routes/AppRoutes';
 
-const queryClient = new QueryClient();
-
 export function App(): JSX.Element {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>

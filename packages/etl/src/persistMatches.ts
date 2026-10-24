@@ -1,36 +1,34 @@
 import type { Client } from 'pg';
 import type { MatchInfo } from './matchSchema';
 
-type ColumnGetter = (match: MatchInfo) => string | number;
+export const MATCH_COLUMN_FIELDS = {
+  id: 'id',
+  date: 'date',
+  season: 'season',
+  home_team: 'homeTeam',
+  away_team: 'awayTeam',
+  home_goals: 'homeGoals',
+  away_goals: 'awayGoals',
+  home_xg: 'homeXg',
+  away_xg: 'awayXg',
+  home_shots: 'homeShots',
+  away_shots: 'awayShots',
+  home_shots_on_target: 'homeShotsOnTarget',
+  away_shots_on_target: 'awayShotsOnTarget',
+  home_deep: 'homeDeep',
+  away_deep: 'awayDeep',
+  home_ppda: 'homePpda',
+  away_ppda: 'awayPpda',
+  home_win_prob: 'homeWinProb',
+  draw_prob: 'drawProb',
+  away_win_prob: 'awayWinProb',
+} as const satisfies Record<string, keyof MatchInfo>;
 
-const MATCH_COLUMN_MAP = {
-  id: (match) => match.id,
-  date: (match) => match.date,
-  season: (match) => match.season,
-  home_team: (match) => match.homeTeam,
-  away_team: (match) => match.awayTeam,
-  home_goals: (match) => match.homeGoals,
-  away_goals: (match) => match.awayGoals,
-  home_xg: (match) => match.homeXg,
-  away_xg: (match) => match.awayXg,
-  home_shots: (match) => match.homeShots,
-  away_shots: (match) => match.awayShots,
-  home_shots_on_target: (match) => match.homeShotsOnTarget,
-  away_shots_on_target: (match) => match.awayShotsOnTarget,
-  home_deep: (match) => match.homeDeep,
-  away_deep: (match) => match.awayDeep,
-  home_ppda: (match) => match.homePpda,
-  away_ppda: (match) => match.awayPpda,
-  home_win_prob: (match) => match.homeWinProb,
-  draw_prob: (match) => match.drawProb,
-  away_win_prob: (match) => match.awayWinProb,
-} satisfies Record<string, ColumnGetter>;
-
-const MATCH_COLUMNS = Object.keys(MATCH_COLUMN_MAP);
-const MATCH_GETTERS: ColumnGetter[] = Object.values(MATCH_COLUMN_MAP);
+const MATCH_COLUMNS = Object.keys(MATCH_COLUMN_FIELDS);
+const MATCH_FIELDS = Object.values(MATCH_COLUMN_FIELDS);
 
 function matchValues(match: MatchInfo): (string | number)[] {
-  return MATCH_GETTERS.map((getter) => getter(match));
+  return MATCH_FIELDS.map((field) => match[field]);
 }
 
 function uniqueTeamNames(matches: MatchInfo[]): string[] {

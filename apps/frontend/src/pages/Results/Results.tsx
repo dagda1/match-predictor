@@ -44,6 +44,7 @@ export function Results(): JSX.Element {
 
   const start = dayjs(startDate);
   const end = dayjs(endDate);
+  const seasonEnded = data.season.ended && start.isAfter(dayjs(data.season.lastMatchDate));
 
   function navigateToDate(matchDate: string) {
     const monday = mondayForDate(dayjs(matchDate));
@@ -112,7 +113,7 @@ export function Results(): JSX.Element {
         {data.matches.length === 0 ? (
           <Paper sx={sx.emptyState}>
             <Typography variant="body1" sx={sx.emptyText}>
-              No matches this week
+              {seasonEnded ? `The ${data.season.name} season has ended` : 'No matches this week'}
             </Typography>
           </Paper>
         ) : (

@@ -8,8 +8,7 @@ from match_predictor.model import train, save_model, TrainedModel, scoreline_pro
 from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
-CUTOFF = pd.Timestamp("2026-01-01")
-PREDICTIONS_PATH = DATA_DIR / "predictions-2026.json"
+PREDICTIONS_PATH = DATA_DIR / "predictions.json"
 MODEL_PATH = DATA_DIR / "model.joblib"
 
 
@@ -30,6 +29,11 @@ def _predicted_outcome(home_win: float, draw: float, away_win: float) -> str:
     return "away"
 
 
+def _newest_season_kickoff(df: pd.DataFrame) -> pd.Timestamp:
+    newest_season = df["season"].max()
+    return df[df["season"] == newest_season]["date"].min()
+
+
 def _write_to_disk(predictions: list[dict]) -> None:
     f = open(PREDICTIONS_PATH, "w")
     json.dump(predictions, f, indent=2)
@@ -46,14 +50,13 @@ def generate(
     save_trained_model: Callable[[TrainedModel], None] = _save_model_to_disk,
 ) -> str:
     df = load_matches()
+    cutoff = _newest_season_kickoff(df)
 
-    train_df = df[df["date"] < CUTOFF]
-    predict_df = df[df["date"] >= CUTOFF]
+    train_df = df[df["date"] < cutoff]
+    predict_df = df[df["date"] >= cutoff]
 
-    assert not predict_df.empty, f"no matches after {CUTOFF.date()}"
-
-    print(f"training on {len(train_df)} matches before {CUTOFF.date()}")
-    print(f"predicting {len(predict_df)} matches from {CUTOFF.date()} onwards")
+    print(f"training on {len(train_df)} matches before {cutoff}")
+    print(f"predicting {len(predict_df)} matches from {cutoff} onwards")
 
     model = train(train_df)
     save_trained_model(model)

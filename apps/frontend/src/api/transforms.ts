@@ -72,5 +72,6 @@ export function toResultsResponse(api: ApiResultsResponse): ResultsResponse {
     summary: api.summary,
     earlierMatchDate: api.earlierMatchDate,
     laterMatchDate: api.laterMatchDate,
+    season: api.season,
   };
 }

@@ -15,16 +15,17 @@ fi
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
-for file in matches-2024.json matches-2025.json; do
+for path in packages/etl/data/matches-*.json; do
+  file=$(basename "$path")
   python3 -c "
 import json, sys
 with open(sys.argv[1]) as f:
     for obj in json.load(f):
         print(json.dumps(obj))
-" "packages/etl/data/$file" > "$tmp/$file"
+" "$path" > "$tmp/$file"
 done
 
-for file in predictions-2026.json upcoming.json; do
+for file in predictions.json upcoming.json; do
   python3 -c "
 import json, sys
 with open(sys.argv[1]) as f:
@@ -39,7 +40,8 @@ aws s3 rm "s3://${bucket}/predictions/" --recursive
 aws s3 rm "s3://${bucket}/upcoming/" --recursive
 
 echo "Uploading to s3://${bucket}/"
-aws s3 cp "$tmp/matches-2024.json" "s3://${bucket}/matches/"
-aws s3 cp "$tmp/matches-2025.json" "s3://${bucket}/matches/"
-aws s3 cp "$tmp/predictions-2026.json" "s3://${bucket}/predictions/"
+for path in "$tmp"/matches-*.json; do
+  aws s3 cp "$path" "s3://${bucket}/matches/"
+done
+aws s3 cp "$tmp/predictions.json" "s3://${bucket}/predictions/"
 aws s3 cp "$tmp/upcoming.json" "s3://${bucket}/upcoming/"

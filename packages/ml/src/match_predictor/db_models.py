@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Float, Boolean, DateTime
+from sqlalchemy import ARRAY, Column, String, Integer, Float, Boolean, DateTime
 from sqlalchemy.orm import DeclarativeBase
 
 
@@ -10,6 +10,16 @@ class Team(Base):
     __tablename__ = "teams"
 
     name = Column(String, primary_key=True)
+
+
+class Season(Base):
+    __tablename__ = "seasons"
+
+    season = Column(String, primary_key=True)
+    first_match_date = Column(DateTime, nullable=False)
+    last_match_date = Column(DateTime, nullable=False)
+    ended = Column(Boolean, nullable=False)
+    teams = Column(ARRAY(String), nullable=False)
 
 
 class Match(Base):

@@ -1,6 +1,32 @@
 import pandas as pd
 
 WINDOWS = (5, 10)
+MIN_MATCHES = WINDOWS[0]
+SEASON_MATCHES = 380
+RELEGATED_COUNT = 3
+
+
+def match_count(df: pd.DataFrame, team: str) -> int:
+    return int(((df["homeTeam"] == team) | (df["awayTeam"] == team)).sum())
+
+
+def _season_points(season_df: pd.DataFrame) -> pd.Series:
+    home_points = (season_df["homeGoals"] > season_df["awayGoals"]) * 3 + (season_df["homeGoals"] == season_df["awayGoals"])
+    away_points = (season_df["awayGoals"] > season_df["homeGoals"]) * 3 + (season_df["homeGoals"] == season_df["awayGoals"])
+    return pd.concat([
+        home_points.groupby(season_df["homeTeam"]).sum(),
+        away_points.groupby(season_df["awayTeam"]).sum(),
+    ]).groupby(level=0).sum()
+
+
+def relegated_teams(prior_df: pd.DataFrame) -> list[str]:
+    season_sizes = prior_df["season"].value_counts()
+    complete = season_sizes[season_sizes == SEASON_MATCHES].index
+    if len(complete) == 0:
+        return []
+
+    latest = prior_df[prior_df["season"] == max(complete)]
+    return list(_season_points(latest).nsmallest(RELEGATED_COUNT).index)
 
 
 def _rolling_stats(
@@ -68,25 +94,46 @@ _ROLLING_KEYS = (
 )
 
 
+def _relegated_average_stats(
+    df: pd.DataFrame, match_date: pd.Timestamp, relegated: list[str], n: int
+) -> dict:
+    team_stats = [_rolling_stats(df, team, match_date, n) for team in relegated]
+    return {key: sum(stats[key] for stats in team_stats) / len(team_stats) for key in _ROLLING_KEYS}
+
+
+def _team_stats(
+    df: pd.DataFrame, prior: pd.DataFrame, team: str, match_date: pd.Timestamp, n: int
+) -> dict:
+    if match_count(prior, team) >= MIN_MATCHES:
+        return _rolling_stats(df, team, match_date, n)
+
+    relegated = relegated_teams(prior)
+    if not relegated:
+        return {}
+
+    return _relegated_average_stats(df, match_date, relegated, n)
+
+
 def build_feature_row(
     df: pd.DataFrame, match_date: pd.Timestamp,
     home_team: str, away_team: str
 ) -> dict | None:
-    home_primary = _rolling_stats(df, home_team, match_date, n=WINDOWS[0])
-    away_primary = _rolling_stats(df, away_team, match_date, n=WINDOWS[0])
+    prior = df[df["date"] < match_date]
+
+    home_primary = _team_stats(df, prior, home_team, match_date, n=WINDOWS[0])
+    away_primary = _team_stats(df, prior, away_team, match_date, n=WINDOWS[0])
 
     if not home_primary or not away_primary:
         return None
 
     features: dict = {}
     for window in WINDOWS:
-        home_stats = _rolling_stats(df, home_team, match_date, n=window)
-        away_stats = _rolling_stats(df, away_team, match_date, n=window)
+        home_stats = _team_stats(df, prior, home_team, match_date, n=window)
+        away_stats = _team_stats(df, prior, away_team, match_date, n=window)
         for key in _ROLLING_KEYS:
             features[f"home_{key}_{window}"] = home_stats[key] if home_stats else float("nan")
             features[f"away_{key}_{window}"] = away_stats[key] if away_stats else float("nan")
 
-    prior = df[df["date"] < match_date]
     features["homeAdvantage"] = _home_advantage(prior) if len(prior) > 0 else 1.0
 
     return features

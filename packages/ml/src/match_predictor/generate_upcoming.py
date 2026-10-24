@@ -11,36 +11,53 @@ from match_predictor.features import build_feature_row
 from match_predictor.poisson_baseline import poisson_predict
 
 UPCOMING_PATH = DATA_DIR / "upcoming.json"
-SEASON = "2025"
+FIRST_SEASON = 2024
+UPCOMING_WINDOW = timedelta(weeks=3)
+KICKOFF_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
-def _fetch_upcoming_fixtures() -> list[dict]:
+def fetch_understat_league_data(season: str) -> dict:
     response = requests.get(
-        f"https://understat.com/getLeagueData/EPL/{SEASON}",
+        f"https://understat.com/getLeagueData/EPL/{season}",
         headers={
             "X-Requested-With": "XMLHttpRequest",
-            "Referer": f"https://understat.com/league/EPL/{SEASON}",
+            "Referer": f"https://understat.com/league/EPL/{season}",
         },
     )
     response.raise_for_status()
 
-    data = response.json()
+    return response.json()
 
-    now = datetime.now()
-    cutoff = now + timedelta(weeks=3)
+
+def _kickoff(entry: dict) -> datetime:
+    return datetime.strptime(entry["datetime"], KICKOFF_FORMAT)
+
+
+def _has_kicked_off(dates: list[dict], now: datetime) -> bool:
+    return len(dates) > 0 and min(_kickoff(entry) for entry in dates) <= now
+
+
+def current_season(fetch_league_data: Callable[[str], dict], now: datetime) -> int:
+    season = FIRST_SEASON
+    while _has_kicked_off(fetch_league_data(str(season + 1))["dates"], now):
+        season += 1
+    return season
+
+
+def _fetch_upcoming_fixtures(fetch_league_data: Callable[[str], dict], now: datetime) -> list[dict]:
+    current = current_season(fetch_league_data, now)
+    cutoff = now + UPCOMING_WINDOW
 
     fixtures = []
-    for entry in data["dates"]:
-        if entry["isResult"]:
-            continue
-        dt = datetime.strptime(entry["datetime"], "%Y-%m-%d %H:%M:%S")
-        if dt > cutoff:
-            continue
-        fixtures.append({
-            "homeTeam": entry["h"]["title"],
-            "awayTeam": entry["a"]["title"],
-            "date": format_date(pd.Timestamp(dt)),
-        })
+    for season in (current, current + 1):
+        for entry in fetch_league_data(str(season))["dates"]:
+            if entry["isResult"] or _kickoff(entry) > cutoff:
+                continue
+            fixtures.append({
+                "homeTeam": entry["h"]["title"],
+                "awayTeam": entry["a"]["title"],
+                "date": format_date(pd.Timestamp(_kickoff(entry))),
+            })
 
     return sorted(fixtures, key=lambda f: f["date"])
 
@@ -54,13 +71,17 @@ def _write_to_disk(predictions: list[dict]) -> None:
 def generate(
     load_matches: Callable[[], pd.DataFrame],
     write_output: Callable[[list[dict]], None],
+    fetch_league_data: Callable[[str], dict] = fetch_understat_league_data,
+    now: datetime | None = None,
 ) -> str:
     print("fetching upcoming fixtures from Understat...")
-    fixtures = _fetch_upcoming_fixtures()
-
-    assert len(fixtures) > 0, "no upcoming fixtures in the next 3 weeks"
+    fixtures = _fetch_upcoming_fixtures(fetch_league_data, now or datetime.now())
 
     print(f"found {len(fixtures)} upcoming fixtures")
+
+    if not fixtures:
+        write_output([])
+        return "0 upcoming predictions"
 
     df = load_matches()
     model = train(df)

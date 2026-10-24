@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { createClient } from '../src/db';
 import { matchInfoSchema } from '../src/matchSchema';
 import { persistMatches } from '../src/persistMatches';
+import { findSeasons, scrapeSeason } from '../src/scrapeLeague';
+import { saveSeason } from '../src/scrapeToDb';
 
 const matchesArraySchema = z.array(matchInfoSchema);
 
@@ -24,10 +26,11 @@ async function main(): Promise<void> {
 
   const db = await createClient();
 
-  for (const season of ['2024', '2025']) {
+  for (const season of await findSeasons(new Date())) {
     const raw = await loadMatches(season);
     const matches = matchesArraySchema.parse(raw);
     await persistMatches(db, matches);
+    await saveSeason(db, await scrapeSeason(season));
     console.log(`seeded season ${season}: ${matches.length} matches`);
   }
 

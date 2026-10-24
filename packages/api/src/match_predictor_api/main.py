@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy import select, text
 
-from match_predictor.db_models import Team as TeamRow, Prediction as PredictionRow, Upcoming as UpcomingRow
+from match_predictor.db_models import Season as SeasonRow, Prediction as PredictionRow, Upcoming as UpcomingRow
 from match_predictor.features import build_feature_row
 from match_predictor.model import load_model, scoreline_probabilities, outcome_probabilities
 from match_predictor.poisson_baseline import poisson_predict
@@ -24,6 +24,7 @@ from match_predictor_api.models import (
     ResultsResponse,
     ResultsSummary,
     Scoreline,
+    SeasonInfo,
     Team,
 )
 
@@ -114,12 +115,20 @@ def get_status():
     }
 
 
+def _current_season() -> SeasonRow:
+    session = get_session()
+    season = session.execute(select(SeasonRow).order_by(SeasonRow.season.desc()).limit(1)).scalar_one()
+    session.close()
+    return season
+
+
+def _season_name(season: str) -> str:
+    return f"{season}-{(int(season) + 1) % 100:02d}"
+
+
 @app.get("/teams", response_model=list[Team])
 def get_teams():
-    session = get_session()
-    rows = session.execute(select(TeamRow).order_by(TeamRow.name)).scalars().all()
-    session.close()
-    return [Team(id=row.name, name=row.name) for row in rows]
+    return [Team(id=name, name=name) for name in sorted(_current_season().teams)]
 
 
 @app.post("/predict", response_model=PredictResponse)
@@ -203,6 +212,7 @@ def get_results(startDate: str, endDate: str | None = None):
     predictions = session.execute(select(PredictionRow)).scalars().all()
     upcoming = session.execute(select(UpcomingRow)).scalars().all()
     session.close()
+    season = _current_season()
 
     all_matches = [_to_match_result(p, True) for p in predictions]
 
@@ -243,6 +253,11 @@ def get_results(startDate: str, endDate: str | None = None):
         ),
         earlierMatchDate=earlier_date.isoformat() if earlier_date else None,
         laterMatchDate=later_date.isoformat() if later_date else None,
+        season=SeasonInfo(
+            name=_season_name(season.season),
+            lastMatchDate=season.last_match_date.strftime("%Y-%m-%d %H:%M:%S"),
+            ended=season.ended,
+        ),
     )
 
 

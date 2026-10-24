@@ -5,13 +5,12 @@ import { z } from 'zod';
 
 import type { MatchInfo } from '../src/matchSchema';
 import { matchInfoSchema } from '../src/matchSchema';
-import { scrapeLeagueMatchIds } from '../src/scrapeLeague';
+import { findSeasons, scrapeLeagueMatchIds } from '../src/scrapeLeague';
 import { scrapeMatch } from '../src/scrapeMatch';
 
 const matchesArraySchema = z.array(matchInfoSchema);
 
 const DATA_DIR = join(import.meta.dirname, '../data');
-const SEASONS = ['2024', '2025'];
 
 async function loadExisting(season: string): Promise<MatchInfo[]> {
   const filePath = join(DATA_DIR, `matches-${season}.json`);
@@ -62,7 +61,7 @@ async function fetchSeason(season: string): Promise<void> {
 
 await mkdir(DATA_DIR, { recursive: true });
 
-for (const season of SEASONS) {
+for (const season of await findSeasons(new Date())) {
   await fetchSeason(season);
 }
 

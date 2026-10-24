@@ -82,8 +82,15 @@ class ResultsSummary(BaseModel):
     poissonTotal: int
 
 
+class SeasonInfo(BaseModel):
+    name: str
+    lastMatchDate: str
+    ended: bool
+
+
 class ResultsResponse(BaseModel):
     matches: list[MatchResult]
     summary: ResultsSummary
     earlierMatchDate: str | None = None
     laterMatchDate: str | None = None
+    season: SeasonInfo

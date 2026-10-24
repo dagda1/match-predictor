@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 import pandas as pd
 
+from match_predictor.features import MIN_MATCHES, match_count, relegated_teams
 from match_predictor.grid import (
     build_grid,
     outcome_probs_from_grid,
@@ -29,21 +30,27 @@ def _team_xg(df: pd.DataFrame, team: str, is_home: bool) -> pd.DataFrame:
     )
 
 
+def _lambda(df: pd.DataFrame, team: str, is_home: bool) -> float:
+    if match_count(df, team) < MIN_MATCHES:
+        relegated = relegated_teams(df)
+        if relegated:
+            means = [float(_team_xg(df, relegated_team, is_home)["xgFor"].mean()) for relegated_team in relegated]
+            return sum(means) / len(means)
+
+    matches = _team_xg(df, team, is_home)
+    if matches.empty:
+        raise ValueError(f"no {'home' if is_home else 'away'} match data for {team}")
+
+    return float(matches["xgFor"].mean())
+
+
 def poisson_predict(
     df: pd.DataFrame,
     home_team: str,
     away_team: str,
 ) -> PoissonPrediction:
-    home_matches = _team_xg(df, home_team, is_home=True)
-    away_matches = _team_xg(df, away_team, is_home=False)
-
-    if home_matches.empty:
-        raise ValueError(f"no home match data for {home_team}")
-    if away_matches.empty:
-        raise ValueError(f"no away match data for {away_team}")
-
-    home_lambda = float(home_matches["xgFor"].mean())
-    away_lambda = float(away_matches["xgFor"].mean())
+    home_lambda = _lambda(df, home_team, is_home=True)
+    away_lambda = _lambda(df, away_team, is_home=False)
 
     grid = build_grid(home_lambda, away_lambda)
     home_win, draw, away_win = outcome_probs_from_grid(grid)

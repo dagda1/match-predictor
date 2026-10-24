@@ -21,6 +21,7 @@ def load_matches_dataframe() -> pd.DataFrame:
         "homeTeam": r.home_team,
         "awayTeam": r.away_team,
         "date": r.date,
+        "season": r.season,
         "homeGoals": r.home_goals,
         "awayGoals": r.away_goals,
         "homeXg": r.home_xg,
