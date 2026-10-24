@@ -114,7 +114,10 @@
       "Bash(grep -oiE \"\\(react-loading-skeleton|about us|who we are|<h1[^>]*>[^<]{1,60}\\)\" dist/client/about/index.html)",
       "Bash(grep -oiE \"<h1[^>]*>[^<]{1,80}\" dist/client/index.html)",
       "Bash(pnpm --filter @cutting/devtools build-tools)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Read(//Users/paulcowan/claude/skills/**)",
+      "Read(//Users/paulcowan/.claude/skills/**)",
+      "Read(//Users/paulcowan/claude/**)"
     ],
     "deny": [
       "Bash(aws *)",

@@ -102,3 +102,9 @@ cdk.out
 *.egg-info
 *.joblib
 .claude/
+# jscpd output
+/jscpd-report/
+
+# /spec and /build task files; only retro.md is committed
+/plans/*/*
+!/plans/*/retro.md
